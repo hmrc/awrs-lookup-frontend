@@ -16,8 +16,16 @@
 
 package uk.gov.hmrc.awrslookup.views.html
 
+import org.joda.time.DateTime
+
+
 package object helpers {
 
   implicit def argConv[T](arg: T): Option[T] = Some(arg)
+
+  def theTime: String = {
+    val now = DateTime.now()
+    now.toString("dd MMMM yyyy HH:mm ") + now.toString("a").toLowerCase
+  }
 
 }

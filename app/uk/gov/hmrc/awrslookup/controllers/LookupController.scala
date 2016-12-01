@@ -21,19 +21,33 @@ import uk.gov.hmrc.awrslookup.forms.SearchForm._
 import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.awrslookup._
+import uk.gov.hmrc.awrslookup.models.SearchResult
+import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
 
 trait LookupController extends AwrsLookupController {
+  val lookupService: LookupService
+
   def show = UnauthorisedAction.async {
     implicit request =>
       searchForm.bindFromRequest.fold(
         formWithErrors =>
           Ok(views.html.lookup.search(formWithErrors))
         ,
-        query =>
-          Ok(views.html.lookup.search(searchForm.fill(query)))
+        queryForm =>
+          queryForm.query.fold("")(x => x.trim) match {
+            case "" =>
+              Ok(views.html.lookup.search(searchForm))
+            case query =>
+              lookupService.lookupAwrsRef(query) map {
+                case Some(result: SearchResult) => Ok(result.toString)
+                case None => Ok(views.html.lookup.search(searchForm.fill(queryForm), query))
+              }
+          }
       )
   }
 }
 
-object LookupController extends LookupController
+object LookupController extends LookupController {
+  override val lookupService: LookupService = LookupService
+}

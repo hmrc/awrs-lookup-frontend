@@ -2,7 +2,7 @@
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html.helpers._
 
-@(searchForm : Form[models.SearchField])(implicit request : Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], termHasNoResults: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @h1 = {
     <h1 class="heading-xlarge">Check if an alcohol wholesaler or producer is registered</h1>
@@ -26,6 +26,28 @@
     </div>
 }
 
+@noResults = {
+    @termHasNoResults match {
+        case Some(termWithNoResult) => {
+            <p class="heading-medium">No results found for [@termWithNoResult]</p>
+            <p>Check you have the correct details from the wholesaler and that you have entered them correctly</p>
+            <div class="form-group">
+                <div style="margin-top:20px">
+                    <table>
+                        <tbody><tr>
+                            <td style="border-style:none; vertical-align:top"><img src="/public/images/icon-important.png"></td>
+                            <th style="border-style:none">It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t on the register.</a>
+                            </th></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="font-xsmall">Search date @theTime</p>
+        }
+        case None => {}
+    }
+}
+
 @actionRoute = @{controllers.routes.LookupController.show}
 
 @views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None) {
@@ -37,6 +59,7 @@
             @form(action = actionRoute) {
                 @searchbar
             }
+            @noResults
         </div>
     </div>
 }

@@ -16,15 +16,8 @@
 
 package uk.gov.hmrc.awrslookup.controllers.util
 
+import uk.gov.hmrc.awrslookup.utils.ImplicitConversions
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 
-import scala.concurrent.Future
 
-
-trait AwrsLookupController extends FrontendController {
-  implicit def optionUtil[T](data: T): Option[T] = Some(data)
-
-  implicit def futureUtil[T](data: T): Future[T] = Future.successful(data)
-
-  implicit def futureUtil[T](exception: Throwable): Future[T] = Future.failed(exception)
-}
+trait AwrsLookupController extends FrontendController with ImplicitConversions

@@ -22,12 +22,12 @@ import forms.validation.util.MappingUtilAPI._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.validation.Valid
-import uk.gov.hmrc.awrslookup.models.SearchField
+import uk.gov.hmrc.awrslookup.models.Query
 
 object SearchForm {
 
   val query = "query"
-  val awrsRefRegEx = "XXAW00000123456"
+  val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
 
   val optionalQueryField = optionalText(
     OptionalTextFieldMappingParameter(
@@ -43,6 +43,6 @@ object SearchForm {
 
   val searchForm = Form(mapping(
     query -> optionalQueryField
-  )(SearchField.apply)(SearchField.unapply))
+  )(Query.apply)(Query.unapply))
 
 }
