@@ -1,0 +1,17 @@
+@(form: Form[_], summaryErrorIdOrder : Seq[String] = Seq())(implicit messages: Messages)
+@import _root_.forms.validation.util.ErrorMessageInterpreter._
+@import _root_.forms.validation.util._
+@import _root_.forms.validation.util.ErrorMessageLookup._
+@if(form.hasGlobalErrors || form.hasErrors) {
+
+<div id="errors" class="validation-summary" role="group" aria-labelledby="summary-heading" tabindex="-1">
+    <h1 class="heading-medium error-summary-heading" id="errorMessageHeadingText">@Messages("awrs.generic.errors_heading")</h1>
+    <ul>@for((summaryError,index) <- getSummaryErrors(form).zipWithIndex){
+        <li role="tooltip" class="validation-summary-message">
+            <a href="#@{summaryError.anchor}_field" class="error-list" id="@{summaryError.anchor}_errorLink" data-focuses="@{summaryError.anchor}_field">
+                @messageLookup(summaryError)
+            </a>
+        </li>
+    }</ul>
+</div>
+}
