@@ -1,0 +1,11 @@
+@(field: Field, fieldErrors: Seq[_root_.forms.validation.util.FieldError])(implicit lang: Lang, messages: Messages)
+@import _root_.forms.validation.util.ErrorMessageInterpreter._
+@import _root_.forms.validation.util.ErrorMessageLookup._
+@fieldErrors.zipWithIndex.map { case (fieldError, index) =>
+    <span class="error-notification"
+          role="tooltip"
+          data-journey="search-page:error:@field.name"
+          id="@(field.name)-error-@index">
+        @messageLookup(fieldError)
+    </span>
+}
