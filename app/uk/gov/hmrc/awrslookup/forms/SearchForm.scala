@@ -24,6 +24,8 @@ import play.api.data.Forms._
 import play.api.data.validation.Valid
 import uk.gov.hmrc.awrslookup.models.Query
 
+import prevalidation._
+
 object SearchForm {
 
   val query = "query"
@@ -41,8 +43,10 @@ object SearchForm {
       )
     ))
 
-  val searchForm = Form(mapping(
+  val searchValidationForm = Form(mapping(
     query -> optionalQueryField
   )(Query.apply)(Query.unapply))
+
+  val searchForm = PreprocessedForm(searchValidationForm)
 
 }

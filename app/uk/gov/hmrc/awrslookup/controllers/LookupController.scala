@@ -36,12 +36,11 @@ trait LookupController extends AwrsLookupController {
         ,
         queryForm =>
           queryForm.query.fold("")(x => x.trim) match {
-            case "" =>
-              Ok(views.html.lookup.search(searchForm))
+            case "" => Ok(views.html.lookup.search(searchForm.form))
             case query =>
               lookupService.lookupAwrsRef(query) map {
                 case Some(result: SearchResult) => Ok(result.toString)
-                case None => Ok(views.html.lookup.search(searchForm.fill(queryForm), query))
+                case None => Ok(views.html.lookup.search(searchForm.form, query))
               }
           }
       )
