@@ -28,7 +28,7 @@ trait LookupController extends AwrsLookupController {
     implicit request =>
       searchForm.bindFromRequest.fold(
         formWithErrors =>
-          Ok(views.html.lookup.search(searchForm))
+          Ok(views.html.lookup.search(formWithErrors))
         ,
         query =>
           Ok(views.html.lookup.search(searchForm.fill(query)))

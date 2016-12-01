@@ -17,4 +17,4 @@
 package uk.gov.hmrc.awrslookup.models
 
 
-case class SearchField(qeuery: String)
+case class SearchField(query: Option[String])

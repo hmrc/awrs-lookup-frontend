@@ -17,7 +17,6 @@
         @awrsInputTypeText(
             field = searchForm("query"),
             parentForm = searchForm,
-            inputId = "queryStr",
             maxLength = "100"
         )
 
@@ -30,6 +29,7 @@
 @actionRoute = @{controllers.routes.LookupController.show}
 
 @views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None) {
+    @errorSummaryTemplate(searchForm)
     <div class="grid">
         <div class="grid grid-2-3">
             @h1

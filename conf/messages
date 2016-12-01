@@ -1,1 +1,6 @@
 awrs.lookup.search.page_title=AWRS Lookup
+
+awrs.search.query.empty.summary=The query field is empty
+awrs.search.query.empty=Enter a query
+awrs.search.query.invalid.summary=The query field is not in a valid format
+awrs.search.query.invalid=Invalid format

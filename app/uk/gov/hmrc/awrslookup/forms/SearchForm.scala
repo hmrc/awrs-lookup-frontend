@@ -16,15 +16,33 @@
 
 package uk.gov.hmrc.awrslookup.forms
 
+import forms.validation.util.ConstraintUtil.{FieldFormatConstraintParameter, MaxLengthConstraintIsHandledByTheRegEx, OptionalTextFieldMappingParameter}
+import forms.validation.util.ErrorMessagesUtilAPI._
+import forms.validation.util.MappingUtilAPI._
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.Valid
 import uk.gov.hmrc.awrslookup.models.SearchField
-
 
 object SearchForm {
 
+  val query = "query"
+  val awrsRefRegEx = "XXAW00000123456"
+
+  val optionalQueryField = optionalText(
+    OptionalTextFieldMappingParameter(
+      maxLengthValidation = MaxLengthConstraintIsHandledByTheRegEx(),
+      formatValidations = FieldFormatConstraintParameter(
+        (str: String) =>
+          str.matches(awrsRefRegEx) match {
+            case true => Valid
+            case false => simpleErrorMessage(query, "awrs.search.query.invalid")
+          }
+      )
+    ))
+
   val searchForm = Form(mapping(
-    "query" -> text()
+    query -> optionalQueryField
   )(SearchField.apply)(SearchField.unapply))
 
 }
