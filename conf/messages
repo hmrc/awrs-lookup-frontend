@@ -1,4 +1,5 @@
-awrs.lookup.search.page_title=AWRS Lookup
+# Generic Messages
+awrs.generic.back=back
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form
@@ -8,3 +9,9 @@ awrs.search.query.empty.summary=The query field is empty
 awrs.search.query.empty=Enter a query
 awrs.search.query.invalid.summary=The query field is not in a valid format
 awrs.search.query.invalid=Invalid format
+
+# Lookup page
+awrs.lookup.search.page_title=AWRS lookup
+
+# Results page
+awrs.lookup.results.page_title=AWRS lookup
