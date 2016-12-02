@@ -21,7 +21,7 @@ import uk.gov.hmrc.awrslookup.forms.SearchForm._
 import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.awrslookup._
-import uk.gov.hmrc.awrslookup.models.{AwrsEntry, SearchResult}
+import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
 
@@ -35,9 +35,9 @@ trait LookupController extends AwrsLookupController {
         queryForm =>
           queryForm.query.fold("")(x => x.trim) match {
             case "" => Ok(views.html.lookup.search_main(searchForm.form))
-            case query =>
-              lookupService.lookupAwrsRef(query) map {
-                case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, termHasNoResults = query))
+            case queryString =>
+              lookupService.lookupAwrsRef(queryString) map {
+                case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
                 case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, searchResult = result))
                 case Some(result: SearchResult) => Ok(views.html.lookup.results(result))
               }

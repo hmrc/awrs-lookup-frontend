@@ -37,7 +37,7 @@
 
 @results = {
     @searchResult match {
-        case Some(SearchResult(results)) => { @multResults(results) }
+        case Some(SearchResult(results)) if results.size > 1 => { @multResults(results) }
         case _ => { @noResults }
     }
 }
