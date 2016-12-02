@@ -16,16 +16,14 @@
 
 package uk.gov.hmrc.awrslookup.models
 
-import java.text.SimpleDateFormat
-
-import org.joda.time.LocalDate
 import play.api.libs.json._
 
 
 case class Info(businessName: Option[String] = None,
                 tradingName: Option[String] = None,
-                address: Option[Address] = None,
-                identification: Option[Identification] = None)
+                fullName: Option[String] = None,
+                address: Option[Address] = None
+               )
 
 case class Address(
                     addressLine1: String,
@@ -59,35 +57,8 @@ case class Address(
     (addressLine1, addressLine2, addressLine3, addressLine4, postcode, addressCountry).hashCode()
 }
 
-case class TupleDate(day: String, month: String, year: String) {
-  lazy val localDate = new LocalDate(year.toInt, month.toInt, day.toInt)
-
-  lazy val date = localDate.toDate
-
-  def toString(format: String) = new SimpleDateFormat(format).format(date)
-}
-
-case class Identification(
-                           utr: Option[String],
-                           nino: Option[String],
-                           crn: Option[String],
-                           dateOfIncorporation: Option[TupleDate],
-                           vrn: Option[String])
-
-object TupleDate {
-  implicit val formats = Json.format[TupleDate]
-
-  implicit def convert(date: LocalDate): TupleDate = TupleDate("%02d".format(date.getDayOfMonth), "%02d".format(date.getMonthOfYear), "%04d".format(date.getYear))
-
-  implicit def convert(date: Option[LocalDate]): Option[TupleDate] = date.map(convert)
-}
-
 object Address {
   implicit val formats = Json.format[Address]
-}
-
-object Identification {
-  implicit val formats = Json.format[Identification]
 }
 
 object Info {

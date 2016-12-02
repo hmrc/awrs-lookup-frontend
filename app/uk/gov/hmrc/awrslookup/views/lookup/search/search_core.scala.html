@@ -1,0 +1,31 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html.helpers._
+
+@(searchForm : Form[models.Query], preForm: Option[Html], postForm: Option[Html] = None)(implicit request : Request[AnyContent], messages: Messages)
+
+@searchbar = {
+    <div class="search">
+        @awrsInputTypeText(
+            field = searchForm("query"),
+            parentForm = searchForm,
+            maxLength = 100
+        )
+        <div class="form-group">
+            @awrsSubmitButton("Search")(id = "search", classAttr = None)
+        </div>
+    </div>
+}
+
+@views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None) {
+    @errorSummaryTemplate(searchForm)
+    <div class="grid">
+        <div class="grid grid-2-3">
+            @preForm.fold(Html(""))(x => x)
+            @form(action = controllers.routes.LookupController.show) {
+                @searchbar
+            }
+            @postForm.fold(Html(""))(x => x)
+        </div>
+    </div>
+}

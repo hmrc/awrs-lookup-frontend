@@ -19,9 +19,12 @@ package uk.gov.hmrc.awrslookup.models
 import play.api.libs.json._
 
 sealed trait AwrsEntry {
-  def awrsRef: String
+  def awrsRef: String //TODO what if it's pending? would pending companies be on the register?
 
   def registrationDate: String
+
+  // in case we don't get it
+  def deRegistrationDate: Option[String]
 
   def status: AwrsStatus
 }
@@ -32,13 +35,15 @@ case class SearchResult(results: List[AwrsEntry])
 case class Business(awrsRef: String,
                     registrationDate: String,
                     status: AwrsStatus,
-                    info: Info
+                    info: Info,
+                    deRegistrationDate: Option[String] = None
                    ) extends AwrsEntry
 
 case class Group(awrsRef: String,
                  registrationDate: String,
                  status: AwrsStatus,
-                 members: List[Info]
+                 members: List[Info],
+                 deRegistrationDate: Option[String] = None
                 ) extends AwrsEntry
 
 
