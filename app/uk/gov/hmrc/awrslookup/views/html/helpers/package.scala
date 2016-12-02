@@ -24,10 +24,6 @@ package object helpers {
 
   implicit def argConv[T](arg: T): Option[T] = Some(arg)
 
-  val emptyHtml = Html("")
-
-  implicit def htmlUtil(html: Option[Html]): Html = html.fold(emptyHtml)(x => x)
-
   def theTime: String = {
     val now = DateTime.now()
     now.toString("dd MMMM yyyy HH:mm ") + now.toString("a").toLowerCase
