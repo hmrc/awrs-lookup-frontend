@@ -58,7 +58,7 @@ case class Address(
 }
 
 object Address {
-  implicit val formats = Json.format[Address]
+  implicit val formatter = Json.format[Address]
 }
 
 object Info {

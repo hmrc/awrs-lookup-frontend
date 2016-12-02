@@ -16,7 +16,9 @@
   dataAttributes: Option[String] = None,
   isPostCode: Boolean = false,
   postCodeLookupAddressNumber: Option[String] = None,
-  additionalHiddenLabelText: Option[String] = None
+  additionalHiddenLabelText: Option[String] = None,
+  preInputContent: Option[Html] = None,
+  postInputContent: Option[Html] = None
 )(implicit lang: play.api.i18n.Lang, messages: Messages)
 
 @import views.html.helper._
@@ -120,6 +122,7 @@
     }
 }
 <div class="form-field @if(fieldErrors.nonEmpty) {form-field--error} @wrapperClassStr @divClassStr">
+    @preInputContent
     <label for="@inputIdStr" id="@{inputIdStr}_field" @labelClassStr @labelDataAttributesStr>@labelText@additionalHiddenLabel</label>
     @formHintStr
     @commonHelper(field, fieldErrors)
@@ -135,4 +138,5 @@
                aria-labelledby="@{field.name}-error-0"
            }
     >
+    @postInputContent
 </div>

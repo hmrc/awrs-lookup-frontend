@@ -17,11 +17,16 @@
 package uk.gov.hmrc.awrslookup.views.html
 
 import org.joda.time.DateTime
+import play.twirl.api.Html
 
 
 package object helpers {
 
   implicit def argConv[T](arg: T): Option[T] = Some(arg)
+
+  val emptyHtml = Html("")
+
+  implicit def htmlUtil(html: Option[Html]): Html = html.fold(emptyHtml)(x => x)
 
   def theTime: String = {
     val now = DateTime.now()
