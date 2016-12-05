@@ -11,8 +11,6 @@ awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
 # Lookup Form Error Messages
 awrs.search.query.empty.summary=The query field is empty
 awrs.search.query.empty=Enter a query
-awrs.search.query.invalid.summary=The query field is not in a valid format
-awrs.search.query.invalid=Invalid format
 
 # Lookup page
 awrs.lookup.search.page_title=AWRS lookup

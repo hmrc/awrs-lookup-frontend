@@ -35,12 +35,10 @@ object SearchForm {
   val optionalQueryField = optionalText(
     OptionalTextFieldMappingParameter(
       maxLengthValidation = MaxLengthConstraintIsHandledByTheRegEx(),
-      formatValidations = FieldFormatConstraintParameter(
-        (str: String) =>
-          str.matches(awrsRefRegEx) match {
-            case true => Valid
-            case false => simpleErrorMessage(query, "awrs.search.query.invalid")
-          }
+      formatValidations = genericInvalidFormatConstraintParameter(
+        validationFunction = (str: String) => str.matches(awrsRefRegEx),
+        fieldId = query,
+        fieldNameInErrorMessage = "search query"
       )
     ))
 
