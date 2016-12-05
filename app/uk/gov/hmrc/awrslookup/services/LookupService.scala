@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.services
 
-import uk.gov.hmrc.awrslookup.connectors.AwrsLookupConnector
+import uk.gov.hmrc.awrslookup.connectors.LookupConnector
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.play.http.HeaderCarrier
 
@@ -24,7 +24,7 @@ import scala.concurrent.Future
 
 trait LookupService {
 
-  val connector: AwrsLookupConnector
+  val connector: LookupConnector
 
   def lookupAwrsRef(awrsRef: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
     connector.sendQuery(awrsRef)
@@ -32,5 +32,5 @@ trait LookupService {
 }
 
 object LookupService extends LookupService {
-  override val connector: AwrsLookupConnector = AwrsLookupConnector
+  override val connector: LookupConnector = LookupConnector
 }

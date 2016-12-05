@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.connectors
 
-import play.api.libs.json.{JsSuccess, Json}
+import play.api.libs.json.Json
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.{FrontendAuditConnector, WSHttp}
 import uk.gov.hmrc.awrslookup.utils.LoggingUtils
@@ -29,10 +29,12 @@ import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
-trait AwrsLookupConnector extends ServicesConfig with RawResponseReads with LoggingUtils {
+trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingUtils {
 
   val http: HttpGet with HttpPost with HttpPut = WSHttp
   lazy val middleServiceURL = baseUrl("awrs-lookup")
+
+  val referenceNotFoundString = "AWRS reference not found"
 
   def sendQuery(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
     val getURL = s"""$middleServiceURL/awrs-lookup/query/$query"""
@@ -49,6 +51,14 @@ trait AwrsLookupConnector extends ServicesConfig with RawResponseReads with Logg
                 err(s"[ $auditLookupTxName - $query ] - Invalid Json recieved from AWRS-LOOKUP")
                 throw new InternalServerException("Invalid json")
             }
+          case 404 =>
+            response.body.equals(referenceNotFoundString) match {
+              case true => None
+              case _ =>
+                err(s"[ $auditLookupTxName ] - The remote endpoint has indicated that no data can be found ## ")
+                info(s"[ $auditLookupTxName ] - Query ## $query")
+                throw new InternalServerException("URL not found")
+            }
           case status =>
             err(s"[ $auditLookupTxName - $query ] - Unsuccessful return of data. Status code: $status")
             throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
@@ -58,7 +68,7 @@ trait AwrsLookupConnector extends ServicesConfig with RawResponseReads with Logg
 
 }
 
-object AwrsLookupConnector extends AwrsLookupConnector {
+object LookupConnector extends LookupConnector {
 
   override val appName = "awrs-lookup-frontend"
   override val audit: Audit = new Audit(AppName.appName, FrontendAuditConnector)
