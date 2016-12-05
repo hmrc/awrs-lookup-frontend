@@ -16,28 +16,21 @@
 
 package uk.gov.hmrc.awrslookup.services
 
-import uk.gov.hmrc.awrslookup.models.AwrsStatus.Pending
-import uk.gov.hmrc.awrslookup.models.{Business, Group, Info, SearchResult}
-import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
+import uk.gov.hmrc.awrslookup.connectors.AwrsLookupConnector
+import uk.gov.hmrc.awrslookup.models.SearchResult
+import uk.gov.hmrc.play.http.HeaderCarrier
 
 import scala.concurrent.Future
 
 trait LookupService {
 
-  def lookupAwrsRef(awrsRef: String): Future[Option[SearchResult]] =
-    awrsRef match {
-      case "XXAW00000123457" =>
-        SearchResult(
-          List(
-            Business("XXAW00000123456", "1 April 2017", Pending, Info("info", "info")),
-            Group("XXAW00000123455", "1 April 2017", Pending, Info("info", "info"), List(Info("info", "info"), Info("info2", "info2")))
-          ))
-      case "XXAW00000123456" => SearchResult(List(Business("XXAW00000123456", "1 April 2017", Pending, Info("info", "info"))))
-      case "XXAW00000123455" => SearchResult(List(Group("XXAW00000123455", "1 April 2017", Pending, Info("info", "info"), List(Info("info", "info"), Info("info2", "info2")))))
-      case "XXAW00000123454" => SearchResult(List())
-      case _ => None
-    }
+  val connector: AwrsLookupConnector
+
+  def lookupAwrsRef(awrsRef: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
+    connector.sendQuery(awrsRef)
 
 }
 
-object LookupService extends LookupService
+object LookupService extends LookupService {
+  override val connector: AwrsLookupConnector = AwrsLookupConnector
+}
