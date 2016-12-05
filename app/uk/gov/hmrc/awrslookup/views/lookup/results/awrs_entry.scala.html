@@ -55,23 +55,9 @@
     @address(info.address)
 }
 
-@headerRegNumberHighlight = {
-    @result.status match {
-        case AwrsStatus.DeRegistered => {
-            <span style="font-weight:700">Deregistered</span>
-        }
-        case AwrsStatus.Revoked => {
-            <span style="font-weight:700">Revoked</span>
-        }
-        case _ => {
-            <span class="heading-secondary">AWRS registration number <span style="font-weight:700">@result.awrsRef</span></span>
-        }
-    }
-}
-
 @business(business: Business) = {
     <h1>@knownName(business.info)</h1>
-    @headerRegNumberHighlight
+    @headerRegNumberHighlight(result)
     <table>
         @tableHeadingMedium(id, knownName(business.info))
         @common(showRegNumber = true)
@@ -81,7 +67,7 @@
 
 @group(group: Group) = {
     <h1>@knownName(group.info)</h1>
-    @headerRegNumberHighlight
+    @headerRegNumberHighlight(result)
     <p class="ledge">@groupLedge(group)</p>
     <table>
         @tableHeadingMedium(id, "Group representative")

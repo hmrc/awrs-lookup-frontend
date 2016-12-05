@@ -1,8 +1,9 @@
 @import uk.gov.hmrc.awrslookup._
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html.helpers._
-@import search._
 @import models._
+@import search._
+@import results._
 
 @(searchForm : Form[models.Query], termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
@@ -31,7 +32,9 @@
 @multResults(results: List[AwrsEntry]) = {
     <p class="heading-medium">We found @{results.size} results</p>
     <div id = "search-results">
-        @results.toString
+        @results.zipWithIndex.map {
+            case (result, ind) => { @awrs_entry_compact(result, ind.toString) }
+        }
     </div>
 }
 

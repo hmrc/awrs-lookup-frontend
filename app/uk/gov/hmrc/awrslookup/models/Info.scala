@@ -18,6 +18,8 @@ package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json._
 
+import uk.gov.hmrc.awrslookup._
+import utils.ImplicitConversions._
 
 case class Info(businessName: Option[String] = None,
                 tradingName: Option[String] = None,
@@ -55,10 +57,20 @@ case class Address(
 
   override def hashCode(): Int =
     (addressLine1, addressLine2, addressLine3, addressLine4, postcode, addressCountry).hashCode()
+
+  def toStringSeq: Seq[String] = {
+    Seq[Option[String]](addressLine1, addressLine2, addressLine3, addressLine4, postcode, addressCountry).flatten
+  }
+
 }
 
 object Address {
   implicit val formatter = Json.format[Address]
+
+  implicit class AddressUtil(address: Option[Address]) {
+    def toStringSeq: Seq[String] = address.fold(Seq[String]())(x => x.toStringSeq)
+  }
+
 }
 
 object Info {
