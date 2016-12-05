@@ -30,10 +30,10 @@ trait LookupService {
         SearchResult(
           List(
             Business("XXAW00000123456", "1 April 2017", Pending, Info("info", "info")),
-            Group("XXAW00000123455", "1 April 2017", Pending, List(Info("info", "info"), Info("info2", "info2")))
+            Group("XXAW00000123455", "1 April 2017", Pending, Info("info", "info"), List(Info("info", "info"), Info("info2", "info2")))
           ))
       case "XXAW00000123456" => SearchResult(List(Business("XXAW00000123456", "1 April 2017", Pending, Info("info", "info"))))
-      case "XXAW00000123455" => SearchResult(List(Group("XXAW00000123455", "1 April 2017", Pending, List(Info("info", "info"), Info("info2", "info2")))))
+      case "XXAW00000123455" => SearchResult(List(Group("XXAW00000123455", "1 April 2017", Pending, Info("info", "info"), List(Info("info", "info"), Info("info2", "info2")))))
       case "XXAW00000123454" => SearchResult(List())
       case _ => None
     }
