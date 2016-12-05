@@ -16,17 +16,22 @@
 
 package uk.gov.hmrc.awrslookup.controllers
 
+import javax.inject.Inject
+
+import play.api.{Configuration, Environment}
+import play.api.i18n.MessagesApi
+import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm._
-import play.api.Play.current
-import play.api.i18n.Messages.Implicits._
-import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
 
-trait LookupController extends AwrsLookupController {
-  val lookupService: LookupService
+class LookupController @Inject()(val environment: Environment,
+                                 val configuration: Configuration,
+                                 val messagesApi: MessagesApi) extends AwrsLookupController {
+
+  val lookupService: LookupService = LookupService
 
   def show = UnauthorisedAction.async {
     implicit request =>
@@ -44,8 +49,4 @@ trait LookupController extends AwrsLookupController {
           }
       )
   }
-}
-
-object LookupController extends LookupController {
-  override val lookupService: LookupService = LookupService
 }

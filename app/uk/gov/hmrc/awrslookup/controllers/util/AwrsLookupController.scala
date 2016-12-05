@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.awrslookup.controllers.util
 
+import play.api.i18n.I18nSupport
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 
 
-trait AwrsLookupController extends FrontendController with ImplicitConversions
+trait AwrsLookupController extends FrontendController with ImplicitConversions with I18nSupport
