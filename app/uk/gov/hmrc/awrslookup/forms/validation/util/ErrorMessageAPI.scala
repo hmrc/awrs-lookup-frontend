@@ -46,7 +46,7 @@
   * messages
   *
   * ********************************************************************************************************************/
-package forms.validation.util
+package uk.gov.hmrc.awrslookup.forms.validation.util
 
 import javax.inject.Inject
 
@@ -154,7 +154,7 @@ case class TargetFieldIds(anchor: String, otherIds: String*)
   * All types inheriting this trait must contain a message key.
   */
 trait MessageLookup extends MessageConfig[String] with I18nSupport {
-  def toString()(implicit messages: Messages): String = ErrorMessageLookup.messageLookup(this)(messages)
+  override def toString: String = ErrorMessageLookup.messageLookup(this)(implicitly)
 }
 
 /**

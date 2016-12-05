@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package forms.validation.util
+package uk.gov.hmrc.awrslookup.forms.validation.util
 
+import uk.gov.hmrc.awrslookup._
 import forms.validation.util.ConstraintUtil.{FieldFormatConstraintParameter, FieldIsEmptyConstraintParameter, FieldMaxLengthConstraintParameter}
 import forms.validation.util.ErrorMessageFactory._
 import play.api.data.validation.Valid

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.awrslookup.controllers
+package uk.gov.hmrc.awrslookup.forms
 
-class LookupControllerTest {
+class LookupFormTest {
 
 }

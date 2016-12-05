@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package forms.validation.util
+package uk.gov.hmrc.awrslookup.forms.validation.util
 
 import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationResult}

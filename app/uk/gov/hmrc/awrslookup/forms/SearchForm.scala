@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.forms
 
+import uk.gov.hmrc.awrslookup._
 import forms.validation.util.ConstraintUtil.{FieldFormatConstraintParameter, MaxLengthConstraintIsHandledByTheRegEx, OptionalTextFieldMappingParameter}
 import forms.validation.util.ErrorMessagesUtilAPI._
 import forms.validation.util.MappingUtilAPI._

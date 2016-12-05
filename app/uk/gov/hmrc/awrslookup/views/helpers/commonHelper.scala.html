@@ -1,6 +1,8 @@
-@(field: Field, fieldErrors: Seq[_root_.forms.validation.util.FieldError])(implicit lang: Lang, messages: Messages)
-@import _root_.forms.validation.util.ErrorMessageInterpreter._
-@import _root_.forms.validation.util.ErrorMessageLookup._
+@import uk.gov.hmrc.awrslookup.forms.validation.util._
+@import ErrorMessageInterpreter._
+@import ErrorMessageLookup._
+
+@(field: Field, fieldErrors: Seq[FieldError])(implicit lang: Lang, messages: Messages)
 @fieldErrors.zipWithIndex.map { case (fieldError, index) =>
     <span class="error-notification"
           role="tooltip"

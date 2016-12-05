@@ -1,3 +1,7 @@
+@import uk.gov.hmrc.awrslookup._
+@import forms.validation.util._
+@import views.html.helpers._
+
 @(
   field: Field,
   parentForm: Option[Form[_]] = None,
@@ -20,10 +24,6 @@
   preInputContent: Option[Html] = None,
   postInputContent: Option[Html] = None
 )(implicit lang: play.api.i18n.Lang, messages: Messages)
-
-@import views.html.helper._
-@import views.html.helpers._
-@import forms.validation.util._
 
 @fieldErrors = @{
     parentForm match {
