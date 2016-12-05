@@ -1,13 +1,15 @@
 @import uk.gov.hmrc.play.views.html.helpers._
 @import uk.gov.hmrc.awrslookup._
-@import views.html.helpers._
+@import views.html._
+@import helpers._
+@import lookup.results._
 
-@(results: models.SearchResult)(implicit request : Request[AnyContent], messages: Messages)
+@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
 @views.html.main_template(title = Messages("awrs.lookup.results.page_title"), bodyClasses = None) {
     <div class="grid">
         <div class="grid grid-2-3">
-            <div>@results.toString</div>
+            <div>@awrs_entry(result, "result")</div>
             @backLink()
             @searchDate()
         </div>

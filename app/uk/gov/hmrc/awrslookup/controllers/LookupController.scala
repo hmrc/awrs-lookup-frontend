@@ -44,7 +44,7 @@ class LookupController @Inject()(val environment: Environment,
               lookupService.lookupAwrsRef(queryString) map {
                 case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
                 case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, searchResult = result))
-                case Some(result: SearchResult) => Ok(views.html.lookup.results(result))
+                case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head))
               }
           }
       )

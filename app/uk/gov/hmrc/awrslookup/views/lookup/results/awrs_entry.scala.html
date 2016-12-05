@@ -1,0 +1,103 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.awrslookup.models._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html._
+@import helpers._
+@import lookup.results._
+
+@(result: AwrsEntry, id: String)(implicit request : Request[AnyContent], messages: Messages)
+
+@tableHeading(size: String, name: String, heading: String) = {
+    <tr><th class="heading-@size" id="@{name}_heading">@heading</th><td></td></tr>
+}
+
+@tableHeadingMedium(name: String, heading: String) = {
+    @tableHeading("medium", name, heading)
+}
+
+@tableHeadingSmall(name: String, heading: String) = {
+    @tableHeading("small", name, heading)
+}
+
+@common(showRegNumber: Boolean) = {
+    @table_row(s"${id}_awrs_status", "AWRS status", result.status.map(_.name))
+    @showRegNumber match {
+        case true => {
+            @table_row(s"${id}_awrs_reg", "AWRS registration number", result.awrsRef)
+        }
+        case false => {}
+    }
+    @table_row(s"${id}_reg_date", "Date of AWRS registration", result.registrationDate)
+    @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.deRegistrationDate)
+}
+
+@address(someAddress: Option[Address]) = {
+    @someAddress match {
+        case Some(address) => {
+            @table_row(s"${id}_address", "Principal place of business",
+                paragraphs(
+                    address.addressLine1,
+                    address.addressLine2,
+                    address.addressLine3,
+                    address.addressLine4,
+                    address.postcode,
+                    address.addressCountry
+                )
+            )
+        }
+        case _ => {}
+    }
+}
+
+@info(info: Info) = {
+    @table_row(s"${id}_businessName", "Business name", info.businessName)
+    @table_row(s"${id}_tradingName", "Trading name", info.tradingName)
+    @address(info.address)
+}
+
+@headerRegNumberHighlight = {
+    @result.status match {
+        case AwrsStatus.DeRegistered => {
+            <span style="font-weight:700">Deregistered</span>
+        }
+        case AwrsStatus.Revoked => {
+            <span style="font-weight:700">Revoked</span>
+        }
+        case _ => {
+            <span class="heading-secondary">AWRS registration number <span style="font-weight:700">@result.awrsRef</span></span>
+        }
+    }
+}
+
+@business(business: Business) = {
+    <h1>@knownName(business.info)</h1>
+    @headerRegNumberHighlight
+    <table>
+        @tableHeadingMedium(id, knownName(business.info))
+        @common(showRegNumber = true)
+        @info(business.info)
+    </table>
+}
+
+@group(group: Group) = {
+    <h1>@knownName(group.info)</h1>
+    @headerRegNumberHighlight
+    <p class="ledge">@groupLedge(group)</p>
+    <table>
+        @tableHeadingMedium(id, "Group representative")
+        @common(showRegNumber = false)
+        @info(group.info)
+        @tableHeadingMedium(id,"Group members")
+        @group.members.zipWithIndex.map {
+            case (memberInfo: Info, index: Int) => {
+                @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
+                @info(memberInfo)
+            }
+        }
+    </table>
+}
+
+@result match {
+    case  bus : Business => { @business(bus) }
+    case  grp : Group    => { @group(grp) }
+}
