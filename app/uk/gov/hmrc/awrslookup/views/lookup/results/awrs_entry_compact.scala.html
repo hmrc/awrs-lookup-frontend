@@ -9,10 +9,12 @@
 
 @address = { Address, @result.info.address.toStringSeq.mkString(", ") }
 
-<a id="result_@id" href="@controllers.routes.LookupController.show?=query=@{result.awrsRef}">
-    <h3 class="heading-medium-search">
-        @knownName(result.info)
-    </h3>
-</a>
-@headerRegNumberHighlight(result, id = id)
-<p id="address_@id">@address</p>
+<div class="form-group">
+    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show?=query=@{result.awrsRef}">
+        <h3 class="heading-medium-search">
+            @knownName(result.info)
+        </h3>
+    </a>
+    @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
+    <p id="address_@id">@address</p>
+</div>

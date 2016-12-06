@@ -2,21 +2,21 @@
 @import uk.gov.hmrc.awrslookup.models._
 @import uk.gov.hmrc.play.views.html.helpers._
 
-@(result: AwrsEntry, id: Option[String]=None)(implicit request : Request[AnyContent], messages: Messages)
+@(result: AwrsEntry, attrClass: String = "heading-secondary", id: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @theId = @{
-    id.fold("result_status")(x => s"result_status_$id")
+    id.fold("result_status")(x => s"result_status_$x")
 }
 
 @result.status match {
     case AwrsStatus.DeRegistered => {
-        <span id="@theId" class="heading-secondary" style="font-weight:700">Deregistered</span>
+        <span id="@theId" class="@attrClass" style="font-weight:700">Deregistered</span>
     }
     case AwrsStatus.Revoked => {
-        <span id="@theId" class="heading-secondary" style="font-weight:700">Revoked</span>
+        <span id="@theId" class="@attrClass" style="font-weight:700">Revoked</span>
     }
     case _ => {
-        <span id="@theId" class="heading-secondary">AWRS registration number <span style="font-weight:700">@result.awrsRef</span></span>
+        <span id="@theId" class="@attrClass">AWRS registration number <span style="font-weight:700">@result.awrsRef</span></span>
     }
 }
 

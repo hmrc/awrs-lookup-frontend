@@ -22,7 +22,6 @@ import uk.gov.hmrc.awrslookup.models.{Group, Info}
 
 import scala.annotation.tailrec
 
-
 package object helpers {
 
   implicit def argConv[T](arg: T): Option[T] = Some(arg)
@@ -35,7 +34,7 @@ package object helpers {
 
   def theTime: String = {
     val now = DateTime.now()
-    now.toString("dd MMMM yyyy HH:mm ") + now.toString("a").toLowerCase
+    now.toString("dd MMMM yyyy hh:mm ") + now.toString("a").toLowerCase
   }
 
   def paragraphs(strings: Option[String]*): Html =

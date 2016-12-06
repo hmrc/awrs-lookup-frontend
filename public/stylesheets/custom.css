@@ -1,3 +1,29 @@
+.search-awrs {
+	float: left;
+	width: 75%;
+	height: 45px;
+	margin-right: 2px;
+	padding-left: 10px;
+	border: 2px solid #6f777b;
+}
+
+input[type="text"] {
+	border: 2px solid #6f777b;
+	padding: 4px;
+}
+
+#search {
+    float: left;
+	height: 45px;
+	width: 50px;
+	color: #005EA5;
+	background-color: #005EA5;
+	background-image: url('/awrs-lookup-frontend/assets/images/search-button.png');
+	background-position: -25% 50%;
+	background-repeat: no-repeat;
+	box-shadow: 0 2px 0 #005EA5;
+}
+
 .result_label {
    vertical-align: top;
 }
@@ -5,6 +31,18 @@
 .lede {
     font-size: 24px;
     line-height: 1.25;
+}
+
+#no-results {
+    margin-top: 100px;
+}
+
+a.result-link h3, a.result-link:visited h3 {
+	color: #2e3191;
+}
+
+a.result-link:hover h3 {
+    color: #22e8aca;
 }
 
 .heading-medium, h3 {

@@ -2,22 +2,28 @@
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html.helpers._
 
-@(searchForm : Form[models.Query], preFormContent: Option[Html], postFormContent: Option[Html] = None)(implicit request : Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query],
+  preFormContent: Option[Html] = None,
+  postFormContent: Option[Html] = None
+)(implicit request : Request[AnyContent], messages: Messages)
 
 @searchbar = {
     <div class="search">
-        <div class="form-group">
-            @awrsInputTypeText(
-                field = searchForm("query"),
-                parentForm = searchForm,
-                maxLength = 100,
-                postInputContent = awrsSubmitButton("Search")(id = "search", classAttr = None)
-            )
-        </div>
+        @awrsInputTypeText(
+            field = searchForm("query"),
+            inputClass = "search-awrs",
+            parentForm = searchForm,
+            maxLength = 100,
+            postInputContent = awrsSubmitButton("")(id = "search", classAttr = None)
+        )
     </div>
 }
 
-@views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None) {
+@cssScripts = {
+    <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
+}
+
+@views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None, contentHeader = cssScripts) {
     @errorSummaryTemplate(searchForm)
     <div class="grid">
         @preFormContent
