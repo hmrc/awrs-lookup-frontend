@@ -19,6 +19,7 @@ package uk.gov.hmrc.awrslookup.utils
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.OneServerPerSuite
+import play.api.{Configuration, Environment}
 import play.api.i18n.{Lang, Messages, MessagesApi}
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
@@ -39,5 +40,9 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
   implicit val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
 
   implicit val messages = Messages(Lang("en"), messagesApi)
+
+  implicit val environment: Environment = app.injector.instanceOf[Environment]
+
+  implicit val configuration: Configuration = app.injector.instanceOf[Configuration]
 
 }
