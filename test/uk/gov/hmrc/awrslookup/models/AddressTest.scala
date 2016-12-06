@@ -40,15 +40,16 @@ class AddressTest extends AwrsUnitTestTraits {
       add1.equals(add2) shouldBe false
       add1.equals(add3) shouldBe false
       add2.equals(add3) shouldBe false
+      add1.equals(null) shouldBe false
 
       add1.hashCode shouldBe add1a.hashCode()
       add1.hashCode should not be add2.hashCode()
       add3.hashCode should not be add2.hashCode()
       add3.hashCode should not be add1.hashCode()
 
-      add1.toString shouldBe add1.toStringSeq.reduce(_+", "+_)
-      add2.toString shouldBe add2.toStringSeq.reduce(_+", "+_)
-      add3.toString shouldBe add3.toStringSeq.reduce(_+", "+_)
+      add1.toString shouldBe add1.toStringSeq.reduce(_ + ", " + _)
+      add2.toString shouldBe add2.toStringSeq.reduce(_ + ", " + _)
+      add3.toString shouldBe add3.toStringSeq.reduce(_ + ", " + _)
     }
 
     "toStringSeq should only return a sequence of the populated fields" in {
@@ -58,6 +59,9 @@ class AddressTest extends AwrsUnitTestTraits {
 
       val test2 = Some(test)
       test2.toStringSeq shouldBe expected
+
+      val none: Option[Address] = None
+      none.toStringSeq shouldBe Seq()
     }
 
   }
