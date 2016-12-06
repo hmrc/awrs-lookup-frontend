@@ -80,7 +80,7 @@
         @group.members.zipWithIndex.map {
             case (memberInfo: Info, index: Int) => {
                 @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
-                @info(memberInfo, id = s"{id}_member_$index")
+                @info(memberInfo, id = s"${id}_member_$index")
             }
         }
     </table>
