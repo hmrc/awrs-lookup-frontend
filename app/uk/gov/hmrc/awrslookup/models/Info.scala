@@ -37,11 +37,11 @@ case class Address(
                   ) {
 
   override def toString = {
-    val line3display = addressLine3.map(line3 => s"$line3, ").fold("")(x => x)
-    val line4display = addressLine4.map(line4 => s"$line4, ").fold("")(x => x)
-    val postcodeDisplay = postcode.map(postcode1 => s"$postcode1, ").fold("")(x => x)
-    val countryDisplay = addressCountry.map(country => s"$country, ").fold("")(x => x)
-    s"$addressLine1, $addressLine2, $line3display, $line4display, $postcodeDisplay, $countryDisplay"
+    val line3display = addressLine3.fold("")(x => s", $x")
+    val line4display = addressLine4.fold("")(x =>s", $x")
+    val postcodeDisplay = postcode.fold("")(x => s", $x")
+    val countryDisplay = addressCountry.fold("")(x => s", $x")
+    s"$addressLine1, $addressLine2$line3display$line4display$postcodeDisplay$countryDisplay"
   }
 
   override def equals(obj: Any): Boolean = obj match {

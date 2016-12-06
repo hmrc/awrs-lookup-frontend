@@ -20,12 +20,16 @@ import javax.inject.Inject
 
 import play.api.{Configuration, Environment}
 import play.api.i18n.MessagesApi
+import play.api.mvc.{AnyContent, Request, Result}
 import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
+import uk.gov.hmrc.awrslookup.forms.SearchForm
 import uk.gov.hmrc.awrslookup.forms.SearchForm._
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
+
+import scala.concurrent.Future
 
 class LookupController @Inject()(val environment: Environment,
                                  val configuration: Configuration,
@@ -33,20 +37,29 @@ class LookupController @Inject()(val environment: Environment,
 
   val lookupService: LookupService = LookupService
 
-  def show = UnauthorisedAction.async {
+  private[controllers] def validateForm(implicit request: Request[AnyContent]): Future[Result] = searchForm.bindFromRequest.fold(
+    formWithErrors => Ok(views.html.lookup.search_main(formWithErrors)),
+    queryForm => {
+      val queryString = queryForm.query.fold("")(x => x.trim)
+      lookupService.lookupAwrsRef(queryString) map {
+        case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
+        case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, searchResult = result))
+        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head))
+      }
+    }
+  )
+
+  def show(query: Option[String] = None) = UnauthorisedAction.async {
     implicit request =>
-      searchForm.bindFromRequest.fold(
-        formWithErrors => Ok(views.html.lookup.search_main(formWithErrors)),
-        queryForm =>
-          queryForm.query.fold("")(x => x.trim) match {
-            case "" => Ok(views.html.lookup.search_main(searchForm.form))
-            case queryString =>
-              lookupService.lookupAwrsRef(queryString) map {
-                case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
-                case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, searchResult = result))
-                case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head))
-              }
+      query match {
+        case None =>
+          request.queryString.get(SearchForm.query).isDefined match {
+            case true => validateForm
+            case false => Ok(views.html.lookup.search_main(searchForm.form))
           }
-      )
+        case _ => validateForm
+      }
+
+
   }
 }
