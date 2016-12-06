@@ -18,17 +18,26 @@ package uk.gov.hmrc.awrslookup.utils
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.twirl.api.Html
+
+import scala.concurrent.Future
+import play.api.test.Helpers._
 
 
 trait HtmlUtils {
 
   implicit def soupUtil(html: Html): Document = Jsoup.parse(html.toString)
+
   implicit def soupUtil2(str: String): Document = Jsoup.parse(str.toString)
 
-  implicit class StringHtmlUtil(str:String) {
+  implicit class StringHtmlUtil(str: String) {
     // compress multiple spaces into a single space
     def htmlTrim = str.replaceAll("[\\s]{2,}", " ")
+  }
+
+  implicit class FutureResultUtil(res: Future[Result]) {
+    def getDocument: Document = Jsoup.parse(contentAsString(res))
   }
 
 }

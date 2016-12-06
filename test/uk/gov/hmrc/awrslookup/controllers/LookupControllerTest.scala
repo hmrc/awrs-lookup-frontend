@@ -15,14 +15,17 @@
  */
 
 package uk.gov.hmrc.awrslookup.controllers
+
 import org.mockito.Matchers
 import org.mockito.Mockito._
+import play.api.i18n.Messages
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers.OK
 import uk.gov.hmrc.awrslookup.services.LookupService
-import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
+import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
+import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
@@ -46,4 +49,35 @@ class LookupControllerTest extends AwrsUnitTestTraits {
       status(result) shouldBe OK
     }
   }
+
+  "lookup routes" should {
+    import HtmlUtils._
+
+    def callLookupFrontEndAndReturnSummaryError(query: Option[String] = None) = {
+      val qString = query match {
+        case Some(q) => "?query=" + q
+        case _ => ""
+      }
+      val oResult = route(app, FakeRequest(GET, "/awrs-lookup-frontend" + qString))
+      oResult shouldBe 'defined
+      val result = oResult.get
+      status(result) shouldBe OK
+      val doc = result.getDocument
+      doc.getElementById("query_errorLink")
+    }
+
+    "do not show error if there is no query string" in {
+      callLookupFrontEndAndReturnSummaryError(None) shouldBe null
+    }
+
+    "show error if the query field is empty" in {
+      callLookupFrontEndAndReturnSummaryError("").text shouldBe Messages("awrs.search.query.empty.summary")
+    }
+
+    "show error if the query is invalid" in {
+      callLookupFrontEndAndReturnSummaryError("invalidValue").text shouldBe Messages("awrs.generic.error.character_invalid.summary", "search query")
+    }
+
+  }
+
 }
