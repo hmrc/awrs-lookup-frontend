@@ -33,10 +33,8 @@ package object helpers {
 
   implicit def stringToHtml3(arg: Option[String]): Option[Html] = arg.map(Html(_))
 
-  def theTime: String = {
-    val now = DateTime.now()
-    now.toString("dd MMMM yyyy hh:mm ") + now.toString("a").toLowerCase
-  }
+  def theTime(time: DateTime = DateTime.now()): String =
+    time.toString("dd MMMM yyyy hh:mm ") + time.toString("a").toLowerCase
 
   def paragraphs(strings: Option[String]*): Html =
     Html(strings.flatten.view.map(x => s"<p>$x</p>").view.mkString(""))

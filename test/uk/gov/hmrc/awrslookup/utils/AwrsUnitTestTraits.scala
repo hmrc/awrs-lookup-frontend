@@ -30,7 +30,7 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
 
   implicit lazy val hc = HeaderCarrier()
 
-  implicit def convertToOption[T](value: T): Option[T] = Some(value)
+  implicit def convertToOption[T, U <: T](value: U): Option[T] = Some(value)
 
   implicit def convertToFuture[T](value: T): Future[Option[T]] = Future.successful(value)
 
