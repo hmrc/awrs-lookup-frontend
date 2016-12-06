@@ -7,16 +7,16 @@
 
 @(result: AwrsEntry, id: String)(implicit request : Request[AnyContent], messages: Messages)
 
-@tableHeading(size: String, name: String, heading: String) = {
-    <tr><th class="heading-@size" id="@{name}_heading">@heading</th><td></td></tr>
+@tableHeading(size: String, name: String, heading: String, additionalClasses: Option[String] = None) = {
+    <tr><th class="heading-@size @additionalClasses" id="@{name}_heading">@heading</th><td></td></tr>
 }
 
-@tableHeadingMedium(name: String, heading: String) = {
-    @tableHeading("medium", name, heading)
+@tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
+    @tableHeading("medium", name, heading, additionalClasses = additionalClasses)
 }
 
-@tableHeadingSmall(name: String, heading: String) = {
-    @tableHeading("small", name, heading)
+@tableHeadingSmall(name: String, heading: String, additionalClasses: Option[String] = "member-section") = {
+    @tableHeading("small", name, heading, additionalClasses = additionalClasses)
 }
 
 @common(showRegNumber: Boolean) = {
@@ -56,19 +56,22 @@
 }
 
 @business(business: Business) = {
-    <h1>@knownName(business.info)</h1>
-    @headerRegNumberHighlight(result)
+    <h1 class="heading-xlarge">
+        @knownName(business.info)
+        @headerRegNumberHighlight(result)
+    </h1>
     <table>
-        @tableHeadingMedium(id, knownName(business.info))
         @common(showRegNumber = true)
         @info(business.info)
     </table>
 }
 
 @group(group: Group) = {
-    <h1>@knownName(group.info)</h1>
-    @headerRegNumberHighlight(result)
-    <p class="ledge">@groupLedge(group)</p>
+    <h1 class="heading-xlarge">
+        @knownName(group.info)
+        @headerRegNumberHighlight(result)
+    </h1>
+    <p class="lede">@groupLedge(group)</p>
     <table>
         @tableHeadingMedium(id, "Group representative")
         @common(showRegNumber = false)

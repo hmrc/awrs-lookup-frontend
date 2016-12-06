@@ -10,10 +10,10 @@
 
 @result.status match {
     case AwrsStatus.DeRegistered => {
-        <span id="@theId" style="font-weight:700">Deregistered</span>
+        <span id="@theId" class="heading-secondary" style="font-weight:700">Deregistered</span>
     }
     case AwrsStatus.Revoked => {
-        <span id="@theId" style="font-weight:700">Revoked</span>
+        <span id="@theId" class="heading-secondary" style="font-weight:700">Revoked</span>
     }
     case _ => {
         <span id="@theId" class="heading-secondary">AWRS registration number <span style="font-weight:700">@result.awrsRef</span></span>
