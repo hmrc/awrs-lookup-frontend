@@ -31,7 +31,7 @@
     @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.deRegistrationDate)
 }
 
-@address(someAddress: Option[Address]) = {
+@address(someAddress: Option[Address], id: String) = {
     @someAddress match {
         case Some(address) => {
             @table_row(s"${id}_address", "Principal place of business",
@@ -49,10 +49,10 @@
     }
 }
 
-@info(info: Info) = {
+@info(info: Info, id: String = id) = {
     @table_row(s"${id}_businessName", "Business name", info.businessName)
     @table_row(s"${id}_tradingName", "Trading name", info.tradingName)
-    @address(info.address)
+    @address(info.address, id)
 }
 
 @business(business: Business) = {
@@ -80,7 +80,7 @@
         @group.members.zipWithIndex.map {
             case (memberInfo: Info, index: Int) => {
                 @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
-                @info(memberInfo)
+                @info(memberInfo, id = s"{id}_member_$index")
             }
         }
     </table>
