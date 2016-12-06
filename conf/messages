@@ -17,3 +17,5 @@ awrs.lookup.search.page_title=AWRS lookup
 
 # Results page
 awrs.lookup.results.page_title=AWRS lookup
+awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group member of {0} is {1}
+awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}

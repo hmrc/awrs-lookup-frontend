@@ -17,6 +17,7 @@
 package uk.gov.hmrc.awrslookup.views.html
 
 import org.joda.time.DateTime
+import play.api.i18n.Messages
 import play.twirl.api.Html
 import uk.gov.hmrc.awrslookup.models.{Group, Info}
 
@@ -45,35 +46,36 @@ package object helpers {
     case _ => info.businessName.fold("")(x => x)
   }
 
-  def groupLedge(group: Group): Html = {
+  def groupLedge(group: Group)(implicit messages: Messages): Html = {
     val groupName = knownName(group.info)
-    val be = group.members.size match {
-      case 1 => "is"
-      case _ => "are"
+    val text = (list: String) => group.members.size match {
+      case 1 => Messages("awrs.lookup.results.group_lede_singular", groupName, list)
+      case _ => Messages("awrs.lookup.results.group_lede_plural", groupName, list)
     }
-    val text = s"For the purposes of AWRS the group members of $groupName $be "
 
     def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading>${knownName(info)}</a>"""
+
+    val Init = ""
 
     @tailrec
     def loop(current: String, leftOvers: List[(Info, Int)]): String = leftOvers match {
       case Nil => current
       case (info, ind) :: Nil =>
         current + (current match {
-          case `text` => tag(info, ind)
+          case Init => tag(info, ind)
           case _ => " and " + tag(info, ind)
         })
       case (info, ind) :: t =>
         loop(
           current = current + (current match {
-            case `text` => tag(info, ind)
+            case Init => tag(info, ind)
             case _ => ", " + tag(info, ind)
           }),
           leftOvers = t
         )
     }
 
-    Html(loop(text, group.members.zipWithIndex))
+    Html(text(loop(Init, group.members.zipWithIndex)))
   }
 
 }
