@@ -47,19 +47,30 @@ package object helpers {
 
   def groupLedge(group: Group): Html = {
     val groupName = knownName(group.info)
-    val text = s"For the purposes of AWRS the group members of $groupName are "
+    val be = group.members.size match {
+      case 1 => "is"
+      case _ => "are"
+    }
+    val text = s"For the purposes of AWRS the group members of $groupName $be "
 
-    def tag(text: String, href: String) = s"""<a href=#$href>$text</a>"""
+    def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading>${knownName(info)}</a>"""
 
     @tailrec
     def loop(current: String, leftOvers: List[(Info, Int)]): String = leftOvers match {
       case Nil => current
-      case (h, ind) :: Nil =>
-        val kn = knownName(h)
-        current + " and " + tag(kn, s"result_member_${ind}_heading")
-      case (h, ind) :: t =>
-        val kn = knownName(h)
-        loop(current = current + tag(kn, s"result_member_${ind}_heading"), leftOvers = t)
+      case (info, ind) :: Nil =>
+        current + (current match {
+          case `text` => tag(info, ind)
+          case _ => " and " + tag(info, ind)
+        })
+      case (info, ind) :: t =>
+        loop(
+          current = current + (current match {
+            case `text` => tag(info, ind)
+            case _ => ", " + tag(info, ind)
+          }),
+          leftOvers = t
+        )
     }
 
     Html(loop(text, group.members.zipWithIndex))
