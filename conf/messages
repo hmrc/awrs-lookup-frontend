@@ -16,6 +16,8 @@ awrs.search.query.empty=Enter a query
 awrs.lookup.search.page_title=AWRS lookup
 awrs.lookup.search.header=Check if an alcohol wholesaler or producer is approved
 awrs.lookup.search.lede=Enter the name or the registration number (AWRS URN) for example XXAW00000123456. Wholesalers or producers in the Isle of Man are not on this register.
+awrs.lookup.search.no_results=No results found for [{0}]
+awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly
 
 # Results page
 awrs.lookup.results.page_title=AWRS lookup

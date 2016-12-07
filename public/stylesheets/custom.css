@@ -94,3 +94,15 @@ a.result-link:hover h3 {
    top: 50%;
    width: 0;
 }
+
+.status-warn-info, .status-warn-icon {
+    border-style: none;
+}
+
+.status-warn-icon {
+    vertical-align: top
+}
+
+.status-warn {
+    margin-top: 20px
+}
