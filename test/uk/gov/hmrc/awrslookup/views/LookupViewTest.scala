@@ -55,9 +55,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     "display an awrs entry when a valid reference is entered" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
-      document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.header")
-      document.getElementById("search-lede").text shouldBe Messages("awrs.lookup.search.lede")
-      document.getElementById("query").text shouldBe ""
+      document.getElementById("results-heading").text shouldBe Messages("awrs.lookup.search.header")
       println("DOC:::"+document)
     }
   }
