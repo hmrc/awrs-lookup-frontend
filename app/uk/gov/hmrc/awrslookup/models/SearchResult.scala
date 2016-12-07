@@ -24,8 +24,7 @@ sealed trait AwrsEntry {
 
   def registrationDate: String
 
-  // in case we don't get it
-  def deRegistrationDate: Option[String]
+  def registrationEndDate: Option[String]
 
   def status: AwrsStatus
 
@@ -40,7 +39,7 @@ case class Business(awrsRef: String,
                     registrationDate: String,
                     status: AwrsStatus,
                     info: Info,
-                    deRegistrationDate: Option[String] = None
+                    registrationEndDate: Option[String] = None
                    ) extends AwrsEntry
 
 case class Group(awrsRef: String,
@@ -48,7 +47,7 @@ case class Group(awrsRef: String,
                  status: AwrsStatus,
                  info: Info,
                  members: List[Info],
-                 deRegistrationDate: Option[String] = None
+                 registrationEndDate: Option[String] = None
                 ) extends AwrsEntry
 
 

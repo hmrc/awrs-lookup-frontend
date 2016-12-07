@@ -1,0 +1,36 @@
+@import uk.gov.hmrc.awrslookup._
+@import models._
+
+@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
+
+@warning(text: Html) = {
+    <div class="form-group">
+        <div style="margin-top:20px">
+            <table>
+                <tbody><tr>
+                    <td style="border-style:none; vertical-align:top"><img src=@routes.Assets.at("images/icon-important.png")></td>
+                    <th style="border-style:none">@text</th></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@revokedText = {
+    This wholesaler has been revoked. It is important that you do not make purchases from an unapproved wholesaler. If you do you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t approved.</a>
+}
+
+@deRegText = {
+    This wholesaler is deregistered. It is important that you do not make purchases from an unapproved wholesaler. If you do you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t approved.</a>
+}
+
+@approvedText = {
+    This check supports your normal <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#excise-due-diligence">due diligence</a>. It is important that you verify the identity of your suppliers with your own checks.
+}
+
+@result.status match {
+    case AwrsStatus.Revoked => { @warning(revokedText) }
+    case AwrsStatus.DeRegistered => { @warning(deRegText) }
+    case AwrsStatus.Approved => { @warning(approvedText) }
+    case _ => {}
+}

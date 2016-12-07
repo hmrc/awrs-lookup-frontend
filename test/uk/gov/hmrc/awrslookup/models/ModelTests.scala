@@ -32,7 +32,7 @@ class ModelTests extends AwrsUnitTestTraits {
         awrsRef = "testValue",
         registrationDate = "01/01/1970",
         status = Approved,
-        deRegistrationDate = "01/01/2017",
+        registrationEndDate = "01/01/2017",
         info = testInfo
       )
       val json = Json.toJson[AwrsEntry](testObj)
@@ -46,7 +46,7 @@ class ModelTests extends AwrsUnitTestTraits {
         awrsRef = "testValue",
         registrationDate = "01/01/1970",
         status = Approved,
-        deRegistrationDate = "01/01/2017",
+        registrationEndDate = "01/01/2017",
         info = testInfo,
         members = List(
           testInfo.copy(businessName = "testBusinessName2"),

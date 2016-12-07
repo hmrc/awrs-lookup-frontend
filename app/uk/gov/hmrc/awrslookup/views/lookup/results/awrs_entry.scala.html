@@ -29,12 +29,13 @@
         case false => {}
     }
     @table_row(s"${id}_reg_date", "Date of AWRS registration", result.registrationDate)
+
     @result.status match {
         case AwrsStatus.DeRegistered => {
-            @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.deRegistrationDate)
+            @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.registrationEndDate)
         }
         case AwrsStatus.Revoked => {
-            @table_row(s"${id}_revoke_date", "Date revoked", result.deRegistrationDate)
+            @table_row(s"${id}_revoke_date", "Date revoked", result.registrationEndDate)
         }
         case _ =>{}
     }
