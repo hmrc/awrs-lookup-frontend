@@ -1,5 +1,7 @@
 # Generic Messages
 awrs.generic.back=Back to search
+awrs.generic.status.revoked=Revoked
+awrs.generic.status.deregistered=Deregistered
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form
@@ -16,11 +18,14 @@ awrs.search.query.empty=Enter a query
 awrs.lookup.search.page_title=AWRS lookup
 awrs.lookup.search.header=Check if an alcohol wholesaler or producer is approved
 awrs.lookup.search.lede=Enter the name or the registration number (AWRS URN) for example XXAW00000123456. Wholesalers or producers in the Isle of Man are not on this register.
+awrs.lookup.search.no_results=No results found for [{0}]
+awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly
 
 # Results page
 awrs.lookup.results.page_title=AWRS lookup
 awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group member of {0} is {1}
 awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}
+awrs.lookup.results.awr_ref=AWRS registration number {0}
 awrs.lookup.results.status_label=AWRS status
 awrs.lookup.results.reg_number=AWRS registration number
 awrs.lookup.results.date_of_reg=Date of AWRS registration

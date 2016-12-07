@@ -4,16 +4,7 @@
 @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
 @warning(text: Html) = {
-    <div class="form-group">
-        <div style="margin-top:20px">
-            <table>
-                <tbody><tr>
-                    <td style="border-style:none; vertical-align:top"><img src=@routes.Assets.at("images/icon-important.png")></td>
-                    <th style="border-style:none">@text</th></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    @warning_core(text)
 }
 
 @revokedText = {

@@ -3,18 +3,12 @@
 
 @(searchTermWithNoResult: String)(implicit request : Request[AnyContent], messages: Messages)
 
-<p id="no-results-search-term" class="heading-medium">No results found for [@searchTermWithNoResult]</p>
-<p>Check you have the correct details from the wholesaler and that you have entered them correctly</p>
-<div class="form-group">
-    <div style="margin-top:20px">
-        <table>
-            <tbody><tr>
-                <td style="border-style:none; vertical-align:top"><img src=@routes.Assets.at("images/icon-important.png")></td>
-                <th style="border-style:none">It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t on the register.</a>
-                </th></tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+@message = {
+    It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t on the register.</a>
+}
+
+<p id="no-results-search-term" class="heading-medium">@Messages("awrs.lookup.search.no_results", searchTermWithNoResult)</p>
+<p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
+@warning_core(message)
 
 
