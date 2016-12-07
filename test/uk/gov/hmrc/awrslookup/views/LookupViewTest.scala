@@ -26,7 +26,7 @@ import uk.gov.hmrc.awrslookup.controllers.LookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm
 import uk.gov.hmrc.awrslookup.models.Query
 import uk.gov.hmrc.awrslookup.services.LookupService
-import uk.gov.hmrc.awrslookup.utils.TestUtils._
+import uk.gov.hmrc.awrslookup.utils.TestUtils.{testBusinessSearchResult, _}
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import play.api.i18n.Messages
 
@@ -55,7 +55,22 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     "display an awrs entry when a valid reference is entered" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
-      document.getElementById("results-heading").text shouldBe Messages("awrs.lookup.search.header")//todo fix this
+      val head = testBusinessSearchResult.results.head
+      val info = head.info
+      document.getElementById("results-heading").text should include (info.tradingName.getOrElse(info.businessName.getOrElse("")))
+      document.getElementById("results-heading").text should include (head.awrsRef)
+      document.getElementById("result_awrs_status_label").text should include (Messages("awrs.lookup.results.status_label"))
+      document.getElementById("result_awrs_status_detail").text should include (head.status.name)
+      document.getElementById("result_awrs_reg_label").text should include (Messages("awrs.lookup.results.reg_number"))
+      document.getElementById("result_awrs_reg_detail").text should include (head.awrsRef)
+      document.getElementById("result_reg_date_label").text should include (Messages("awrs.lookup.results.date_of_reg"))
+      document.getElementById("result_reg_date_detail").text should include (head.registrationDate)
+      document.getElementById("result_businessName_label").text should include (Messages("awrs.lookup.results.business_name"))
+      document.getElementById("result_businessName_detail").text should include (info.businessName.get)
+      document.getElementById("result_tradingName_label").text should include (Messages("awrs.lookup.results.trading_name"))
+      document.getElementById("result_tradingName_detail").text should include (info.tradingName.get)
+      document.getElementById("result_address_label").text should include (Messages("awrs.lookup.results.place_of_bus"))
+      document.getElementById("result_address_detail").text should include (info.address.get.addressLine1)
       println("DOC:::"+document)
     }
   }

@@ -21,21 +21,21 @@
 }
 
 @common(showRegNumber: Boolean) = {
-    @table_row(s"${id}_awrs_status", "AWRS status", result.status.map(_.name))
+    @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
     @showRegNumber match {
         case true => {
-            @table_row(s"${id}_awrs_reg", "AWRS registration number", result.awrsRef)
+            @table_row(s"${id}_awrs_reg", Messages("awrs.lookup.results.reg_number"), result.awrsRef)
         }
         case false => {}
     }
-    @table_row(s"${id}_reg_date", "Date of AWRS registration", result.registrationDate)
+    @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDate)
 
     @result.status match {
         case AwrsStatus.DeRegistered => {
-            @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.registrationEndDate)
+            @table_row(s"${id}_deReg_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDate)
         }
         case AwrsStatus.Revoked => {
-            @table_row(s"${id}_revoke_date", "Date revoked", result.registrationEndDate)
+            @table_row(s"${id}_revoke_date", Messages("awrs.lookup.results.date_revoked"), result.registrationEndDate)
         }
         case _ =>{}
     }
@@ -44,7 +44,7 @@
 @address(someAddress: Option[Address], id: String) = {
     @someAddress match {
         case Some(address) => {
-            @table_row(s"${id}_address", "Principal place of business",
+            @table_row(s"${id}_address", Messages("awrs.lookup.results.place_of_bus"),
                 paragraphs(ListMap(
                     "addressLine1" -> address.addressLine1,
                     "addressLine2" -> address.addressLine2,
@@ -60,8 +60,8 @@
 }
 
 @info(info: Info, id: String = id) = {
-    @table_row(s"${id}_businessName", "Business name", info.businessName)
-    @table_row(s"${id}_tradingName", "Trading name", info.tradingName)
+    @table_row(s"${id}_businessName", Messages("awrs.lookup.results.business_name"), info.businessName)
+    @table_row(s"${id}_tradingName", Messages("awrs.lookup.results.trading_name"), info.tradingName)
     @address(info.address, id)
 }
 
