@@ -95,15 +95,50 @@ a.result-link:hover h3 {
    width: 0;
 }
 
-.status-warn-info, .status-warn-icon {
-    border-style: none;
-}
-
-.status-warn-icon {
-    vertical-align: top
-}
-
 .status-warn {
-    margin-top: 20px
+    margin-top: 30px;
+    margin-bottom: 0px;
 }
+
+div.status-warn-info {
+    float: left;
+    width:85%
+}
+
+div.status-warn-icon {
+    float: left;
+    width:10%
+    vertical-align: top;
+    margin-right: 10px;
+    float:left;
+    clear:both;
+}
+
+#questionAnswer {
+	margin-left: 0px;
+    display:block;
+}
+
+#answer-text {
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 700;
+    vertical-align: top;
+}
+
+
+.status-warn-info, .status-warn-info p {
+    margin-top: 0px;
+    margin-left: 0px;
+    text-transform: none;
+    padding: 0;
+    text-align: left;
+    color: #0b0c0c;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 700;
+    vertical-align: top;
+}
+
+
 
