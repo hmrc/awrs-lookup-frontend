@@ -17,18 +17,13 @@
 package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json._
-
-import scala.util.Try
+import uk.gov.hmrc.awrslookup.utils.AwrsNumberFormatter
 
 sealed trait AwrsEntry {
 
   def awrsRef: String
 
-  def awrsRefFormatted: String =
-    Try[String] {
-      val AwrsEntry.awrsFormatPattern(a, b, c, d) = awrsRef
-      a + " " + b + " " + c + " " + d
-    }.getOrElse(awrsRef)
+  @inline final def awrsRefFormatted: String = AwrsNumberFormatter.format(awrsRef)
 
   def registrationDate: String
 

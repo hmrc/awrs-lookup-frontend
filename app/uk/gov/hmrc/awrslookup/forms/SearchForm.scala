@@ -49,7 +49,7 @@ object SearchForm {
   )
 
   val zerosRule = FieldFormatConstraintParameter(
-    (name: String) => name.drop(4).startsWith("00000") match {
+    (name: String) => name.matches("^[a-zA-Z]{4}00000.{6}") match {
       case true =>
         Valid
       case false =>
