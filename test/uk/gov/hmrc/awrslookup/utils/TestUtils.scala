@@ -16,11 +16,19 @@
 
 package uk.gov.hmrc.awrslookup.utils
 
+import play.api.data.Form
+import play.api.mvc.AnyContentAsFormUrlEncoded
+import play.api.test.FakeRequest
 import uk.gov.hmrc.awrslookup.models.AwrsStatus.Approved
 import uk.gov.hmrc.awrslookup.models._
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
 
 object TestUtils {
+
+  def populateFakeRequest[T](fakeRequest: FakeRequest[_], form: Form[T], data: T): FakeRequest[AnyContentAsFormUrlEncoded] =
+    fakeRequest.withFormUrlEncodedBody(form.fill(data).data.toSeq: _*)
+
+  val testAwrsRef = "XXAW00000123455"
 
   val testInfo = (id: String) => Info(s"testBusinessName$id", s"testTradingName$id", s"testFullName$id",
     Address(s"testline1$id", s"testline2$id", s"testline3$id", s"testline4$id", s"testPostCode$id", s"testCountry$id"))

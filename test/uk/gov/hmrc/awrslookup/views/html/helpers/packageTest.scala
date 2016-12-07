@@ -16,15 +16,13 @@
 
 package uk.gov.hmrc.awrslookup.views.html.helpers
 
-import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.i18n.Messages
-import play.twirl.api.Html
 import uk.gov.hmrc.awrslookup.models.AwrsStatus.Approved
-import uk.gov.hmrc.awrslookup.models.{AwrsStatus, Group, Info}
+import uk.gov.hmrc.awrslookup.models.{Group, Info}
+import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 
 import scala.collection.JavaConversions._
 

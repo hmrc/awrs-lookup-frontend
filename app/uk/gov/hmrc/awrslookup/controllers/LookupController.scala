@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 import play.api.{Configuration, Environment}
 import play.api.i18n.MessagesApi
+import play.api.mvc.{Action, AnyContent}
 import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm._
@@ -33,7 +34,7 @@ class LookupController @Inject()(val environment: Environment,
 
   val lookupService: LookupService = LookupService
 
-  def show = UnauthorisedAction.async {
+  def show: Action[AnyContent] = UnauthorisedAction.async {
     implicit request =>
       searchForm.bindFromRequest.fold(
         formWithErrors => Ok(views.html.lookup.search_main(formWithErrors)),
