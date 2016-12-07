@@ -18,9 +18,17 @@ package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json._
 
+import scala.util.Try
+
 sealed trait AwrsEntry {
 
   def awrsRef: String
+
+  def awrsRefFormatted: String =
+    Try[String] {
+      val AwrsEntry.awrsFormatPattern(a, b, c, d) = awrsRef
+      a + " " + b + " " + c + " " + d
+    }.getOrElse(awrsRef)
 
   def registrationDate: String
 
@@ -60,6 +68,9 @@ object Group {
 }
 
 object AwrsEntry {
+
+  val awrsFormatPattern = "([A-Za-z]{4})([0-9]{3})([0-9]{4})([0-9]{4})".r
+
   def unapply(foo: AwrsEntry): Option[(String, JsValue)] = {
     val (prod: Product, sub) = foo match {
       case b: Business => (b, Json.toJson(b)(Business.formatter))

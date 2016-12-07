@@ -25,7 +25,7 @@
     @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
     @showRegNumber match {
         case true => {
-            @table_row(s"${id}_awrs_reg", Messages("awrs.lookup.results.reg_number"), result.awrsRef)
+            @table_row(s"${id}_awrs_reg", Messages("awrs.lookup.results.reg_number"), result.awrsRefFormatted)
         }
         case false => {}
     }
