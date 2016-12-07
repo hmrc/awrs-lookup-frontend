@@ -46,7 +46,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "lookup and display an awrs entry when passed a valid awrs reference" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val document: Document = TestLookupController.show.apply(testRequest(Query(Some(testAwrsRef))))
+      val document: Document = TestLookupController.show().apply(testRequest(Query(Some(testAwrsRef))))
       println("DOC::" + document)
     }
   }
