@@ -37,14 +37,14 @@ package object helpers {
     time.toString("dd MMMM yyyy hh:mm ") + time.toString("a").toLowerCase
 
   def paragraphs(strings: Map[String, Option[String]]): Html =
-    Html(s"<p>${
+    Html(
       strings.map(
         x => x match {
-          case (id, Some(data)) => s"<p id='${id}'>${data}</p>"
+          case (id, Some(data)) => s"<p id='$id'>$data</p>"
           case _ => ""
         }
       ).view.mkString("")
-    }</p>")
+    )
 
   def knownName(info: Info): String = info.tradingName match {
     case Some(name) => name

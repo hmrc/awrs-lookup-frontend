@@ -43,12 +43,16 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
 
   "paragraphs function" should {
     "Output only defined elements in <p> tags" in {
-      val testData: Seq[Option[String]] = Seq[Option[String]]("line1", "line2", None, "line4")
-      val soupDoc: Document = paragraphs(testData: _*)
+      val testData: Map[String, Option[String]] = Map[String, Option[String]]("addressLine1" -> "line1", "addressLine2" -> "line2", "addressLine3" -> None, "addressLine4" -> "line4")
+      val soupDoc: Document = paragraphs(testData)
       val pTags = soupDoc.getElementsByTag("p")
-      pTags.size() shouldBe 3
-      testData.flatten.foreach {
-        x => pTags.text().contains(x) shouldBe true
+      withClue(s"p tags found:\n$pTags\n") {
+        pTags.size() shouldBe 3
+      }
+      testData.foreach {
+        case (id: String, Some(x)) =>
+          pTags.text().contains(x) shouldBe true
+        case _ =>
       }
     }
   }
@@ -70,6 +74,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
     def testInfo(member: Int) = Info(
       tradingName = s"test-$member"
     )
+
     def testGroup(members: Int) = Group(
       awrsRef = "",
       registrationDate = "",
