@@ -16,6 +16,12 @@ awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
 # Lookup Form Error Messages
 awrs.search.query.empty.summary=The search field is empty
 awrs.search.query.empty=Enter an AWRS URN
+awrs.search.query.string_length_mismatch=You must enter a 15 character AWRS URN
+awrs.search.query.leading_character_Length_mismatch=An AWRS URN must start with 4 alphabetical characters
+awrs.search.query.leading_x_mismatch=An AWRS URN must start with the letter X
+awrs.search.query.leading_character_mismatch=An AWRS URN must start with 4 alphabetical characters that ends in AW
+awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
+awrs.search.query.ending_digits_mismatch=An AWRS URN must ends with 11 digits
 
 # Lookup page
 awrs.lookup.search.page_title=AWRS lookup

@@ -25,20 +25,112 @@ import play.api.data.Forms._
 import play.api.data.validation.Valid
 import uk.gov.hmrc.awrslookup.models.Query
 import prevalidation._
+import uk.gov.hmrc.awrslookup.forms.validation.util.ErrorMessageFactory._
+import uk.gov.hmrc.awrslookup.forms.validation.util.{FieldErrorConfig, MessageArguments, SummaryErrorConfig, TargetFieldIds}
 
 object SearchForm {
 
   val query = "query"
   val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
 
+  private val queryTargetId = TargetFieldIds(query)
+  private val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments())
+
+  val charLenRule = FieldFormatConstraintParameter(
+    (name: String) => name.length == 15 match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.search.query.string_length_mismatch"),
+          invalidFormatSummaryError)
+    }
+  )
+
+  val zerosRule = FieldFormatConstraintParameter(
+    (name: String) => name.drop(4).startsWith("00000") match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.search.query.zeros_mismatch"),
+          invalidFormatSummaryError)
+    }
+  )
+  val leading4CharRule = FieldFormatConstraintParameter(
+    (name: String) => name.matches("^[a-zA-Z]{4}.{11}$") match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.search.query.leading_character_Length_mismatch"),
+          invalidFormatSummaryError)
+    }
+  )
+
+  val leadingXRule = FieldFormatConstraintParameter(
+    (name: String) => name.matches("^X.{14}$") match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.search.query.leading_x_mismatch"),
+          invalidFormatSummaryError)
+    }
+  )
+
+  val leadingCharacterRule = FieldFormatConstraintParameter(
+    (name: String) => name.matches("^.{2}AW.{11}$") match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.search.query.leading_character_mismatch"),
+          invalidFormatSummaryError)
+    }
+  )
+
+  val endingDigitsRule = FieldFormatConstraintParameter(
+    (name: String) => name.matches("^.{4}[0-9]{11}$") match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.search.query.ending_digits_mismatch"),
+          invalidFormatSummaryError)
+    }
+  )
+
+  val patternRule = FieldFormatConstraintParameter(
+    (name: String) => name.matches(awrsRefRegEx) match {
+      case true =>
+        Valid
+      case false =>
+        createErrorMessage(
+          queryTargetId,
+          FieldErrorConfig("awrs.generic.error.character_invalid"),
+          invalidFormatSummaryError)
+    }
+  )
+
   val compulsoryQueryField = compulsoryText(
     CompulsoryTextFieldMappingParameter(
-      empty = simpleFieldIsEmptyConstraintParameter(query,"awrs.search.query.empty"),
+      empty = simpleFieldIsEmptyConstraintParameter(query, "awrs.search.query.empty"),
       maxLengthValidation = MaxLengthConstraintIsHandledByTheRegEx(),
-      formatValidations = genericInvalidFormatConstraintParameter(
-        validationFunction = (str: String) => str.matches(awrsRefRegEx),
-        fieldId = query,
-        fieldNameInErrorMessage = "search field"
+      formatValidations = Seq(
+        charLenRule,
+        leading4CharRule,
+        leadingXRule,
+        leadingCharacterRule,
+        zerosRule,
+        endingDigitsRule,
+        patternRule
       )
     ))
 
