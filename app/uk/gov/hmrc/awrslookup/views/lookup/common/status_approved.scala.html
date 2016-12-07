@@ -1,0 +1,17 @@
+@import uk.gov.hmrc.awrslookup._
+@import models._
+
+@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
+
+@warning(text: Html) = {
+    @warning_core(text)
+}
+
+@approvedText = {
+    This check supports your normal <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#excise-due-diligence">due diligence</a>. It is important that you verify the identity of your suppliers with your own checks.
+}
+
+@result.status match {
+    case AwrsStatus.Approved => { @warning(approvedText) }
+    case _ => {}
+}
