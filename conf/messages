@@ -14,6 +14,8 @@ awrs.search.query.empty=Enter a query
 
 # Lookup page
 awrs.lookup.search.page_title=AWRS lookup
+awrs.lookup.search.header=Check if an alcohol wholesaler or producer is registered
+awrs.lookup.search.lede=Enter an Alcohol Wholesaler Registration Scheme number (AWRS URN) for example XXAW00000123456.
 
 # Results page
 awrs.lookup.results.page_title=AWRS lookup

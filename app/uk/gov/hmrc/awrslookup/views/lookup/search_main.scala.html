@@ -44,8 +44,8 @@
     @(termHasNoResults, searchResult)match {
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
-            <h1 class="heading-xlarge">Check if an alcohol wholesaler or producer is registered</h1>
-            <p class="lede">Enter an Alcohol Wholesaler Registration Scheme number (AWRS URN) for example XXAW00000123456.</p>
+            <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.header")</h1>
+            <p class="lede" id="search-lede">@Messages("awrs.lookup.search.lede")</p>
         }
     }
 }

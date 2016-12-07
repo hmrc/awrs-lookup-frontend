@@ -33,12 +33,12 @@ object TestUtils {
   val testInfo = (id: String) => Info(s"testBusinessName$id", s"testTradingName$id", s"testFullName$id",
     Address(s"testline1$id", s"testline2$id", s"testline3$id", s"testline4$id", s"testPostCode$id", s"testCountry$id"))
 
-  val testBusiness = Business("XXAW00000123456", "1 April 2017", Approved, testInfo(" bus"))
+  def testBusiness(ref: String = testAwrsRef) = Business(ref, "1 April 2017", Approved, testInfo(" bus"))
 
-  val testGroup = Group("XXAW00000123455", "1 April 2017", Approved, testInfo(" group"), List(testInfo(" member 1"), testInfo(" member 2"), testInfo(" member 3"), testInfo(" member 4")))
+  def testGroup(ref: String = testAwrsRef) = Group(ref, "1 April 2017", Approved, testInfo(" group"), List(testInfo(" member 1"), testInfo(" member 2"), testInfo(" member 3"), testInfo(" member 4")))
 
-  val testBusinessSearchResult = SearchResult(List(testBusiness))
+  val testBusinessSearchResult = SearchResult(List(testBusiness()))
 
-  val testGroupSearchResult = SearchResult(List(testGroup))
+  val testGroupSearchResult = SearchResult(List(testGroup()))
 
 }
