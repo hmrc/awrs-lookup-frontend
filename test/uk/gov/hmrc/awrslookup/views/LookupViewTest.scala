@@ -28,6 +28,7 @@ import uk.gov.hmrc.awrslookup.models.Query
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
+import play.api.i18n.Messages
 
 import scala.concurrent.Future
 
@@ -35,8 +36,8 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
   val mockLookupService: LookupService = mock[LookupService]
   val lookupFailure = Json.parse( """{"reason": "Generic test reason"}""")
 
-  def testRequest(query: Query): FakeRequest[AnyContentAsFormUrlEncoded] =
-    populateFakeRequest[Query](FakeRequest(), SearchForm.searchValidationForm, query)
+  def testRequest(query: String): FakeRequest[AnyContentAsFormUrlEncoded] =
+    populateFakeRequest[Query](FakeRequest(), SearchForm.searchValidationForm, Query(query))
 
   object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi) {
     override val lookupService: LookupService = mockLookupService
@@ -44,10 +45,20 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
   "Lookup Controller " should {
 
-    "lookup and display an awrs entry when passed a valid awrs reference" in {
+    "display an empty search page landed on for the first time" in {
+      val document: Document = TestLookupController.show().apply(FakeRequest())
+      document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.header")
+      document.getElementById("search-lede").text shouldBe Messages("awrs.lookup.search.lede")
+      document.getElementById("query").text shouldBe ""
+    }
+
+    "display an awrs entry when a valid reference is entered" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val document: Document = TestLookupController.show().apply(testRequest(Query(Some(testAwrsRef))))
-      println("DOC::" + document)
+      val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
+      document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.header")
+      document.getElementById("search-lede").text shouldBe Messages("awrs.lookup.search.lede")
+      document.getElementById("query").text shouldBe ""
+      println("DOC:::"+document)
     }
   }
 }
