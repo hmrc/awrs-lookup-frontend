@@ -2,6 +2,7 @@ awrs-lookup-frontend.nav_title=Check for approved alcohol wholesalers or produce
 
 # Generic Messages
 awrs.generic.back=Back to search
+awrs.generic.status.approved=Approved
 awrs.generic.status.revoked=Revoked
 awrs.generic.status.deregistered=Deregistered
 
