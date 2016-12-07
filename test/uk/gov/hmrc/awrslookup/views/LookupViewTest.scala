@@ -47,7 +47,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "display an empty search page landed on for the first time" in {
       val document: Document = TestLookupController.show().apply(FakeRequest())
-      document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.header")
+      document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
       document.getElementById("search-lede").text shouldBe Messages("awrs.lookup.search.lede")
       document.getElementById("query").text shouldBe ""
     }
@@ -71,7 +71,6 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       document.getElementById("result_tradingName_detail").text should include (info.tradingName.get)
       document.getElementById("result_address_label").text should include (Messages("awrs.lookup.results.place_of_bus"))
       document.getElementById("result_address_detail").text should include (info.address.get.addressLine1)
-      println("DOC:::"+document)
     }
   }
 }
