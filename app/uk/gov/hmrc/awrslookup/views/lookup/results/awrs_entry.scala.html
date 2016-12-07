@@ -28,7 +28,15 @@
         case false => {}
     }
     @table_row(s"${id}_reg_date", "Date of AWRS registration", result.registrationDate)
-    @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.deRegistrationDate)
+    @result.status match {
+        case AwrsStatus.DeRegistered => {
+            @table_row(s"${id}_deReg_date", "Date of AWRS deregistration", result.deRegistrationDate)
+        }
+        case AwrsStatus.Revoked => {
+            @table_row(s"${id}_revoke_date", "Date revoked", result.deRegistrationDate)
+        }
+        case _ =>{}
+    }
 }
 
 @address(someAddress: Option[Address], id: String) = {
