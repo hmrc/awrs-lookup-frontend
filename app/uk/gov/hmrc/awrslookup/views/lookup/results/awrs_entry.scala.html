@@ -65,13 +65,6 @@
     @address(info.address, id)
 }
 
-@lede = {
-    <p class="lede">@result.status match {
-        case AwrsStatus.DeRegistered | AwrsStatus.Revoked =>  { @Messages("awrs.generic.you_can_not_trade") }
-        case _ => { @Messages("awrs.generic.you_can_trade") }
-    }</p>
-}
-
 @business(business: Business) = {
     <h1 class="heading-xlarge" id="results-heading">
         @knownName(business.info)
