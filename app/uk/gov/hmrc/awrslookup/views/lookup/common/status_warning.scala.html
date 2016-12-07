@@ -1,7 +1,7 @@
 @import uk.gov.hmrc.awrslookup._
 @import models._
 
-@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
+@(result: models.AwrsEntry, showForApproved: Boolean = false)(implicit request : Request[AnyContent], messages: Messages)
 
 @warning(text: Html) = {
     @warning_core(text)
@@ -22,6 +22,6 @@
 @result.status match {
     case AwrsStatus.Revoked => { @warning(revokedText) }
     case AwrsStatus.DeRegistered => { @warning(deRegText) }
-    case AwrsStatus.Approved => { @warning(approvedText) }
+    case AwrsStatus.Approved if showForApproved => { @warning(approvedText) }
     case _ => {}
 }

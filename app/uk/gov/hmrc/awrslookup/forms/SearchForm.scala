@@ -38,7 +38,7 @@ object SearchForm {
       formatValidations = genericInvalidFormatConstraintParameter(
         validationFunction = (str: String) => str.matches(awrsRefRegEx),
         fieldId = query,
-        fieldNameInErrorMessage = "search query"
+        fieldNameInErrorMessage = "search field"
       )
     ))
 

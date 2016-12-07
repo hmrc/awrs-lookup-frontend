@@ -3,6 +3,7 @@
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html._
 @import helpers._
+@import lookup.common._
 @import lookup.results._
 @import collection.immutable.ListMap
 
@@ -70,6 +71,7 @@
         @knownName(business.info)
         @headerRegNumberHighlight(result)
     </h1>
+    @status_warning(result)
     <table id="results-table">
         @common(showRegNumber = true)
         @info(business.info)
@@ -82,6 +84,7 @@
         @headerRegNumberHighlight(result)
     </h1>
     <p class="lede">@groupLedge(group)</p>
+    @status_warning(result)
     <table>
         @tableHeadingMedium(id, "Group representative")
         @common(showRegNumber = false)
