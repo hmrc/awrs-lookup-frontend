@@ -36,8 +36,15 @@ package object helpers {
   def theTime(time: DateTime = DateTime.now()): String =
     time.toString("dd MMMM yyyy hh:mm ") + time.toString("a").toLowerCase
 
-  def paragraphs(strings: Option[String]*): Html =
-    Html(strings.flatten.view.map(x => s"<p>$x</p>").view.mkString(""))
+  def paragraphs(strings: Map[String, Option[String]]): Html =
+    Html(s"<p>${
+      strings.map(
+        x => x match {
+          case (id, Some(data)) => s"<p id='${id}'>${data}</p>"
+          case _ => ""
+        }
+      ).view.mkString("")
+    }</p>")
 
   def knownName(info: Info): String = info.tradingName match {
     case Some(name) => name
