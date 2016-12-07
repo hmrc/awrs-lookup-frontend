@@ -26,7 +26,7 @@
 
 @insideHeader = {
     @uiLayouts.header_nav(
-      navTitle = Some("awrs-lookup-frontend"),
+      navTitle = Some(Messages("awrs-lookup-frontend.nav_title")),
       navTitleLink = None,
       showBetaLink = false,
       navLinks = Some(headerNavLinks))
@@ -57,9 +57,11 @@
 
 @serviceInfo = {
     @uiLayouts.serviceInfo(
-      betaBanner = betaBanner,
-      includeGridWrapper = false,
-      serviceInfoContent = Some(serviceInfoContent))
+        betaBanner = betaBanner,
+        includeGridWrapper = false,
+        serviceInfoContent = Some(serviceInfoContent),
+        includeHMRCBranding = false
+    )
 }
 
 @mainContentHeader = {
