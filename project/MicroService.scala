@@ -27,7 +27,12 @@ trait MicroService {
   lazy val scoverageSettings = {
     import scoverage.ScoverageKeys
     Seq(
-      ScoverageKeys.coverageExcludedPackages  := "<empty>;app.*;config.*;Reverse.*;.*AuthService.*;models/.data/..*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup;prod.*;testOnlyDoNotUseInAppConf.*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup.views.*",
+      ScoverageKeys.coverageExcludedPackages  :=
+        """<empty>;app.*;config.*;Reverse.*;.*AuthService.*;models/.data/..*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup;prod.*;
+          |testOnlyDoNotUseInAppConf.*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup.views.*;
+          |uk.gov.hmrc.awrslookup.audit.*;uk.gov.hmrc.awrslookup.forms.prevalidation.*;uk.gov.hmrc.awrslookup.forms.validation.util.*;
+          |uk.gov.hmrc.awrslookup.utils.LoggingUtils;
+        """.stripMargin,
       ScoverageKeys.coverageMinimum := 80,
       ScoverageKeys.coverageFailOnMinimum := false,
       ScoverageKeys.coverageHighlighting := true,

@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.utils
 
+import org.mockito.Matchers
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.OneServerPerSuite
@@ -44,5 +45,44 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
   implicit val environment: Environment = app.injector.instanceOf[Environment]
 
   implicit val configuration: Configuration = app.injector.instanceOf[Configuration]
+
+
+  // used to help mock setup functions to clarify if certain results should be mocked.
+  sealed trait MockConfiguration[+A] {
+    final def get = this match {
+      case Configure(config) => config
+      case _ => throw new RuntimeException("This element is not to be configured")
+    }
+
+    final def ifConfiguredThen(action: A => Unit): Unit = this match {
+      case Configure(dataToReturn) => action(dataToReturn)
+      case _ =>
+    }
+  }
+
+  case class Configure[A](config: A) extends MockConfiguration[A]
+
+  case object DoNotConfigure extends MockConfiguration[Nothing]
+
+  implicit def convertToMockConfiguration[T](value: T): MockConfiguration[T] = Configure(value)
+
+  implicit def convertToMockConfiguration2[T](value: T): MockConfiguration[Option[T]] = Configure(value)
+
+  implicit def convertToMockConfiguration3[T](value: T): MockConfiguration[Future[T]] = Configure(value)
+
+  implicit def convertToMockConfiguration4[T](value: T): MockConfiguration[Future[Option[T]]] = Configure(Some(value))
+
+  implicit def convertToMockConfiguration5[T](err: Throwable): MockConfiguration[Future[Option[T]]] = Configure(err)
+
+  sealed trait MatcherConfiguration[+A] {
+    def matcher: A = this match {
+      case AnyMatcher => Matchers.any()
+      case EqMatcher(matchValue) => Matchers.eq(matchValue)
+    }
+  }
+
+  case object AnyMatcher extends MatcherConfiguration[Nothing]
+
+  case class EqMatcher[T](matchValue: T) extends MatcherConfiguration[T]
 
 }
