@@ -17,14 +17,13 @@
 package uk.gov.hmrc.awrslookup.forms
 
 import uk.gov.hmrc.awrslookup._
-import forms.validation.util.ConstraintUtil.{FieldFormatConstraintParameter, MaxLengthConstraintIsHandledByTheRegEx, OptionalTextFieldMappingParameter}
+import forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, FieldFormatConstraintParameter, MaxLengthConstraintIsHandledByTheRegEx, OptionalTextFieldMappingParameter}
 import forms.validation.util.ErrorMessagesUtilAPI._
 import forms.validation.util.MappingUtilAPI._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.validation.Valid
 import uk.gov.hmrc.awrslookup.models.Query
-
 import prevalidation._
 
 object SearchForm {
@@ -32,8 +31,9 @@ object SearchForm {
   val query = "query"
   val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
 
-  val optionalQueryField = optionalText(
-    OptionalTextFieldMappingParameter(
+  val compulsoryQueryField = compulsoryText(
+    CompulsoryTextFieldMappingParameter(
+      empty = simpleFieldIsEmptyConstraintParameter(query,"awrs.search.query.empty"),
       maxLengthValidation = MaxLengthConstraintIsHandledByTheRegEx(),
       formatValidations = genericInvalidFormatConstraintParameter(
         validationFunction = (str: String) => str.matches(awrsRefRegEx),
@@ -43,7 +43,7 @@ object SearchForm {
     ))
 
   val searchValidationForm = Form(mapping(
-    query -> optionalQueryField
+    query -> compulsoryQueryField
   )(Query.apply)(Query.unapply))
 
   val searchForm = PreprocessedForm(searchValidationForm)

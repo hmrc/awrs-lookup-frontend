@@ -18,6 +18,7 @@ package uk.gov.hmrc.awrslookup.forms
 
 import uk.gov.hmrc.awrslookup._
 import forms.test.util._
+import forms.validation.util.FieldError
 import utils.AwrsUnitTestTraits
 
 class SearchFormTest extends AwrsUnitTestTraits {
@@ -29,13 +30,14 @@ class SearchFormTest extends AwrsUnitTestTraits {
   "SearchForm" should {
     "validate and generate the correct error messages" in {
       val fieldId: String = query
+      val emptyError = ExpectedFieldIsEmpty(fieldId, FieldError("awrs.search.query.empty"))
       val maxLenError = MaxLengthIsHandledByTheRegEx()
       val invalidFormats = List(ExpectedInvalidFieldFormat("α", fieldId, "search query"))
       val formatError = ExpectedFieldFormat(invalidFormats)
 
-      val expectations = OptionalFieldValidationExpectations(maxLenError, formatError)
+      val expectations = CompulsoryFieldValidationExpectations(emptyError, maxLenError, formatError)
 
-      fieldId assertFieldIsOptional expectations
+      fieldId assertFieldIsCompulsory expectations
     }
   }
 
