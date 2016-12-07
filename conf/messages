@@ -1,5 +1,7 @@
 # Generic Messages
 awrs.generic.back=Back to search
+awrs.generic.status.revoked=Revoked
+awrs.generic.status.deregistered=Deregistered
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form
@@ -23,3 +25,4 @@ awrs.lookup.search.no_results.info=Check you have the correct details from the w
 awrs.lookup.results.page_title=AWRS lookup
 awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group member of {0} is {1}
 awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}
+awrs.lookup.results.awr_ref=AWRS registration number {0}
