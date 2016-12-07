@@ -1,7 +1,4 @@
 import sbt._
-import uk.gov.hmrc.SbtAutoBuildPlugin
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
-import uk.gov.hmrc.versioning.SbtGitVersioning
 
 object FrontendBuild extends Build with MicroService {
 
@@ -11,8 +8,8 @@ object FrontendBuild extends Build with MicroService {
 }
 
 private object AppDependencies {
-  import play.sbt.PlayImport._
   import play.core.PlayVersion
+  import play.sbt.PlayImport._
 
   private val playHealthVersion = "2.0.0"
   private val logbackJsonLoggerVersion = "3.1.0"
