@@ -13,9 +13,9 @@
 
 @views.html.main_template(title = Messages("awrs.lookup.results.page_title"), bodyClasses = None, contentHeader = cssScripts) {
     <div class="grid">
+        @backLink()
         <div>@awrs_entry(result, "result")</div>
         @searchDate()
         @status_warning(result)
-        @backLink()
     </div>
 }
