@@ -47,13 +47,15 @@ object SearchForm {
 
   private lazy val formatRules =
     FieldFormatConstraintParameter(
-      (name: String) => name match {
-        case _ if name.matches(awrsRefRegEx) => Valid
-        case _ if name.length != 15 => invalidQueryFieldError("awrs.search.query.string_length_mismatch")
-        case _ if !name.matches(leading4CharRegex) => invalidQueryFieldError("awrs.search.query.leading_character_Length_mismatch")
-        case _ if !name.matches(leadingXRegex) => invalidQueryFieldError("awrs.search.query.leading_x_mismatch")
-        case _ if !name.matches(zerosRegex) => invalidQueryFieldError("awrs.search.query.zeros_mismatch")
-        case _ => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
+      (name: String) => {
+        name match {
+          case _ if name.matches(awrsRefRegEx) => Valid
+          case _ if name.length != 15 => invalidQueryFieldError("awrs.search.query.string_length_mismatch")
+          case _ if !name.matches(leading4CharRegex) => invalidQueryFieldError("awrs.search.query.leading_character_Length_mismatch")
+          case _ if !name.matches(leadingXRegex) => invalidQueryFieldError("awrs.search.query.leading_x_mismatch")
+          case _ if !name.matches(zerosRegex) => invalidQueryFieldError("awrs.search.query.zeros_mismatch")
+          case _ => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
+        }
       }
     )
 
@@ -65,7 +67,7 @@ object SearchForm {
     ))
 
   lazy val searchValidationForm = Form(mapping(
-    query -> compulsoryQueryField
+    query -> compulsoryQueryField.toStringFormatter
   )(Query.apply)(Query.unapply))
 
   lazy val searchForm = PreprocessedForm(searchValidationForm)

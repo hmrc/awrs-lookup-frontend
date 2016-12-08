@@ -20,8 +20,9 @@ import org.jsoup.nodes.Document
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.libs.json.Json
-import play.api.mvc.AnyContentAsFormUrlEncoded
+import play.api.mvc.{AnyContent, AnyContentAsEmpty, AnyContentAsFormUrlEncoded}
 import play.api.test.FakeRequest
+import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.LookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm
 import uk.gov.hmrc.awrslookup.models.Query
@@ -30,14 +31,16 @@ import uk.gov.hmrc.awrslookup.utils.TestUtils.{testBusinessSearchResult, _}
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import play.api.i18n.Messages
 
+import play.api.test.Helpers._
+
 import scala.concurrent.Future
 
 class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
   val mockLookupService: LookupService = mock[LookupService]
   val lookupFailure = Json.parse( """{"reason": "Generic test reason"}""")
 
-  def testRequest(query: String): FakeRequest[AnyContentAsFormUrlEncoded] =
-    populateFakeRequest[Query](FakeRequest(), SearchForm.searchValidationForm, Query(query))
+  def testRequest(query: Option[String]): FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest(GET, "/awrs-lookup-frontend" + query.fold("")(q => s"?query=$q"))
 
   object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi) {
     override val lookupService: LookupService = mockLookupService
@@ -46,15 +49,15 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
   "Lookup Controller " should {
 
     "display an empty search page landed on for the first time" in {
-      val document: Document = TestLookupController.show().apply(FakeRequest())
+      val document: Document = TestLookupController.show.apply(testRequest(query = None))
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
-      document.getElementById("search-lede").text should include (Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.isle_of_man", "", "")))
+      document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.isle_of_man", "", "")))
       document.getElementById("query").text shouldBe ""
     }
 
     "display an awrs entry when a valid reference is entered" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
+      val document: Document = TestLookupController.show.apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
       document.getElementById("results-heading").text should include(info.tradingName.getOrElse(info.businessName.getOrElse("")))
@@ -75,13 +78,13 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "display a 'No results found' page when a non existent reference is entered" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
-      val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
+      val document: Document = TestLookupController.show.apply(testRequest(testAwrsRef))
       document.getElementById("no-results-search-term").text.replaceAll(" ", "") should include(Messages("awrs.lookup.search.no_results", testAwrsRef).replaceAll(" ", ""))
     }
 
     "display a list of awrs entries when a valid reference is entered and multiple are found" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessListSearchResult)))
-      val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
+      val document: Document = TestLookupController.show.apply(testRequest(testAwrsRef))
       val noOfResults = testBusinessListSearchResult.results.size
       document.getElementById("result-count").text should include(Messages("awrs.lookup.results.results_found", noOfResults))
     }

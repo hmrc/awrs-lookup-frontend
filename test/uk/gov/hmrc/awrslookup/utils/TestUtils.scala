@@ -25,7 +25,7 @@ import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
 
 object TestUtils {
 
-  def populateFakeRequest[T](fakeRequest: FakeRequest[_], form: Form[T], data: T): FakeRequest[AnyContentAsFormUrlEncoded] =
+  def populateFakeRequestWithPost[T](fakeRequest: FakeRequest[_], form: Form[T], data: T): FakeRequest[AnyContentAsFormUrlEncoded] =
     fakeRequest.withFormUrlEncodedBody(form.fill(data).data.toSeq: _*)
 
   val testAwrsRef = "XXAW00000123455"

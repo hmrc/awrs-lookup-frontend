@@ -40,7 +40,7 @@ class LookupController @Inject()(val environment: Environment,
   private[controllers] def validateForm(implicit request: Request[AnyContent]): Future[Result] = searchForm.bindFromRequest.fold(
     formWithErrors => Ok(views.html.lookup.search_main(formWithErrors)),
     queryForm => {
-      val queryString = queryForm.query.fold("")(x => x.trim)
+      val queryString = queryForm.query
       lookupService.lookupAwrsRef(queryString) map {
         case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
         case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, searchResult = result))
@@ -49,17 +49,11 @@ class LookupController @Inject()(val environment: Environment,
     }
   )
 
-  def show(query: Option[String] = None) = UnauthorisedAction.async {
+  def show = UnauthorisedAction.async {
     implicit request =>
-      query match {
-        case None =>
-          request.queryString.get(SearchForm.query).isDefined match {
-            case true => validateForm
-            case false => Ok(views.html.lookup.search_main(searchForm.form))
-          }
-        case _ => validateForm
+      request.queryString.get(SearchForm.query).isDefined match {
+        case true => validateForm
+        case false => Ok(views.html.lookup.search_main(searchForm.form))
       }
-
-
   }
 }
