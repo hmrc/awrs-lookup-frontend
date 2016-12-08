@@ -48,6 +48,13 @@ class SearchFormTest extends AwrsUnitTestTraits {
 
       fieldId assertFieldIsCompulsory expectations
     }
+
+    "allow valid submissions" in {
+      assertFormIsValid(form, Map(query -> "XAAW00000123456"))
+      assertFormIsValid(form, Map(query -> "XSAW00000123456"))
+      assertFormIsValid(form, Map(query -> "XZAW00000999999"))
+      assertFormIsValid(form, Map(query -> "XFAW00000000000"))
+    }
   }
 
 }
