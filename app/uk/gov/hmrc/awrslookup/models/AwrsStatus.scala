@@ -113,7 +113,7 @@ object AwrsStatus {
 
   case object DeRegistered extends AwrsStatus {
     val code = "10"
-    val name = "De-Registered"
+    val name = "Deregistered"
   }
 
   case class NotFound(code: String) extends AwrsStatus {
