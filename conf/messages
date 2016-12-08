@@ -43,3 +43,4 @@ awrs.lookup.results.date_revoked=Date revoked
 awrs.lookup.results.place_of_bus=Principal place of business
 awrs.lookup.results.business_name=Business name
 awrs.lookup.results.trading_name=Trading name
+awrs.lookup.results.results_found=We found {0} results
