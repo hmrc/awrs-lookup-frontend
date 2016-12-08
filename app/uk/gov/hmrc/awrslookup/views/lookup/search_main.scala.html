@@ -12,7 +12,9 @@
     @termHasNoResults match {
         case Some(termWithNoResult) => {
             <div id="no-results">
-                @no_result_warning(termWithNoResult)
+                <div class="form-group">
+                    @no_result_warning(termWithNoResult)
+                </div>
                 @searchDate()
             </div>
         }
@@ -45,7 +47,7 @@
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
-            <p class="lede" id="search-lede">@Messages("awrs.lookup.search.lede")</p>
+            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", isle_of_man_link()))</p>
         }
     }
 }

@@ -83,30 +83,6 @@ object SearchForm {
     }
   )
 
-  val leadingCharacterRule = FieldFormatConstraintParameter(
-    (name: String) => name.matches("^.{2}AW.{11}$") match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.leading_character_mismatch"),
-          invalidFormatSummaryError)
-    }
-  )
-
-  val endingDigitsRule = FieldFormatConstraintParameter(
-    (name: String) => name.matches("^.{4}[0-9]{11}$") match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.ending_digits_mismatch"),
-          invalidFormatSummaryError)
-    }
-  )
-
   val patternRule = FieldFormatConstraintParameter(
     (name: String) => name.matches(awrsRefRegEx) match {
       case true =>
@@ -127,9 +103,7 @@ object SearchForm {
         charLenRule,
         leading4CharRule,
         leadingXRule,
-        leadingCharacterRule,
         zerosRule,
-        endingDigitsRule,
         patternRule
       )
     ))
