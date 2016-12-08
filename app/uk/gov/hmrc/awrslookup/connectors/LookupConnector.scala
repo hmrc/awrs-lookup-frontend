@@ -31,10 +31,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingUtils {
 
-  val http: HttpGet with HttpPost with HttpPut = WSHttp
+  val http: HttpGet = WSHttp
   lazy val middleServiceURL = baseUrl("awrs-lookup")
 
-  val referenceNotFoundString = "AWRS reference not found"
 
   def sendQuery(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
     val getURL = s"""$middleServiceURL/awrs-lookup/query/$query"""
@@ -52,8 +51,8 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
                 throw new InternalServerException("Invalid json")
             }
           case 404 =>
-            response.body.equals(referenceNotFoundString) match {
-              case true => None
+            response.body match {
+              case x if x != null && x.contains(LookupConnector.referenceNotFoundString) => None
               case _ =>
                 err(s"[ $auditLookupTxName ] - The remote endpoint has indicated that no data can be found ## ")
                 info(s"[ $auditLookupTxName ] - Query ## $query")
@@ -72,5 +71,7 @@ object LookupConnector extends LookupConnector {
 
   override val appName = "awrs-lookup-frontend"
   override val audit: Audit = new Audit(AppName.appName, FrontendAuditConnector)
+
+  val referenceNotFoundString = "AWRS reference not found"
 
 }
