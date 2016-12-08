@@ -58,11 +58,11 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       val head = testBusinessSearchResult.results.head
       val info = head.info
       document.getElementById("results-heading").text should include (info.tradingName.getOrElse(info.businessName.getOrElse("")))
-      document.getElementById("results-heading").text should include (head.awrsRef)
+      document.getElementById("results-heading").text should include (head.status.name)
       document.getElementById("result_awrs_status_label").text should include (Messages("awrs.lookup.results.status_label"))
       document.getElementById("result_awrs_status_detail").text should include (head.status.name)
       document.getElementById("result_awrs_reg_label").text should include (Messages("awrs.lookup.results.reg_number"))
-      document.getElementById("result_awrs_reg_detail").text should include (head.awrsRef)
+      document.getElementById("result_awrs_reg_detail").text.replaceAll(" ", "") should include (head.awrsRef)
       document.getElementById("result_reg_date_label").text should include (Messages("awrs.lookup.results.date_of_reg"))
       document.getElementById("result_reg_date_detail").text should include (head.registrationDate)
       document.getElementById("result_businessName_label").text should include (Messages("awrs.lookup.results.business_name"))
