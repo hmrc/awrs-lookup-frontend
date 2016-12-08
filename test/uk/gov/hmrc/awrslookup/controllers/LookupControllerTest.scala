@@ -75,7 +75,7 @@ class LookupControllerTest extends AwrsUnitTestTraits {
     }
 
     "show error if the query is invalid" in {
-      callLookupFrontEndAndReturnSummaryError("invalidValue").text shouldBe Messages("awrs.generic.error.character_invalid.summary", "search query")
+      callLookupFrontEndAndReturnSummaryError("invalidValue").text shouldBe Messages("awrs.generic.error.character_invalid.summary", "search field")
     }
 
   }

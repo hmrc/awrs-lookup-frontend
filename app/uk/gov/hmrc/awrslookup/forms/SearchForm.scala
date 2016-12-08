@@ -34,7 +34,7 @@ object SearchForm {
   val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
 
   private val queryTargetId = TargetFieldIds(query)
-  private val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments())
+  private val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments("search field"))
 
   val charLenRule = FieldFormatConstraintParameter(
     (name: String) => name.length == 15 match {
