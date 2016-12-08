@@ -32,86 +32,42 @@ object SearchForm {
 
   val query = "query"
   val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
+  private lazy val leading4CharRegex = "^[a-zA-Z]{4}.{11}$"
+  private lazy val leadingXRegex = "^X.{14}$"
+  private lazy val zerosRegex = "^[a-zA-Z]{4}00000.{6}"
 
-  private val queryTargetId = TargetFieldIds(query)
-  private val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments("search field"))
+  private lazy val queryTargetId = TargetFieldIds(query)
+  private lazy val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments("search field"))
 
-  val charLenRule = FieldFormatConstraintParameter(
-    (name: String) => name.length == 15 match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.string_length_mismatch"),
-          invalidFormatSummaryError)
-    }
-  )
+  private lazy val invalidQueryFieldError =
+    (fieldErr: String) => createErrorMessage(
+      queryTargetId,
+      FieldErrorConfig(fieldErr),
+      invalidFormatSummaryError)
 
-  val zerosRule = FieldFormatConstraintParameter(
-    (name: String) => name.matches("^[a-zA-Z]{4}00000.{6}") match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.zeros_mismatch"),
-          invalidFormatSummaryError)
-    }
-  )
-  val leading4CharRule = FieldFormatConstraintParameter(
-    (name: String) => name.matches("^[a-zA-Z]{4}.{11}$") match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.leading_character_Length_mismatch"),
-          invalidFormatSummaryError)
-    }
-  )
+  private lazy val formatRules =
+    FieldFormatConstraintParameter(
+      (name: String) => name match {
+        case _ if name.matches(awrsRefRegEx) => Valid
+        case _ if name.length != 15 => invalidQueryFieldError("awrs.search.query.string_length_mismatch")
+        case _ if !name.matches(leading4CharRegex) => invalidQueryFieldError("awrs.search.query.leading_character_Length_mismatch")
+        case _ if !name.matches(leadingXRegex) => invalidQueryFieldError("awrs.search.query.leading_x_mismatch")
+        case _ if !name.matches(zerosRegex) => invalidQueryFieldError("awrs.search.query.zeros_mismatch")
+        case _ => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
+      }
+    )
 
-  val leadingXRule = FieldFormatConstraintParameter(
-    (name: String) => name.matches("^X.{14}$") match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.leading_x_mismatch"),
-          invalidFormatSummaryError)
-    }
-  )
-
-  val patternRule = FieldFormatConstraintParameter(
-    (name: String) => name.matches(awrsRefRegEx) match {
-      case true =>
-        Valid
-      case false =>
-        createErrorMessage(
-          queryTargetId,
-          FieldErrorConfig("awrs.search.query.default_invalid_urn"),
-          invalidFormatSummaryError)
-    }
-  )
-
-  val compulsoryQueryField = compulsoryText(
+  private lazy val compulsoryQueryField = compulsoryText(
     CompulsoryTextFieldMappingParameter(
       empty = simpleFieldIsEmptyConstraintParameter(query, "awrs.search.query.empty"),
       maxLengthValidation = MaxLengthConstraintIsHandledByTheRegEx(),
-      formatValidations = Seq(
-        charLenRule,
-        leading4CharRule,
-        leadingXRule,
-        zerosRule,
-        patternRule
-      )
+      formatValidations = Seq(formatRules)
     ))
 
-  val searchValidationForm = Form(mapping(
+  lazy val searchValidationForm = Form(mapping(
     query -> compulsoryQueryField
   )(Query.apply)(Query.unapply))
 
-  val searchForm = PreprocessedForm(searchValidationForm)
+  lazy val searchForm = PreprocessedForm(searchValidationForm)
 
 }
