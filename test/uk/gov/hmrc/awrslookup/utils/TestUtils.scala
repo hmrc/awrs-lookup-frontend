@@ -39,6 +39,8 @@ object TestUtils {
 
   val testBusinessSearchResult = SearchResult(List(testBusiness()))
 
+  val testBusinessListSearchResult = SearchResult(List(testBusiness(), testBusiness()))
+
   val testGroupSearchResult = SearchResult(List(testGroup()))
 
 }

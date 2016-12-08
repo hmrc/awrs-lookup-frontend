@@ -57,20 +57,33 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
-      document.getElementById("results-heading").text should include (info.tradingName.getOrElse(info.businessName.getOrElse("")))
-      document.getElementById("results-heading").text should include (head.status.name)
-      document.getElementById("result_awrs_status_label").text should include (Messages("awrs.lookup.results.status_label"))
-      document.getElementById("result_awrs_status_detail").text should include (head.status.name)
-      document.getElementById("result_awrs_reg_label").text should include (Messages("awrs.lookup.results.reg_number"))
-      document.getElementById("result_awrs_reg_detail").text.replaceAll(" ", "") should include (head.awrsRef)
-      document.getElementById("result_reg_date_label").text should include (Messages("awrs.lookup.results.date_of_reg"))
-      document.getElementById("result_reg_date_detail").text should include (head.registrationDate)
-      document.getElementById("result_businessName_label").text should include (Messages("awrs.lookup.results.business_name"))
-      document.getElementById("result_businessName_detail").text should include (info.businessName.get)
-      document.getElementById("result_tradingName_label").text should include (Messages("awrs.lookup.results.trading_name"))
-      document.getElementById("result_tradingName_detail").text should include (info.tradingName.get)
-      document.getElementById("result_address_label").text should include (Messages("awrs.lookup.results.place_of_bus"))
-      document.getElementById("result_address_detail").text should include (info.address.get.addressLine1)
+      document.getElementById("results-heading").text should include(info.tradingName.getOrElse(info.businessName.getOrElse("")))
+      document.getElementById("results-heading").text should include(head.status.name)
+      document.getElementById("result_awrs_status_label").text should include(Messages("awrs.lookup.results.status_label"))
+      document.getElementById("result_awrs_status_detail").text should include(head.status.name)
+      document.getElementById("result_awrs_reg_label").text should include(Messages("awrs.lookup.results.reg_number"))
+      document.getElementById("result_awrs_reg_detail").text.replaceAll(" ", "") should include(head.awrsRef)
+      document.getElementById("result_reg_date_label").text should include(Messages("awrs.lookup.results.date_of_reg"))
+      document.getElementById("result_reg_date_detail").text should include(head.registrationDate)
+      document.getElementById("result_businessName_label").text should include(Messages("awrs.lookup.results.business_name"))
+      document.getElementById("result_businessName_detail").text should include(info.businessName.get)
+      document.getElementById("result_tradingName_label").text should include(Messages("awrs.lookup.results.trading_name"))
+      document.getElementById("result_tradingName_detail").text should include(info.tradingName.get)
+      document.getElementById("result_address_label").text should include(Messages("awrs.lookup.results.place_of_bus"))
+      document.getElementById("result_address_detail").text should include(info.address.get.addressLine1)
+    }
+
+    "display a 'No results found' page when a non existent reference is entered" in {
+      when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
+      val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
+      document.getElementById("no-results-search-term").text.replaceAll(" ", "") should include(Messages("awrs.lookup.search.no_results", testAwrsRef).replaceAll(" ", ""))
+    }
+
+    "display a list of awrs entries when a valid reference is entered and multiple are found" in {
+      when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessListSearchResult)))
+      val document: Document = TestLookupController.show(testAwrsRef).apply(testRequest(testAwrsRef))
+      val noOfResults = testBusinessListSearchResult.results.size
+      document.getElementById("result-count").text should include(Messages("awrs.lookup.results.results_found", noOfResults))
     }
   }
 }

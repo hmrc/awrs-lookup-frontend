@@ -21,7 +21,7 @@
 }
 
 @resultCounter(size: Int) = {
-    <p id="result-count">We found @size results</p>
+    <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
 }
 
 @multResults(results: List[AwrsEntry]) = {
