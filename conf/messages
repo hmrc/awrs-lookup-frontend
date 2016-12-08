@@ -44,3 +44,5 @@ awrs.lookup.results.place_of_bus=Principal place of business
 awrs.lookup.results.business_name=Business name
 awrs.lookup.results.trading_name=Trading name
 awrs.lookup.results.results_found=We found {0} results
+awrs.lookup.results.unapproved.info=If you make purchases from an unapproved wholesaler you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
+awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler you’re dealing with isn’t approved.

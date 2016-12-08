@@ -5,25 +5,20 @@
 @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
 @warning(text: Html) = {
-    <div style="margin-top : 0px; padding-top:0;padding-bottom : 125px;">
-        @warning_core(text)
-    </div>
+    @warning_core(text)
 }
 
-@revokedText = {
-    You must not make purchases from an unapproved wholesaler. If you do you could face prosecution, liable to a penalty, and have your alcohol stock seized. Find out about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t approved.</a>
+@warningText = {
+    @Messages("awrs.lookup.results.unapproved.info") @whatToDo
 }
 
-@deRegText = {
-    You must not make purchases from an unapproved wholesaler. If you do you could face prosecution, liable to a penalty, and have your alcohol stock seized. Find out about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t approved.</a>
+@whatToDo = {
+    <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations">@Messages("awrs.lookup.results.unapproved.what_to_do")</a>
 }
 
 @result.status match {
-    case AwrsStatus.Revoked => {
-        @warning(revokedText)
-    }
-    case AwrsStatus.DeRegistered => {
-        @warning(deRegText)
+    case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
+        @warning(warningText)
     }
     case _ => {}
 }
