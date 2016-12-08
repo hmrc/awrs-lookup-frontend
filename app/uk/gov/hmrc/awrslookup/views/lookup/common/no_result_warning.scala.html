@@ -5,10 +5,10 @@
 @(searchTermWithNoResult: String)(implicit request : Request[AnyContent], messages: Messages)
 
 @message = {
-    It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved"> what to do if you find a wholesaler you’re dealing with isn’t on the register.</a>
+It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved"> what to do if you find a wholesaler you’re dealing with isn’t on the register.</a>
 }
 
-<p id="no-results-search-term" class="heading-medium">@Messages("awrs.lookup.search.no_results", AwrsNumberFormatter.format(searchTermWithNoResult))</p>
+<h1 id="no-results-search-term" class="heading-medium">@Messages("awrs.lookup.search.no_results", AwrsNumberFormatter.format(searchTermWithNoResult))</h1>
 <p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
 <p id="no-results-isle-of-man">@isle_of_man_link()</p>
 @warning_core(message)
