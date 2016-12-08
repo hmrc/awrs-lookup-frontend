@@ -14,12 +14,12 @@ input[type="text"] {
 
 #search {
     float: left;
-	height: 45px;
+	height: 43px;
 	width: 50px;
 	color: #005EA5;
 	background-color: #005EA5;
 	background-image: url('/awrs-lookup-frontend/assets/images/search-button.png');
-	background-position: -25% 50%;
+	background-position: -14% 44%;
 	background-repeat: no-repeat;
 	box-shadow: 0 2px 0 #005EA5;
 }
@@ -110,3 +110,23 @@ a.result-link:hover h3 {
     padding-bottom: 0px
 }
 
+
+.icon{display: inline-block;}
+
+.notice {margin-bottom:1em;}
+
+.notice .icon {
+    left: 0;
+    margin-top: -17px;
+    top: 50%;
+}
+
+.notice strong {
+    display: block;
+    margin-left: -15px;
+    padding-left: 65px;
+}
+
+table th, table td, table p {font-size:19px;}
+
+.warnicon {float:left; display: block; margin-left: auto; margin-right: auto;}
