@@ -18,7 +18,7 @@ package uk.gov.hmrc.awrslookup.forms
 
 import uk.gov.hmrc.awrslookup._
 import forms.test.util._
-import forms.validation.util.FieldError
+import forms.validation.util.{FieldError, MessageArguments, SummaryError}
 import utils.AwrsUnitTestTraits
 
 class SearchFormTest extends AwrsUnitTestTraits {
@@ -32,7 +32,16 @@ class SearchFormTest extends AwrsUnitTestTraits {
       val fieldId: String = query
       val emptyError = ExpectedFieldIsEmpty(fieldId, FieldError("awrs.search.query.empty"))
       val maxLenError = MaxLengthIsHandledByTheRegEx()
-      val invalidFormats = List(ExpectedInvalidFieldFormat("α", fieldId, "search query"))
+      val summaryError = SummaryError("awrs.generic.error.character_invalid.summary", MessageArguments("search field"), query)
+      val invalidFormats = List(
+        ExpectedInvalidFieldFormat("A" * 16, FieldError("awrs.search.query.string_length_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("A" * 14, FieldError("awrs.search.query.string_length_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("BAAW00000123456", FieldError("awrs.search.query.leading_x_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("XAAW00001123456", FieldError("awrs.search.query.zeros_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("1AAW00000123456", FieldError("awrs.search.query.leading_character_Length_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("XAAA00000123456", FieldError("awrs.search.query.default_invalid_urn"), summaryError),
+        ExpectedInvalidFieldFormat("XAAW0000012345A", FieldError("awrs.search.query.default_invalid_urn"), summaryError)
+      )
       val formatError = ExpectedFieldFormat(invalidFormats)
 
       val expectations = CompulsoryFieldValidationExpectations(emptyError, maxLenError, formatError)
