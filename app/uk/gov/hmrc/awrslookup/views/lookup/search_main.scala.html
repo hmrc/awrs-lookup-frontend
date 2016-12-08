@@ -12,9 +12,7 @@
     @termHasNoResults match {
         case Some(termWithNoResult) => {
             <div id="no-results">
-                <div class="form-group">
-                    @no_result_warning(termWithNoResult)
-                </div>
+                @no_result_warning(termWithNoResult)
                 @searchDate()
             </div>
         }

@@ -20,6 +20,7 @@ awrs.search.query.string_length_mismatch=You must enter a 15 character AWRS URN
 awrs.search.query.leading_character_Length_mismatch=An AWRS URN must start with 4 alphabetical characters
 awrs.search.query.leading_x_mismatch=An AWRS URN must start with the letter X
 awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
+awrs.search.query.default_invalid_urn=You must enter a valid AWRS URN
 
 # Lookup page
 awrs.lookup.search.page_title=AWRS lookup
@@ -43,3 +44,5 @@ awrs.lookup.results.place_of_bus=Principal place of business
 awrs.lookup.results.business_name=Business name
 awrs.lookup.results.trading_name=Trading name
 awrs.lookup.results.results_found=We found {0} results
+awrs.lookup.results.unapproved.info=If you make purchases from an unapproved wholesaler you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
+awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler you’re dealing with isn’t approved.

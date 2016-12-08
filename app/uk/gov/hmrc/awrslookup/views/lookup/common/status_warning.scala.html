@@ -8,39 +8,17 @@
     @warning_core(text)
 }
 
-@hint(answerText: Html) = {
-    @awrsAnswerQuestionHelper(
-        question = "What does this mean?",
-        questionId = "answer-text",
-        answer = answerText,
-        wrapperClass = None
-    )
+@warningText = {
+    @Messages("awrs.lookup.results.unapproved.info") @whatToDo
 }
 
-@revokedText = {
-    This wholesaler has been revoked. It is important that you do not make purchases from an unapproved wholesaler.
-    @hint(revokedHintAnswer)
-}
-
-@revokedHintAnswer = {
-    If you do you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t approved.</a>
-}
-
-@deRegText = {
-    This wholesaler is deregistered. It is important that you do not make purchases from an unapproved wholesaler.
-    @hint(deRegHintAnswer)
-}
-
-@deRegHintAnswer = {
-    If you do you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations"> what to do if you find a wholesaler you’re dealing with isn’t approved.</a>
+@whatToDo = {
+    <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations">@Messages("awrs.lookup.results.unapproved.what_to_do")</a>
 }
 
 @result.status match {
-    case AwrsStatus.Revoked => {
-        @warning(revokedText)
-    }
-    case AwrsStatus.DeRegistered => {
-        @warning(deRegText)
+    case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
+        @warning(warningText)
     }
     case _ => {}
 }

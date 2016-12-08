@@ -90,7 +90,7 @@ object SearchForm {
       case false =>
         createErrorMessage(
           queryTargetId,
-          FieldErrorConfig("awrs.generic.error.character_invalid"),
+          FieldErrorConfig("awrs.search.query.default_invalid_urn"),
           invalidFormatSummaryError)
     }
   )
