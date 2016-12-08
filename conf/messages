@@ -29,6 +29,7 @@ awrs.lookup.search.lede=Enter the registration number (AWRS URN) for example XXA
 awrs.lookup.search.isle_of_man=Wholesalers or producers in the {0}Isle of Man{1} are not on this register
 awrs.lookup.search.no_results=No results found for [{0}]
 awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly
+awrs.lookup.search.label=Enter a valid AWRS URN
 
 # Results page
 awrs.lookup.results.page_title=AWRS lookup

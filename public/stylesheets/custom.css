@@ -109,4 +109,6 @@ a.result-link:hover h3 {
     padding-top: 0px
     padding-bottom: 0px
 }
-
+.service-info {
+    text-align: left;
+}
