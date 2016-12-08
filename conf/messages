@@ -19,14 +19,13 @@ awrs.search.query.empty=Enter an AWRS URN
 awrs.search.query.string_length_mismatch=You must enter a 15 character AWRS URN
 awrs.search.query.leading_character_Length_mismatch=An AWRS URN must start with 4 alphabetical characters
 awrs.search.query.leading_x_mismatch=An AWRS URN must start with the letter X
-awrs.search.query.leading_character_mismatch=An AWRS URN must start with 4 alphabetical characters that ends in AW
 awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
-awrs.search.query.ending_digits_mismatch=An AWRS URN must ends with 11 digits
 
 # Lookup page
 awrs.lookup.search.page_title=AWRS lookup
 awrs.lookup.search.heading=Check if an alcohol wholesaler or producer is approved
-awrs.lookup.search.lede=Enter the registration number (AWRS URN) for example XXAW 000 0012 3456. Wholesalers or producers in the Isle of Man are not on this register.
+awrs.lookup.search.lede=Enter the registration number (AWRS URN) for example XXAW 000 0012 3456. {0}.
+awrs.lookup.search.isle_of_man=Wholesalers or producers in the {0}Isle of Man{1} are not on this register
 awrs.lookup.search.no_results=No results found for [{0}]
 awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly
 
