@@ -73,7 +73,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       document.getElementById("result_tradingName_label").text should include(Messages("awrs.lookup.results.trading_name"))
       document.getElementById("result_tradingName_detail").text should include(info.tradingName.get)
       document.getElementById("result_address_label").text should include(Messages("awrs.lookup.results.place_of_bus"))
-      document.getElementById("result_address_detail").text should include(info.address.get.addressLine1)
+      document.getElementById("result_address_detail").text should include(info.address.get.addressLine1.get)
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {

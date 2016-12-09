@@ -19,7 +19,6 @@ package uk.gov.hmrc.awrslookup.models
 import play.api.libs.json._
 
 import uk.gov.hmrc.awrslookup._
-import utils.ImplicitConversions._
 
 case class Info(businessName: Option[String] = None,
                 tradingName: Option[String] = None,
@@ -28,21 +27,16 @@ case class Info(businessName: Option[String] = None,
                )
 
 case class Address(
-                    addressLine1: String,
-                    addressLine2: String,
+                    addressLine1: Option[String] = None,
+                    addressLine2: Option[String] = None,
                     addressLine3: Option[String] = None,
                     addressLine4: Option[String] = None,
                     postcode: Option[String] = None,
                     addressCountry: Option[String] = None
                   ) {
 
-  override def toString = {
-    val line3display = addressLine3.fold("")(x => s", $x")
-    val line4display = addressLine4.fold("")(x =>s", $x")
-    val postcodeDisplay = postcode.fold("")(x => s", $x")
-    val countryDisplay = addressCountry.fold("")(x => s", $x")
-    s"$addressLine1, $addressLine2$line3display$line4display$postcodeDisplay$countryDisplay"
-  }
+  override def toString = toStringSeq.mkString(", ")
+
 
   override def equals(obj: Any): Boolean = obj match {
     case that: Address =>
