@@ -1,0 +1,105 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.awrslookup.models._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html._
+@import helpers._
+@import lookup.common._
+@import lookup.results._
+@import collection.immutable.ListMap
+
+@(result: AwrsEntry, id: String)(implicit request : Request[AnyContent], messages: Messages)
+
+@tableHeading(size: String, name: String, heading: String, additionalClasses: Option[String] = None) = {
+    <tr><th class="heading-@size @additionalClasses" id="@{name}_heading">@heading</th><td></td></tr>
+}
+
+@tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
+    @tableHeading("medium", name, heading, additionalClasses = additionalClasses)
+}
+
+@tableHeadingSmall(name: String, heading: String, additionalClasses: Option[String] = "member-section") = {
+    @tableHeading("small", name, heading, additionalClasses = additionalClasses)
+}
+
+@common(showRegNumber: Boolean) = {
+    @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
+    @showRegNumber match {
+        case true => {
+            @table_row(s"${id}_awrs_reg", Messages("awrs.lookup.results.reg_number"), result.awrsRefFormatted)
+        }
+        case false => {}
+    }
+    @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDate)
+
+    @result.status match {
+        case AwrsStatus.DeRegistered => {
+            @table_row(s"${id}_deReg_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDate)
+        }
+        case AwrsStatus.Revoked => {
+            @table_row(s"${id}_revoke_date", Messages("awrs.lookup.results.date_revoked"), result.registrationEndDate)
+        }
+        case _ =>{}
+    }
+}
+
+@address(someAddress: Option[Address], id: String) = {
+    @someAddress match {
+        case Some(address) => {
+            @table_row(s"${id}_address", Messages("awrs.lookup.results.place_of_bus"),
+                paragraphs(ListMap(
+                    "addressLine1" -> address.addressLine1,
+                    "addressLine2" -> address.addressLine2,
+                    "addressLine3" -> address.addressLine3,
+                    "addressLine4" -> address.addressLine4,
+                    "postcode" -> address.postcode,
+                    "country" -> address.addressCountry)
+                )
+            )
+        }
+        case _ => {}
+    }
+}
+
+@info(info: Info, id: String = id) = {
+    @table_row(s"${id}_businessName", Messages("awrs.lookup.results.business_name"), info.businessName)
+    @table_row(s"${id}_tradingName", Messages("awrs.lookup.results.trading_name"), info.tradingName)
+    @address(info.address, id)
+}
+
+@business(business: Business) = {
+    <h1 class="heading-xlarge" id="results-heading">
+        @knownName(business.info)
+        @headerRegNumberHighlight(result)
+    </h1>
+    @status_warning(result)
+    <table id="results-table">
+        @common(showRegNumber = true)
+        @info(business.info)
+    </table>
+}
+
+@group(group: Group) = {
+    <h1 class="heading-xlarge">
+        @knownName(group.info)
+        @headerRegNumberHighlight(result)
+    </h1>
+    <p class="lede">@groupLedge(group)</p>
+    @status_warning(result)
+    <table>
+        @tableHeadingMedium(id, "Group representative", additionalClasses = None)
+        @common(showRegNumber = false)
+        @info(group.info)
+        @tableHeadingMedium(id,"Group members")
+        @group.members.zipWithIndex.map {
+            case (memberInfo: Info, index: Int) => {
+                @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
+                @info(memberInfo, id = s"${id}_member_$index")
+            }
+        }
+    </table>
+}
+
+@result match {
+    case  bus : Business => { @business(bus) }
+    case  grp : Group    => { @group(grp) }
+}

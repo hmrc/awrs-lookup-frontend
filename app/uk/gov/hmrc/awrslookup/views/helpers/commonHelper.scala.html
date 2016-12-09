@@ -1,0 +1,13 @@
+@import uk.gov.hmrc.awrslookup.forms.validation.util._
+@import ErrorMessageInterpreter._
+@import ErrorMessageLookup._
+
+@(field: Field, fieldErrors: Seq[FieldError])(implicit lang: Lang, messages: Messages)
+@fieldErrors.zipWithIndex.map { case (fieldError, index) =>
+    <span class="error-notification"
+          role="tooltip"
+          data-journey="search-page:error:@field.name"
+          id="@(field.name)-error-@index">
+        @messageLookup(fieldError)
+    </span>
+}

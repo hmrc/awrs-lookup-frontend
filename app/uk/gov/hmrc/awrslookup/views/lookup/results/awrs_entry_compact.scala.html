@@ -1,0 +1,20 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.awrslookup.models._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html._
+@import helpers._
+@import lookup.results._
+
+@(result: AwrsEntry, id: String)(implicit request : Request[AnyContent], messages: Messages)
+
+@address = { Address, @result.info.address.toStringSeq.mkString(", ") }
+
+<div class="form-group">
+    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show?=query=@{result.awrsRef}">
+        <h3 class="heading-medium-search">
+            @knownName(result.info)
+        </h3>
+    </a>
+    @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
+    <p id="address_@id">@address</p>
+</div>

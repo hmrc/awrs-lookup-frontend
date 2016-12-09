@@ -1,0 +1,24 @@
+@import uk.gov.hmrc.awrslookup._
+@import views.html.helpers._
+@import models._
+
+@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
+
+@warning(text: Html) = {
+    @warning_core(text)
+}
+
+@warningText = {
+    @Messages("awrs.lookup.results.unapproved.info") @whatToDo
+}
+
+@whatToDo = {
+    <a class="print-hidden" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.unapproved.what_to_do")</a>
+}
+
+@result.status match {
+    case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
+        @warning(warningText)
+    }
+    case _ => {}
+}

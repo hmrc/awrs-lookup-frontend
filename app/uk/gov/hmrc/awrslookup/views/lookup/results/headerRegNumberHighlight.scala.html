@@ -1,0 +1,26 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.awrslookup.models._
+@import uk.gov.hmrc.play.views.html.helpers._
+
+@(result: AwrsEntry, attrClass: String = "heading-secondary", id: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
+
+@theId = @{
+    id.fold("result_status")(x => s"result_status_$x")
+}
+
+@highlight(str: String) = {
+    <strong>@str</strong>
+}
+
+@result.status match {
+    case AwrsStatus.DeRegistered => {
+        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.deregistered"))</span>
+    }
+    case AwrsStatus.Revoked => {
+        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.revoked"))</span>
+    }
+    case _ => {
+        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.approved"))</span>
+    }
+}
+

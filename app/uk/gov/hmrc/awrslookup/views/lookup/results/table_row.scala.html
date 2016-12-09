@@ -1,0 +1,19 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html.helpers._
+
+@(name: String, label: String, someDetail: Option[Html])
+
+@labelId={"@{name}_label"}
+
+@detailId={"@{name}_detail"}
+
+@someDetail match {
+    case None | Some(HtmlFormat.empty) => {}
+    case Some(detail) => {
+        <tr id="@name">
+            <th class="result_label" id=@labelId>@label</th>
+            <td id=@detailId>@detail</td>
+        </tr>
+    }
+}

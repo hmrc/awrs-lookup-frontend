@@ -1,3 +1,5 @@
 # microservice specific routes
 
-GET        /hello-world             uk.gov.hmrc.awrslookup.controllers.HelloWorld.helloWorld
+GET        /assets/*file            controllers.Assets.at(path="/public", file)
+
+GET        /                        uk.gov.hmrc.awrslookup.controllers.LookupController.show

@@ -1,0 +1,15 @@
+@(id: Option[String], classAttr: Option[String])
+@getId = {
+    @id match {
+        case Some(customId) => {id=@customId}
+        case _ => {}
+    }
+}
+@getClass = {
+    @classAttr match {
+        case Some(customClass) => {class=@customClass}
+        case _ => {}
+    }
+}
+
+<button @getClass alt="search" type="submit" @getId formnovalidate="formnovalidate"><span class="visuallyhidden">search</span></button>

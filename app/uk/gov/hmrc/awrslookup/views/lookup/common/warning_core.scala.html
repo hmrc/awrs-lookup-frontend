@@ -1,0 +1,12 @@
+@(message: Html)(implicit request : Request[AnyContent], messages: Messages)
+
+<div id="notice">
+    <div class="warnicon">
+        <i>
+            <img src=@routes.Assets.at("images/icon-important.png") alt="warning.">
+        </i>
+    </div>
+    <div>
+        <strong>@message</strong>
+    </div>
+</div>

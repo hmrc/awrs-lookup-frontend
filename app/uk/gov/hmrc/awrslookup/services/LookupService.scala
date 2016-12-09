@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.awrslookup.controllers
+package uk.gov.hmrc.awrslookup.services
 
-import uk.gov.hmrc.play.frontend.controller.FrontendController
-import play.api.mvc._
+import uk.gov.hmrc.awrslookup.connectors.LookupConnector
+import uk.gov.hmrc.awrslookup.models.SearchResult
+import uk.gov.hmrc.play.http.HeaderCarrier
+
 import scala.concurrent.Future
-import play.api.Play.current
-import play.api.i18n.Messages.Implicits._
 
+trait LookupService {
 
-object HelloWorld extends HelloWorld
+  val connector: LookupConnector
 
-trait HelloWorld extends FrontendController {
-  val helloWorld = Action.async { implicit request =>
-		Future.successful(Ok(uk.gov.hmrc.awrslookup.views.html.helloworld.hello_world()))
-  }
+  def lookupAwrsRef(awrsRef: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
+    connector.sendQuery(awrsRef)
+
+}
+
+object LookupService extends LookupService {
+  override val connector: LookupConnector = LookupConnector
 }

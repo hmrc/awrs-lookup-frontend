@@ -1,0 +1,57 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html.helpers._
+@import models._
+@import common._
+@import search._
+@import results._
+
+@(searchForm : Form[models.Query], termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
+
+@noResults = {
+    @termHasNoResults match {
+        case Some(termWithNoResult) => {
+            <div id="no-results">
+                @no_result_warning(termWithNoResult)
+                @searchDate()
+            </div>
+        }
+        case None => {}
+    }
+}
+
+@resultCounter(size: Int) = {
+    <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
+}
+
+@multResults(results: List[AwrsEntry]) = {
+    @resultCounter(results.size)
+    <div id = "search-results">
+        @results.zipWithIndex.map {
+            case (result, ind) => { @awrs_entry_compact(result, ind.toString) }
+        }
+    </div>
+}
+
+@results = {
+    @searchResult match {
+        case Some(SearchResult(results)) if results.size > 1 => { @multResults(results) }
+        case _ => { @noResults }
+    }
+}
+
+@headers = {
+    @(termHasNoResults, searchResult)match {
+        case (Some(_), _) | (_, Some(_)) => {}
+        case _ => {
+            <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
+            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", isle_of_man_link()))</p>
+        }
+    }
+}
+
+@search_core(
+    searchForm = searchForm,
+    preFormContent = headers,
+    postFormContent = results
+)

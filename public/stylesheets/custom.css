@@ -1,0 +1,174 @@
+@media print {
+	.print-hidden, .header-wrapper, .service-info, .report-error {
+		display: none !important;
+	}
+}
+
+.search-awrs {
+	float: left;
+	width: 75%;
+	height: 45px;
+	margin-right: 2px;
+	padding-left: 10px;
+	border: 2px solid #6f777b;
+}
+
+input[type="text"] {
+	border: 2px solid #6f777b;
+	padding: 4px;
+}
+
+#search {
+    float: left;
+	height: 43px;
+	width: 50px;
+	color: #005EA5;
+	background-color: #005EA5;
+	background-image: url('/awrs-lookup-frontend/assets/images/search-button.png');
+	background-position: -14% 44%;
+	background-repeat: no-repeat;
+	box-shadow: 0 2px 0 #005EA5;
+}
+
+.result_label {
+   vertical-align: top;
+}
+
+.lede {
+    font-size: 24px;
+    line-height: 1.25;
+}
+
+#no-results {
+    margin-top: 100px;
+}
+
+a.result-link h3, a.result-link:visited h3 {
+	color: #2e3191;
+}
+
+a.result-link:hover h3 {
+    color: #22e8aca;
+}
+
+.heading-medium, h3 {
+	margin-top: 1.875em;
+	margin-bottom: 0.8333333333em;
+	font-size: 24px;
+	line-height: 1.25;
+	font-family: "nta", Arial, sans-serif;
+	font-weight: 700;
+	text-transform: none;
+}
+
+.group-section {
+    padding-top: 60px
+}
+
+.member-section {
+    padding-top: 30px
+}
+
+.back-link {
+	font-size: 16px;
+	line-height: 1.25;
+	display: -moz-inline-stack;
+	display: inline-block;
+	position: relative;
+	font-family: "nta", Arial, sans-serif;
+	font-weight: 400;
+	text-transform: none;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	padding-left: 14px;
+	color: #0b0c0c;
+	text-decoration: none;
+	border-bottom: 1px solid #0b0c0c;
+}
+
+.back-link::before {
+   border-bottom: 5px solid transparent;
+   border-right: 6px solid #0b0c0c;
+   border-top: 5px solid transparent;
+   content: "";
+   display: block;
+   height: 0;
+   left: 0;
+   margin-top: -6px;
+   position: absolute;
+   padding-right: 0;
+   top: 50%;
+   width: 0;
+}
+
+.status-warn-info, .status-warn-icon {
+    border-style: none;
+}
+
+.status-warn-icon {
+    vertical-align: top
+}
+
+.status-warn {
+    margin-top: 0px
+    margin-bottom: 0px
+    padding-top: 0px
+    padding-bottom: 0px
+}
+.service-info {
+    text-align: left;
+}
+
+.icon{display: inline-block;}
+
+#notice {margin-bottom:1em;}
+
+#notice .icon {
+    left: 0;
+    margin-top: -17px;
+    top: 50%;
+}
+
+#notice strong {
+    display: block;
+    margin-left: -15px;
+    padding-left: 65px;
+}
+
+table th, table td, table p {font-size:19px;}
+
+.warnicon {float:left; display: block; margin-left: auto; margin-right: auto;}
+
+#errors:focus {outline: 3px solid #ffbf47;}
+
+#errors ul li a {
+    font-weight: 700;
+}
+
+.validation-summary {
+    border: 5px solid #b10e1e;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    padding: 20px 15px 15px;
+}
+
+.validation-summary h1 {
+    margin-top: 10px;
+}
+
+.validation-summary-message a, .validation-message a, p.field-error {
+    color: #b10e1e;
+    font-weight: 700;
+}
+
+.form-field.form-field--error .error-notification, fieldset.form-field--error .error-notification {
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.form-field--error {
+    border-left: 5px solid #b10e1e;
+    margin: 0 0 0.75em;
+    padding-bottom: 0;
+    padding-top: 0;
+}

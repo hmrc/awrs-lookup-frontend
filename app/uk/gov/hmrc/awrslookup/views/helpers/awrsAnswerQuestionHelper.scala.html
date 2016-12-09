@@ -1,0 +1,23 @@
+@import uk.gov.hmrc.awrslookup._
+
+@(question: String,
+  questionId: String,
+  answer: Html,
+  wrapperClass: Option[String] = None)
+@import views.html.helpers._
+
+<div id="questionAnswer">
+    <details role="group">
+        @* Do not add spaces to the value of the summary tag *@
+        <summary role="button" aria-controls="details-content-0" tabindex="0" class="summary" id="@questionId">@question</summary>
+        <div id="details-content-0"
+            @wrapperClass match {
+                case Some(className) => {
+                    class="@className"
+                }
+                case _ => {}
+            }>
+            @awrsAnswerHint(questionId, answer)
+        </div>
+    </details>
+</div>

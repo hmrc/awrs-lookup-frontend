@@ -20,17 +20,12 @@
     <meta name="format-detection" content="telephone=no" />
 }
 
-@headerNavLinks = {
-  <li><a id="homeNavHref" href="http://www.google.com"
-         data-journey-click="primary-navigation:Click:Home">Home</a></li>
-}
-
 @insideHeader = {
     @uiLayouts.header_nav(
-      navTitle = Some("awrs-lookup-frontend"),
+      navTitle = Some(Messages("awrs-lookup-frontend.nav_title")),
       navTitleLink = None,
       showBetaLink = false,
-      navLinks = Some(headerNavLinks))
+      navLinks = Some(HtmlFormat.empty))
 }
 
 @afterHeader = {}
@@ -47,11 +42,22 @@
 @footerTop = {}
 @footerLinks = {}
 
+@betaBanner = {
+    @uiLayouts.betaBanner(
+        userLoggedIn = true,
+        betaFeedbackUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+        betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+        showFeedbackLinkInBetaBanner = true
+    )
+}
+
 @serviceInfo = {
     @uiLayouts.serviceInfo(
-      betaBanner = HtmlFormat.empty,
-      includeGridWrapper = false,
-      serviceInfoContent = Some(serviceInfoContent))
+        betaBanner = betaBanner,
+        includeGridWrapper = false,
+        serviceInfoContent = Some(serviceInfoContent),
+        includeHMRCBranding = false
+    )
 }
 
 @mainContentHeader = {
