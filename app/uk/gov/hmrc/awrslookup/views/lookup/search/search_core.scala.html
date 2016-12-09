@@ -1,5 +1,5 @@
 @import uk.gov.hmrc.awrslookup._
-@import uk.gov.hmrc.play.views.html.helpers._
+@import uk.gov.hmrc.play.views.html.helpers.{form => _, _}
 @import views.html.helpers._
 
 @(searchForm : Form[models.Query],
@@ -25,11 +25,17 @@
     <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
 }
 
-@views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None, contentHeader = cssScripts) {
+@pageScripts = {<script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>}
+
+@views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
     @errorSummaryTemplate(searchForm)
     <div class="grid">
         @preFormContent
-        @form(action = controllers.routes.LookupController.show) {
+        @*  This uses the play's default form helper which does not include the hidden CSRF token field.
+            This is because currently this service is completely sessionless and stateless thus
+            does not require CSRF protection, and we do not want it to appear in the query String.
+        *@
+        @helper.form(action = controllers.routes.LookupController.show) {
             @searchbar
         }
         @postFormContent

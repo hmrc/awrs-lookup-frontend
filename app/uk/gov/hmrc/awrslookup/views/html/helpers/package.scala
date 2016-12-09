@@ -38,17 +38,15 @@ package object helpers {
 
   def paragraphs(strings: Map[String, Option[String]]): Html =
     Html(
-      strings.map(
-        x => x match {
-          case (id, Some(data)) => s"<p id='$id'>$data</p>"
-          case _ => ""
-        }
-      ).view.mkString("")
+      strings.map {
+        case (id, Some(data)) => s"<p id='$id'>$data</p>"
+        case _ => ""
+      }.view.mkString("")
     )
 
   def knownName(info: Info): String = info.tradingName match {
+    case None | Some("") => info.businessName.fold("")(x => x)
     case Some(name) => name
-    case _ => info.businessName.fold("")(x => x)
   }
 
   def groupLedge(group: Group)(implicit messages: Messages): Html = {
