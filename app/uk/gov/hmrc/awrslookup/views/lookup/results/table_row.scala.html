@@ -9,11 +9,11 @@
 @detailId={"@{name}_detail"}
 
 @someDetail match {
+    case None | Some(HtmlFormat.empty) => {}
     case Some(detail) => {
         <tr id="@name">
             <th class="result_label" id=@labelId>@label</th>
             <td id=@detailId>@detail</td>
         </tr>
     }
-    case _ =>{}
 }
