@@ -132,3 +132,37 @@ a.result-link:hover h3 {
 table th, table td, table p {font-size:19px;}
 
 .warnicon {float:left; display: block; margin-left: auto; margin-right: auto;}
+
+#errors:focus {outline: 3px solid #ffbf47;}
+
+#errors ul li a {
+    font-weight: 700;
+}
+
+.validation-summary {
+    border: 5px solid #b10e1e;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    padding: 20px 15px 15px;
+}
+
+.validation-summary h1 {
+    margin-top: 10px;
+}
+
+.validation-summary-message a, .validation-message a, p.field-error {
+    color: #b10e1e;
+    font-weight: 700;
+}
+
+.form-field.form-field--error .error-notification, fieldset.form-field--error .error-notification {
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.form-field--error {
+    border-left: 5px solid #b10e1e;
+    margin: 0 0 0.75em;
+    padding-bottom: 0;
+    padding-top: 0;
+}
