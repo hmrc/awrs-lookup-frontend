@@ -1,3 +1,9 @@
+@media print {
+	.print-hidden, .header-wrapper, .service-info, .report-error {
+		display: none !important;
+	}
+}
+
 .search-awrs {
 	float: left;
 	width: 75%;
