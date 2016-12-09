@@ -115,15 +115,15 @@ a.result-link:hover h3 {
 
 .icon{display: inline-block;}
 
-.notice {margin-bottom:1em;}
+#notice {margin-bottom:1em;}
 
-.notice .icon {
+#notice .icon {
     left: 0;
     margin-top: -17px;
     top: 50%;
 }
 
-.notice strong {
+#notice strong {
     display: block;
     margin-left: -15px;
     padding-left: 65px;
