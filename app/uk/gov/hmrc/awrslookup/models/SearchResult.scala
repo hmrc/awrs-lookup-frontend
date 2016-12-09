@@ -25,7 +25,7 @@ sealed trait AwrsEntry {
 
   @inline final def awrsRefFormatted: String = AwrsNumberFormatter.format(awrsRef)
 
-  def registrationDate: String
+  def registrationDate: Option[String]
 
   def registrationEndDate: Option[String]
 
@@ -39,14 +39,14 @@ case class SearchResult(results: List[AwrsEntry])
 
 
 case class Business(awrsRef: String,
-                    registrationDate: String,
+                    registrationDate: Option[String],
                     status: AwrsStatus,
                     info: Info,
                     registrationEndDate: Option[String] = None
                    ) extends AwrsEntry
 
 case class Group(awrsRef: String,
-                 registrationDate: String,
+                 registrationDate: Option[String],
                  status: AwrsStatus,
                  info: Info,
                  members: List[Info],

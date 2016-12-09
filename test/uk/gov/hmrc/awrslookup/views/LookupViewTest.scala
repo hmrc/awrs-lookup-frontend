@@ -67,7 +67,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       document.getElementById("result_awrs_reg_label").text should include(Messages("awrs.lookup.results.reg_number"))
       document.getElementById("result_awrs_reg_detail").text.replaceAll(" ", "") should include(head.awrsRef)
       document.getElementById("result_reg_date_label").text should include(Messages("awrs.lookup.results.date_of_reg"))
-      document.getElementById("result_reg_date_detail").text should include(head.registrationDate)
+      document.getElementById("result_reg_date_detail").text should include(head.registrationDate.get)
       document.getElementById("result_businessName_label").text should include(Messages("awrs.lookup.results.business_name"))
       document.getElementById("result_businessName_detail").text should include(info.businessName.get)
       document.getElementById("result_tradingName_label").text should include(Messages("awrs.lookup.results.trading_name"))
