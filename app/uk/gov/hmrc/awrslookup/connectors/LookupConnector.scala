@@ -33,36 +33,42 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
 
   val http: HttpGet = WSHttp
   lazy val middleServiceURL = baseUrl("awrs-lookup")
+  lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
+  lazy val byNameUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/$query"""
 
 
-  def sendQuery(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
-    val getURL = s"""$middleServiceURL/awrs-lookup/query/$query"""
-    http.GET(getURL) map {
-      response =>
-        response.status match {
-          case 200 =>
-            val responseJson = response.json
-            debug(s"[ $auditLookupTxName - $query ] - Json:\n$responseJson\n")
-            val parse = Json.fromJson[SearchResult](responseJson)
-            parse.isSuccess match {
-              case true => parse.get
-              case _ =>
-                err(s"[ $auditLookupTxName - $query ] - Invalid Json recieved from AWRS-LOOKUP")
-                throw new InternalServerException("Invalid json")
-            }
-          case 404 =>
-            response.body match {
-              case x if x != null && x.contains(LookupConnector.referenceNotFoundString) => None
-              case _ =>
-                err(s"[ $auditLookupTxName ] - The remote endpoint has indicated that no data can be found ## ")
-                info(s"[ $auditLookupTxName ] - Query ## $query")
-                throw new InternalServerException("URL not found")
-            }
-          case status =>
-            err(s"[ $auditLookupTxName - $query ] - Unsuccessful return of data. Status code: $status")
-            throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
-        }
-    }
+  private def responseCore(logRef: String)(response: HttpResponse): Future[Option[SearchResult]] = response.status match {
+    case 200 =>
+      val responseJson = response.json
+      debug(s"[ $auditLookupTxName - $logRef ] - Json:\n$responseJson\n")
+      val parse = Json.fromJson[SearchResult](responseJson)
+      parse.isSuccess match {
+        case true => parse.get
+        case _ =>
+          err(s"[ $auditLookupTxName - $logRef ] - Invalid Json recieved from AWRS-LOOKUP")
+          throw new InternalServerException("Invalid json")
+      }
+    case 404 =>
+      response.body match {
+        case x if x != null && x.contains(LookupConnector.referenceNotFoundString) => None
+        case _ =>
+          err(s"[ $auditLookupTxName ] - The remote endpoint has indicated that no data can be found ## ")
+          info(s"[ $auditLookupTxName ] - Query ## $logRef")
+          throw new InternalServerException("URL not found")
+      }
+    case status =>
+      err(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
+      throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
+  }
+
+  def queryByUrn(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
+    val getURL = byUrnUrl(query)
+    http.GET(getURL) flatMap responseCore(s"ByUrl[ $query ]")
+  }
+
+  def queryByName(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
+    val getURL = byNameUrl(query)
+    http.GET(getURL) flatMap responseCore(s"ByName[ $query ]")
   }
 
 }

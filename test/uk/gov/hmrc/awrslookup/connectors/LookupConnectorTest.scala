@@ -69,7 +69,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedURL = s"""/awrs-lookup/query/$testAwrsRef"""
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, lookupSuccess)))
-      val result = TestLookupConnector.sendQuery(testAwrsRef)
+      val result = TestLookupConnector.queryByName(testAwrsRef)
       await(result) shouldBe expectedResult
     }
 
@@ -79,7 +79,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
       val response = HttpResponse(NOT_FOUND, Json.toJson[String](LookupConnector.referenceNotFoundString))
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.sendQuery(testAwrsRef)
+      val result = TestLookupConnector.queryByName(testAwrsRef)
       await(result) shouldBe expectedResult
     }
 
@@ -88,7 +88,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
       val response = HttpResponse(NOT_FOUND)
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.sendQuery(testAwrsRef)
+      val result = TestLookupConnector.queryByName(testAwrsRef)
       val thrown = the[InternalServerException] thrownBy await(result)
       thrown.getMessage shouldBe "URL not found"
     }
@@ -98,7 +98,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedURL = s"""/awrs-lookup/query/$testAwrsRef"""
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, invalidJson)))
-      val result = TestLookupConnector.sendQuery(testAwrsRef)
+      val result = TestLookupConnector.queryByName(testAwrsRef)
       val thrown = the[InternalServerException] thrownBy await(result)
       thrown.getMessage shouldBe "Invalid json"
     }
@@ -108,7 +108,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
       val response = HttpResponse(BAD_GATEWAY)
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.sendQuery(testAwrsRef)
+      val result = TestLookupConnector.queryByName(testAwrsRef)
       val thrown = the[InternalServerException] thrownBy await(result)
       thrown.getMessage should include ("Unsuccessful return of data. Status code")
     }
