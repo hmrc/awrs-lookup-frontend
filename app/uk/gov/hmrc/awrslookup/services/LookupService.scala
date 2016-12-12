@@ -27,7 +27,7 @@ trait LookupService {
   val connector: LookupConnector
 
   def lookupAwrsRef(awrsRef: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
-    connector.sendQuery(awrsRef)
+    connector.queryByUrn(awrsRef)
 
 }
 
