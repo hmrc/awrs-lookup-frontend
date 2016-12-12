@@ -23,7 +23,7 @@ awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical char
 awrs.search.query.default_invalid_urn=You must enter a valid AWRS URN
 
 # Lookup page
-awrs.lookup.search.page_title=AWRS lookup
+awrs.lookup.search.page_title=Check the alcohol wholesaler and producer register
 awrs.lookup.search.heading=Check if an alcohol wholesaler or producer is approved
 awrs.lookup.search.lede=Enter the registration number (AWRS URN) for example XXAW 000 0012 3456. {0}.
 awrs.lookup.search.isle_of_man=Wholesalers or producers in the {0}Isle of Man{1} are not on this register
@@ -32,7 +32,7 @@ awrs.lookup.search.no_results.info=Check you have the correct details from the w
 awrs.lookup.search.label=Enter a valid AWRS URN
 
 # Results page
-awrs.lookup.results.page_title=AWRS lookup
+awrs.lookup.results.page_title=Results page
 awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group member of {0} is {1}
 awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}
 awrs.lookup.results.secondary_heading_awrs_ref=AWRS registration number {0}
