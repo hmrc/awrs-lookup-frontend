@@ -18,6 +18,7 @@ package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
 
+import play.api.data.Form
 import play.api.{Configuration, Environment}
 import play.api.i18n.MessagesApi
 import play.api.mvc.{AnyContent, Call, Request, Result}
@@ -25,7 +26,8 @@ import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm
 import uk.gov.hmrc.awrslookup.forms.SearchForm._
-import uk.gov.hmrc.awrslookup.models.SearchResult
+import uk.gov.hmrc.awrslookup.forms.prevalidation.PrevalidationAPI
+import uk.gov.hmrc.awrslookup.models.{Query, SearchResult}
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
 
@@ -39,12 +41,12 @@ class LookupController @Inject()(val environment: Environment,
 
   val lookupService: LookupService = LookupService
 
-  private[controllers] def validateFormAndSearch(action: Call, lookupCall: lookupServiceCall)(implicit request: Request[AnyContent]): Future[Result] = searchForm.bindFromRequest.fold(
+  private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall)(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
     formWithErrors => Ok(views.html.lookup.search_main(formWithErrors, action)),
     queryForm => {
       val queryString = queryForm.query
       lookupCall(queryString) map {
-        case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(searchForm.form, action, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
+        case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(preValidationForm.form, action, termHasNoResults = queryString, searchResult = SearchResult(Nil)))
         case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, action, searchResult = result))
         case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head))
       }
@@ -55,7 +57,7 @@ class LookupController @Inject()(val environment: Environment,
     implicit request =>
       val action = controllers.routes.LookupController.show()
       request.queryString.get(SearchForm.query).isDefined match {
-        case true => validateFormAndSearch(action = action, lookupCall = lookupService.lookupAwrsRef)
+        case true => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookupAwrsRef)
         case false => Ok(views.html.lookup.search_main(searchForm.form, action))
       }
   }
@@ -64,7 +66,7 @@ class LookupController @Inject()(val environment: Environment,
     implicit request =>
       val action = controllers.routes.LookupController.byNameShow()
       request.queryString.get(SearchForm.query).isDefined match {
-        case true => validateFormAndSearch(action = action, lookupCall = lookupService.lookupByName)
+        case true => validateFormAndSearch(preValidationForm = searchByNameForm, action = action, lookupCall = lookupService.lookupByName)
         case false => Ok(views.html.lookup.search_main(searchForm.form, action))
       }
   }

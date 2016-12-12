@@ -17,6 +17,7 @@
 package uk.gov.hmrc.awrslookup.services
 
 import uk.gov.hmrc.awrslookup.connectors.LookupConnector
+import uk.gov.hmrc.awrslookup.forms.{SearchForm, prevalidation}
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.play.http.HeaderCarrier
 
@@ -30,7 +31,10 @@ trait LookupService {
     connector.queryByUrn(awrsRef)
 
   def lookupByName(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
-    connector.queryByName(queryString)
+    prevalidation.trimAllFunc(queryString).toUpperCase.matches(SearchForm.awrsRefRegEx) match {
+      case true => connector.queryByUrn(queryString)
+      case false => connector.queryByName(queryString)
+    }
 
 }
 
