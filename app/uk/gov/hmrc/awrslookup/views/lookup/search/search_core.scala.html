@@ -4,7 +4,8 @@
 
 @(searchForm : Form[models.Query],
   preFormContent: Option[Html] = None,
-  postFormContent: Option[Html] = None
+  postFormContent: Option[Html] = None,
+  action : Call
 )(implicit request : Request[AnyContent], messages: Messages)
 
 @searchbar = {
@@ -35,7 +36,7 @@
             This is because currently this service is completely sessionless and stateless thus
             does not require CSRF protection, and we do not want it to appear in the query String.
         *@
-        @helper.form(action = controllers.routes.LookupController.show) {
+        @helper.form(action = action) {
             @searchbar
         }
         @postFormContent
