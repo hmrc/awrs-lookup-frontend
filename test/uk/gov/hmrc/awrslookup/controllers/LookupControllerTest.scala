@@ -43,9 +43,15 @@ class LookupControllerTest extends AwrsUnitTestTraits {
       new LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi).lookupService shouldBe LookupService
     }
 
-    "lookup awrs entry when passed a valid awrs reference" in {
+    "in show, lookup awrs entry when passed a valid awrs reference" in {
       when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val result = TestLookupController.show.apply(FakeRequest())
+      status(result) shouldBe OK
+    }
+
+    "in byNameShow, lookup awrs entries by name" in {
+      when(mockLookupService.lookupByName(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      val result = TestLookupController.byNameShow.apply(FakeRequest())
       status(result) shouldBe OK
     }
   }
