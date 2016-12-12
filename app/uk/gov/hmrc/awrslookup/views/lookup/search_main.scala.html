@@ -9,9 +9,9 @@
 @(searchForm : Form[models.Query], action: Call, termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @searchTitle = @{
-    termHasNoResults match {
-        case None => Messages("awrs.lookup.results.page_title_no_results")
-        case Some(termWithNoResult) => Messages("awrs.lookup.search.page_title")
+    searchResult match {
+        case Some(termWithNoResult) => Messages("awrs.lookup.results.page_title_no_results")
+        case None => Messages("awrs.lookup.search.page_title")
     }
 }
 
