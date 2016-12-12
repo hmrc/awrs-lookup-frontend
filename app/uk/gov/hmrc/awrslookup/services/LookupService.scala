@@ -29,6 +29,9 @@ trait LookupService {
   def lookupAwrsRef(awrsRef: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
     connector.queryByUrn(awrsRef)
 
+  def lookupByName(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
+    connector.queryByName(queryString)
+
 }
 
 object LookupService extends LookupService {

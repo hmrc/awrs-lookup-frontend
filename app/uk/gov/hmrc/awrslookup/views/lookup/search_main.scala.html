@@ -6,7 +6,7 @@
 @import search._
 @import results._
 
-@(searchForm : Form[models.Query], termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], action: Call, termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @noResults = {
     @termHasNoResults match {
@@ -53,5 +53,6 @@
 @search_core(
     searchForm = searchForm,
     preFormContent = headers,
-    postFormContent = results
+    postFormContent = results,
+    action = action
 )
