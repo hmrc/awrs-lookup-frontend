@@ -66,7 +66,10 @@
     }
 }
 
-@getHelpForm = @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
+@getHelpForm = {
+    @uk.gov.hmrc.awrslookup.CachedStaticHtmlPartialProvider.getPartialContent(appConfig.reportAProblemPartialUrl)
+}
+
 
 @content = {
     @uiLayouts.main_content(

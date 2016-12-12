@@ -23,16 +23,17 @@ awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical char
 awrs.search.query.default_invalid_urn=You must enter a valid AWRS URN
 
 # Lookup page
-awrs.lookup.search.page_title=AWRS lookup
+awrs.lookup.search.page_title=Check the alcohol wholesaler and producer register
 awrs.lookup.search.heading=Check if an alcohol wholesaler or producer is approved
 awrs.lookup.search.lede=Enter the registration number (AWRS URN) for example XXAW 000 0012 3456. {0}.
 awrs.lookup.search.isle_of_man=Wholesalers or producers in the {0}Isle of Man{1} are not on this register
-awrs.lookup.search.no_results=No results found for [{0}]
+awrs.lookup.search.no_results=No results found for {0}
 awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly
 awrs.lookup.search.label=Enter a valid AWRS URN
 
 # Results page
-awrs.lookup.results.page_title=AWRS lookup
+awrs.lookup.results.page_title=Results page
+awrs.lookup.results.page_title_no_results=No results found
 awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group member of {0} is {1}
 awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}
 awrs.lookup.results.secondary_heading_awrs_ref=AWRS registration number {0}
@@ -46,5 +47,10 @@ awrs.lookup.results.business_name=Business name
 awrs.lookup.results.trading_name=Trading name
 awrs.lookup.results.results_found=We found {0} results
 awrs.lookup.results.unapproved.info=If you make purchases from an unapproved wholesaler you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
-awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler you’re dealing with isn’t approved.
+awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler you’re dealing with isn’t approved
 awrs.lookup.results.print_link=Print or save for your records
+awrs.lookup.results.no_results.warning_info=It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about
+awrs.lookup.results.no_results.warning_what_to_do=what to do if you find a wholesaler you’re dealing with isn’t on the register
+awrs.lookup.results.approved.warning_info=This check supports your normal
+awrs.lookup.results.approved.due_diligence=due diligence
+awrs.lookup.results.approved.warning_info2=It is important that you verify the identity of your suppliers with your own checks
