@@ -43,8 +43,8 @@ class LookupServiceTest extends AwrsUnitTestTraits
       // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
       // then 'noDataToReturn' is returned
       // and 'dataToReturn' is returned otherwise
-      mockLookupConnectorWithOnly(sendQuery = (AnyMatcher, noDataToReturn)) // must be placed before the eq matcher
-      mockLookupConnectorWithOnly(sendQuery = (EqMatcher(testAwrs), dataToReturn))
+      mockLookupConnectorWithOnly(queryByUrn = (AnyMatcher, noDataToReturn)) // must be placed before the eq matcher
+      mockLookupConnectorWithOnly(queryByUrn = (EqMatcher(testAwrs), dataToReturn))
 
       LookupServiceTest.lookupAwrsRef(testAwrs) shouldBe dataToReturn
       LookupServiceTest.lookupAwrsRef(notTestAwrs) shouldBe noDataToReturn

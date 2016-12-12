@@ -72,4 +72,20 @@ object SearchForm {
 
   lazy val searchForm = PreprocessedForm(searchValidationForm)
 
+  private lazy val compulsoryByNameQueryField = compulsoryText(
+    CompulsoryTextFieldMappingParameter(
+      empty = simpleFieldIsEmptyConstraintParameter(query, "awrs.search.query.empty"),
+      maxLengthValidation = genericFieldMaxLengthConstraintParameter(140, query, "search field"),
+      formatValidations = Seq()
+    ))
+
+  lazy val searchByNameValidationForm = Form(mapping(
+    query -> compulsoryByNameQueryField.toStringFormatter
+  )(Query.apply)(Query.unapply))
+
+  lazy val searchByNameForm =
+    PreprocessedForm(
+      searchByNameValidationForm,
+      trimRules = Map(query -> TrimOption.bothAndCompress),
+      caseRules = Map())
 }
