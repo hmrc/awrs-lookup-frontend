@@ -53,4 +53,4 @@ awrs.lookup.results.no_results.warning_info=It is important that you only make p
 awrs.lookup.results.no_results.warning_what_to_do=what to do if you find a wholesaler you’re dealing with isn’t on the register
 awrs.lookup.results.approved.warning_info=This check supports your normal
 awrs.lookup.results.approved.due_diligence=due diligence
-awrs.lookup.results.approved.warning_info2=It is important that you verify the identity of your suppliers with your own checks
+awrs.lookup.results.approved.warning_info2=It is important that you verify the identity of your suppliers with your own checks.
