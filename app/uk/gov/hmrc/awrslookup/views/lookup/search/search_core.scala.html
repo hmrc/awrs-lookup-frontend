@@ -5,7 +5,8 @@
 @(searchForm : Form[models.Query],
   preFormContent: Option[Html] = None,
   postFormContent: Option[Html] = None,
-  action : Call
+  action : Call,
+  title : String
 )(implicit request : Request[AnyContent], messages: Messages)
 
 @searchbar = {
@@ -28,7 +29,7 @@
 
 @pageScripts = {<script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>}
 
-@views.html.main_template(title = Messages("awrs.lookup.search.page_title"), bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
+@views.html.main_template(title = title, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
     @errorSummaryTemplate(searchForm)
     <div class="grid">
         @preFormContent
