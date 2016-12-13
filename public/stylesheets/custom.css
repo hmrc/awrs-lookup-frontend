@@ -28,7 +28,7 @@ input[type="text"] {
 	width: 50px;
 	color: #005EA5;
 	background-color: #005EA5;
-	background-image: url('/awrs-lookup/assets/images/search-button.png');
+	background-image: url('/awrs-lookup-frontend/assets/images/search-button.png');
 	background-position: -14% 44%;
 	background-repeat: no-repeat;
 	box-shadow: 0 2px 0 #005EA5;
