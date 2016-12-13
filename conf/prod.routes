@@ -1,5 +1,5 @@
 # Add all the application routes to the app.routes file
-->         /awrs-lookup-frontend              app.Routes
+->         /awrs-lookup               app.Routes
 ->         /                          health.Routes
 ->     	   /template                  template.Routes
 
