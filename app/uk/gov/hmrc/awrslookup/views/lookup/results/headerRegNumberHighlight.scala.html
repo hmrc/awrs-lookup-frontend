@@ -2,7 +2,7 @@
 @import uk.gov.hmrc.awrslookup.models._
 @import uk.gov.hmrc.play.views.html.helpers._
 
-@(result: AwrsEntry, attrClass: String = "heading-secondary", id: Option[String] = None, displayRegNumberForApproved: Boolean = false)(implicit request : Request[AnyContent], messages: Messages)
+@(result: AwrsEntry, attrClass: String = "heading-secondary", id: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @theId = @{
     id.fold("result_status")(x => s"result_status_$x")
@@ -10,12 +10,6 @@
 
 @highlight(str: String) = {
     <strong>@str</strong>
-}
-
-@regNumber = {<span id="@theId" class="@attrClass">AWRS registration number <span class="highlight">@result.awrsRef</span></span>}
-
-@approved = {
-    <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.approved"))</span>
 }
 
 @result.status match {
@@ -26,10 +20,7 @@
         <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.revoked"))</span>
     }
     case _ => {
-        @displayRegNumberForApproved match {
-            case true => {@regNumber}
-            case false => {@approved}
-        }
+        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.approved"))</span>
     }
 }
 

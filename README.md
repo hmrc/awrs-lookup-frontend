@@ -1,6 +1,6 @@
-# awrs-lookup
+# awrs-lookup-frontend
 
-[![Build Status](https://travis-ci.org/hmrc/awrs-lookup.svg)](https://travis-ci.org/hmrc/awrs-lookup) [ ![Download](https://api.bintray.com/packages/hmrc/releases/awrs-lookup/images/download.svg) ](https://bintray.com/hmrc/releases/awrs-lookup/_latestVersion)
+[![Build Status](https://travis-ci.org/hmrc/awrs-lookup-frontend.svg)](https://travis-ci.org/hmrc/awrs-lookup-frontend) [ ![Download](https://api.bintray.com/packages/hmrc/releases/awrs-lookup-frontend/images/download.svg) ](https://bintray.com/hmrc/releases/awrs-lookup-frontend/_latestVersion)
 
 This is a placeholder README.md for a new repository
 

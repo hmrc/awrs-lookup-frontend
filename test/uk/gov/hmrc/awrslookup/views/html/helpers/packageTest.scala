@@ -21,7 +21,7 @@ import org.joda.time.format.DateTimeFormat
 import org.jsoup.nodes.Document
 import play.api.i18n.Messages
 import uk.gov.hmrc.awrslookup.models.AwrsStatus.Approved
-import uk.gov.hmrc.awrslookup.models.{Group, Info}
+import uk.gov.hmrc.awrslookup.models.{Address, Group, Info}
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 
 import scala.collection.JavaConversions._
@@ -125,6 +125,31 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
       s"return the plural version of the lede if for $num member" in testLeadingMessage(num, "awrs.lookup.results.group_lede_plural")
     )
 
+  }
+
+
+  "memberWithTheClosestMatch" should {
+    "find the best matching member" in {
+      val testInfo = Info("testBusinessName", "testTradingName", "testFullName",
+        Address("testline1", "testline2", "testline3", "testline4", "testPostCode", "testCountry"))
+
+      val g: Group = Group(
+        awrsRef = "testValue",
+        registrationDate = "01/01/1970",
+        status = Approved,
+        registrationEndDate = "01/01/2017",
+        info = testInfo,
+        members = List(
+          testInfo.copy(businessName = "testBusinessName2"),
+          testInfo.copy(businessName = "testBusinessName3"),
+          testInfo.copy(businessName = "my bus"),
+          testInfo.copy(businessName = "testBusinessName4")
+        )
+      )
+
+      val info = memberWithTheClosestMatch(g.members, "my bus")
+      info shouldBe testInfo.copy(businessName = "my bus")
+    }
   }
 
 }
