@@ -9,9 +9,10 @@
 @(searchForm : Form[models.Query], action: Call, termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @searchTitle = @{
-    searchResult match {
-        case Some(termWithNoResult) => Messages("awrs.lookup.results.page_title_no_results")
-        case None => Messages("awrs.lookup.search.page_title")
+    (termHasNoResults, searchResult) match {
+        case (Some(_), (None | Some(SearchResult(Nil))))            => Messages("awrs.lookup.results.page_title_no_results")
+        case (None , (Some(SearchResult(list)))) if list.size > 1   => Messages("awrs.lookup.results.page_title_multi_results")
+        case _ => Messages("awrs.lookup.search.page_title")
     }
 }
 

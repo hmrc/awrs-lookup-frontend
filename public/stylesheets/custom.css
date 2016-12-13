@@ -163,11 +163,13 @@ table th, table td, table p {font-size:19px;}
 .validation-summary-message a, .validation-message a, p.field-error {
     color: #b10e1e;
     font-weight: 700;
+    font-size: 19px;
 }
 
 .form-field.form-field--error .error-notification, fieldset.form-field--error .error-notification {
-    font-size: 1em;
+    font-size: 19px;
     font-weight: 700;
+    color: #b10e1e;
 }
 
 .form-field--error {
@@ -175,4 +177,8 @@ table th, table td, table p {font-size:19px;}
     margin: 0 0 0.75em;
     padding-bottom: 0;
     padding-top: 0;
+}
+
+span.highlight {
+    font-weight:700
 }
