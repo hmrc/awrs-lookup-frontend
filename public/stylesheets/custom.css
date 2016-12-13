@@ -178,3 +178,7 @@ table th, table td, table p {font-size:19px;}
     padding-bottom: 0;
     padding-top: 0;
 }
+
+span.highlight {
+    font-weight:700
+}
