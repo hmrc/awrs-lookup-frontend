@@ -6,10 +6,10 @@
 @import search._
 @import results._
 
-@(searchForm : Form[models.Query], action: Call, termHasNoResults: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @searchTitle = @{
-    (termHasNoResults, searchResult) match {
+    (searchTerm, searchResult) match {
         case (Some(_), (None | Some(SearchResult(Nil))))            => Messages("awrs.lookup.results.page_title_no_results")
         case (None , (Some(SearchResult(list)))) if list.size > 1   => Messages("awrs.lookup.results.page_title_multi_results")
         case _ => Messages("awrs.lookup.search.page_title")
@@ -17,10 +17,10 @@
 }
 
 @noResults = {
-    @termHasNoResults match {
-        case Some(termWithNoResult) => {
+    @searchTerm match {
+        case Some(term) => {
             <div id="no-results">
-                @no_result_warning(termWithNoResult)
+                @no_result_warning(term)
                 @searchDate()
             </div>
         }
@@ -32,7 +32,7 @@
     <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
 }
 
-@multResults(results: List[AwrsEntry]) = {
+@multiResults(results: List[AwrsEntry]) = {
     @resultCounter(results.size)
     <div id = "search-results">
         @results.zipWithIndex.map {
@@ -43,13 +43,13 @@
 
 @results = {
     @searchResult match {
-        case Some(SearchResult(results)) if results.size > 1 => { @multResults(results) }
+        case Some(SearchResult(results)) if results.size > 1 => { @multiResults(results) }
         case _ => { @noResults }
     }
 }
 
 @headers = {
-    @(termHasNoResults, searchResult)match {
+    @(searchTerm, searchResult)match {
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
