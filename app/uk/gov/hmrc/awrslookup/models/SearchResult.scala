@@ -17,7 +17,7 @@
 package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json._
-import uk.gov.hmrc.awrslookup.utils.AwrsNumberFormatter
+import uk.gov.hmrc.awrslookup.utils.{AwrsNumberFormatter, LetterPairSimilarity}
 
 sealed trait AwrsEntry {
 
@@ -52,7 +52,6 @@ case class Group(awrsRef: String,
                  members: List[Info],
                  registrationEndDate: Option[String] = None
                 ) extends AwrsEntry
-
 
 object Business {
   implicit val formatter = Json.format[Business]
