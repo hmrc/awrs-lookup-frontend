@@ -31,7 +31,7 @@ class LookupServiceTest extends AwrsUnitTestTraits
   }
 
   "LookupService" should {
-    "call lookup connector with the correct parameters" in {
+    "call lookup connector with the correct parameters for lookupAwrsRef" in {
       val testAwrs = "testvalue"
       val notTestAwrs = ""
 
@@ -48,6 +48,45 @@ class LookupServiceTest extends AwrsUnitTestTraits
 
       LookupServiceTest.lookupAwrsRef(testAwrs) shouldBe dataToReturn
       LookupServiceTest.lookupAwrsRef(notTestAwrs) shouldBe noDataToReturn
+    }
+
+
+    "call lookup connector search by urn in lookupByName if the query is a valid AWRS number" in {
+      val testAwrs = "XXAW00000123456"
+      val notTestAwrs = ""
+
+      assert(testAwrs != notTestAwrs)
+
+      val dataToReturn: Future[Option[SearchResult]] = SearchResult(Nil)
+      val noDataToReturn: Future[Option[SearchResult]] = None
+
+      // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
+      // then 'noDataToReturn' is returned
+      // and 'dataToReturn' is returned otherwise
+      mockLookupConnectorWithOnly(queryByName = (AnyMatcher, noDataToReturn))
+      mockLookupConnectorWithOnly(queryByUrn = (EqMatcher(testAwrs), dataToReturn))
+
+      LookupServiceTest.lookupByName(testAwrs) shouldBe dataToReturn
+      LookupServiceTest.lookupByName(notTestAwrs) shouldBe noDataToReturn
+    }
+
+    "call lookup connector search by name in lookupByName if the query is not a valid AWRS number" in {
+      val testAwrs = "testvalue"
+      val notTestAwrs = ""
+
+      assert(testAwrs != notTestAwrs)
+
+      val dataToReturn: Future[Option[SearchResult]] = SearchResult(Nil)
+      val noDataToReturn: Future[Option[SearchResult]] = None
+
+      // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
+      // then 'noDataToReturn' is returned
+      // and 'dataToReturn' is returned otherwise
+      mockLookupConnectorWithOnly(queryByName = (AnyMatcher, noDataToReturn)) // must be placed before the eq matcher
+      mockLookupConnectorWithOnly(queryByName = (EqMatcher(testAwrs), dataToReturn))
+
+      LookupServiceTest.lookupByName(testAwrs) shouldBe dataToReturn
+      LookupServiceTest.lookupByName(notTestAwrs) shouldBe noDataToReturn
     }
   }
 

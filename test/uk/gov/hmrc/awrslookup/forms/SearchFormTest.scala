@@ -17,7 +17,7 @@
 package uk.gov.hmrc.awrslookup.forms
 
 import uk.gov.hmrc.awrslookup._
-import forms.test.util._
+import forms.test.util.{ExpectedInvalidFieldFormat, _}
 import forms.validation.util.{FieldError, MessageArguments, SummaryError}
 import utils.AwrsUnitTestTraits
 
@@ -25,14 +25,14 @@ class SearchFormTest extends AwrsUnitTestTraits {
 
   import SearchForm._
 
-  implicit val form = searchForm.form
-
   "SearchForm" should {
+    implicit val form = searchForm.form
+
     "validate and generate the correct error messages" in {
       val fieldId: String = query
       val emptyError = ExpectedFieldIsEmpty(fieldId, FieldError("awrs.search.query.empty"))
       val maxLenError = MaxLengthIsHandledByTheRegEx()
-      val summaryError = SummaryError("awrs.generic.error.character_invalid.summary", MessageArguments("search field"), query)
+      val summaryError = SummaryError("awrs.generic.error.character_invalid.summary", MessageArguments("search field"), fieldId)
       val invalidFormats = List(
         ExpectedInvalidFieldFormat("A" * 16, FieldError("awrs.search.query.string_length_mismatch"), summaryError),
         ExpectedInvalidFieldFormat("A" * 14, FieldError("awrs.search.query.string_length_mismatch"), summaryError),
@@ -54,6 +54,31 @@ class SearchFormTest extends AwrsUnitTestTraits {
       assertFormIsValid(form, Map(query -> "XSAW00000123456"))
       assertFormIsValid(form, Map(query -> "XZAW00000999999"))
       assertFormIsValid(form, Map(query -> "XFAW00000000000"))
+    }
+  }
+
+  "SearchByNameForm" should {
+    implicit val form = searchByNameForm.form
+
+    "validate and generate the correct error messages" in {
+      val fieldId: String = query
+      val emptyError = ExpectedFieldIsEmpty(fieldId, FieldError("awrs.search.query.empty"))
+      val maxLenError = ExpectedFieldExceedsMaxLength(fieldId, "search field", maxQueryLength)
+      val summaryError = SummaryError("awrs.generic.error.character_invalid.summary", MessageArguments("search field"), fieldId)
+      val invalidFormats = List(ExpectedInvalidFieldFormat("α", fieldId, "search field"))
+      val formatError = ExpectedFieldFormat(invalidFormats)
+
+      val expectations = CompulsoryFieldValidationExpectations(emptyError, maxLenError, formatError)
+
+      fieldId assertFieldIsCompulsory expectations
+    }
+
+    "allow valid submissions" in {
+      assertFormIsValid(form, Map(query -> "XAAW00000123456"))
+      assertFormIsValid(form, Map(query -> "XSAW00000123456"))
+      assertFormIsValid(form, Map(query -> "XZAW00000999999"))
+      assertFormIsValid(form, Map(query -> "XFAW00000000000"))
+      assertFormIsValid(form, Map(query -> "My company"))
     }
   }
 

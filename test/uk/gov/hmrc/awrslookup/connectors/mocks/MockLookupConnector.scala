@@ -29,10 +29,17 @@ trait MockLookupConnector extends AwrsUnitTestTraits {
 
   val mockLookupConnector = mock[LookupConnector]
 
-  def mockLookupConnectorWithOnly(queryByUrn: MockConfiguration[(MatcherConfiguration[String], Future[Option[SearchResult]])] = DoNotConfigure): Unit = {
+  def mockLookupConnectorWithOnly(queryByUrn: MockConfiguration[(MatcherConfiguration[String], Future[Option[SearchResult]])] = DoNotConfigure,
+                                  queryByName: MockConfiguration[(MatcherConfiguration[String], Future[Option[SearchResult]])] = DoNotConfigure
+                                 ): Unit = {
     queryByUrn ifConfiguredThen {
       case (input: MatcherConfiguration[String], dataToReturn: Future[Option[SearchResult]]) =>
         when(mockLookupConnector.queryByUrn(input.matcher)(Matchers.any())).thenReturn(dataToReturn)
+    }
+
+    queryByName ifConfiguredThen {
+      case (input: MatcherConfiguration[String], dataToReturn: Future[Option[SearchResult]]) =>
+        when(mockLookupConnector.queryByName(input.matcher)(Matchers.any())).thenReturn(dataToReturn)
     }
   }
 

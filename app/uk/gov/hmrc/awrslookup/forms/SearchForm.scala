@@ -17,7 +17,7 @@
 package uk.gov.hmrc.awrslookup.forms
 
 import uk.gov.hmrc.awrslookup._
-import forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, FieldFormatConstraintParameter, MaxLengthConstraintIsHandledByTheRegEx, OptionalTextFieldMappingParameter}
+import forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, FieldFormatConstraintParameter, MaxLengthConstraintIsHandledByTheRegEx}
 import forms.validation.util.ErrorMessagesUtilAPI._
 import forms.validation.util.MappingUtilAPI._
 import play.api.data.Form
@@ -35,6 +35,7 @@ object SearchForm {
   private lazy val leading4CharRegex = "^[a-zA-Z]{4}.{11}$"
   private lazy val leadingXRegex = "^X.{14}$"
   private lazy val zerosRegex = "^[a-zA-Z]{4}00000.{6}"
+  val maxQueryLength = 140
 
   private lazy val queryTargetId = TargetFieldIds(query)
   private lazy val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments("search field"))
@@ -72,11 +73,23 @@ object SearchForm {
 
   lazy val searchForm = PreprocessedForm(searchValidationForm)
 
+  val asciiChar32 = 32
+  val asciiChar126 = 126
+  val asciiChar160 = 160
+  val asciiChar255 = 255
+
+  def validText(input: String): Boolean = {
+    val inputList: List[Char] = input.toList
+    inputList.forall { c =>
+      (c >= asciiChar32 && c <= asciiChar126) || (c >= asciiChar160 && c <= asciiChar255)
+    }
+  }
+
   private lazy val compulsoryByNameQueryField = compulsoryText(
     CompulsoryTextFieldMappingParameter(
       empty = simpleFieldIsEmptyConstraintParameter(query, "awrs.search.query.empty"),
-      maxLengthValidation = genericFieldMaxLengthConstraintParameter(140, query, "search field"),
-      formatValidations = Seq()
+      maxLengthValidation = genericFieldMaxLengthConstraintParameter(maxQueryLength, query, "search field"),
+      formatValidations = genericInvalidFormatConstraintParameter(validText, query, "search field")
     ))
 
   lazy val searchByNameValidationForm = Form(mapping(
