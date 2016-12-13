@@ -1,0 +1,25 @@
+@(brackets: Boolean = true)(implicit messages: Messages)
+
+@tagOpen = {
+    <span aria-label="A W R S  U R N">
+}
+
+@tagClose={
+    </span>
+}
+
+@lbracket = @{
+    brackets match {
+        case true => "("
+        case _ => ""
+    }
+}
+
+@rbracket = @{
+    brackets match {
+        case true => ")"
+        case _ => ""
+    }
+}
+
+@Html(Messages("awrs.lookup.search.awrs_urn", tagOpen, tagClose, lbracket, rbracket))
