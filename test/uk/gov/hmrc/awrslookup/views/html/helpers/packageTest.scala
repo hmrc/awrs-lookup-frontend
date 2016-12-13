@@ -41,17 +41,17 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
     }
   }
 
-  "paragraphs function" should {
-    "Output only defined elements in <p> tags" in {
+  "spans function" should {
+    "Output only defined elements in <span> tags" in {
       val testData: Map[String, Option[String]] = Map[String, Option[String]]("addressLine1" -> "line1", "addressLine2" -> "line2", "addressLine3" -> None, "addressLine4" -> "line4")
-      val soupDoc: Document = paragraphs(testData)
-      val pTags = soupDoc.getElementsByTag("p")
-      withClue(s"p tags found:\n$pTags\n") {
-        pTags.size() shouldBe 3
+      val soupDoc: Document = spans(testData)
+      val spanTags = soupDoc.getElementsByTag("span")
+      withClue(s"span tags found:\n$spanTags\n") {
+        spanTags.size() shouldBe 3
       }
       testData.foreach {
         case (id: String, Some(x)) =>
-          pTags.text().contains(x) shouldBe true
+          spanTags.text().contains(x) shouldBe true
         case _ =>
       }
     }

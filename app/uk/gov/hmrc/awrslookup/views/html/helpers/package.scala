@@ -36,10 +36,10 @@ package object helpers {
   def theTime(time: DateTime = DateTime.now()): String =
     time.toString("dd MMMM yyyy hh:mm ") + time.toString("a").toLowerCase
 
-  def paragraphs(strings: Map[String, Option[String]]): Html =
+  def spans(strings: Map[String, Option[String]]): Html =
     Html(
       strings.map {
-        case (id, Some(data)) => s"<p id='$id'>$data</p>"
+        case (id, Some(data)) => s"<span id='$id'>$data</span><br/>"
         case _ => ""
       }.view.mkString("")
     )
