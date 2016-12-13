@@ -5,16 +5,21 @@
 @import helpers._
 @import lookup.results._
 
-@(result: AwrsEntry, id: String)(implicit request : Request[AnyContent], messages: Messages)
+@(result: AwrsEntry, id: String, searchTerm: String)(implicit request : Request[AnyContent], messages: Messages)
 
 @address = { Address, @result.info.address.toStringSeq.mkString(", ") }
 
+@resultNameToDisplay = @{
+    result match {
+        case _ : Business => bestMatchName(result.info, searchTerm)
+        case asGroup : Group => groupSearchBestMatchInfo(asGroup, searchTerm)
+    }
+}
+
 <div class="form-group">
     <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show?=query=@{result.awrsRef}">
-        <h3 class="heading-medium-search">
-            @knownName(result.info)
-        </h3>
+        <h3 class="heading-medium-search">@resultNameToDisplay</h3>
     </a>
-    @headerRegNumberHighlight(result, attrClass = "form-hint", id = id, displayRegNumberForApproved = true)
+    @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
     <p id="address_@id">@address</p>
 </div>
