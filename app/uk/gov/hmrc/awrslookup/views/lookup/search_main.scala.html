@@ -53,7 +53,7 @@
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
-            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), isle_of_man_link()))</p>
+            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", isle_of_man_link()))</p>
         }
     }
 }
