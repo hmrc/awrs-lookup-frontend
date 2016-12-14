@@ -22,7 +22,8 @@ import org.jsoup.nodes.Document
 import play.api.i18n.Messages
 import uk.gov.hmrc.awrslookup.models.AwrsStatus.Approved
 import uk.gov.hmrc.awrslookup.models.{Address, Group, Info}
-import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
+import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils, TestUtils}
+import TestUtils._
 
 import scala.collection.JavaConversions._
 
@@ -127,12 +128,32 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
 
   }
 
+  val testInfo = TestUtils.testInfo("")
+  val epsilon = 1e-2f
+
+  "infoMatchCoEff" should {
+    val test = testInfo.copy(businessName = "FRANCE")
+    infoMatchCoEff(test, "france") shouldBe 1.0 +- epsilon
+    infoMatchCoEff(test, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+
+    val test2 = testInfo.copy(tradingName = "FRANCE")
+    infoMatchCoEff(test2, "france") shouldBe 1.0 +- epsilon
+    infoMatchCoEff(test2, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+  }
+
+  "bestMatchName" should {
+    "return either the trading/business name that is the best match to the search term" in {
+      val testName = "FRANCE"
+      val testName2 = "REPUBLIC OF FRANCE"
+      val test = testInfo.copy(businessName = testName, tradingName = testName2)
+      bestMatchName(test, testName) shouldBe testName
+      bestMatchName(test, testName2) shouldBe testName2
+      bestMatchName(test, "REPUBLIC") shouldBe testName2
+    }
+  }
 
   "memberWithTheClosestMatch" should {
     "find the best matching member" in {
-      val testInfo = Info("testBusinessName", "testTradingName", "testFullName",
-        Address("testline1", "testline2", "testline3", "testline4", "testPostCode", "testCountry"))
-
       val g: Group = Group(
         awrsRef = "testValue",
         registrationDate = "01/01/1970",
@@ -149,6 +170,31 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
 
       val info = memberWithTheClosestMatch(g.members, "my bus")
       info shouldBe testInfo.copy(businessName = "my bus")
+    }
+  }
+
+  val testGroup = TestUtils.testGroup("")
+
+  "groupSearchBestMatchInfo" should {
+    "return the group rep's name if the search term matches on the group rep" in {
+      val testValue = "FRANCE"
+      val g = testGroup.copy(info = testInfo.copy(businessName = testValue))
+      val actual = groupSearchBestMatchInfo(g, searchTerm = testValue)
+      actual shouldBe testValue
+    }
+
+    "return the member's name if the search term matches a member" in {
+      val testValue = "FRANCE"
+      val g = testGroup.copy(members =
+        List(
+          testInfo.copy(tradingName = "not me"),
+          testInfo.copy(tradingName = testValue),
+          testInfo.copy(tradingName = "not me 2"),
+          testInfo.copy(tradingName = "not me 3")
+        )
+      )
+      val actual = groupSearchBestMatchInfo(g, searchTerm = testValue)
+      actual shouldBe s"$testValue part of ${knownName(testGroup.info)}"
     }
   }
 

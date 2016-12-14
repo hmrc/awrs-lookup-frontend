@@ -114,7 +114,6 @@ package object helpers {
         1 - infoMatchCoEff(info, searchTerm)
     }.head
 
-
   def groupSearchBestMatchInfo(group: Group, searchTerm: String): String = {
     val bestMatch = memberWithTheClosestMatch(group.members :+ group.info, searchTerm)
     bestMatch == group.info match {
