@@ -87,7 +87,7 @@
     @status_warning(result)
     <table id="results-table">
         @tableHeadingMedium(id+"_representative", "Group representative", additionalClasses = None)
-        @common(showRegNumber = false)
+        @common(showRegNumber = true)
         @info(group.info)
         @tableHeadingMedium(id+"_members","Group members")
         @group.members.zipWithIndex.map {
