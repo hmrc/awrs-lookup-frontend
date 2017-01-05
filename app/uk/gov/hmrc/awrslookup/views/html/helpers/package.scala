@@ -57,7 +57,7 @@ package object helpers {
       case _ => Messages("awrs.lookup.results.group_lede_plural", groupName, list)
     }
 
-    def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading>${knownName(info)}</a>"""
+    def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading id=result_member_${ind}_lede>${knownName(info)}</a>"""
 
     val Init = ""
 
