@@ -86,10 +86,10 @@
     <p id="results-lede" class="lede">@groupLedge(group)</p>
     @status_warning(result)
     <table id="results-table">
-        @tableHeadingMedium(id, "Group representative", additionalClasses = None)
+        @tableHeadingMedium(id+"_representative", "Group representative", additionalClasses = None)
         @common(showRegNumber = false)
         @info(group.info)
-        @tableHeadingMedium(id,"Group members")
+        @tableHeadingMedium(id+"_members","Group members")
         @group.members.zipWithIndex.map {
             case (memberInfo: Info, index: Int) => {
                 @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
