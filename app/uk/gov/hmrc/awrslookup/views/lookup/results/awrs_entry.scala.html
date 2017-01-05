@@ -47,12 +47,12 @@
         case Some(address) => {
             @table_row(s"${id}_address", Messages("awrs.lookup.results.place_of_bus"),
                 spans(ListMap(
-                    "addressLine1" -> address.addressLine1,
-                    "addressLine2" -> address.addressLine2,
-                    "addressLine3" -> address.addressLine3,
-                    "addressLine4" -> address.addressLine4,
-                    "postcode" -> address.postcode,
-                    "country" -> address.addressCountry)
+                    s"${id}_addressLine1" -> address.addressLine1,
+                    s"${id}_addressLine2" -> address.addressLine2,
+                    s"${id}_addressLine3" -> address.addressLine3,
+                    s"${id}_addressLine4" -> address.addressLine4,
+                    s"${id}_postcode" -> address.postcode,
+                    s"${id}_country" -> address.addressCountry)
                 )
             )
         }
@@ -79,13 +79,13 @@
 }
 
 @group(group: Group) = {
-    <h1 class="heading-xlarge">
+    <h1 class="heading-xlarge" id="results-heading">
         @knownName(group.info)
         @headerRegNumberHighlight(result)
     </h1>
-    <p class="lede">@groupLedge(group)</p>
+    <p id="results-lede" class="lede">@groupLedge(group)</p>
     @status_warning(result)
-    <table>
+    <table id="results-table">
         @tableHeadingMedium(id, "Group representative", additionalClasses = None)
         @common(showRegNumber = false)
         @info(group.info)
