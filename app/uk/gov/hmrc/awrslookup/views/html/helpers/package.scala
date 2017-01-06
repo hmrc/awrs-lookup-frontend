@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ package object helpers {
       case _ => Messages("awrs.lookup.results.group_lede_plural", groupName, list)
     }
 
-    def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading>${knownName(info)}</a>"""
+    def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading id=result_member_${ind}_lede>${knownName(info)}</a>"""
 
     val Init = ""
 
