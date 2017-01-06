@@ -85,11 +85,11 @@
     </h1>
     <p id="results-lede" class="lede">@groupLedge(group)</p>
     @status_warning(result)
-    <table id="results-table">
-        @tableHeadingMedium(id+"_representative", "Group representative", additionalClasses = None)
+    <table>
+        @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
         @common(showRegNumber = true)
         @info(group.info)
-        @tableHeadingMedium(id+"_members","Group members")
+        @tableHeadingMedium(id+"_members", Messages("awrs.lookup.results.group_member_table_heading"))
         @group.members.zipWithIndex.map {
             case (memberInfo: Info, index: Int) => {
                 @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
