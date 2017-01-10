@@ -79,7 +79,7 @@ package object helpers {
         )
     }
 
-    Html(text(loop(Init, group.members.zipWithIndex)))
+    Html(text(loop(Init, group.members.zipWithIndex) + "."))
   }
 
   // TODO optimisation, currently we're calling the similarity function multiple times for each element,
