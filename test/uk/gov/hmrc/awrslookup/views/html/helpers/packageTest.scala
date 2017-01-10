@@ -117,7 +117,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
           val names = testData.members.map(knownName)
           names.dropRight(1).mkString(", ") + " and " + names.last
       }
-      membersStr shouldBe expectedMembersStr
+      membersStr shouldBe expectedMembersStr + "."
     }
 
     "return the singular version of the lede if there is only 1 member" in testLeadingMessage(1, "awrs.lookup.results.group_lede_singular")
