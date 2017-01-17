@@ -57,16 +57,7 @@ class LookupController @Inject()(val environment: Environment,
     implicit request =>
       val action = controllers.routes.LookupController.show()
       request.queryString.get(SearchForm.query).isDefined match {
-        case true => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookupAwrsRef)
-        case false => Ok(views.html.lookup.search_main(searchForm.form, action))
-      }
-  }
-
-  def byNameShow = UnauthorisedAction.async {
-    implicit request =>
-      val action = controllers.routes.LookupController.byNameShow()
-      request.queryString.get(SearchForm.query).isDefined match {
-        case true => validateFormAndSearch(preValidationForm = searchByNameForm, action = action, lookupCall = lookupService.lookupByName)
+        case true => validateFormAndSearch(preValidationForm = searchByNameForm, action = action, lookupCall = lookupService.lookup)
         case false => Ok(views.html.lookup.search_main(searchForm.form, action))
       }
   }

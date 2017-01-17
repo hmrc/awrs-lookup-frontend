@@ -27,10 +27,7 @@ trait LookupService {
 
   val connector: LookupConnector
 
-  def lookupAwrsRef(awrsRef: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
-    connector.queryByUrn(awrsRef)
-
-  def lookupByName(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
+  def lookup(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
     prevalidation.trimAllFunc(queryString).toUpperCase.matches(SearchForm.awrsRefRegEx) match {
       case true => connector.queryByUrn(queryString)
       case false => connector.queryByName(queryString)
