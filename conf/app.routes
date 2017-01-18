@@ -3,5 +3,3 @@
 GET        /assets/*file            controllers.Assets.at(path="/public", file)
 
 GET        /                        uk.gov.hmrc.awrslookup.controllers.LookupController.show
-
-GET        /test-only                uk.gov.hmrc.awrslookup.controllers.LookupController.byNameShow

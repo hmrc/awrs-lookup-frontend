@@ -16,11 +16,6 @@ awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
 # Lookup Form Error Messages
 awrs.search.query.empty.summary=The search field is empty
 awrs.search.query.empty=Enter an AWRS URN
-awrs.search.query.string_length_mismatch=You must enter a 15 character AWRS URN
-awrs.search.query.leading_character_Length_mismatch=An AWRS URN must start with 4 alphabetical characters
-awrs.search.query.leading_x_mismatch=An AWRS URN must start with the letter X
-awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
-awrs.search.query.default_invalid_urn=You must enter a valid AWRS URN
 
 # Lookup page
 awrs.lookup.search.page_title=Check the alcohol wholesaler and producer register
@@ -40,7 +35,6 @@ awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group membe
 awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}
 awrs.lookup.results.group_rep_table_heading=Group representative
 awrs.lookup.results.group_member_table_heading=Group members
-awrs.lookup.results.secondary_heading_awrs_ref=AWRS registration number {0}
 awrs.lookup.results.status_label=AWRS status
 awrs.lookup.results.reg_number=AWRS registration number
 awrs.lookup.results.date_of_reg=Date of AWRS registration

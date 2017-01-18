@@ -29,6 +29,6 @@ trait MockLookupService extends AwrsUnitTestTraits {
   val mockLookupService = mock[LookupService]
 
   def mockLookupServiceWithOnly(lookupAwrsRef: MockConfiguration[Future[Option[SearchResult]]] = DoNotConfigure): Unit = {
-    lookupAwrsRef ifConfiguredThen (dataToReturn => when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(dataToReturn))
+    lookupAwrsRef ifConfiguredThen (dataToReturn => when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(dataToReturn))
   }
 }

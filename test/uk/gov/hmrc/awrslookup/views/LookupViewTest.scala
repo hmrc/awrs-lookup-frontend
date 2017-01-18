@@ -55,7 +55,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display an awrs entry when a valid reference is entered" in {
-      when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val document: Document = TestLookupController.show.apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
@@ -76,13 +76,13 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {
-      when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
+      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
       val document: Document = TestLookupController.show.apply(testRequest(testAwrsRef))
       document.getElementById("no-results-search-term").text.replaceAll(" ", "") should include(Messages("awrs.lookup.search.no_results", testAwrsRef).replaceAll(" ", ""))
     }
 
     "display a list of awrs entries when a valid reference is entered and multiple are found" in {
-      when(mockLookupService.lookupAwrsRef(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessListSearchResult)))
+      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessListSearchResult)))
       val document: Document = TestLookupController.show.apply(testRequest(testAwrsRef))
       val noOfResults = testBusinessListSearchResult.results.size
       document.getElementById("result-count").text should include(Messages("awrs.lookup.results.results_found", noOfResults))
