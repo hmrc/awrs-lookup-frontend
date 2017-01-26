@@ -95,7 +95,7 @@ package object helpers {
     }
   }
 
- def bestMatchName(info: Info, searchTerm: String): String = {
+  def bestMatchName(info: Info, searchTerm: String): String = {
     val tn = info.tradingName.fold("")(x => x)
     val bn = info.businessName.fold("")(x => x)
     val tnMatchPerc = LetterPairSimilarity.compareStrings(tn, searchTerm)
@@ -114,11 +114,11 @@ package object helpers {
         1 - infoMatchCoEff(info, searchTerm)
     }.head
 
-  def groupSearchBestMatchInfo(group: Group, searchTerm: String): String = {
+  def groupSearchBestMatchInfo(group: Group, searchTerm: String)(implicit messages: Messages): String = {
     val bestMatch = memberWithTheClosestMatch(group.members :+ group.info, searchTerm)
     bestMatch == group.info match {
       case true => bestMatchName(bestMatch, searchTerm)
-      case false => bestMatchName(bestMatch, searchTerm) + " part of " + knownName(group.info)
+      case false => Messages("awrs.lookup.results.group_h1_member_of", bestMatchName(bestMatch, searchTerm), knownName(group.info))
     }
   }
 
