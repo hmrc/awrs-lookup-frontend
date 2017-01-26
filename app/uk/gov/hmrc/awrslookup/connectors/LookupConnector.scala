@@ -17,6 +17,7 @@
 package uk.gov.hmrc.awrslookup.connectors
 
 import play.api.libs.json.Json
+import uk.gov.hmrc.awrslookup.forms.prevalidation
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.{FrontendAuditConnector, WSHttp}
 import uk.gov.hmrc.awrslookup.utils.LoggingUtils
@@ -26,6 +27,7 @@ import uk.gov.hmrc.play.http._
 
 import scala.concurrent.Future
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
@@ -62,7 +64,7 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
   }
 
   def queryByUrn(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
-    val getURL = byUrnUrl(query)
+    val getURL = byUrnUrl(prevalidation.trimAllFunc(query).toUpperCase)
     http.GET(getURL) flatMap responseCore(s"ByUrl[ $query ]")
   }
 
