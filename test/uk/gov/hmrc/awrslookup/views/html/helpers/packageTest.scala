@@ -194,7 +194,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
         )
       )
       val actual = groupSearchBestMatchInfo(g, searchTerm = testValue)
-      actual shouldBe s"$testValue part of ${knownName(testGroup.info)}"
+      actual shouldBe s"$testValue part of the ${knownName(testGroup.info)}"
     }
   }
 
