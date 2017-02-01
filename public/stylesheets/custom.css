@@ -45,6 +45,7 @@ input[type="text"] {
 
 #no-results {
     margin-top: 100px;
+    overflow: hidden;
 }
 
 a.result-link h3, a.result-link:visited h3 {

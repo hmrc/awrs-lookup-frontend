@@ -58,6 +58,11 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
           info(s"[ $auditLookupTxName ] - Query ## $logRef")
           throw new InternalServerException("URL not found")
       }
+    case 400 => {
+      val reason: String = (response.json \ "message").as[String]
+      info(s"[ $auditLookupTxName - $logRef ] - The Submission has not passed validation: $reason")
+      None
+    }
     case status =>
       err(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
       throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
