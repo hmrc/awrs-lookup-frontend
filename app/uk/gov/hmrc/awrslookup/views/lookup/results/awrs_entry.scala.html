@@ -80,7 +80,7 @@
 
 @group(group: Group) = {
     <h1 class="heading-xlarge" id="results-heading">
-        @groupSearchBestMatchInfo(group, searchTerm)
+        @knownName(group.info)
         @headerRegNumberHighlight(result)
     </h1>
     <p id="results-lede" class="lede">@groupLedge(group)</p>
