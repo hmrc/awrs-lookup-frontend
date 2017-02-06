@@ -5,7 +5,7 @@
 @import lookup.results._
 @import common._
 
-@(result: models.AwrsEntry, searchTerm: String)(implicit request: Request[AnyContent], messages: Messages)
+@(result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false)(implicit request: Request[AnyContent], messages: Messages)
 
 @cssScripts = {
     <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
@@ -14,7 +14,7 @@
 @views.html.main_template(title = Messages("awrs.lookup.results.page_title"), bodyClasses = None, contentHeader = cssScripts) {
     <div class="grid">
         @backLink()
-        <div>@awrs_entry(result, "result", searchTerm)</div>
+        <div>@awrs_entry(result, "result", searchTerm, fromMulti)</div>
         @searchDate()
         @status_approved(result)
         @awrsPrintLink()
