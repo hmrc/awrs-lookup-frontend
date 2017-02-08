@@ -75,9 +75,9 @@ trait PrevalidationAPI[T] {
     }
     val sanitisedField: String = XssFilter.filter(trimmedField)
     caseRules.getOrElse(removeKeyPrefix(key), CaseOption.none) match {
-      case CaseOption.upper => sanitisedField.toUpperCase
-      case CaseOption.lower => sanitisedField.toLowerCase
-      case CaseOption.none => sanitisedField
+      case CaseOption.upper => trimmedField.toUpperCase
+      case CaseOption.lower => trimmedField.toLowerCase
+      case CaseOption.none => trimmedField
     }
   }
 
