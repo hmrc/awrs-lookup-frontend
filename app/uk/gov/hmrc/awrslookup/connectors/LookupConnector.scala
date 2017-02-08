@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.awrslookup.connectors
 
+import java.net.URLEncoder
+
 import play.api.libs.json.Json
 import uk.gov.hmrc.awrslookup.forms.prevalidation
 import uk.gov.hmrc.awrslookup.models.SearchResult
@@ -35,9 +37,12 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
 
   val http: HttpGet = WSHttp
   lazy val middleServiceURL = baseUrl("awrs-lookup")
-  lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
-  lazy val byNameUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/$query"""
+  lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/${encode(query)}"""
+  lazy val byNameUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/${encode(query)}"""
 
+  def encode(query: String): String = {
+    URLEncoder.encode(query, "UTF-8").replaceAll("\\+", "%20")
+  }
 
   private def responseCore(logRef: String)(response: HttpResponse): Future[Option[SearchResult]] = response.status match {
     case 200 =>
