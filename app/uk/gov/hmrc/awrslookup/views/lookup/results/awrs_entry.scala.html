@@ -7,7 +7,7 @@
 @import lookup.results._
 @import collection.immutable.ListMap
 
-@(result: AwrsEntry, id: String, searchTerm: String)(implicit request : Request[AnyContent], messages: Messages)
+@(result: AwrsEntry, id: String, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @tableHeading(size: String, name: String, heading: String, additionalClasses: Option[String] = None) = {
     <tr><th class="heading-@size @additionalClasses" id="@{name}_heading">@heading</th><td></td></tr>
@@ -19,6 +19,13 @@
 
 @tableHeadingSmall(name: String, heading: String, additionalClasses: Option[String] = "member-section") = {
     @tableHeading("small", name, heading, additionalClasses = additionalClasses)
+}
+
+@whichHeading(group: Group) = {
+    @fromMulti match {
+        case true => {@groupSearchBestMatchInfo(group, originalSearchTerm.get)}
+        case _ => {@knownName(group.info)}
+    }
 }
 
 @common(showRegNumber: Boolean) = {
@@ -80,7 +87,7 @@
 
 @group(group: Group) = {
     <h1 class="heading-xlarge" id="results-heading">
-        @knownName(group.info)
+        @whichHeading(group)
         @headerRegNumberHighlight(result)
     </h1>
     <p id="results-lede" class="lede">@groupLedge(group)</p>

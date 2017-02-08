@@ -45,13 +45,13 @@ class LookupControllerTest extends AwrsUnitTestTraits {
 
     "in show, lookup awrs entry when passed a valid awrs reference" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val result = TestLookupController.show.apply(FakeRequest())
+      val result = TestLookupController.show(false).apply(FakeRequest())
       status(result) shouldBe OK
     }
 
     "in byNameShow, lookup awrs entries by name" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val result = TestLookupController.show.apply(FakeRequest())
+      val result = TestLookupController.show(false).apply(FakeRequest())
       status(result) shouldBe OK
     }
   }
@@ -64,7 +64,7 @@ class LookupControllerTest extends AwrsUnitTestTraits {
         case Some(q) => "?query=" + q
         case _ => ""
       }
-      val oResult = route(app, FakeRequest(GET, "/awrs-lookup" + qString))
+      val oResult = route(app, FakeRequest(GET, "/check-the-awrs-register" + qString))
       oResult shouldBe 'defined
       val result = oResult.get
       status(result) shouldBe OK

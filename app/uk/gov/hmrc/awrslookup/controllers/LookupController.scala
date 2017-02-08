@@ -41,24 +41,25 @@ class LookupController @Inject()(val environment: Environment,
 
   val lookupService: LookupService = LookupService
 
-  private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall)(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
+  private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall, fromMulti: Boolean, originalSearchTerm: Option[String])(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
     formWithErrors => Ok(views.html.lookup.search_main(formWithErrors, action)),
     queryForm => {
       val queryString = queryForm.query
       lookupCall(queryString) map {
         case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(preValidationForm.form, action, searchTerm = queryString, searchResult = SearchResult(Nil)))
         case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, action, searchTerm = queryString, searchResult = result))
-        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head, searchTerm = queryString))
+        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm))
       }
     }
   )
 
-  def show = UnauthorisedAction.async {
+  def show(fromMulti: Boolean = false) = UnauthorisedAction.async {
     implicit request =>
-      val action = controllers.routes.LookupController.show()
-      request.queryString.get(SearchForm.query).isDefined match {
-        case true => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup)
-        case false => Ok(views.html.lookup.search_main(searchForm.form, action))
+      val action = controllers.routes.LookupController.show(fromMulti)
+      (request.queryString.get(SearchForm.query).isDefined, request.queryString.get("originalSearchTerm").isDefined) match {
+        case (true, true) => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = Some(request.queryString.get("originalSearchTerm").get.head))
+        case (true, false) => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = None)
+        case _ => Ok(views.html.lookup.search_main(searchForm.form, action))
       }
   }
 
