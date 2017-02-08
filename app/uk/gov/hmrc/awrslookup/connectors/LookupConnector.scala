@@ -37,7 +37,7 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
 
   val http: HttpGet = WSHttp
   lazy val middleServiceURL = baseUrl("awrs-lookup")
-  lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/${encode(query)}"""
+  lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
   lazy val byNameUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/${encode(query)}"""
 
   def encode(query: String): String = {
