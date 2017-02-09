@@ -18,18 +18,50 @@ package uk.gov.hmrc.awrslookup.forms
 
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.Valid
 import uk.gov.hmrc.awrslookup.forms.prevalidation._
-import uk.gov.hmrc.awrslookup.forms.validation.util.ConstraintUtil.CompulsoryTextFieldMappingParameter
+import uk.gov.hmrc.awrslookup.forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, FieldFormatConstraintParameter}
+import uk.gov.hmrc.awrslookup.forms.validation.util.ErrorMessageFactory.createErrorMessage
 import uk.gov.hmrc.awrslookup.forms.validation.util.ErrorMessagesUtilAPI._
 import uk.gov.hmrc.awrslookup.forms.validation.util.MappingUtilAPI._
-import uk.gov.hmrc.awrslookup.forms.validation.util.{MessageArguments, SummaryErrorConfig, TargetFieldIds}
+import uk.gov.hmrc.awrslookup.forms.validation.util.{FieldErrorConfig, MessageArguments, SummaryErrorConfig, TargetFieldIds}
 import uk.gov.hmrc.awrslookup.models.Query
 
 object SearchForm {
 
   val query = "query"
   val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
+  private lazy val leading4CharRegex = "^[a-zA-Z]{4}.{11}$"
+  private lazy val leadingXRegex = "^X.{14}$"
+  private lazy val zerosRegex = "^[a-zA-Z]{4}00000.{6}"
+  // if the user has entered more than 5 numbers, we assume they were trying to enter a URN
+  private lazy val guessUrnRegex = "(.*?[0-9]){6,}".r
   val maxQueryLength = 140
+
+  private lazy val queryTargetId = TargetFieldIds(query)
+  private lazy val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments("search field"))
+
+  private lazy val invalidQueryFieldError =
+    (fieldErr: String) => createErrorMessage(
+      queryTargetId,
+      FieldErrorConfig(fieldErr),
+      invalidFormatSummaryError)
+
+  private lazy val formatRules =
+    FieldFormatConstraintParameter(
+      (name: String) => {
+        trimAllFunc(name) match {
+          case trimmedName@_ if !validText(trimmedName) => invalidQueryFieldError("awrs.generic.error.character_invalid")
+          case trimmedName@_ if !guessUrnRegex.findFirstIn(trimmedName).isDefined => Valid
+          case trimmedName@_ if trimmedName.matches(awrsRefRegEx) => Valid
+          case trimmedName@_ if trimmedName.length != 15 => invalidQueryFieldError("awrs.search.query.string_length_mismatch")
+          case trimmedName@_ if !trimmedName.matches(leading4CharRegex) => invalidQueryFieldError("awrs.search.query.leading_four_characters_length_mismatch")
+          case trimmedName@_ if !trimmedName.matches(leadingXRegex) => invalidQueryFieldError("awrs.search.query.leading_x_mismatch")
+          case trimmedName@_ if !trimmedName.matches(zerosRegex) => invalidQueryFieldError("awrs.search.query.zeros_mismatch")
+          case _ => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
+        }
+      }
+    )
 
   val asciiChar32 = 32
   val asciiChar126 = 126
@@ -47,7 +79,7 @@ object SearchForm {
     CompulsoryTextFieldMappingParameter(
       empty = simpleFieldIsEmptyConstraintParameter(query, "awrs.search.query.empty"),
       maxLengthValidation = genericFieldMaxLengthConstraintParameter(maxQueryLength, query, "search field"),
-      formatValidations = genericInvalidFormatConstraintParameter(validText, query, "search field")
+      formatValidations = Seq(formatRules)
     ))
 
   lazy val searchValidationForm = Form(mapping(
