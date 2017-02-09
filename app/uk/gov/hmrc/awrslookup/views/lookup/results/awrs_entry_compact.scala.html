@@ -5,14 +5,19 @@
 @import helpers._
 @import lookup.results._
 
-@(result: AwrsEntry, id: String, searchTerm: String)(implicit request : Request[AnyContent], messages: Messages)
+@(result: AwrsEntry, id: String, searchTerm: String)(implicit request: Request[AnyContent], messages: Messages)
 
-@address = { Address, @result.info.address.toStringSeq.mkString(", ") }
+@address = @{
+    result match {
+        case _: Business => result.info.address.toStringSeq.mkString(", ")
+        case asGroup: Group => groupSearchBestMatchAddress(asGroup, searchTerm).toStringSeq.mkString(", ")
+    }
+}
 
 @resultNameToDisplay = @{
     result match {
-        case _ : Business => bestMatchName(result.info, searchTerm)
-        case asGroup : Group => groupSearchBestMatchInfo(asGroup, searchTerm)
+        case _: Business => bestMatchName(result.info, searchTerm)
+        case asGroup: Group => groupSearchBestMatchInfo(asGroup, searchTerm)
     }
 }
 
