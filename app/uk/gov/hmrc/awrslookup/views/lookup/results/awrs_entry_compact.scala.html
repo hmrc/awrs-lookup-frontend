@@ -22,7 +22,7 @@
 }
 
 <div class="form-group">
-    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?=originalSearchTerm=@{searchTerm}&query=@{result.awrsRef}">
+    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{searchTerm}&query=@{result.awrsRef}">
         <h3 class="heading-medium-search">@resultNameToDisplay</h3>
     </a>
     @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
