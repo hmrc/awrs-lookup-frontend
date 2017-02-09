@@ -19,7 +19,7 @@ package uk.gov.hmrc.awrslookup.views.html
 import org.joda.time.DateTime
 import play.api.i18n.Messages
 import play.twirl.api.Html
-import uk.gov.hmrc.awrslookup.models.{Group, Info}
+import uk.gov.hmrc.awrslookup.models.{Address, Group, Info}
 import uk.gov.hmrc.awrslookup.utils.LetterPairSimilarity
 
 import scala.annotation.tailrec
@@ -121,5 +121,8 @@ package object helpers {
       case false => Messages("awrs.lookup.results.group_h1_member_of", bestMatchName(bestMatch, searchTerm), knownName(group.info))
     }
   }
+
+  def groupSearchBestMatchAddress(group: Group, searchTerm: String)(implicit messages: Messages): Option[Address] =
+    memberWithTheClosestMatch(group.members :+ group.info, searchTerm).address
 
 }
