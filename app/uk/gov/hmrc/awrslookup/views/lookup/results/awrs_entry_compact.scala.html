@@ -4,8 +4,14 @@
 @import views.html._
 @import helpers._
 @import lookup.results._
+@import java.net.URLEncoder
+
 
 @(result: AwrsEntry, id: String, searchTerm: String)(implicit request: Request[AnyContent], messages: Messages)
+
+@encodeString(query: String) = @{
+    URLEncoder.encode(query, "UTF-8").replaceAll("\\+", "%20")
+}
 
 @address = @{
     result match {
@@ -22,7 +28,7 @@
 }
 
 <div class="form-group">
-    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{searchTerm}&query=@{result.awrsRef}">
+    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{encodeString(searchTerm)}&query=@{result.awrsRef}">
         <h3 class="heading-medium-search">@resultNameToDisplay</h3>
     </a>
     @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
