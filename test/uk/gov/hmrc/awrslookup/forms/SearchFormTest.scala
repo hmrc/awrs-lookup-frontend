@@ -33,7 +33,17 @@ class SearchFormTest extends AwrsUnitTestTraits {
       val emptyError = ExpectedFieldIsEmpty(fieldId, FieldError("awrs.search.query.empty"))
       val maxLenError = ExpectedFieldExceedsMaxLength(fieldId, "search field", maxQueryLength)
       val summaryError = SummaryError("awrs.generic.error.character_invalid.summary", MessageArguments("search field"), fieldId)
-      val invalidFormats = List(ExpectedInvalidFieldFormat("α", fieldId, "search field"))
+      val invalidFormats = List(
+        ExpectedInvalidFieldFormat("α", fieldId, "search field"),
+        ExpectedInvalidFieldFormat("AAAA000001234567", FieldError("awrs.search.query.string_length_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("AAAA0000012345", FieldError("awrs.search.query.string_length_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("BAAW00000123456", FieldError("awrs.search.query.leading_x_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("XAAW00001123456", FieldError("awrs.search.query.zeros_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("1AAW00000123456", FieldError("awrs.search.query.leading_four_characters_length_mismatch"), summaryError),
+        ExpectedInvalidFieldFormat("XAAA00000123456", FieldError("awrs.search.query.default_invalid_urn"), summaryError),
+        ExpectedInvalidFieldFormat("XAAA00000123456", FieldError("awrs.search.query.default_invalid_urn"), summaryError),
+        ExpectedInvalidFieldFormat("My 20th company 1885", FieldError("awrs.search.query.string_length_mismatch"), summaryError)
+      )
       val formatError = ExpectedFieldFormat(invalidFormats)
 
       val expectations = CompulsoryFieldValidationExpectations(emptyError, maxLenError, formatError)
@@ -47,6 +57,8 @@ class SearchFormTest extends AwrsUnitTestTraits {
       assertFormIsValid(form, Map(query -> "XZAW00000999999"))
       assertFormIsValid(form, Map(query -> "XFAW00000000000"))
       assertFormIsValid(form, Map(query -> "My company"))
+      assertFormIsValid(form, Map(query -> "My company 1885"))
+      assertFormIsValid(form, Map(query -> "My 2 company 1885"))
     }
   }
 
