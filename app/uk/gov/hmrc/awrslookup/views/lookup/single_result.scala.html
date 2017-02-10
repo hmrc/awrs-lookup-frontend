@@ -1,5 +1,6 @@
 @import uk.gov.hmrc.play.views.html.helpers._
 @import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.awrslookup.models._
 @import views.html._
 @import helpers._
 @import lookup.results._
@@ -11,10 +12,24 @@
     <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
 }
 
-@views.html.main_template(title = Messages("awrs.lookup.results.page_title"), bodyClasses = None, contentHeader = cssScripts) {
+@heading = {
+    @result match {
+        case  bus : Business => { @knownName(bus.info) }
+        case  grp : Group    => { @whichHeading(grp) }
+    }
+}
+
+@whichHeading(group: Group) = {
+    @fromMulti match {
+        case true => {@groupSearchBestMatchInfo(group, originalSearchTerm.get)}
+        case _ => {@knownName(group.info)}
+    }
+}
+
+@views.html.main_template(title = heading.toString, bodyClasses = None, contentHeader = cssScripts) {
     <div class="grid">
         @backLink()
-        <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm)</div>
+        <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
         @searchDate()
         @status_approved(result)
         @awrsPrintLink()
