@@ -33,7 +33,7 @@
 
 <div class="form-group">
     <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{encodeString(searchTerm)}&query=@{result.awrsRef}">
-        <h3 class="heading-medium-search">@{decodeString(resultNameToDisplay)}</h3>
+        <h2 class="heading-small">@{decodeString(resultNameToDisplay)}</h2>
     </a>
     @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
     <p id="address_@id">@address</p>
