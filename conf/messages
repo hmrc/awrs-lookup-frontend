@@ -3,8 +3,8 @@ awrs-lookup.nav_title=Check for approved alcohol wholesalers or producers
 # Generic Messages
 awrs.generic.back=Back to search
 awrs.generic.status.approved=Approved
-awrs.generic.status.revoked=Revoked
-awrs.generic.status.deregistered=Deregistered
+awrs.generic.status.revoked=No longer registered
+awrs.generic.status.deregistered=No longer registered
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form
