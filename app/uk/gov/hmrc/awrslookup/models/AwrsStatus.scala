@@ -59,12 +59,12 @@ object AwrsStatus {
 
   case object Revoked extends AwrsStatus {
     val code = "08"
-    val name = "Revoked"
+    val name = "No longer registered"
   }
 
   case object DeRegistered extends AwrsStatus {
     val code = "10"
-    val name = "Deregistered"
+    val name = "No longer registered"
   }
 
   case class NotFound(code: String) extends AwrsStatus {
