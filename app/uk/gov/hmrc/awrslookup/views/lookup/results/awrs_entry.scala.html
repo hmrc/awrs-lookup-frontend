@@ -72,7 +72,7 @@
         @headerRegNumberHighlight(result)
     </h1>
     @status_warning(result)
-    <table id="results-table">
+    <table id="results-table" role="presentation">
         @common(showRegNumber = true)
         @info(business.info)
     </table>
@@ -85,7 +85,7 @@
     </h1>
     <p id="results-lede" class="lede">@groupLedge(group)</p>
     @status_warning(result)
-    <table id="results-table">
+    <table id="results-table" role="presentation">
         @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
         @common(showRegNumber = true)
         @info(group.info)
