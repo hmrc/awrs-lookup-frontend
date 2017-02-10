@@ -48,7 +48,7 @@ input[type="text"] {
     overflow: hidden;
 }
 
-a.result-link h3, a.result-link:visited h3 {
+a.result-link h3, a.result-link:visited h3, a.result-link h2, a.result-link:visited h2 {
 	color: #2e3191;
 }
 
