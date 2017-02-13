@@ -42,14 +42,15 @@
 }
 
 @views.html.main_template(title = heading.toString, bodyClasses = None, contentHeader = cssScripts) {
-    <div class="grid">
-        @backLink()
-        @helper.form(action = action) {
+    @helper.form(action = action) {
         @searchbar
-        }
-        <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
-        @searchDate()
-        @status_approved(result)
-        @awrsPrintLink()
+    }
+    <div class="grid">
+        <div class="grid-2-3">
+            <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
+            @searchDate()
+            @status_approved(result)
+            @awrsPrintLink()
+        </div>
     </div>
 }
