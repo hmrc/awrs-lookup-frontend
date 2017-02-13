@@ -16,6 +16,18 @@
     }
 }
 
+@noResults = {
+    @searchTerm match {
+        case Some(term) => {
+            <div id="no-results">
+                @no_result_warning(term)
+                @searchDate()
+            </div>
+        }
+        case None => {}
+    }
+}
+
 @resultCounter(size: Int) = {
     <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
 }
@@ -34,7 +46,7 @@
 @results = {
     @searchResult match {
         case Some(SearchResult(results)) if results.size > 1 => { @multiResults(results) }
-        case _ => {}
+        case _ => { @noResults }
     }
 }
 
