@@ -5,11 +5,9 @@
 @import helpers._
 @import lookup.results._
 @import common._
-@import views.html.helpers._
-@import uk.gov.hmrc.play.views.html.helpers.{form => _, _}
-@import uk.gov.hmrc.awrslookup._
+@import lookup.search._
 
-@(searchForm : Form[models.Query], result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], action: Call, result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
 @cssScripts = {
     <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
