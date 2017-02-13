@@ -5,8 +5,11 @@
 @import helpers._
 @import lookup.results._
 @import common._
+@import views.html.helpers._
+@import uk.gov.hmrc.play.views.html.helpers.{form => _, _}
+@import uk.gov.hmrc.awrslookup._
 
-@(result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
 @cssScripts = {
     <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
@@ -26,9 +29,26 @@
     }
 }
 
+@searchbar = {
+<div class="search">
+    @awrsInputTypeText(
+    field = searchForm("query"),
+    inputClass = "search-awrs",
+    parentForm = searchForm,
+    maxLength = 140,
+    postInputContent = search_button(id = "search", classAttr = None),
+    label = Messages("awrs.lookup.search.label"),
+    labelClass = "visuallyhidden"
+    )
+</div>
+}
+
 @views.html.main_template(title = heading.toString, bodyClasses = None, contentHeader = cssScripts) {
     <div class="grid">
         @backLink()
+        @helper.form(action = action) {
+        @searchbar
+        }
         <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
         @searchDate()
         @status_approved(result)

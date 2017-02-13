@@ -8,6 +8,8 @@
     }
 }
 
+#content__body {width:100%;}
+
 .search-awrs {
 	float: left;
 	width: 75%;
