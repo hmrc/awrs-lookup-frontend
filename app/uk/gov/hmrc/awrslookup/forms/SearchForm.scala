@@ -39,13 +39,15 @@ object SearchForm {
   val maxQueryLength = 140
 
   private lazy val queryTargetId = TargetFieldIds(query)
-  private lazy val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.character_invalid.summary", MessageArguments("search field"))
+ // private lazy val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.maximum_length.summary", MessageArguments("search field"))
+  private lazy val invalidFormatSummaryError =
+    (fieldErr: String) => SummaryErrorConfig(fieldErr + ".summary", MessageArguments("search field"))
 
   private lazy val invalidQueryFieldError =
     (fieldErr: String) => createErrorMessage(
       queryTargetId,
       FieldErrorConfig(fieldErr),
-      invalidFormatSummaryError)
+      invalidFormatSummaryError(fieldErr))
 
   private lazy val formatRules =
     FieldFormatConstraintParameter(
