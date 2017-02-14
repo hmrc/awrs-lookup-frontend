@@ -43,26 +43,16 @@ class LookupController @Inject()(val environment: Environment,
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall, fromMulti: Boolean, originalSearchTerm: Option[String])(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
     formWithErrors => {
-      println("FORMDATA:"+formWithErrors.data.get("query"))
-      formWithErrors.errors.foreach {
-        res =>
-          println("RES:::"+res)
-          res.messages.foreach {
-            next =>
-              println("ERROS::::"+next)
-              }
-          }
+      val query = formWithErrors.data.get("query")
       val err = formWithErrors.errors.head.messages.head.split(".summary#").head
-      println("\n\n\nERR:"+err)
-      Ok(views.html.lookup.search_no_results(formWithErrors, action, searchTerm = formWithErrors.data.get("query"), searchResult = None, errorMessage = err))
-      Ok(views.html.lookup.search_error(formWithErrors, action, searchTerm = "", searchResult = None))
+      Ok(views.html.lookup.search_no_results(formWithErrors, action, searchTerm = query, searchResult = None, errorMessage = err))
     },
     queryForm => {
       val queryString = queryForm.query
       lookupCall(queryString) map {
         case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_no_results(preValidationForm.form, action, searchTerm = queryString, searchResult = SearchResult(Nil), errorMessage = None))
         case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.multiple_results(searchForm.form, action, searchTerm = queryString, searchResult = result))
-        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm))  // single result
+        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm)) // single result
       }
     }
   )
