@@ -52,7 +52,7 @@ class LookupController @Inject()(val environment: Environment,
       //        }
       //      },
       //
-      Ok(views.html.lookup.search_main(formWithErrors, action, searchTerm = "", searchResult = None))
+      Ok(views.html.lookup.search_error(formWithErrors, action, searchTerm = "", searchResult = None))
     },
     queryForm => {
       val queryString = queryForm.query
