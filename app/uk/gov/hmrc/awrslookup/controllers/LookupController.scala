@@ -43,7 +43,7 @@ class LookupController @Inject()(val environment: Environment,
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall, fromMulti: Boolean, originalSearchTerm: Option[String])(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
     formWithErrors => {
-      println("FORMDATA:"+formWithErrors)
+      println("FORMDATA:"+formWithErrors.data.get("query"))
       formWithErrors.errors.foreach {
         res =>
           println("RES:::"+res)
@@ -54,7 +54,7 @@ class LookupController @Inject()(val environment: Environment,
           }
       val err = formWithErrors.errors.head.messages.head.split(".summary#").head
       println("\n\n\nERR:"+err)
-      Ok(views.html.lookup.search_no_results(formWithErrors, action, searchTerm = "", searchResult = None, errorMessage = err))
+      Ok(views.html.lookup.search_no_results(formWithErrors, action, searchTerm = formWithErrors.data.get("query"), searchResult = None, errorMessage = err))
     },
     queryForm => {
       val queryString = queryForm.query
