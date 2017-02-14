@@ -16,18 +16,6 @@
     }
 }
 
-@noResults = {
-    @searchTerm match {
-        case Some(term) => {
-            <div id="no-results">
-                @no_result_warning(term)
-                @searchDate()
-            </div>
-        }
-        case None => {}
-    }
-}
-
 @resultCounter(size: Int) = {
     <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
 }
@@ -46,7 +34,7 @@
 @results = {
     @searchResult match {
         case Some(SearchResult(results)) if results.size > 1 => { @multiResults(results) }
-        case _ => { @noResults }
+        case _ => {}
     }
 }
 
@@ -81,13 +69,13 @@
 @pageScripts = {<script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>}
 
 @views.html.main_template(title = searchTitle, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
-    @helper.form(action = action) {
-        @searchbar
-    }
-    <div class="grid">
-        <div class="grid-2-3">
-            @headers
-            @results
-        </div>
+@helper.form(action = action) {
+@searchbar
+}
+<div class="grid">
+    <div class="grid-2-3">
+        @headers
+        @results
     </div>
+</div>
 }
