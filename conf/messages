@@ -8,7 +8,7 @@ awrs.generic.status.deregistered=No longer registered
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form
-awrs.generic.error.character_invalid.summary=The {0} is not in the correct format
+awrs.generic.error.character_invalid.summary=The URN is not in the correct format
 awrs.generic.error.character_invalid=Invalid characters have been entered
 awrs.generic.error.maximum_length.summary=The {0} is not in the correct format
 awrs.generic.error.maximum_length=The {0} must not be more than {1} characters

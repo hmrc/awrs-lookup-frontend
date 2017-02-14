@@ -121,11 +121,11 @@
         case None => {}
     }
 }
-<div class="form-field @if(fieldErrors.nonEmpty) {form-field--error} @wrapperClassStr @divClassStr">
+<div class="form-field @*@if(fieldErrors.nonEmpty) {form-field--error}*@ @wrapperClassStr @divClassStr">
     @preInputContent
     <label for="@inputIdStr" id="@{inputIdStr}_field" @labelClassStr @labelDataAttributesStr>@labelText@additionalHiddenLabel</label>
     @formHintStr
-    @commonHelper(field, fieldErrors)
+@*    @commonHelper(field, fieldErrors)  *@
     <input type="text"
            class="form-control @inputClassStr"
            name="@field.name"

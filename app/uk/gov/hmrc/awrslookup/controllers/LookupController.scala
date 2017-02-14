@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 import play.api.data.Form
 import play.api.{Configuration, Environment}
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.{AnyContent, Call, Request, Result}
 import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
@@ -43,16 +43,15 @@ class LookupController @Inject()(val environment: Environment,
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall, fromMulti: Boolean, originalSearchTerm: Option[String])(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
     formWithErrors => {
-      //        val queryString = preValidationForm.
-      //      println("****************************** preValidationForm.form.get.query: "+preValidationForm.form.get.query)
-      //        lookupCall(queryString) map {
-      //          case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(preValidationForm.form, action, searchTerm = queryString, searchResult = SearchResult(Nil)))
-      //          case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, action, searchTerm = queryString, searchResult = result))
-      //          case Some(r: SearchResult) => Ok(views.html.lookup.single_result(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm))
-      //        }
-      //      },
-      //
-      Ok(views.html.lookup.search_main(formWithErrors, action, searchTerm = "", searchResult = None))
+      formWithErrors.errors.foreach {
+        res =>
+          res.messages.foreach {
+            next =>
+              println("\n\n\n\nNEXT:::"+Messages(next.split(".summary#").head)+"<<<<<")
+              println("\n\n\n\nNEXT:::"+Messages((next.split(".summary#").head)+".summary")+"<<<<<")
+              }
+          }
+      Ok(views.html.lookup.search_no_results(formWithErrors, action, searchTerm = "", searchResult = None))
     },
     queryForm => {
       val queryString = queryForm.query

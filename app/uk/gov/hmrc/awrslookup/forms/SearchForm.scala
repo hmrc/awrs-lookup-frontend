@@ -30,9 +30,9 @@ import uk.gov.hmrc.awrslookup.models.Query
 object SearchForm {
 
   val query = "query"
-  val awrsRefRegEx = "^X[A-Z]AW00000[0-9]{6}$"
+  val awrsRefRegEx = "^[xX][a-zA-Z][aA][wW]00000[0-9]{6}$"
   private lazy val leading4CharRegex = "^[a-zA-Z]{4}.{11}$"
-  private lazy val leadingXRegex = "^X.{14}$"
+  private lazy val leadingXRegex = "^[xX].{14}$"
   private lazy val zerosRegex = "^[a-zA-Z]{4}00000.{6}"
   // if the user has entered more than 5 numbers, we assume they were trying to enter a URN
   private lazy val guessUrnRegex = "(.*?[0-9]){6,}".r
