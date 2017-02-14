@@ -18,10 +18,9 @@ package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
 
-import play.api.data.Form
-import play.api.{Configuration, Environment}
-import play.api.i18n.{Messages, MessagesApi}
+import play.api.i18n.MessagesApi
 import play.api.mvc.{AnyContent, Call, Request, Result}
+import play.api.{Configuration, Environment}
 import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm
