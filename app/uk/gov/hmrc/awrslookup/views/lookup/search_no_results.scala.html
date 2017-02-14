@@ -6,7 +6,7 @@
 @import search._
 @import results._
 
-@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None, errorMessage: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
 
 @searchTitle = @{
     (searchTerm, searchResult) match {
@@ -20,7 +20,7 @@
     @searchTerm match {
         case Some(term) => {
             <div id="no-results">
-                @no_result_warning(term)
+                @no_result_warning(term, errorMessage)
                 @searchDate()
             </div>
         }
