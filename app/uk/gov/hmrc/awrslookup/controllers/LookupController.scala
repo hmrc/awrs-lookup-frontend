@@ -58,7 +58,7 @@ class LookupController @Inject()(val environment: Environment,
       val queryString = queryForm.query
       lookupCall(queryString) map {
         case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_no_results(preValidationForm.form, action, searchTerm = queryString, searchResult = SearchResult(Nil)))
-        case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, action, searchTerm = queryString, searchResult = result))
+        case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.multiple_results(searchForm.form, action, searchTerm = queryString, searchResult = result))
         case Some(r: SearchResult) => Ok(views.html.lookup.single_result(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm))  // single result
       }
     }
