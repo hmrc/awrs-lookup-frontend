@@ -12,7 +12,7 @@
 
 .search-awrs {
 	float: left;
-	width: calc(100% - 50px - 1em - 2px);
+	width: calc(100% - 50px - 1em);
 	height: 45px;
 	margin-right: 2px;
 	padding-left: 0;
@@ -40,10 +40,19 @@ input[type="text"] {
     position: relative;
 }
 
-#content .search div.form-field {
+#search-bar-active {
     position: relative;
     background: #e5e5e5 none repeat scroll 0 0;
-    padding: 0.5em;
+    padding: 0.5em 0 0.5em 0.5em;
+}
+
+#search-form {
+    clear:both;
+    overflow:hidden;
+    width:100%;
+    padding:0;
+    margin:0;
+    float:left;
 }
 
 .result_label {
