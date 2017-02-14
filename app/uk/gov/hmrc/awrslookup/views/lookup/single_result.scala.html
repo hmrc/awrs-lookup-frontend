@@ -27,30 +27,18 @@
     }
 }
 
-@searchbar = {
-<div class="search">
-    @awrsInputTypeText(
-    field = searchForm("query"),
-    inputClass = "search-awrs",
-    parentForm = searchForm,
-    maxLength = 140,
-    postInputContent = search_button(id = "search", classAttr = None),
-    label = Messages("awrs.lookup.search.label"),
-    labelClass = "visuallyhidden"
-    )
-</div>
+@preContent = {
+    <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
+    @searchDate()
+    @status_approved(result)
+    @awrsPrintLink()
 }
 
-@views.html.main_template(title = heading.toString, bodyClasses = None, contentHeader = cssScripts) {
-    @helper.form(action = action) {
-        @searchbar
-    }
-    <div class="grid">
-        <div class="grid-2-3">
-            <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
-            @searchDate()
-            @status_approved(result)
-            @awrsPrintLink()
-        </div>
-    </div>
-}
+@results_core(
+    searchForm = searchForm,
+    preFormContent = preContent,
+    postFormContent = None,
+    action = action,
+    title = heading.toString
+)
+
