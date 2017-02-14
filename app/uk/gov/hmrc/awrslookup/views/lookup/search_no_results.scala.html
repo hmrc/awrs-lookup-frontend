@@ -6,64 +6,49 @@
 @import search._
 @import results._
 
-@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None, errorMessage: Option[String] = None)(implicit request : Request[AnyContent], messages: Messages)
-
-@searchTitle = @{
-    (searchTerm, searchResult) match {
-        case (Some(_), (None | Some(SearchResult(Nil))))            => Messages("awrs.lookup.results.page_title_no_results")
-        case (_ , (Some(SearchResult(list)))) if list.size > 1      => Messages("awrs.lookup.results.heading_multi_results", searchTerm.get)
-        case _ => Messages("awrs.lookup.search.page_title")
-    }
-}
+@(searchForm: Form[models.Query], action: Call, searchTerm: Option[String] = None, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
 @noResults = {
-    @searchTerm match {
-        case Some(term) => {
-            <div id="no-results">
-                @no_result_warning(term, errorMessage)
-                @searchDate()
-            </div>
-        }
-        case None => {}
+@searchTerm match {
+    case Some(term) => {
+        <div id="no-results">
+            @no_result_warning(term, errorMessage)
+            @searchDate()
+        </div>
     }
+    case None => {}
+}
 }
 
-@resultCounter(size: Int) = {
-    <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
-}
-
-@multiResults(results: List[AwrsEntry]) = {
-    <h1 class="heading-medium" id="search-heading">@Messages("awrs.lookup.results.heading_multi_results", results.size, searchTerm.get)</h1>
-    <div id = "search-results">
-        @results.zipWithIndex.map {
-            case (result, ind) => {
-                @awrs_entry_compact(result, ind.toString, searchTerm.fold("")(x => x))
-            }
-        }
+@searchbar = {
+    <div class="search">
+    @awrsInputTypeText(
+        field = searchForm("query"),
+        inputClass = "search-awrs",
+        parentForm = searchForm,
+        maxLength = 140,
+        postInputContent = search_button(id = "search", classAttr = None),
+        label = Messages("awrs.lookup.search.label"),
+        labelClass = "visuallyhidden"
+    )
     </div>
 }
 
-@results = {
-    @searchResult match {
-        case Some(SearchResult(results)) if results.size > 1 => { @multiResults(results) }
-        case _ => { @noResults }
-    }
+@cssScripts = {
+    <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
 }
 
-@headers = {
-    @(searchTerm, searchResult)match {
-        case (Some(_), _) | (_, Some(_)) => {}
-        case _ => {
-            <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
-            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), isle_of_man_link()))</p>
-        }
-    }
+@pageScripts = {
+    <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
 }
 
-@results_core(
-    searchForm = searchForm,
-    preFormContent = headers,
-    postFormContent = results,
-    action = action,
-    title = searchTitle
-)
+@views.html.main_template(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
+    @helper.form(action = action) {
+        @searchbar
+    }
+    <div class="grid">
+        <div class="grid-2-3">
+        @noResults
+        </div>
+    </div>
+}
