@@ -16,11 +16,10 @@
 
 package uk.gov.hmrc.awrslookup
 
-import play.api.Play._
 import uk.gov.hmrc.play.config.ServicesConfig
 
 trait AppConfig {
-  val analyticsToken: String
+  val analyticsToken: Option[String]
   val betaFeedbackUnauthenticatedUrl: String
   val externalReportProblemUrl: String
   val analyticsHost: String
@@ -36,8 +35,8 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   private val contactHost = loadConfig(s"contact-frontend.host")
   private val contactFormServiceIdentifier = "AWRS-LOOKUP"
 
-  override lazy val analyticsToken = loadConfig(s"google-analytics.token")
-  override lazy val analyticsHost = loadConfig(s"google-analytics.host")
+  override lazy val analyticsToken: Option[String] = Some(getString(s"google-analytics.token"))
+  override lazy val analyticsHost: String = getString(s"google-analytics.host")
   override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports?secure=true"
 
   override lazy val externalReportProblemUrl = s"$contactHost/contact/problem_reports"
