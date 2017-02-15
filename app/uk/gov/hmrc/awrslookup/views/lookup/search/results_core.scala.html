@@ -5,7 +5,6 @@
 @(searchForm : Form[models.Query],
   preFormContent: Option[Html] = None,
   postFormContent: Option[Html] = None,
-  action : Call,
   title : String,
   searchTerm: String
 )(implicit request : Request[AnyContent], messages: Messages)
@@ -34,7 +33,7 @@
 }
 
 @views.html.main_template(title = title, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
-    @helper.form(action = action, 'id -> "search-form") {
+    @helper.form(action = controllers.routes.LookupController.show(false), 'id -> "search-form") {
         @searchbar
     }
     <div class="grid">
