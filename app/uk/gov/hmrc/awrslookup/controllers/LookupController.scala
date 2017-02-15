@@ -18,10 +18,9 @@ package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
 
-import play.api.data.Form
-import play.api.{Configuration, Environment}
 import play.api.i18n.MessagesApi
 import play.api.mvc.{AnyContent, Call, Request, Result}
+import play.api.{Configuration, Environment}
 import uk.gov.hmrc.awrslookup._
 import uk.gov.hmrc.awrslookup.controllers.util.AwrsLookupController
 import uk.gov.hmrc.awrslookup.forms.SearchForm
@@ -42,13 +41,17 @@ class LookupController @Inject()(val environment: Environment,
   val lookupService: LookupService = LookupService
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call, lookupCall: lookupServiceCall, fromMulti: Boolean, originalSearchTerm: Option[String])(implicit request: Request[AnyContent]): Future[Result] = preValidationForm.bindFromRequest.fold(
-    formWithErrors => Ok(views.html.lookup.search_main(formWithErrors, action)),
+    formWithErrors => {
+      val query = formWithErrors.data.get("query")
+      val err = formWithErrors.errors.head.messages.head.split(".summary#").head
+      Ok(views.html.lookup.search_no_results(formWithErrors, action, searchTerm = query, errorMessage = err))
+    },
     queryForm => {
       val queryString = queryForm.query
       lookupCall(queryString) map {
-        case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_main(preValidationForm.form, action, searchTerm = queryString, searchResult = SearchResult(Nil)))
-        case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.search_main(searchForm.form, action, searchTerm = queryString, searchResult = result))
-        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm))
+        case None | Some(SearchResult(Nil)) => Ok(views.html.lookup.search_no_results(preValidationForm.form, action, searchTerm = queryString, errorMessage = None))
+        case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.multiple_results(searchForm.form, action, searchTerm = queryString, searchResult = result))
+        case Some(r: SearchResult) => Ok(views.html.lookup.single_result(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm)) // single result
       }
     }
   )

@@ -30,16 +30,17 @@
 @pageScripts = {<script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>}
 
 @views.html.main_template(title = title, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
-    @errorSummaryTemplate(searchForm)
     <div class="grid">
-        @preFormContent
-        @*  This uses the play's default form helper which does not include the hidden CSRF token field.
-            This is because currently this service is completely sessionless and stateless thus
-            does not require CSRF protection, and we do not want it to appear in the query String.
-        *@
-        @helper.form(action = action) {
-            @searchbar
-        }
-        @postFormContent
+        <div class="grid-2-3">
+            @preFormContent
+            @*  This uses the play's default form helper which does not include the hidden CSRF token field.
+                This is because currently this service is completely sessionless and stateless thus
+                does not require CSRF protection, and we do not want it to appear in the query String.
+            *@
+            @helper.form(action = action, 'id -> "search-form") {
+                @searchbar
+            }
+            @postFormContent
+        </div>
     </div>
 }

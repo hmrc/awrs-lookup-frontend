@@ -85,7 +85,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessListSearchResult)))
       val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
       val noOfResults = testBusinessListSearchResult.results.size
-      document.getElementById("result-count").text should include(Messages("awrs.lookup.results.results_found", noOfResults))
+      document.getElementById("search-heading").text should include(Messages("awrs.lookup.results.heading_multi_results", noOfResults, testAwrsRef))
     }
   }
 }

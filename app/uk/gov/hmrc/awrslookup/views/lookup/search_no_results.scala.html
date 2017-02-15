@@ -1,0 +1,54 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html.helpers._
+@import models._
+@import common._
+@import search._
+@import results._
+
+@(searchForm: Form[models.Query], action: Call, searchTerm: Option[String] = None, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
+
+@noResults = {
+@searchTerm match {
+    case Some(term) => {
+        <div id="no-results">
+            @no_result_warning(term, errorMessage)
+        </div>
+    }
+    case None => {}
+}
+}
+
+@searchbar = {
+    <div class="search">
+    @awrsInputTypeText(
+        field = searchForm("query"),
+        inputClass = "search-awrs",
+        parentForm = searchForm,
+        maxLength = 140,
+        postInputContent = search_button(id = "search", classAttr = None),
+        label = Messages("awrs.lookup.search.label"),
+        labelClass = "visuallyhidden"
+    )
+    </div>
+}
+
+@cssScripts = {
+    <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
+}
+
+@pageScripts = {
+    <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
+    <script>_gaq.push(['_trackEvent', 'Search Results', 'No Results', '@searchTerm']);</script>
+}
+
+@views.html.main_template(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
+    @helper.form(action = action, 'id -> "search-form") {
+        @searchbar
+    }
+    <div class="grid">
+        <div class="grid-2-3">
+        @noResults
+        </div>
+    </div>
+}

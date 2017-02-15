@@ -1,0 +1,20 @@
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import views.html.helpers._
+@import models._
+@import common._
+@import search._
+@import results._
+
+@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
+
+@searchTitle = @{Messages("awrs.lookup.results.format_error")}
+
+@results_core(
+    searchForm = searchForm,
+    preFormContent = None,
+    postFormContent = None,
+    action = action,
+    title = searchTitle.toString,
+    searchTerm = searchTerm.get
+)

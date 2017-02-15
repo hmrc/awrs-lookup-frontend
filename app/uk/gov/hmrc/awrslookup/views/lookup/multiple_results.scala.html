@@ -8,17 +8,7 @@
 
 @(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
-@searchTitle = @{
-    (searchTerm, searchResult) match {
-        case (Some(_), (None | Some(SearchResult(Nil))))            => Messages("awrs.lookup.results.page_title_no_results")
-        case (_ , (Some(SearchResult(list)))) if list.size > 1      => Messages("awrs.lookup.results.heading_multi_results", searchTerm.get)
-        case _ => Messages("awrs.lookup.search.page_title")
-    }
-}
-
-@resultCounter(size: Int) = {
-    <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
-}
+@searchTitle = @{Messages("awrs.lookup.results.heading_multi_results", searchTerm.get)}
 
 @multiResults(results: List[AwrsEntry]) = {
     <h1 class="heading-medium" id="search-heading">@Messages("awrs.lookup.results.heading_multi_results", results.size, searchTerm.get)</h1>
@@ -48,10 +38,11 @@
     }
 }
 
-@search_core(
+@results_core(
     searchForm = searchForm,
     preFormContent = headers,
     postFormContent = results,
     action = action,
-    title = searchTitle
+    title = searchTitle,
+    searchTerm = searchTerm.get
 )

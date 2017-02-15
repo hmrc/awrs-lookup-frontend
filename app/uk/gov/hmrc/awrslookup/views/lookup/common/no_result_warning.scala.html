@@ -2,7 +2,7 @@
 @import models._
 @import utils.AwrsNumberFormatter
 
-@(searchTermWithNoResult: String)(implicit request : Request[AnyContent], messages: Messages)
+@(searchTermWithNoResult: String, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
 @warningText = {
 @Messages("awrs.lookup.results.no_results.warning_info") @whatToDo
@@ -12,8 +12,28 @@
     <a class="print-hidden" id="due_diligence_link" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.
 }
 
+@heading = @{
+    errorMessage match {
+        case Some(message) => Messages(message + ".summary")
+        case _ => {
+            Messages("awrs.lookup.search.no_results", AwrsNumberFormatter.format(searchTermWithNoResult))
+        }
+    }
+}
+
+@info = @{
+    errorMessage match {
+        case Some(_) => {}
+        case _ => {
+                <p id="no-results-isle-of-man">@isle_of_man_link()</p>
+            warning_core(warningText)
+        }
+    }
+}
+
+<h1 id="no-results-search-term" class="heading-medium">@heading</h1>
 <p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
-<p id="no-results-isle-of-man">@isle_of_man_link()</p>
-@warning_core(warningText)
+@info
+
 
 
