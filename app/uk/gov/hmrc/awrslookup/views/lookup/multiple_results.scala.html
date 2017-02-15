@@ -8,10 +8,13 @@
 
 @(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
 
-@searchTitle = @{Messages("awrs.lookup.results.heading_multi_results", searchTerm.get)}
+@h1 = {@searchResult match {
+        case Some(SearchResult(results)) if results.size > 1 => { @Messages("awrs.lookup.results.heading_multi_results", results.size, searchTerm.get) }
+        case _ => {}
+    }}
 
 @multiResults(results: List[AwrsEntry]) = {
-    <h1 class="heading-medium" id="search-heading">@Messages("awrs.lookup.results.heading_multi_results", results.size, searchTerm.get)</h1>
+    <h1 class="heading-medium" id="search-heading">@h1</h1>
     <div id = "search-results">
         @results.zipWithIndex.map {
             case (result, ind) => {
@@ -43,6 +46,6 @@
     preFormContent = headers,
     postFormContent = results,
     action = action,
-    title = searchTitle,
+    title = h1.toString,
     searchTerm = searchTerm.get
 )
