@@ -10,7 +10,7 @@
 )(implicit request : Request[AnyContent], messages: Messages)
 
 @searchbar = {
-    <div class="search">
+    <div class="search print-hidden">
         @awrsInputTypeText(
             field = searchForm("query"),
             inputClass = "search-awrs",
