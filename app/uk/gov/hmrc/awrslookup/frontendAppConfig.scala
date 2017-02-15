@@ -16,12 +16,12 @@
 
 package uk.gov.hmrc.awrslookup
 
-import play.api.Play._
 import uk.gov.hmrc.play.config.ServicesConfig
 
 trait AppConfig {
-  val analyticsToken: String
+  val analyticsToken: Option[String]
   val betaFeedbackUnauthenticatedUrl: String
+  val externalReportProblemUrl: String
   val analyticsHost: String
   val reportAProblemPartialUrl: String
   val reportAProblemNonJSUrl: String
@@ -29,14 +29,18 @@ trait AppConfig {
 
 object FrontendAppConfig extends AppConfig with ServicesConfig {
 
-  private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
+  private def loadConfig(key: String) = getConfString(key,throw new Exception(s"Missing configuration key: $key"))
 
-  private val contactHost = configuration.getString(s"microservice.services.contact-frontend.host").getOrElse("")
+  private val contactFrontendService = baseUrl("contact-frontend")
+  private val contactHost = loadConfig(s"contact-frontend.host")
   private val contactFormServiceIdentifier = "AWRS-LOOKUP"
 
-  override lazy val analyticsToken = loadConfig(s"google-analytics.token")
-  override lazy val analyticsHost = loadConfig(s"google-analytics.host")
-  override lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports?secure=true&service=$contactFormServiceIdentifier"
+  override lazy val analyticsToken: Option[String] = Some(getString(s"google-analytics.token"))
+  override lazy val analyticsHost: String = getString(s"google-analytics.host")
+  override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports?secure=true"
+
+  override lazy val externalReportProblemUrl = s"$contactHost/contact/problem_reports"
+
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
 
   //TODO deal with beta banner feedback link
