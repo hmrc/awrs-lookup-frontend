@@ -7,7 +7,7 @@
 @import lookup.results._
 @import collection.immutable.ListMap
 
-@(result: AwrsEntry, id: String, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None, mainHeading: String)(implicit request : Request[AnyContent], messages: Messages)
+@(result: AwrsEntry, id: String, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None, mainHeading: Html)(implicit request : Request[AnyContent], messages: Messages)
 
 @tableHeading(size: String, name: String, heading: String, additionalClasses: Option[String] = None) = {
     <tr><th class="heading-@size @additionalClasses" id="@{name}_heading">@heading</th><td></td></tr>
