@@ -93,6 +93,11 @@ a.result-link:hover h3 {
     text-transform: none;
 }
 
+
+.heading-large {
+    margin-top: 0.5em;
+}
+
 .group-section {
     padding-top: 60px
 }
@@ -153,7 +158,10 @@ a.result-link:hover h3 {
 
 .icon{display: inline-block;}
 
-#notice {margin-bottom:1em;}
+#notice {
+    margin-top:2em;
+    margin-bottom:2em;
+}
 
 #notice .icon {
     left: 0;
