@@ -69,7 +69,7 @@ class LookupControllerTest extends AwrsUnitTestTraits {
       val result = oResult.get
       status(result) shouldBe OK
       val doc = result.getDocument
-      doc.getElementById("query_errorLink")
+      doc.getElementById("no-results-search-term")
     }
 
     "do not show error if there is no query string" in {

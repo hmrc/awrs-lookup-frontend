@@ -12,13 +12,13 @@
 @searchbar = {
     <div class="search">
         @awrsInputTypeText(
-            field = searchForm("query"),
-            inputClass = "search-awrs",
-            parentForm = searchForm,
-            maxLength = 140,
-            postInputContent = search_button(id = "search", classAttr = None),
-            label = Messages("awrs.lookup.search.label"),
-            labelClass = "visuallyhidden"
+        field = searchForm("query"),
+        inputClass = "search-awrs",
+        parentForm = searchForm,
+        maxLength = 140,
+        postInputContent = search_button(id = "search", classAttr = None),
+        label = Messages("awrs.lookup.search.label"),
+        labelClass = "visuallyhidden"
         )
     </div>
 }
@@ -30,16 +30,12 @@
 @pageScripts = {<script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>}
 
 @views.html.main_template(title = title, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
+    @helper.form(action = action, 'id -> "search-form") {
+        @searchbar
+    }
     <div class="grid">
         <div class="grid-2-3">
             @preFormContent
-            @*  This uses the play's default form helper which does not include the hidden CSRF token field.
-                This is because currently this service is completely sessionless and stateless thus
-                does not require CSRF protection, and we do not want it to appear in the query String.
-            *@
-            @helper.form(action = action, 'id -> "search-form") {
-                @searchbar
-            }
             @postFormContent
         </div>
     </div>

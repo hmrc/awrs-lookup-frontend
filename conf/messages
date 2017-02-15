@@ -8,7 +8,7 @@ awrs.generic.status.deregistered=No longer registered
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form
-awrs.generic.error.character_invalid.summary=The {0} is not in the correct format
+awrs.generic.error.character_invalid.summary=The URN is not in the correct format
 awrs.generic.error.character_invalid=Invalid characters have been entered
 awrs.generic.error.maximum_length.summary=The {0} is not in the correct format
 awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
@@ -16,10 +16,15 @@ awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
 # Lookup Form Error Messages
 awrs.search.query.empty.summary=The search field is empty
 awrs.search.query.empty=Enter an AWRS URN
+awrs.search.query.string_length_mismatch.summary=You must enter a 15 character AWRS URN
 awrs.search.query.string_length_mismatch=You must enter a 15 character AWRS URN
+awrs.search.query.leading_four_characters_length_mismatch.summary=An AWRS URN must start with 4 alphabetical characters
 awrs.search.query.leading_four_characters_length_mismatch=An AWRS URN must start with 4 alphabetical characters
+awrs.search.query.leading_x_mismatch.summary=An AWRS URN must start with the letter X
 awrs.search.query.leading_x_mismatch=An AWRS URN must start with the letter X
+awrs.search.query.zeros_mismatch.summary=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
 awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
+awrs.search.query.default_invalid_urn.summary=You must enter a valid AWRS URN
 awrs.search.query.default_invalid_urn=You must enter a valid AWRS URN
 
 # Lookup page
@@ -33,8 +38,10 @@ awrs.lookup.search.no_results.info=Check you have the correct details from the w
 awrs.lookup.search.label=Enter a valid A W R S U R N
 
 # Results page
+awrs.lookup.results.format_error=Query string format error
 awrs.lookup.results.page_title_no_results=No results found
-awrs.lookup.results.heading_multi_results=Results for {0}
+awrs.lookup.results.heading_multi_results=We found {0} results for {1}
+awrs.lookup.results.results_found=We found {0} results
 awrs.lookup.results.group_lede_singular=For the purposes of AWRS the group member of {0} is {1}
 awrs.lookup.results.group_lede_plural=For the purposes of AWRS the group members of {0} are {1}
 awrs.lookup.results.group_h1_member_of={0} part of the {1}
@@ -48,7 +55,6 @@ awrs.lookup.results.date_revoked=Date revoked
 awrs.lookup.results.place_of_bus=Principal place of business
 awrs.lookup.results.business_name=Business name
 awrs.lookup.results.trading_name=Trading name
-awrs.lookup.results.results_found=We found {0} results
 awrs.lookup.results.unapproved.info=If you make purchases from an unapproved wholesaler you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
 awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler you’re dealing with isn’t approved
 awrs.lookup.results.print_link=Print or save for your records
