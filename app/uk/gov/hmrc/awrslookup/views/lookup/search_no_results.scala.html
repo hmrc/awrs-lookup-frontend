@@ -43,7 +43,7 @@
 }
 
 @views.html.main_template(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
-    @helper.form(action = action) {
+    @helper.form(action = action, 'id -> "search-form") {
         @searchbar
     }
     <div class="grid">

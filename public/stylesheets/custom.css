@@ -83,7 +83,7 @@ a.result-link:hover h3 {
 }
 
 
-.heading-medium .heading-secondary {
+.heading-medium .heading-secondary, .heading-large .heading-secondary {
     color: #6f777b;
     display: block;
     font-family: "nta",Arial,sans-serif;
