@@ -83,7 +83,7 @@ a.result-link:hover h3 {
 }
 
 
-.heading-medium .heading-secondary, .heading-large .heading-secondary {
+.heading-medium .heading-secondary, .heading-xlarge .heading-secondary {
     color: #6f777b;
     display: block;
     font-family: "nta",Arial,sans-serif;
@@ -91,11 +91,6 @@ a.result-link:hover h3 {
     font-weight: 400;
     line-height: 1.11111;
     text-transform: none;
-}
-
-
-.heading-large {
-    margin-top: 0.5em;
 }
 
 .group-section {
