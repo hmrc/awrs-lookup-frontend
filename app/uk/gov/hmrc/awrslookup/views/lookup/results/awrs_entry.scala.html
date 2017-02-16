@@ -32,11 +32,8 @@
     @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDate)
 
     @result.status match {
-        case AwrsStatus.DeRegistered => {
-            @table_row(s"${id}_deReg_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDate)
-        }
-        case AwrsStatus.Revoked => {
-            @table_row(s"${id}_revoke_date", Messages("awrs.lookup.results.date_revoked"), result.registrationEndDate)
+        case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
+            @table_row(s"${id}_end_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDate)
         }
         case _ =>{}
     }
