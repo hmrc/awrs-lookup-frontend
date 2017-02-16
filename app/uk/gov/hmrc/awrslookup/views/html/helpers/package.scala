@@ -35,7 +35,7 @@ package object helpers {
   implicit def stringToHtml3(arg: Option[String]): Option[Html] = arg.map(Html(_))
 
   def theTime(time: DateTime = DateTime.now()): String =
-    time.toString("dd MMMM yyyy hh:mm ") + time.toString("a").toLowerCase
+    time.toString("dd MMMM yyyy h:mm ") + time.toString("a").toLowerCase
 
   def spans(strings: Map[String, Option[String]]): Html =
     Html(
