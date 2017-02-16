@@ -9,14 +9,6 @@
 
 @(result: AwrsEntry, id: String, searchTerm: String)(implicit request: Request[AnyContent], messages: Messages)
 
-@encodeString(query: String) = @{
-    URLEncoder.encode(query, "UTF-8").replaceAll("\\+", "%20")
-}
-
-@decodeString(query: String) = @{
-    URLDecoder.decode(query, "UTF-8")
-}
-
 @address = @{
     result match {
         case _: Business => result.info.address.toStringSeq.mkString(", ")
@@ -32,8 +24,8 @@
 }
 
 <div class="form-group">
-    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{encodeString(searchTerm)}&query=@{result.awrsRef}">
-        <h2 class="heading-small">@{decodeString(resultNameToDisplay)}</h2>
+    <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{searchTerm}&query=@{result.awrsRef}">
+        <h2 class="heading-small">@{resultNameToDisplay}</h2>
     </a>
     @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
     <p id="address_@id">@address</p>
