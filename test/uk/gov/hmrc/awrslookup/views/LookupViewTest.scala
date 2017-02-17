@@ -49,7 +49,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     "display an empty search page landed on for the first time" in {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
-      document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(",")"), Messages("awrs.lookup.search.isle_of_man", "", "")))
+      document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),"), Messages("awrs.lookup.search.isle_of_man", "", "")))
 
       document.getElementById("query").text shouldBe ""
     }
