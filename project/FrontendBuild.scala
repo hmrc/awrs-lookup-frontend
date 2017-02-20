@@ -26,6 +26,7 @@ private object AppDependencies {
   private val mockitoVersion = "1.10.19"
 
   val compile = Seq(
+    filters,
     ws,
     "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,

@@ -30,6 +30,9 @@ import uk.gov.hmrc.play.filters.MicroserviceFilterSupport
 import uk.gov.hmrc.play.frontend.bootstrap.DefaultFrontendGlobal
 import uk.gov.hmrc.play.http.logging.filters.FrontendLoggingFilter
 
+import javax.inject.Inject
+import play.api.http.DefaultHttpFilters
+import play.filters.headers.SecurityHeadersFilter
 
 object FrontendGlobal
   extends DefaultFrontendGlobal {
@@ -42,6 +45,8 @@ object FrontendGlobal
     super.onStart(app)
     ApplicationCrypto.verifyConfiguration()
   }
+
+  class Filters @Inject() (securityHeadersFilter: SecurityHeadersFilter) extends DefaultHttpFilters(securityHeadersFilter)
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit rh: Request[_]): Html =
     uk.gov.hmrc.awrslookup.views.html.error_template(pageTitle, heading, message)
