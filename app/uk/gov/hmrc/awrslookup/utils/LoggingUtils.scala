@@ -41,7 +41,7 @@ trait LoggingUtils extends Auditable {
     s"${if (eventType.nonEmpty) eventType + "\n"}$transactionName\n$detail"
 
   private def splunkFunction(transactionName: String, detail: Map[String, String], eventType: String)(implicit hc: HeaderCarrier) = {
-    Logger.debug(splunkString + splunkToLogger(transactionName, detail, eventType))
+    debug(splunkString + splunkToLogger(transactionName, detail, eventType))
     sendDataEvent(
       transactionName = transactionName,
       detail = detail,
