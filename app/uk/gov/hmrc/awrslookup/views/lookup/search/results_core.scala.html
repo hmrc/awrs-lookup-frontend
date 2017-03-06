@@ -29,7 +29,7 @@
 
 @pageScripts = {
     <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
-    <script>_gaq.push(['_trackEvent', 'Search Results', 'Success', '@searchTerm']);</script>
+    <script>ga('send', 'event', {'eventCategory': 'Success', 'eventAction': '@searchTerm'});</script>
 }
 
 @views.html.main_template(title = title, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
