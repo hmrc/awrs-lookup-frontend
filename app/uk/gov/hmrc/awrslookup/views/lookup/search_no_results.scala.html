@@ -39,7 +39,7 @@
 
 @pageScripts = {
     <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
-    <script>_gaq.push(['_trackEvent', 'Search Results', 'No Results', '@searchTerm']);</script>
+    <script>ga('send', 'event', {'eventCategory': 'No Results', 'eventAction': '@searchTerm'});</script>
 }
 
 @views.html.main_template(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
