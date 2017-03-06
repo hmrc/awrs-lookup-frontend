@@ -44,6 +44,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     override val lookupService: LookupService = mockLookupService
   }
 
+
   "Lookup Controller " should {
 
     "display an empty search page landed on for the first time" in {
