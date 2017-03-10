@@ -5,8 +5,12 @@
 @import common._
 @import search._
 @import results._
+@import uk.gov.hmrc.awrslookup.controllers.AwrsLanguageController
+@import play.api.Application
 
-@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages)
+@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages, application: Application)
+
+@clc = @{ Application.instanceCache[AwrsLanguageController].apply(application) }
 
 @searchTitle = @{
     (searchTerm, searchResult) match {
@@ -43,6 +47,7 @@
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
+            <p>@awrsLanguageSelection(clc.languageMap, clc.langToCall)</p>
             <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), isle_of_man_link()))</p>
         }
     }
