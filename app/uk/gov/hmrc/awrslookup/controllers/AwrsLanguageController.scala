@@ -31,8 +31,8 @@ class AwrsLanguageController @Inject()(implicit val messagesApi: MessagesApi) ex
 
   def langToCall(lang: String): Call = routes.AwrsLanguageController.switchToLanguage(lang)
 
-  override def languageMap: Map[String, Lang] = Map("Saesneg (English)." -> English,
-    "Welsh (Cymraeg)." -> Welsh)
+  override def languageMap: Map[String, Lang] = Map("English" -> English,
+    "Cymraeg" -> Welsh)
 
   override protected def fallbackURL: String = current.configuration.getString(s"$env.language.fallbackUrl").getOrElse("/")
 }

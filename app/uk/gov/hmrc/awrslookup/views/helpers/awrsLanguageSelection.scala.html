@@ -20,13 +20,20 @@
 langToCall : (String => Call),
 customClass: Option[String] = None)(implicit  messages: Messages, lang: Lang)
 
-<span class="@if(customClass.isDefined) {@customClass.get}">
+<div class="available-languages">
     @langMap.map { case (key: String, value: Lang) =>
         @if(lang.code != value.code) {
             @Link.toInternalPage(
-                id      = Some(s"$key-switch"),
-                url     = s"${langToCall(key)}",
-                value   = Some(key.capitalize)).toHtml
-            }
+            id      = Some(s"$key-switch"),
+            url     = s"${langToCall(key)}",
+            value   = Some(key.capitalize)).toHtml
+        }else{
+           @if(lang.code == "cy"){
+             | @key
+           }else{
+              @key |
+           }
         }
-</span>
+    }
+</div>
+

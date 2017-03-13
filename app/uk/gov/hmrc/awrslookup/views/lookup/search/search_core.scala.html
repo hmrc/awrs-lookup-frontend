@@ -1,13 +1,15 @@
 @import uk.gov.hmrc.awrslookup._
 @import uk.gov.hmrc.play.views.html.helpers.{form => _, _}
 @import views.html.helpers._
+@import play.api.Application
+
 
 @(searchForm : Form[models.Query],
   preFormContent: Option[Html] = None,
   postFormContent: Option[Html] = None,
   action : Call,
   title : String
-)(implicit request : Request[AnyContent], messages: Messages)
+)(implicit request : Request[AnyContent], messages: Messages, application: Application)
 
 @searchbar = {
     <div class="search print-hidden">

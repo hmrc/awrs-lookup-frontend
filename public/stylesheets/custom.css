@@ -213,3 +213,7 @@ table th, table td, table p {font-size:19px;}
 span.highlight {
     font-weight:700
 }
+
+.available-languages{
+    float: right;
+}

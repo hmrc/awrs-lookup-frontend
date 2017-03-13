@@ -5,8 +5,10 @@
 @import common._
 @import search._
 @import results._
+@import play.api.Application
 
-@(searchForm: Form[models.Query], action: Call, searchTerm: Option[String] = None, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
+
+@(searchForm: Form[models.Query], action: Call, searchTerm: Option[String] = None, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages, application: Application)
 
 @noResults = {
 @searchTerm match {
