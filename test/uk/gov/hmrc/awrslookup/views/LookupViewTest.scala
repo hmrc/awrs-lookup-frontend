@@ -40,7 +40,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
   def testRequest(query: Option[String]): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, "/awrs-lookup-frontend" + query.fold("")(q => s"?query=$q"))
 
-  object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi) {
+  object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi,application = app) {
     override val lookupService: LookupService = mockLookupService
   }
 
