@@ -8,7 +8,7 @@
 @import play.api.Application
 
 
-@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages, application: Application)
+@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages, application: Application, lang: Lang)
 
 @searchTitle = @{Messages("awrs.lookup.results.format_error")}
 
