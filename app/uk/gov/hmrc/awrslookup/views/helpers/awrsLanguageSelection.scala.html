@@ -28,11 +28,10 @@ customClass: Option[String] = None)(implicit  messages: Messages, lang: Lang)
             url     = s"${langToCall(key)}",
             value   = Some(key.capitalize)).toHtml
         }else{
-           @if(lang.code == "cy"){
-             | @key
-           }else{
-              @key |
-           }
+            @lang.code match{
+               case "en" => {@key |}
+               case _ => {| @key}
+            }
         }
     }
 </div>
