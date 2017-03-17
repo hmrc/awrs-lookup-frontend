@@ -45,6 +45,7 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
 
   //TODO deal with beta banner feedback link
   val callBackURL = loadConfig(s"beta-feedback.callBackURL")
-  override lazy val betaFeedbackUnauthenticatedUrl = s"http://localhost:9514/feedback-survey/check-the-awrs-register/?callbackURL=$callBackURL"
+  val feedBackURL = loadConfig(s"beta-feedback.feedBackURL")
+  override lazy val betaFeedbackUnauthenticatedUrl = s"$feedBackURL$callBackURL"
 
 }
