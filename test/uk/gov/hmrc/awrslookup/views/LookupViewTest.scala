@@ -19,17 +19,15 @@ package uk.gov.hmrc.awrslookup.views
 import org.jsoup.nodes.Document
 import org.mockito.Matchers
 import org.mockito.Mockito._
+import play.api.i18n.Messages
 import play.api.libs.json.Json
-import play.api.mvc.{AnyContentAsEmpty}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
+import play.api.test.Helpers._
 import uk.gov.hmrc.awrslookup.controllers.LookupController
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.TestUtils.{testBusinessSearchResult, _}
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
-import play.api.i18n.Messages
-
-import play.api.test.Helpers._
-import uk.gov.hmrc.awrslookup.views.html.helpers.awrs_urn
 
 import scala.concurrent.Future
 
@@ -51,6 +49,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
       document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),"), Messages("awrs.lookup.search.isle_of_man", "", "")))
+      document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
 
       document.getElementById("query").text shouldBe ""
     }
