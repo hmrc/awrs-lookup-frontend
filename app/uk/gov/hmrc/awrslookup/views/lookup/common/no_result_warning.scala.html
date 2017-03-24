@@ -16,7 +16,7 @@
     errorMessage match {
         case Some(message) => Messages(message + ".summary")
         case _ => {
-            Messages("awrs.lookup.search.no_results", AwrsNumberFormatter.format(searchTermWithNoResult))
+            Messages("awrs.lookup.search.no_results", AwrsNumberFormatter.format(searchTermWithNoResult.replaceAll("\\s", "")))
         }
     }
 }
