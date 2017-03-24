@@ -38,7 +38,11 @@ class SearchFormTest extends AwrsUnitTestTraits {
         ExpectedInvalidFieldFormat("XAAW000001234567", FieldError("awrs.search.query.string_length_mismatch"), summaryError("awrs.search.query.string_length_mismatch")),
         ExpectedInvalidFieldFormat("XAAW0000012345", FieldError("awrs.search.query.string_length_mismatch"), summaryError("awrs.search.query.string_length_mismatch")),
         ExpectedInvalidFieldFormat("XAAW00001123456", FieldError("awrs.search.query.zeros_mismatch"), summaryError("awrs.search.query.zeros_mismatch")),
-        ExpectedInvalidFieldFormat("XAAW0000012345X", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn"))
+        ExpectedInvalidFieldFormat("XAAW0000012345X", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn")),
+
+        ExpectedInvalidFieldFormat("My company 1885", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn")),
+        ExpectedInvalidFieldFormat("My 2 company 1885", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn")),
+        ExpectedInvalidFieldFormat("My company", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn"))
       )
       val formatError = ExpectedFieldFormat(invalidFormats)
 
@@ -52,9 +56,9 @@ class SearchFormTest extends AwrsUnitTestTraits {
       assertFormIsValid(form, Map(query -> "XSAW00000123456"))
       assertFormIsValid(form, Map(query -> "XZAW00000999999"))
       assertFormIsValid(form, Map(query -> "XFAW00000000000"))
-      assertFormIsValid(form, Map(query -> "My company"))
-      assertFormIsValid(form, Map(query -> "My company 1885"))
-      assertFormIsValid(form, Map(query -> "My 2 company 1885"))
+//      assertFormIsValid(form, Map(query -> "My company"))
+//      assertFormIsValid(form, Map(query -> "My company 1885"))
+//      assertFormIsValid(form, Map(query -> "My 2 company 1885"))
     }
   }
 
