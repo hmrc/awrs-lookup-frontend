@@ -36,6 +36,9 @@ object SearchForm {
   private lazy val zerosRegex = "^[a-zA-Z]{4}00000.{6}"
   // if the user has entered more than 5 numbers, we assume they were trying to enter a URN
   private lazy val guessUrnRegex = "(.*?^[xX][a-zA-Z][aA][wW])".r
+
+  //when name search is reinstated reduce to original value
+  //val maxQueryLength = 140
   val maxQueryLength = 18000
 
   private lazy val queryTargetId = TargetFieldIds(query)
@@ -54,6 +57,7 @@ object SearchForm {
       (name: String) => {
         trimAllFunc(name) match {
           case trimmedName@_ if !validText(trimmedName) => invalidQueryFieldError("awrs.generic.error.character_invalid")
+          //when name search is reinstated uncomment line below
           //case trimmedName@_ if !guessUrnRegex.findFirstIn(trimmedName).isDefined => Valid
           case trimmedName@_ if trimmedName.matches(awrsRefRegEx) => Valid
           case trimmedName@_ if trimmedName.length != 15 => invalidQueryFieldError("awrs.search.query.string_length_mismatch")
