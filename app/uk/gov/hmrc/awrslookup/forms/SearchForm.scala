@@ -38,8 +38,8 @@ object SearchForm {
   private lazy val guessUrnRegex = "(.*?^[xX][a-zA-Z][aA][wW])".r
 
   //when name search is reinstated reduce to original value
-  //val maxQueryLength = 140
-  val maxQueryLength = 18000
+  val maxQueryLength = 140
+  //val maxQueryLength = 18000
 
   private lazy val queryTargetId = TargetFieldIds(query)
  // private lazy val invalidFormatSummaryError = SummaryErrorConfig("awrs.generic.error.maximum_length.summary", MessageArguments("search field"))
