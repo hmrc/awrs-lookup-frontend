@@ -44,8 +44,7 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
 
   //TODO deal with beta banner feedback link
-  val callBackURL = loadConfig(s"beta-feedback.callBackURL")
   val feedBackURL = loadConfig(s"beta-feedback.feedBackURL")
-  override lazy val betaFeedbackUnauthenticatedUrl = s"$feedBackURL$callBackURL"
+  override lazy val betaFeedbackUnauthenticatedUrl = s"$feedBackURL"
 
 }
