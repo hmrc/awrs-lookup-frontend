@@ -33,14 +33,14 @@ class LookupControllerTest extends AwrsUnitTestTraits {
   val mockLookupService: LookupService = mock[LookupService]
   val lookupFailure = Json.parse( """{"reason": "Generic test reason"}""")
 
-  object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi) {
+  object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi, application = app) {
     override val lookupService: LookupService = mockLookupService
   }
 
   "Lookup Controller " should {
 
     "use the correct Lookup service" in {
-      new LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi).lookupService shouldBe LookupService
+      new LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi, application = app).lookupService shouldBe LookupService
     }
 
     "in show, lookup awrs entry when passed a valid awrs reference" in {

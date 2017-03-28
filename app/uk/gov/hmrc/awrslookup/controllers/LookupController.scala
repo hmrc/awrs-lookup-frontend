@@ -18,6 +18,7 @@ package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
 
+import play.api.Application
 import play.api.i18n.MessagesApi
 import play.api.mvc.{AnyContent, Call, Request, Result}
 import play.api.{Configuration, Environment}
@@ -29,12 +30,14 @@ import uk.gov.hmrc.awrslookup.forms.prevalidation.PrevalidationAPI
 import uk.gov.hmrc.awrslookup.models.{Query, SearchResult}
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
+import play.api.Play.current
 
 import scala.concurrent.Future
 
 class LookupController @Inject()(val environment: Environment,
                                  val configuration: Configuration,
-                                 val messagesApi: MessagesApi) extends AwrsLookupController {
+                                 val messagesApi: MessagesApi,
+                                 val application: Application) extends AwrsLookupController {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
 
