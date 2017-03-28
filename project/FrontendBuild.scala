@@ -24,6 +24,7 @@ private object AppDependencies {
   private val scalaTestPlusPlayVersion = "1.5.1"
   private val pegdownVersion = "1.6.0"
   private val mockitoVersion = "1.10.19"
+  private val playLanguageVersion = "3.0.0"
 
   val compile = Seq(
     filters,
@@ -47,6 +48,7 @@ private object AppDependencies {
     def apply() = new TestDependencies {
       override lazy val test = Seq(
         "uk.gov.hmrc" %% "hmrctest" % hmrcTestVersion % scope,
+        "uk.gov.hmrc" %% "play-language" % playLanguageVersion,
         "org.scalatest" %% "scalatest" % scalaTestVersion % scope,
         "org.scalatestplus.play" %% "scalatestplus-play" % scalaTestPlusPlayVersion % scope,
         "org.pegdown" % "pegdown" % pegdownVersion % scope,
