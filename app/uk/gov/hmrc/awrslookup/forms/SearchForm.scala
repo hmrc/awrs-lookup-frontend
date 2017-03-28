@@ -32,8 +32,8 @@ object SearchForm {
   val query = "query"
 
   private lazy val leading4CharRegex = "^[xX][a-zA-Z][aA][wW][0-9]{1,}$"//Just match the 1st 4 characters rule
-  private lazy val zerosRegex = "^[a-zA-Z]{4}[0]{5}"//check number of zeros
-  private lazy val ending6NumRegex = "^.{9}[0-9]{6}$"
+  private lazy val zerosRegex = "^[a-zA-Z]{4}[0]{5}.{1,}$"//check number of zeros
+  //private lazy val ending6NumRegex = "^.{9}[0-9]{6}$"
 
   val awrsRefRegEx = "^[xX][a-zA-Z][aA][wW][0]{5}[0-9]{6}$"//check for all chars in AWRS URN
 
@@ -56,12 +56,13 @@ object SearchForm {
         trimAllFunc(name) match {
           case trimmedName@_ if !validText(trimmedName) => invalidQueryFieldError("awrs.generic.error.character_invalid")
           case trimmedName@_ if trimmedName.matches(awrsRefRegEx) => Valid
-          case trimmedName@_ if !trimmedName.matches(leading4CharRegex) => invalidQueryFieldError("awrs.search.query.leading_four_characters_length_mismatch")
+          //case trimmedName@_ if !trimmedName.matches(leading4CharRegex) => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
           case trimmedName@_ if trimmedName.matches(leading4CharRegex) => {
             trimmedName match {
               case trimmedName if (trimmedName.length != 15) => invalidQueryFieldError("awrs.search.query.string_length_mismatch")
               case trimmedName if (!trimmedName.matches(zerosRegex)) => invalidQueryFieldError("awrs.search.query.zeros_mismatch")
-              case trimmedName if (!trimmedName.matches(ending6NumRegex)) => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
+              //case trimmedName if (!trimmedName.matches(ending6NumRegex)) => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
+
               case _ => invalidQueryFieldError("awrs.search.query.default_invalid_urn")
             }
           }
