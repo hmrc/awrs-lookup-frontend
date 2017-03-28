@@ -18,12 +18,19 @@ awrs.search.query.empty.summary=The search field is empty
 awrs.search.query.empty=Enter an AWRS URN
 awrs.search.query.string_length_mismatch.summary=You must enter a 15 character AWRS URN
 awrs.search.query.string_length_mismatch=You must enter a 15 character AWRS URN
+
 awrs.search.query.leading_four_characters_length_mismatch.summary=An AWRS URN must start with 4 alphabetical characters
 awrs.search.query.leading_four_characters_length_mismatch=An AWRS URN must start with 4 alphabetical characters
+
 awrs.search.query.zeros_mismatch.summary=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
 awrs.search.query.zeros_mismatch=An AWRS URN must start with 4 alphabetical characters followed by 5 zeros
-awrs.search.query.default_invalid_urn.summary=You must enter a 15 character AWRS URN
-awrs.search.query.default_invalid_urn=You must enter a 15 character AWRS URN
+
+awrs.search.query.default_invalid_urn.summary=You must enter a valid AWRS URN
+awrs.search.query.default_invalid_urn=You must enter a valid AWRS URN
+
+ awrs.search.query.leading_x_mismatch.summary=An AWRS URN must start with the letter X
+ awrs.search.query.leading_x_mismatch=An AWRS URN must start with the letter X
+
 
 # Lookup page
 awrs.lookup.search.page_title=Check to see if an alcohol wholesaler or producer is approved
