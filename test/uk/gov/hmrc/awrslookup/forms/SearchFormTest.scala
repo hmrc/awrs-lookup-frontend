@@ -38,12 +38,10 @@ class SearchFormTest extends AwrsUnitTestTraits {
         ExpectedInvalidFieldFormat("XAAW000001234567", FieldError("awrs.search.query.string_length_mismatch"), summaryError("awrs.search.query.string_length_mismatch")),
         ExpectedInvalidFieldFormat("XAAW0000012345", FieldError("awrs.search.query.string_length_mismatch"), summaryError("awrs.search.query.string_length_mismatch")),
         ExpectedInvalidFieldFormat("XAAW00001123456", FieldError("awrs.search.query.zeros_mismatch"), summaryError("awrs.search.query.zeros_mismatch")),
-        ExpectedInvalidFieldFormat("XAAW0000012345X", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn")),
         ExpectedInvalidFieldFormat("X0AW00000123456", FieldError("awrs.search.query.leading_four_characters_length_mismatch"), summaryError("awrs.search.query.leading_four_characters_length_mismatch")),
         ExpectedInvalidFieldFormat("XXA000000123456", FieldError("awrs.search.query.leading_four_characters_length_mismatch"), summaryError("awrs.search.query.leading_four_characters_length_mismatch")),
-        ExpectedInvalidFieldFormat("XXAW000001234A5", FieldError("awrs.search.query.default_invalid_urn"), summaryError("awrs.search.query.default_invalid_urn")),
           //when name search is reinstated delete line below
-        ExpectedInvalidFieldFormat("Xy company 188555", FieldError("awrs.search.query.zeros_mismatch"), summaryError("awrs.search.query.zeros_mismatch"))
+        ExpectedInvalidFieldFormat("Xy company 188555", FieldError("awrs.search.query.leading_four_characters_length_mismatch"), summaryError("awrs.search.query.leading_four_characters_length_mismatch"))
 
       )
       val formatError = ExpectedFieldFormat(invalidFormats)
