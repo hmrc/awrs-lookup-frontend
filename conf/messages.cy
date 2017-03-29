@@ -3,8 +3,8 @@ awrs-lookup.nav_title=Gwirio am gyfanwerthwyr neu gynhyrchwyr alcohol wedi''u cy
 # Generic Messages
 awrs.generic.back=Yn ôl i chwilio
 awrs.generic.status.approved=Cymeradwywyd
-awrs.generic.status.revoked=Diddymwyd
-awrs.generic.status.deregistered=Datgofrestrwyd
+awrs.generic.status.revoked=Heb fod yn gofrestredig mwyach
+awrs.generic.status.deregistered=Heb fod yn gofrestredig mwyach
 
 # Generic Error Messages
 awrs.generic.errors_heading=Mae problem gyda''r ffurflen
@@ -28,7 +28,7 @@ awrs.search.query.default_invalid_urn=Mae''n rhaid i chi nodi Cyfeirnod Unigryw 
 # Lookup page
 awrs.lookup.search.page_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
 awrs.lookup.search.heading=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
-awrs.lookup.search.lede=Nodwch y rhif cofrestru {0} er enghraifft XXAW 000 0012 3456. {1}.
+awrs.lookup.search.lede=Nodwch gyfeirnod unigryw''r Cynllun Cofrestru Cyfanwerthwyr Alcohol (AWRS), er enghraifft XXAW 000 0012 3456.
 awrs.lookup.search.awrs_urn={0}{2}Cyfeirnod Unigryw AWRS{3}{1}
 awrs.lookup.search.isle_of_man=Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
 awrs.lookup.search.no_results=Dim canlyniadau wedi''u canfod ar gyfer {0}
@@ -61,3 +61,6 @@ awrs.lookup.results.no_results.warning_what_to_do=yr hyn i''w wneud os ydych yn 
 awrs.lookup.results.approved.warning_info=Mae''r gwiriad hwn yn cefnogi''ch
 awrs.lookup.results.approved.due_diligence=diwydrwydd dyladwy
 awrs.lookup.results.approved.warning_info2=Mae''n bwysig eich bod yn defnyddio''ch gwiriadau eich hun i gadarnhau pwy yw eich cyflenwyr.
+
+awrs.lookup.results.search_date=Dyddiad y chwiliad
+

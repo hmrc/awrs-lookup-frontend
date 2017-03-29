@@ -1,2 +1,3 @@
-@(time: String = theTime())
-<p class="font-xsmall" id="search-date">Search date @time</p>
+@(time: String = theTime())(implicit messages: Messages)
+
+<p class="font-xsmall" id="search-date">@Messages("awrs.lookup.results.search_date" ) @time</p>
