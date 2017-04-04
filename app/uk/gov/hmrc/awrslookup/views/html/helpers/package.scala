@@ -16,6 +16,9 @@
 
 package uk.gov.hmrc.awrslookup.views.html
 
+import java.text.SimpleDateFormat
+import java.util.TimeZone
+
 import org.joda.time.DateTime
 import play.api.i18n.Messages
 import play.twirl.api.Html
@@ -34,8 +37,11 @@ package object helpers {
 
   implicit def stringToHtml3(arg: Option[String]): Option[Html] = arg.map(Html(_))
 
-  def theTime(time: DateTime = DateTime.now()): String =
-    time.toString("dd MMMM yyyy h:mm ") + time.toString("a").toLowerCase
+  def theTime(dateTime: DateTime = DateTime.now()): String = {
+    val jsonDateTimeFormat = new SimpleDateFormat("dd MMMM yyyy h:mm a")
+    jsonDateTimeFormat.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+    jsonDateTimeFormat.format(dateTime.toDate()).replace("AM", "am").replace("PM", "pm")
+  }
 
   def spans(strings: Map[String, Option[String]]): Html =
     Html(
