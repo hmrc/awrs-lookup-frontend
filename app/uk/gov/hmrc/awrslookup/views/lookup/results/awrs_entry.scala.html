@@ -34,7 +34,7 @@
 
     @result.status match {
         case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
-            @table_row(s"${id}_end_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDateFormatted.get)
+            @table_row(s"${id}_end_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDateFormatted)
         }
         case _ =>{}
     }
