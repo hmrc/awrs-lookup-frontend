@@ -58,9 +58,7 @@ awrs.lookup.results.unapproved.what_to_do=Yr hyn i''w wneud os ydych yn canfod n
 awrs.lookup.results.print_link=Argraffu neu gadw ar gyfer eich cofnodion
 awrs.lookup.results.no_results.warning_info=Mae''n bwysig eich bod dim ond yn prynu gan gyfanwerthwyr cymeradwy sydd ar y gofrestr. Os ydych yn masnachu gyda chyfanwerthwyr heb eu cymeradwyo, gallech gael eich erlyn, fod yn agored i gosb, a chael eich stoc o alcohol wedi''i atafaelu. Chwiliwch am ragor o wybodaeth am
 awrs.lookup.results.no_results.warning_what_to_do=yr hyn i''w wneud os ydych yn canfod nad yw cyfanwerthwr yr ydych yn delio ag ef ar y gofrestr
-awrs.lookup.results.approved.warning_info=Mae''r gwiriad hwn yn cefnogi''ch
-awrs.lookup.results.approved.due_diligence=diwydrwydd dyladwy
-awrs.lookup.results.approved.warning_info2=Mae''n bwysig eich bod yn defnyddio''ch gwiriadau eich hun i gadarnhau pwy yw eich cyflenwyr.
-
+awrs.lookup.results.approved.warning_info=Mae''r gwiriad hwn yn cefnogi''ch diwydrwydd dyladwy. Mae''n bwysig eich bod yn defnyddio''ch
+awrs.lookup.results.approved.warning_info2=gwiriadau ychwanegol eich hun fel prynwr masnach i gadarnhau pwy yw''ch cyflenwyr
 awrs.lookup.results.search_date=Dyddiad y chwiliad
 
