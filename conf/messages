@@ -64,9 +64,7 @@ awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler yo
 awrs.lookup.results.print_link=Print or save for your records
 awrs.lookup.results.no_results.warning_info=It is important that you only make purchases from approved wholesalers who are on the register. If you do trade with unapproved wholesalers you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about
 awrs.lookup.results.no_results.warning_what_to_do=what to do if you find a wholesaler you’re dealing with isn’t on the register
-awrs.lookup.results.approved.warning_info=This check supports your normal
-awrs.lookup.results.approved.due_diligence=due diligence
-awrs.lookup.results.approved.warning_info2=It is important that you verify the identity of your suppliers with your own checks.
-
+awrs.lookup.results.approved.warning_info=This check supports your normal due diligence. It is important that you verify the identity of your suppliers with your own
+awrs.lookup.results.approved.warning_info2=additional checks as a trade buyer
 
 awrs.lookup.results.search_date=Search date
