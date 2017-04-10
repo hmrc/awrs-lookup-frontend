@@ -39,7 +39,7 @@ awrs.lookup.search.lede=Enter the Alcohol Wholesaler Registration Scheme unique 
 awrs.lookup.search.awrs_urn={0}{2}AWRS URN{3}
 awrs.lookup.search.no_results=No results found for {0}
 awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly.
-awrs.lookup.search.label=Enter a valid A W R S U R N
+awrs.lookup.search.label=Enter a valid A&#32 W&#32 R&#32 S&#32 U&#32 R&#32 N&#32
 
 # Results page
 awrs.lookup.results.format_error=Query string format error

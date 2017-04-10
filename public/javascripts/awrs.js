@@ -13,8 +13,6 @@
 
     $('#errors').focus();
 
-    $('#query').focus();
-
 	// ----------------------------------------------------------
 	// If you're not in IE (or IE version is less than 5) then:
 	// ie === undefined
