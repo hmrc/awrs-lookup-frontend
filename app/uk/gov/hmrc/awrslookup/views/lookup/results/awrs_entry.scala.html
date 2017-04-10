@@ -22,13 +22,14 @@
 }
 
 @common(showRegNumber: Boolean) = {
-    @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
     @showRegNumber match {
         case true => {
             @table_row(s"${id}_awrs_reg", Messages("awrs.lookup.results.reg_number"), result.awrsRefFormatted)
         }
         case false => {}
     }
+    @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
+
     @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDate)
 
     @result.status match {
@@ -66,8 +67,10 @@
 @business(business: Business) = {
     <h1 class="heading-xlarge" id="results-heading">
         @mainHeading
-        @headerRegNumberHighlight(result)
     </h1>
+    <h2>
+        @headerRegNumberHighlight(result)
+    </h2>
     @status_warning(result)
     <table id="results-table" role="presentation">
         @common(showRegNumber = true)
@@ -78,8 +81,10 @@
 @group(group: Group) = {
     <h1 class="heading-xlarge" id="results-heading">
         @mainHeading
-        @headerRegNumberHighlight(result)
     </h1>
+    <h2>
+        @headerRegNumberHighlight(result)
+    </h2>
     <p id="results-lede" class="lede">@groupLedge(group)</p>
     @status_warning(result)
     <table id="results-table" role="presentation">
