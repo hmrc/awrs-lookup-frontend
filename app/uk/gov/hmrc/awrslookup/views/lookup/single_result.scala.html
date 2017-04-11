@@ -11,10 +11,6 @@
 
 @(searchForm : Form[models.Query], action: Call, result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages, application: Application, lang: Lang)
 
-@cssScripts = {
-    <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
-}
-
 @heading = {
     @result match {
         case  bus : Business => { @knownName(bus.info) }

@@ -9,6 +9,9 @@
 
 @import uk.gov.hmrc.play.views.html.layouts
 
+@linkElement = {
+    <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
+}
 
 @serviceInfoContent = {}
 
@@ -25,6 +28,7 @@
                bodyClasses = bodyClasses,
                sidebar = sidebar,
                contentHeader = contentHeader,
+               linkElement = Some(linkElement),
                mainContent = layouts.article(mainContent),
                serviceInfoContent = serviceInfoContent,
                scriptElem = scriptElem
