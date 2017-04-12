@@ -38,7 +38,7 @@ package object helpers {
   implicit def stringToHtml3(arg: Option[String]): Option[Html] = arg.map(Html(_))
 
   def formatForAiraLabel(string: String): String = {
-    string.replace("AWRS","A W R S").replace("URN", "U R N")
+    string.replace("AWRS","A. W R S.").replace("URN", "U R N")
   }
 
   def theTime(dateTime: DateTime = DateTime.now()): String = {
