@@ -25,15 +25,11 @@
     </div>
 }
 
-@cssScripts = {
-    <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css")>
-}
-
 @pageScripts = {
     <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
 }
 
-@views.html.main_template(title = title, bodyClasses = None, contentHeader = cssScripts, scriptElem = pageScripts) {
+@views.html.main_template(title = title, bodyClasses = None, scriptElem = pageScripts) {
     @helper.form(action = controllers.routes.LookupController.show(false), 'id -> "search-form") {
         @searchbar
     }

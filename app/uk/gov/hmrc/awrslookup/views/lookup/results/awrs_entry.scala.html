@@ -6,6 +6,7 @@
 @import lookup.common._
 @import lookup.results._
 @import collection.immutable.ListMap
+@import utils.AwrsDateFormatter
 
 @(result: AwrsEntry, id: String, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None, mainHeading: Html)(implicit request : Request[AnyContent], messages: Messages)
 
@@ -29,12 +30,11 @@
         case false => {}
     }
     @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
-
-    @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDate)
+    @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDateFormatted)
 
     @result.status match {
         case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
-            @table_row(s"${id}_end_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDate)
+            @table_row(s"${id}_end_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDateFormatted)
         }
         case _ =>{}
     }
