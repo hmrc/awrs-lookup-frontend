@@ -3,6 +3,7 @@
 @import views.html.helpers._
 @import uk.gov.hmrc.awrslookup.controllers.AwrsLanguageController
 @import play.api.Application
+@import java.net.URLDecoder
 
 
 @(appConfig: uk.gov.hmrc.awrslookup.AppConfig,
@@ -93,4 +94,4 @@
       sidebar = sidebar)
 }
 
-@hmrcGovUkTemplate(Some(title), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiLayouts.footer_links()), true)(content)
+@hmrcGovUkTemplate(Some(title.replace("&#x27;","\'")), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiLayouts.footer_links()), true)(content)
