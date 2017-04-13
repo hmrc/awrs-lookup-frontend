@@ -15,25 +15,25 @@ awrs.generic.error.maximum_length=Ni all yr {0} fod yn hirach na {1} o gymeriada
 
 # Lookup Form Error Messages
 awrs.search.query.empty.summary=Mae''r blwch chwilio''n wag
-awrs.search.query.empty=Nodwch Gyfeirnod Unigryw AWRS
-awrs.search.query.string_length_mismatch.summary=Mae''n rhaid i chi nodi Cyfeirnod Unigryw AWRS sy''n 15 cymeriad o hyd
-awrs.search.query.string_length_mismatch=Mae''n rhaid i chi nodi Cyfeirnod Unigryw AWRS sy''n 15 cymeriad o hyd
-awrs.search.query.leading_four_characters_length_mismatch.summary=Mae''n rhaid i Gyfeirnod Unigryw AWRS ddechrau â 4 cymeriad o''r wyddor
+awrs.search.query.empty=Nodwch Gyfeirnod Unigryw
+awrs.search.query.string_length_mismatch.summary=Mae''n rhaid i chi nodi Cyfeirnod Unigryw sy''n 15 cymeriad o hyd
+awrs.search.query.string_length_mismatch=Mae''n rhaid i chi nodi Cyfeirnod Unigryw sy''n 15 cymeriad o hyd
+awrs.search.query.leading_four_characters_length_mismatch.summary=Mae''n rhaid i Gyfeirnod Unigryw ddechrau â 4 cymeriad o''r wyddor
 awrs.search.query.leading_four_characters_length_mismatch=Mae''n rhaid i Gyfeirnod Unigryw AWRS ddechrau â 4 cymeriad o''r wyddor
 awrs.search.query.zeros_mismatch.summary=Mae''n rhaid i Gyfeirnod Unigryw AWRS ddechrau â 4 cymeriad o''r wyddor wedi''u dilyn gan 5 sero
 awrs.search.query.zeros_mismatch=Mae''n rhaid i Gyfeirnod Unigryw AWRS ddechrau â 4 cymeriad o''r wyddor wedi''u dilyn gan 5 sero
-awrs.search.query.default_invalid_urn.summary=Mae''n rhaid i chi nodi Cyfeirnod Unigryw AWRS dilys
-awrs.search.query.default_invalid_urn=Mae''n rhaid i chi nodi Cyfeirnod Unigryw AWRS dilys
+awrs.search.query.default_invalid_urn.summary=Mae''n rhaid i chi nodi Cyfeirnod Unigryw dilys
+awrs.search.query.default_invalid_urn=Mae''n rhaid i chi nodi Cyfeirnod Unigryw dilys
 
 # Lookup page
 awrs.lookup.search.page_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
 awrs.lookup.search.heading=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
-awrs.lookup.search.lede=Nodwch gyfeirnod unigryw''r Cynllun Cofrestru Cyfanwerthwyr Alcohol (AWRS), er enghraifft XXAW 000 0012 3456.
+awrs.lookup.search.lede=Nodwch gyfeirnod unigryw''r Cynllun Cofrestru Cyfanwerthwyr Alcohol, er enghraifft XXAW 000 0012 3456.
 awrs.lookup.search.awrs_urn={0}{2}Cyfeirnod Unigryw AWRS{3}{1}
 awrs.lookup.search.isle_of_man=Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
 awrs.lookup.search.no_results=Dim canlyniadau wedi''u canfod ar gyfer {0}
 awrs.lookup.search.no_results.info=Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr a''ch bod wedi''u nodi''n gywir
-awrs.lookup.search.label=Nodwch Gyfeirnod Unigryw AWRS dilys.
+awrs.lookup.search.label=Nodwch Gyfeirnod Unigryw dilys.
 
 # Results page
 awrs.lookup.results.format_error=Query string format error
@@ -46,8 +46,8 @@ awrs.lookup.results.group_lede_plural=At ddibenion AWRS, aelodau grŵp {0} yw {1
 awrs.lookup.results.group_h1_member_of={0} part of the {1}
 awrs.lookup.results.group_rep_table_heading=Cynrychiolydd y grŵp
 awrs.lookup.results.group_member_table_heading=Aelodau''r grŵp
-awrs.lookup.results.status_label=Statws AWRS
-awrs.lookup.results.reg_number=Rhif cofrestru AWRS
+awrs.lookup.results.status_label=Statws
+awrs.lookup.results.reg_number=Rhif cofrestru
 awrs.lookup.results.date_of_reg=Dyddiad y daw''r cofrestriad i rym
 awrs.lookup.results.date_of_dereg=Dyddiad dadgofrestru
 awrs.lookup.results.place_of_bus=Prif safle''r busnes
