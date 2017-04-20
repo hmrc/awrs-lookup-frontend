@@ -1,4 +1,4 @@
-awrs-lookup.nav_title=Check for approved alcohol wholesalers or producers
+awrs-lookup.nav_title=Check if an alcohol wholesaler or producer is approved
 
 # Generic Messages
 awrs.generic.back=Back to search
@@ -33,8 +33,8 @@ awrs.search.query.default_invalid_urn=You must enter a valid Unique Reference Nu
 
 
 # Lookup page
-awrs.lookup.search.page_title=Check to see if an alcohol wholesaler or producer is approved
-awrs.lookup.search.heading=Check to see if an alcohol wholesaler or producer is approved
+awrs.lookup.search.page_title=Check if an alcohol wholesaler or producer is approved
+awrs.lookup.search.heading=Check if an alcohol wholesaler or producer is approved
 awrs.lookup.search.lede=Enter the Alcohol Wholesaler Registration Scheme Unique Reference Number, for example XXAW 000 0012 3456.
 awrs.lookup.search.awrs_urn={0}{2}AWRS URN{3}
 awrs.lookup.search.no_results=No results found for {0}
