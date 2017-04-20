@@ -1,4 +1,4 @@
-awrs-lookup.nav_title=Gwirio am gyfanwerthwyr neu gynhyrchwyr alcohol wedi''u cymeradwyo
+awrs-lookup.nav_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
 
 # Generic Messages
 awrs.generic.back=Yn ôl i chwilio
