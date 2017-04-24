@@ -10,16 +10,12 @@
 
 @(result: AwrsEntry, id: String, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None, mainHeading: Html)(implicit request : Request[AnyContent], messages: Messages)
 
-@tableHeading(size: String, name: String, heading: String, additionalClasses: Option[String] = None) = {
-    <tr><th class="heading-@size @additionalClasses" id="@{name}_heading">@heading</th><td></td></tr>
-}
-
 @tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
-    @tableHeading("medium", name, heading, additionalClasses = additionalClasses)
+    <h2 class="heading-medium @additionalClasses" id="@{name}_heading">@heading</h2>
 }
 
 @tableHeadingSmall(name: String, heading: String, additionalClasses: Option[String] = "member-section") = {
-    @tableHeading("small", name, heading, additionalClasses = additionalClasses)
+    <h3 class="heading-small @additionalClasses" id="@{name}_heading">@heading</h3>
 }
 
 @common(showRegNumber: Boolean) = {
@@ -68,9 +64,7 @@
     <h1 class="heading-xlarge" id="results-heading">
         @mainHeading
     </h1>
-    <h2>
-        @headerRegNumberHighlight(result)
-    </h2>
+    @headerRegNumberHighlight(result)
     @status_warning(result)
     <table id="results-table" role="presentation">
         @common(showRegNumber = true)
@@ -82,23 +76,23 @@
     <h1 class="heading-xlarge" id="results-heading">
         @mainHeading
     </h1>
-    <h2>
-        @headerRegNumberHighlight(result)
-    </h2>
+    @headerRegNumberHighlight(result)
     <p id="results-lede" class="lede">@groupLedge(group)</p>
     @status_warning(result)
+    @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
     <table id="results-table" role="presentation">
-        @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
         @common(showRegNumber = true)
         @info(group.info)
-        @tableHeadingMedium(id+"_members", Messages("awrs.lookup.results.group_member_table_heading"))
-        @group.members.zipWithIndex.map {
-            case (memberInfo: Info, index: Int) => {
-                @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
-                @info(memberInfo, id = s"${id}_member_$index")
-            }
-        }
     </table>
+    @tableHeadingMedium(id+"_members", Messages("awrs.lookup.results.group_member_table_heading"))
+    @group.members.zipWithIndex.map {
+        case (memberInfo: Info, index: Int) => {
+            @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
+            <table id="results-table-@{index}" role="presentation">
+                @info(memberInfo, id = s"${id}_member_$index")
+            </table>
+        }
+    }
 }
 
 @result match {
