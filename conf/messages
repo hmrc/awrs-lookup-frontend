@@ -5,6 +5,7 @@ awrs.generic.back=Back to search
 awrs.generic.status.approved=Approved
 awrs.generic.status.revoked=No longer registered
 awrs.generic.status.deregistered=No longer registered
+awrs.generic.status.approved_group_member=Approved as part of the group
 
 # Generic Error Messages
 awrs.generic.errors_heading=There is a problem with the form

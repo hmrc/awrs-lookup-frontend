@@ -57,7 +57,10 @@ input[type="text"] {
 
 .result_label {
    vertical-align: top;
+   width: 50%;
 }
+
+#results-lede {margin-bottom: 1.75em;}
 
 .lede {
     font-size: 24px;
@@ -72,6 +75,12 @@ a.result-link:hover h3 {
     color: #22e8aca;
 }
 
+#result_status {margin-bottom:1.75em;}
+#results-heading {margin-bottom:0;}
+
+#result_representative_heading, #result_members_heading {border-bottom: 1px solid #bfc1c3; padding-bottom: 0.52632em;}
+.member-section {border-bottom: 1px solid #bfc1c3; padding-bottom: 0.52632em;}
+
 .heading-medium, h3 {
 	margin-top: 1em;
 	margin-bottom: 0.8333333333em;
@@ -83,7 +92,7 @@ a.result-link:hover h3 {
 }
 
 
-.heading-medium .heading-secondary, .heading-xlarge .heading-secondary {
+.heading-secondary {
     color: #6f777b;
     display: block;
     font-family: "nta",Arial,sans-serif;
@@ -94,11 +103,11 @@ a.result-link:hover h3 {
 }
 
 .group-section {
-    padding-top: 60px
+    padding-top: 1em;
 }
 
 .member-section {
-    padding-top: 30px
+    padding-top: 1em;
 }
 
 .back-link {
