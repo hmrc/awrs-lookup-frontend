@@ -1,8 +1,9 @@
 @import uk.gov.hmrc.awrslookup._
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html.helpers._
+@import uk.gov.hmrc.awrslookup.models._
 
-@(name: String, label: String, someDetail: Option[Html])
+@(name: String, label: String, someDetail: Option[Html])(implicit messages: Messages)
 
 @labelId={"@{name}_label"}
 
@@ -13,7 +14,22 @@
     case Some(detail) => {
         <tr id="@name">
             <th class="result_label" id=@labelId>@label</th>
-            <td id=@detailId>@detail</td>
+            <td id=@detailId>
+                @detail.toString match {
+                    case AwrsStatus.DeRegistered.name => {
+                        @Messages("awrs.generic.status.deregistered")
+                    }
+                    case AwrsStatus.Revoked.name => {
+                        @Messages("awrs.generic.status.revoked")
+                    }
+                    case AwrsStatus.Approved.name => {
+                        @Messages("awrs.generic.status.approved")
+                    }
+                    case _ => {
+                        @detail
+                    }
+                }
+            </td>
         </tr>
     }
 }

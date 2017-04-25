@@ -29,8 +29,8 @@ awrs.search.query.zeros_mismatch=A Unique Reference Number must start with 4 alp
 awrs.search.query.default_invalid_urn.summary=You must enter a valid Unique Reference Number
 awrs.search.query.default_invalid_urn=You must enter a valid Unique Reference Number
 
- awrs.search.query.leading_x_mismatch.summary=A Unique Reference Number must start with the letter X
- awrs.search.query.leading_x_mismatch=A Unique Reference Number must start with the letter X
+awrs.search.query.leading_x_mismatch.summary=A Unique Reference Number must start with the letter X
+awrs.search.query.leading_x_mismatch=A Unique Reference Number must start with the letter X
 
 
 # Lookup page
@@ -67,5 +67,4 @@ awrs.lookup.results.no_results.warning_info=It is important that you only make p
 awrs.lookup.results.no_results.warning_what_to_do=what to do if you find a wholesaler you’re dealing with isn’t on the register
 awrs.lookup.results.approved.warning_info=This check supports your normal due diligence. It is important that you verify the identity of your suppliers with your own
 awrs.lookup.results.approved.warning_info2=additional checks as a trade buyer
-
 awrs.lookup.results.search_date=Search date

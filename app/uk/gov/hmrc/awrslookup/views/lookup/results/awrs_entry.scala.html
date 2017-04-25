@@ -54,16 +54,19 @@
     }
 }
 
-@memberStatus() = {
-    <tr>
-        <th class="result_label">Status</th>
-        <td>
+@memberStatus(id: String = id) = {
+    <tr id="@{id}_status">
+        <th id="@{id}_status_label" class="result_label">@Messages("awrs.lookup.results.status_label")</th>
+        <td id="@{id}_status_detail">
         @result.status match {
-            case AwrsStatus.Approved => {
-                @Messages("awrs.generic.status.approved_group_member")
+            case AwrsStatus.DeRegistered => {
+                @Messages("awrs.generic.status.deregistered")
+            }
+            case AwrsStatus.Revoked => {
+                @Messages("awrs.generic.status.revoked")
             }
             case _ => {
-                @result.status.map(_.name)
+                @Messages("awrs.generic.status.approved_group_member")
             }
         }
         </td>
@@ -105,7 +108,7 @@
         case (memberInfo: Info, index: Int) => {
             @tableHeadingSmall(s"${id}_member_$index", knownName(memberInfo))
             <table id="results-table-@{index}" role="presentation">
-                @memberStatus()
+                @memberStatus(id = s"${id}_member_$index")
                 @info(memberInfo, id = s"${id}_member_$index")
             </table>
         }
