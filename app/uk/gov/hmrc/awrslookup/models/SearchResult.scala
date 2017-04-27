@@ -27,11 +27,11 @@ sealed trait AwrsEntry {
 
   def registrationDate: Option[String]
 
-  @inline final def registrationDateFormatted: Option[String] = Some(AwrsDateFormatter.format(registrationDate.get))
+  @inline final def registrationDateFormatted: Option[String] = Some(AwrsDateFormatter.format(registrationDate.getOrElse("")))
 
   def registrationEndDate: Option[String]
 
-  @inline final def registrationEndDateFormatted: Option[String] = Some(AwrsDateFormatter.format(registrationEndDate.get))
+  @inline final def registrationEndDateFormatted: Option[String] = Some(AwrsDateFormatter.format(registrationEndDate.getOrElse("")))
 
   def status: AwrsStatus
 
