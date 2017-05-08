@@ -1,6 +1,7 @@
 @import uk.gov.hmrc.awrslookup._
 @import forms.validation.util._
 @import views.html.helpers._
+@import models._
 
 @(
   field: Field,
@@ -18,11 +19,12 @@
   formHintId: Option[String] = None,
   maxLength: Option[Int] = None,
   dataAttributes: Option[String] = None,
-  isPostCode: Boolean = false,
   postCodeLookupAddressNumber: Option[String] = None,
   additionalHiddenLabelText: Option[String] = None,
   preInputContent: Option[Html] = None,
-  postInputContent: Option[Html] = None
+  postInputContent: Option[Html] = None,
+  searchTerm: Option[String] = None,
+  searchResult: Option[SearchResult] = None
 )(implicit  messages: Messages)
 
 @fieldErrors = @{
@@ -121,9 +123,18 @@
         case None => {}
     }
 }
+
+@ariaLabelledBy = {
+    @(searchTerm, searchResult)match {
+        case (Some(_), _) | (_, Some(_)) => {"@{inputIdStr}_field"}
+        case _ => {"search-lede"}
+    }
+}
+
+
 <div class="form-field @wrapperClassStr @divClassStr" id="search-bar-active">
     @preInputContent
-    <label for="@inputIdStr" id="@{inputIdStr}_field" @labelClassStr @labelDataAttributesStr>@labelText@additionalHiddenLabel</label>
+    <label for="@inputIdStr" id="@{inputIdStr}_field" aria-hidden="true" @labelClassStr @labelDataAttributesStr>@labelText@additionalHiddenLabel</label>
     @formHintStr
     <input type="text"
            class="form-control @inputClassStr"
@@ -136,6 +147,8 @@
            @requiredStr
            @if(fieldErrors.nonEmpty){
                aria-labelledby="no-results-search-term"
+           } else {
+                aria-labelledby=@ariaLabelledBy
            }
     >
     @postInputContent

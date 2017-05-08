@@ -9,7 +9,7 @@
 @import play.api.Application
 
 
-@(searchForm : Form[models.Query], action: Call, result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages, application: Application, lang: Lang)
+@(searchForm : Form[models.Query], action: Call, result: models.AwrsEntry, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request: Request[AnyContent], messages: Messages, application: Application, lang: Lang)
 
 @heading = {
     @result match {
@@ -37,6 +37,7 @@
     preFormContent = preContent,
     postFormContent = None,
     title = Messages("awrs.lookup.results.page_title_single", heading),
-    searchTerm = searchTerm
+    searchTerm = searchTerm,
+    searchResult = searchResult
 )
 
