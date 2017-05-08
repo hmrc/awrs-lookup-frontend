@@ -3,8 +3,8 @@ awrs-lookup.nav_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i 
 # Generic Messages
 awrs.generic.back=Yn ôl i chwilio
 awrs.generic.status.approved=Cymeradwywyd
-awrs.generic.status.revoked=Heb fod yn gofrestredig mwyach
-awrs.generic.status.deregistered=Heb fod yn gofrestredig mwyach
+awrs.generic.status.revoked=Heb ei gymeradwyo mwyach
+awrs.generic.status.deregistered=Heb ei gymeradwyo mwyach
 awrs.generic.status.approved_group_member=Cymeradwywyd fel rhan o''r grŵp
 
 # Generic Error Messages

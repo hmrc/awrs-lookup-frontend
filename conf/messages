@@ -3,8 +3,8 @@ awrs-lookup.nav_title=Check if an alcohol wholesaler or producer is approved
 # Generic Messages
 awrs.generic.back=Back to search
 awrs.generic.status.approved=Approved
-awrs.generic.status.revoked=No longer registered
-awrs.generic.status.deregistered=No longer registered
+awrs.generic.status.revoked=No longer approved
+awrs.generic.status.deregistered=No longer approved
 awrs.generic.status.approved_group_member=Approved as part of the group
 
 # Generic Error Messages
