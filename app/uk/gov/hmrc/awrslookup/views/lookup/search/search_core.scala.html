@@ -2,13 +2,15 @@
 @import uk.gov.hmrc.play.views.html.helpers.{form => _, _}
 @import views.html.helpers._
 @import play.api.Application
-
+@import models._
 
 @(searchForm : Form[models.Query],
   preFormContent: Option[Html] = None,
   postFormContent: Option[Html] = None,
   action : Call,
-  title : String
+  title : String,
+  searchTerm: Option[String] = None,
+  searchResult: Option[SearchResult] = None
 )(implicit request : Request[AnyContent], messages: Messages, application: Application, lang: Lang)
 
 @searchbar = {
@@ -20,7 +22,9 @@
             maxLength = 140,
             postInputContent = search_button(id = "search", classAttr = None),
             label = Messages("awrs.lookup.search.label"),
-            labelClass = "visuallyhidden"
+            labelClass = "visuallyhidden",
+            searchTerm = searchTerm,
+            searchResult = searchResult
         )
     </div>
 }
