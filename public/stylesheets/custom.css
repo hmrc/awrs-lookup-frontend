@@ -75,7 +75,7 @@ a.result-link:hover h3 {
     color: #22e8aca;
 }
 
-#result_status {margin-bottom:1.75em;}
+#result_status {margin-bottom:1.75em; margin-top:0;}
 #results-heading {margin-bottom:0;}
 
 #result_representative_heading, #result_members_heading {border-bottom: 1px solid #bfc1c3; padding-bottom: 0.52632em;}

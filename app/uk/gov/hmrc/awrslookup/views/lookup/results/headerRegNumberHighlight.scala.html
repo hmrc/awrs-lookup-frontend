@@ -14,13 +14,13 @@
 
 @result.status match {
     case AwrsStatus.DeRegistered => {
-        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.deregistered"))</span>
+        <p id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.deregistered"))</p>
     }
     case AwrsStatus.Revoked => {
-        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.revoked"))</span>
+        <p id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.revoked"))</p>
     }
     case _ => {
-        <span id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.approved"))</span>
+        <p id="@theId" class="@attrClass">@highlight(Messages("awrs.generic.status.approved"))</p>
     }
 }
 
