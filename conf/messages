@@ -39,7 +39,7 @@ awrs.lookup.search.heading=Check if an alcohol wholesaler or producer is approve
 awrs.lookup.search.lede=Enter the Alcohol Wholesaler Registration Scheme Unique Reference Number, for example XXAW 000 0012 3456.
 awrs.lookup.search.awrs_urn={0}{2}AWRS URN{3}
 awrs.lookup.search.no_results=No results found for {0}
-awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler and that you have entered them correctly.
+awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler or producer and that you have entered them correctly.
 awrs.lookup.search.label=Enter a valid Unique Reference Number.
 
 # Results page
