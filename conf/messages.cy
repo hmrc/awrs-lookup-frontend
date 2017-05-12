@@ -35,7 +35,7 @@ awrs.lookup.search.lede=Nodwch Gyfeirnod Unigryw y Cynllun Cofrestru Cyfanwerthw
 awrs.lookup.search.awrs_urn={0}{2}Cyfeirnod Unigryw AWRS{3}{1}
 awrs.lookup.search.isle_of_man=Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
 awrs.lookup.search.no_results=Dim canlyniadau wedi''u canfod ar gyfer {0}
-awrs.lookup.search.no_results.info=Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr a''ch bod wedi''u nodi''n gywir
+awrs.lookup.search.no_results.info=Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu''r cynhyrchwr a''ch bod wedi''u nodi''n gywir
 awrs.lookup.search.label=Rhowch Gyfeirnod Unigryw dilys
 
 # Results page
