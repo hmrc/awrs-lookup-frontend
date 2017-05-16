@@ -1,0 +1,15 @@
+@()(implicit request: Request[AnyRef])
+@import play.twirl.api.Html
+@import uk.gov.hmrc.play.views.html.helpers._
+@import play.api.i18n.Messages.Implicits._
+@import play.api.Play.current
+
+
+@uk.gov.hmrc.awrslookup.views.html.main_template(title = Messages("awrs.generic.error.title")) {
+
+    <div>
+        <h1 id="application-error-header" class="heading-xlarge">@Html(Messages("awrs.generic.error.title"))</h1>
+        <h2 id="application-error-description" class="heading-medium">@Html(Messages("awrs.generic.error.status"))</h2>
+    </div>
+
+}

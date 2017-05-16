@@ -18,8 +18,9 @@ package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
 
+import org.apache.http.HttpException
 import play.api.Application
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.{AnyContent, Call, Request, Result}
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.awrslookup._
@@ -31,13 +32,17 @@ import uk.gov.hmrc.awrslookup.models.{Query, SearchResult}
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.play.frontend.controller.UnauthorisedAction
 import play.api.Play.current
+import play.api.http.Status
+import uk.gov.hmrc.awrslookup.connectors.RawResponseReads
+import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
+import uk.gov.hmrc.play.http.HttpResponse
 
 import scala.concurrent.Future
 
 class LookupController @Inject()(val environment: Environment,
                                  val configuration: Configuration,
                                  val messagesApi: MessagesApi,
-                                 val application: Application) extends AwrsLookupController {
+                                 val application: Application) extends AwrsLookupController with RawResponseReads {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
 
@@ -56,17 +61,29 @@ class LookupController @Inject()(val environment: Environment,
         case (Some(result@SearchResult(list))) if list.size > 1 => Ok(views.html.lookup.multiple_results(searchForm.form, action, searchTerm = queryString, searchResult = result))
         case Some(r: SearchResult) => Ok(views.html.lookup.single_result(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm, searchResult = r)) // single result
       }
+    }.recover{
+      case _ => {
+        Ok(views.html.error_template(Messages("awrs.error.technical.title"), Messages("awrs.error.technical.title"), Messages("awrs.error.technical.message")))
+      }
+
     }
+
   )
 
-  def show(fromMulti: Boolean = false) = UnauthorisedAction.async {
-    implicit request =>
-      val action = controllers.routes.LookupController.show(fromMulti)
-      (request.queryString.get(SearchForm.query).isDefined, request.queryString.get("originalSearchTerm").isDefined) match {
-        case (true, true) => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = Some(request.queryString.get("originalSearchTerm").get.head))
-        case (true, false) => validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = None)
-        case _ => Ok(views.html.lookup.search_main(searchForm.form, action))
-      }
+
+    def show(fromMulti: Boolean = false) = UnauthorisedAction.async {
+
+         implicit request =>
+
+         val action = controllers.routes.LookupController.show (fromMulti)
+         (request.queryString.get (SearchForm.query).isDefined, request.queryString.get ("originalSearchTerm").isDefined) match {
+         case (true, true) => validateFormAndSearch (preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = Some (request.queryString.get ("originalSearchTerm").get.head) )
+         case (true, false) => validateFormAndSearch (preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = None)
+         case _ => Ok (views.html.lookup.search_main (searchForm.form, action) )
+         }
+
   }
+
+
 
 }

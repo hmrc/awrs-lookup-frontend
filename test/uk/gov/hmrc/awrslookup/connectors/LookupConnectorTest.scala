@@ -21,7 +21,8 @@ import java.util.UUID
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.http.Status._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsResultException, JsValue, Json}
+import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
@@ -106,6 +107,27 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       thrown.getMessage shouldBe "Invalid json"
     }
 
+    "return 'technical error 400' when a 400 error is returned" in {
+      val expectedURL = s"""$urnURL$testAwrsRef"""
+      implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
+      val response = HttpResponse(BAD_REQUEST)
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
+      val result = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown = the[LookupExceptions] thrownBy await(result)
+      thrown.getMessage shouldBe "technical error 400"
+    }
+
+    "return 'technical error 500' when a 500 error is returned" in {
+      val expectedURL = s"""$urnURL$testAwrsRef"""
+      implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
+      val response = HttpResponse(INTERNAL_SERVER_ERROR)
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
+      val result = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown = the[LookupExceptions] thrownBy await(result)
+      thrown.getMessage shouldBe "technical error 500"
+    }
+
+
     "return an exception when the middle service returns any other status code" in {
       val expectedURL = s"""$urnURL$testAwrsRef"""
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
@@ -115,7 +137,6 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val thrown = the[InternalServerException] thrownBy await(result)
       thrown.getMessage should include("Unsuccessful return of data. Status code")
     }
-
   }
 
   "LookupConnector by name" should {
@@ -170,6 +191,26 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       thrown.getMessage should include("Unsuccessful return of data. Status code")
     }
 
+    "return 'technical error 400' when a 400 error is returned" in {
+      val expectedURL = s"""$nameURL$testAwrsRef"""
+      implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
+      val response = HttpResponse(BAD_REQUEST)
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
+      val result = TestLookupConnector.queryByName(testAwrsRef)
+      val thrown = the[LookupExceptions] thrownBy await(result)
+      thrown.getMessage shouldBe "technical error 400"
+    }
+
+    "return 'technical error 500' when a 500 error is returned" in {
+      val expectedURL = s"""$nameURL$testAwrsRef"""
+      implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
+      val response = HttpResponse(INTERNAL_SERVER_ERROR)
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
+      val result = TestLookupConnector.queryByName(testAwrsRef)
+      val thrown = the[LookupExceptions] thrownBy await(result)
+      thrown.getMessage shouldBe "technical error 500"
+    }
   }
+
 
 }
