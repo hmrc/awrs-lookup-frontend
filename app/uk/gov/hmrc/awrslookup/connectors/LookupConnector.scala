@@ -19,6 +19,7 @@ package uk.gov.hmrc.awrslookup.connectors
 import java.net.URLEncoder
 
 import play.api.libs.json.Json
+import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.forms.prevalidation
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.{FrontendAuditConnector, WSHttp}
@@ -29,7 +30,6 @@ import uk.gov.hmrc.play.http._
 
 import scala.concurrent.Future
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
-
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -65,11 +65,15 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
           throw new InternalServerException("URL not found")
       }
     case 400 => {
-      val reason: String = (response.json \ "message").as[String]
-      info(s"[ $auditLookupTxName - $logRef ] - The Submission has not passed validation: $reason")
-      None
+      info(s"[ $auditLookupTxName - $logRef ] - Currently experiencing technical difficulties: error 400")
+      throw new LookupExceptions("technical error 400")
+    }
+    case 500 => {
+      info(s"[ $auditLookupTxName - $logRef] - Currently experiencing technical difficulties: error 500")
+      throw new LookupExceptions("technical error 500")
     }
     case status =>
+      println(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
       err(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
       throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
   }
@@ -83,6 +87,7 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
     val getURL = byNameUrl(query)
     http.GET(getURL) flatMap responseCore(s"ByName[ $query ]")
   }
+
 
 }
 

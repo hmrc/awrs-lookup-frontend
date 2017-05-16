@@ -14,6 +14,10 @@ awrs.generic.error.character_invalid=Invalid characters have been entered
 awrs.generic.error.maximum_length.summary=The {0} is not in the correct format
 awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
 
+#errrors
+awrs.error.technical.title=Sorry, we'’re experiencing technical difficulties
+awrs.error.technical.message=Try again later
+
 # Lookup Form Error Messages
 awrs.search.query.empty.summary=The search field is empty
 awrs.search.query.empty=Enter a Unique Reference Number

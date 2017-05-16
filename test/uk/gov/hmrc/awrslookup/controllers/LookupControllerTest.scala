@@ -20,6 +20,7 @@ import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.i18n.Messages
 import play.api.libs.json.Json
+import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.OK
 import uk.gov.hmrc.awrslookup.services.LookupService
@@ -51,9 +52,11 @@ class LookupControllerTest extends AwrsUnitTestTraits {
 
     "in byNameShow, lookup awrs entries by name" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val result = TestLookupController.show(false).apply(FakeRequest())
+      val result = TestLookupController.show(true).apply(FakeRequest())
       status(result) shouldBe OK
     }
+
+
   }
 
   "lookup routes" should {

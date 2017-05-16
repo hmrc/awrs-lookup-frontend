@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.awrslookup.controllers.util
+package uk.gov.hmrc.awrslookup.exceptions
 
-import play.api.i18n.I18nSupport
-import play.api.mvc._
-import uk.gov.hmrc.awrslookup.utils.ImplicitConversions
-import uk.gov.hmrc.awrslookup.views
-import uk.gov.hmrc.play.frontend.controller.FrontendController
-import play.twirl.api._
-import uk.gov.hmrc.play.frontend.auth.AuthContext
-
-import scala.concurrent.Future
-
-
-trait AwrsLookupController extends FrontendController with ImplicitConversions with I18nSupport
+case class LookupExceptions(message: String) extends Exception(message)
