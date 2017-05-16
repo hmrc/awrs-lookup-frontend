@@ -65,15 +65,16 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
           throw new InternalServerException("URL not found")
       }
     case 400 => {
-      info(s"[ $auditLookupTxName - $logRef ] - Currently experiencing technical difficulties: error 400")
-      throw new LookupExceptions("technical error 400")
+      val error = response.status
+      info(s"[ $eventTypeBadRequest - $logRef ] - Currently experiencing technical difficulties: $error")
+      throw new LookupExceptions(s"technical error $error")
     }
     case 500 => {
-      info(s"[ $auditLookupTxName - $logRef] - Currently experiencing technical difficulties: error 500")
-      throw new LookupExceptions("technical error 500")
+      val error = response.status
+      info(s"[ $auditLookupTxName - $logRef] - Currently experiencing technical difficulties: $error")
+      throw new LookupExceptions(s"technical error $error")
     }
     case status =>
-      println(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
       err(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
       throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
   }
