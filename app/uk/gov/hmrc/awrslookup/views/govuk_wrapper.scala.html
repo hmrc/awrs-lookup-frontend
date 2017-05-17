@@ -14,7 +14,8 @@
   linkElement : Option[Html] = None,
   mainContent: Html = HtmlFormat.empty,
   serviceInfoContent: Html = HtmlFormat.empty,
-  scriptElem: Option[Html] = None)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
+  scriptElem: Option[Html] = None,
+  isErrorPage : Boolean = false)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
 
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
@@ -70,7 +71,10 @@
 }
 
 @mainContentHeader = {
+    @if(!isErrorPage) {
     @awrsLanguageSelection(clc.languageMap, clc.langToCall)
+    }
+
     @if(contentHeader.isDefined) {
         @uiLayouts.main_content_header(contentHeader = contentHeader.get)
     }
