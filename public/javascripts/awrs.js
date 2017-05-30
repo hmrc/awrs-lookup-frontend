@@ -26,6 +26,17 @@
 		}).focus(); // focus on the content container
 	});
 
+
+	$('#due_diligence_link').click(function() {
+		if (this.getAttribute('data-page') == "no-results") {
+			ga('send', 'event', "what-to-do-no-results-page", 'click');
+		}
+		if (this.getAttribute('data-page') == "unapproved") {
+			ga('send', 'event', "what-to-do-unapproved-page", 'click');
+		}
+	});
+
+
 	// ----------------------------------------------------------
 	// If you're not in IE (or IE version is less than 5) then:
 	// ie === undefined
