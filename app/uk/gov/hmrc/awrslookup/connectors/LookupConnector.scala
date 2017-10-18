@@ -32,6 +32,7 @@ import scala.concurrent.Future
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpGet, HttpResponse, InternalServerException }
 
 
 trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingUtils {

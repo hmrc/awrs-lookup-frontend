@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 import uk.gov.hmrc.awrslookup.FrontendAuditConnector
 import uk.gov.hmrc.play.audit.model.Audit._
 import uk.gov.hmrc.play.audit.model.{Audit, AuditAsMagnet, DataEvent}
-import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.http.HeaderCarrier
 
 class AuditTest() extends Audit("test", FrontendAuditConnector) {
   var capturedTxName: String = ""

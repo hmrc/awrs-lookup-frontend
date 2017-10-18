@@ -19,9 +19,9 @@ package uk.gov.hmrc.awrslookup.services
 import uk.gov.hmrc.awrslookup.connectors.LookupConnector
 import uk.gov.hmrc.awrslookup.forms.{SearchForm, prevalidation}
 import uk.gov.hmrc.awrslookup.models.SearchResult
-import uk.gov.hmrc.play.http.HeaderCarrier
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait LookupService {
 
