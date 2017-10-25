@@ -35,7 +35,6 @@ import play.api.Play.current
 import play.api.http.Status
 import uk.gov.hmrc.awrslookup.connectors.RawResponseReads
 import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
-import uk.gov.hmrc.play.http.HttpResponse
 
 import scala.concurrent.Future
 
