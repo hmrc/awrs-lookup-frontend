@@ -1,5 +1,3 @@
-This is a placeholder README.md for a new repository
-
 Backend of the Alcohol Wholesale Registration Scheme application
 ====================================================================
 
