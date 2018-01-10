@@ -1,8 +1,6 @@
-@import uk.gov.hmrc.awrslookup._
-@import uk.gov.hmrc.play.views.html.helpers._
-@import views.html.helpers._
 @import uk.gov.hmrc.awrslookup.controllers.AwrsLanguageController
 @import play.api.Application
+@import uk.gov.hmrc.awrslookup.FrontendAppConfig
 
 @(appConfig: uk.gov.hmrc.awrslookup.AppConfig,
   title: String,
@@ -15,7 +13,7 @@
   mainContent: Html = HtmlFormat.empty,
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None,
-  isErrorPage : Boolean = false)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
+  isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = false)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
 
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
@@ -38,7 +36,19 @@
       navLinks = None)
 }
 
-@afterHeader = {}
+@afterHeader = {
+
+        @if(isUserResearchBannerVisible) {
+            @full_width_banner(Some(full_width_banner_content_ur(
+                                messages("urbanner.message.text"),
+                                FrontendAppConfig.urBannerLink,
+                                Some(messages("site.userResearchLink.text"))
+                                ))
+            )
+    }
+
+
+}
 
 @bodyEnd = {
     @uiLayouts.footer(
@@ -50,6 +60,7 @@
 }
 
 @footerTop = {}
+
 @footerLinks = {}
 
 @betaBanner = {
