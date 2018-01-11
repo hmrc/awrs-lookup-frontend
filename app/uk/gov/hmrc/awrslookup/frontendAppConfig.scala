@@ -37,6 +37,8 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
 
   val urBannerLink = loadConfig("urBanner.external-urls.ur-page")
 
+  val showUrBanner:Boolean = loadConfig("urBanner.toggled").toBoolean
+
   override lazy val analyticsToken: Option[String] = Some(getString(s"google-analytics.token"))
   override lazy val analyticsHost: String = getString(s"google-analytics.host")
   override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports?secure=true"

@@ -3,7 +3,7 @@
 @import uk.gov.hmrc.awrslookup.FrontendAppConfig
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
-@import views.html.helpers._
+
 
 @(appConfig: uk.gov.hmrc.awrslookup.AppConfig,
 title: String,
@@ -16,7 +16,7 @@ linkElement : Option[Html] = None,
 mainContent: Html = HtmlFormat.empty,
 serviceInfoContent: Html = HtmlFormat.empty,
 scriptElem: Option[Html] = None,
-isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = false)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
+isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendAppConfig.showUrBanner)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
 
 @clc = @{ Application.instanceCache[AwrsLanguageController].apply(application) }
 
@@ -35,16 +35,17 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = false)(impl
       navLinks = None)
 }
 
-@afterHeader = {
-    @if(isUserResearchBannerVisible) {
-        @fullWidthBanner(
-            Some(fullWidthBannerContentUr(
+@afterHeader = @{
+    if(isUserResearchBannerVisible) {
+        uk.gov.hmrc.awrslookup.views.html.helpers.fullWidthBanner(
+            Some(uk.gov.hmrc.awrslookup.views.html.helpers.fullWidthBannerContentUr(
             messages("urbanner.message.text"),
             FrontendAppConfig.urBannerLink,
-            Some(messages("site.userResearchLink.text"))
+            Some("test")
         ))
         )
     }
+    else HtmlFormat.empty
 }
 
 @bodyEnd = {
@@ -80,7 +81,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = false)(impl
 
 @mainContentHeader = {
     @if(!isErrorPage) {
-        @awrsLanguageSelection(clc.languageMap, clc.langToCall(_))
+        @uk.gov.hmrc.awrslookup.views.html.helpers.awrsLanguageSelection(clc.languageMap, clc.langToCall)
     }
 
     @if(contentHeader.isDefined) {

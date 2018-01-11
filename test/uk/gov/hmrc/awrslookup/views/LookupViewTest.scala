@@ -45,6 +45,16 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
   "Lookup Controller " should {
 
+    "display the UR banner if cookie is not set" in {
+      val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
+      document.getElementsByClass("banner-panel--show").text shouldBe Messages("urbanner.message.text")
+    }
+
+    "hid the UR banner if the cookie is set" in {
+      val request = testRequest(query = None).withCookies()
+
+    }
+
     "display an empty search page landed on for the first time" in {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
