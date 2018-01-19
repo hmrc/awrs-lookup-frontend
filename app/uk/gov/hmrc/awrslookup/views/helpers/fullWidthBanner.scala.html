@@ -13,11 +13,11 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 *@
-@(fullWithBannerContent: Option[Html])(implicit messages: Messages)
+@(fullWidthBannerContent: Option[Html])(implicit messages: Messages)
 
 <div id="ur-panel" class="banner-panel">
     <section class="centered-content visible banner-panel__container" aria-hidden="false">
-        @fullWithBannerContent
+        @fullWidthBannerContent
     <a class="banner-panel__close" href="#" role="button"><span aria-hidden="true">@Messages("urbanner.message.reject")</span></a>
     </section>
 </div>
