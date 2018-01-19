@@ -47,7 +47,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "display the UR banner if cookie is not set" in {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
-      document.getElementById("banner-panel").text shouldBe Messages("urbanner.message.text")
+      document.getElementsByClass("banner-panel__close").text shouldBe Messages("urbanner.message.reject")
     }
     
     "display an empty search page landed on for the first time" in {
