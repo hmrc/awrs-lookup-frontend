@@ -65,3 +65,10 @@ awrs.lookup.results.approved.warning_info=Mae''r gwiriad hwn yn cefnogi''ch diwy
 awrs.lookup.results.approved.warning_info2=gwiriadau ychwanegol personol fel prynwr masnach
 awrs.lookup.results.search_date=Dyddiad y chwiliad
 
+#********************************************************************************
+# User Research Banner
+#********************************************************************************
+
+urbanner.message.text = Helpwch i wella gwasanaethau digidol drwy ymuno â phanel defnyddwyr CThEM (yn agor ffenestr newydd)
+urbanner.message.reject = Dim diolch
+

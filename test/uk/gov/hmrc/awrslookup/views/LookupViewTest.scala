@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.i18n.Messages
 import play.api.libs.json.Json
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.{AnyContentAsEmpty, Cookie, Cookies}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.awrslookup.controllers.LookupController
@@ -45,6 +45,11 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
   "Lookup Controller " should {
 
+    "display the UR banner if cookie is not set" in {
+      val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
+      document.getElementById("banner-panel").text shouldBe Messages("urbanner.message.text")
+    }
+    
     "display an empty search page landed on for the first time" in {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")

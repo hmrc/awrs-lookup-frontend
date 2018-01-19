@@ -1,25 +1,22 @@
-@import uk.gov.hmrc.awrslookup._
-@import uk.gov.hmrc.play.views.html.helpers._
-@import views.html.helpers._
 @import uk.gov.hmrc.awrslookup.controllers.AwrsLanguageController
 @import play.api.Application
-
-@(appConfig: uk.gov.hmrc.awrslookup.AppConfig,
-  title: String,
-  mainClass: Option[String] = None,
-  mainDataAttributes: Option[Html] = None,
-  bodyClasses: Option[String] = None,
-  sidebar: Html = HtmlFormat.empty,
-  contentHeader: Option[Html] = None,
-  linkElement : Option[Html] = None,
-  mainContent: Html = HtmlFormat.empty,
-  serviceInfoContent: Html = HtmlFormat.empty,
-  scriptElem: Option[Html] = None,
-  isErrorPage : Boolean = false)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
-
+@import uk.gov.hmrc.awrslookup.FrontendAppConfig
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
-@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
+
+
+@(appConfig: uk.gov.hmrc.awrslookup.AppConfig,
+title: String,
+mainClass: Option[String] = None,
+mainDataAttributes: Option[Html] = None,
+bodyClasses: Option[String] = None,
+sidebar: Html = HtmlFormat.empty,
+contentHeader: Option[Html] = None,
+linkElement : Option[Html] = None,
+mainContent: Html = HtmlFormat.empty,
+serviceInfoContent: Html = HtmlFormat.empty,
+scriptElem: Option[Html] = None,
+isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendAppConfig.showUrBanner)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
 
 @clc = @{ Application.instanceCache[AwrsLanguageController].apply(application) }
 
@@ -38,7 +35,18 @@
       navLinks = None)
 }
 
-@afterHeader = {}
+@afterHeader = @{
+    if(isUserResearchBannerVisible) {
+        uk.gov.hmrc.awrslookup.views.html.helpers.fullWidthBanner(
+            Some(uk.gov.hmrc.awrslookup.views.html.helpers.fullWidthBannerContentUr(
+            messages("urbanner.message.text"),
+            FrontendAppConfig.urBannerLink,
+            Some("test")
+        ))
+        )
+    }
+    else HtmlFormat.empty
+}
 
 @bodyEnd = {
     @uiLayouts.footer(
@@ -50,6 +58,7 @@
 }
 
 @footerTop = {}
+
 @footerLinks = {}
 
 @betaBanner = {
@@ -72,7 +81,7 @@
 
 @mainContentHeader = {
     @if(!isErrorPage) {
-    @awrsLanguageSelection(clc.languageMap, clc.langToCall)
+        @uk.gov.hmrc.awrslookup.views.html.helpers.awrsLanguageSelection(clc.languageMap, clc.langToCall)
     }
 
     @if(contentHeader.isDefined) {
