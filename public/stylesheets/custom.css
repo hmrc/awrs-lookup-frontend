@@ -8,12 +8,16 @@
     }
 }
 
-.content__body {width:100%;}
+
+
+.content__body {
+    width:100%;
+    }
 
 .search-awrs {
 	float: left;
-	width: calc(100% - 50px - 1em);
-	height: 45px;
+	width: calc(62% - 50px - 1em);
+	height: 40px;
 	margin-right: 2px;
 	padding-left: 0;
 	border: 2px solid #6f777b;
@@ -24,17 +28,6 @@ input[type="text"] {
 	padding: 4px;
 }
 
-#search {
-    float: left;
-	height: 43px;
-	width: 50px;
-	color: #005EA5;
-	background-color: #005EA5;
-	background-image: url('/check-the-awrs-register/assets/images/search-button.png');
-	background-position: -14% 44%;
-	background-repeat: no-repeat;
-	box-shadow: 0 2px 0 #005EA5;
-}
 
 .search {
     position: relative;
@@ -42,8 +35,8 @@ input[type="text"] {
 
 #search-bar-active {
     position: relative;
-    background: #e5e5e5 none repeat scroll 0 0;
-    padding: 0.5em 0 0.5em 0.5em;
+    background: none repeat scroll 0 0;
+	padding-left: 0;
 }
 
 #search-form {
@@ -63,8 +56,14 @@ input[type="text"] {
 #results-lede {margin-bottom: 1.75em;}
 
 .lede {
-    font-size: 24px;
+    font-family: nta, Arial, sans-serif;
+    font-size: 20px;
     line-height: 1.25;
+    display:block;
+    color: rgb(111, 119, 123);
+    font-weight: normal;
+    margin-top: -2px;
+    padding-bottom: 2px;
 }
 
 a.result-link h3, a.result-link:visited h3, a.result-link h2, a.result-link:visited h2 {

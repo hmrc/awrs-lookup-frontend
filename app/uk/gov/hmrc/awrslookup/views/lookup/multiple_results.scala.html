@@ -37,8 +37,8 @@
     @(searchTerm, searchResult)match {
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
-            <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
-            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), ""))</p>
+            <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading.revised")</h1>
+            <p class="lede" id="search-lede">@Html(Messages("awrs.lookup.search.lede.revised", awrs_urn(), ""))</p>
         }
     }
 }
