@@ -18,7 +18,7 @@ This service is written in [Scala](http://www.scala-lang.org/) and [Play](http:/
 Authentication
 ------------
 
-This customer logs into this service using [Government Gateway]http://www.gateway.gov.uk/).
+This customer logs into this service using [Government Gateway](http://www.gateway.gov.uk/).
 
 
 Acronyms
