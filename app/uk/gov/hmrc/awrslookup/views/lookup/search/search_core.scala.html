@@ -20,14 +20,13 @@
             inputClass = "search-awrs",
             parentForm = searchForm,
             maxLength = 140,
-            postInputContent = search_button(id = "search", classAttr = None),
             label = Messages("awrs.lookup.search.label"),
             labelClass = "visuallyhidden",
             searchTerm = searchTerm,
             searchResult = searchResult
         )
     </div>
-<button class="button" id="submit" type="submit">Continue</button>
+    @search_button(id = "search", classAttr = None)
 }
 
 @pageScripts = {<script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>}
