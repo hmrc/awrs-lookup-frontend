@@ -16,7 +16,7 @@ This service is written in [Scala](http://www.scala-lang.org/) and [Play](http:/
 Authentication
 ------------
 
-There is no authentication for this service.
+This user logs into this service using the [Government Gateway](http://www.gateway.gov.uk/)
 
 Acronyms
 ---
