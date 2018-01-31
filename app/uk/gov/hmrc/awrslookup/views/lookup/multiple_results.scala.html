@@ -34,7 +34,7 @@
 }
 
 @headers = {
-    @(searchTerm, searchResult)match {
+    @(searchTerm, searchResult) match {
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>

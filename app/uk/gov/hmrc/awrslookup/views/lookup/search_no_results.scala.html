@@ -23,15 +23,16 @@
 
 @searchbar = {
     <div class="search print-hidden">
-    @awrsInputTypeText(
-        field = searchForm("query"),
-        inputClass = "search-awrs",
-        parentForm = searchForm,
-        maxLength = 140,
-        label = Messages("awrs.lookup.search.label"),
-        labelClass = "visuallyhidden"
-    )
+        @awrsInputTypeText(
+            field = searchForm("query"),
+            inputClass = "search-awrs",
+            parentForm = searchForm,
+            maxLength = 140,
+            label = Messages("awrs.lookup.search.label"),
+            labelClass = "visuallyhidden"
+        )
     </div>
+    @search_button(id = "search", classAttr = None)
 }
 
 @pageScripts = {

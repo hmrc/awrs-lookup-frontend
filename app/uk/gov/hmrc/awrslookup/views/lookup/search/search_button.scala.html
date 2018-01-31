@@ -1,4 +1,4 @@
-@(id: Option[String], classAttr: Option[String])(implicit  messages: Messages)
+@(id: Option[String], classAttr: Option[String])(implicit messages: Messages)
 @getId = {
     @id match {
         case Some(customId) => {id=@customId}
