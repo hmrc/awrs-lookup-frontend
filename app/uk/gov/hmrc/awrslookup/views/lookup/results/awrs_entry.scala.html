@@ -8,7 +8,17 @@
 @import collection.immutable.ListMap
 @import utils.AwrsDateFormatter
 
-@(result: AwrsEntry, id: String, searchTerm: String, fromMulti: Boolean = false, originalSearchTerm: Option[String] = None, mainHeading: Html)(implicit request : Request[AnyContent], messages: Messages)
+@(
+    result: AwrsEntry,
+    id: String,
+    searchTerm: String,
+    fromMulti: Boolean = false,
+    originalSearchTerm: Option[String] = None,
+    mainHeading: Html
+)(implicit
+    request : Request[AnyContent],
+    messages: Messages
+)
 
 @tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
     <h2 class="heading-medium @additionalClasses" id="@{name}_heading">@heading</h2>

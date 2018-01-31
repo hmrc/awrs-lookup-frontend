@@ -53,17 +53,6 @@ input[type="text"] {
 
 #results-lede {margin-bottom: 1.75em;}
 
-.lede {
-    font-family: nta, Arial, sans-serif;
-    font-size: 20px;
-    line-height: 1.25;
-    display:block;
-    color: rgb(111, 119, 123);
-    font-weight: normal;
-    margin-top: -2px;
-    padding-bottom: 2px;
-}
-
 a.result-link h3, a.result-link:visited h3, a.result-link h2, a.result-link:visited h2 {
 	color: #2e3191;
 }

@@ -8,7 +8,17 @@
 @import uk.gov.hmrc.awrslookup.controllers.AwrsLanguageController
 @import play.api.Application
 
-@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages, application: Application, lang: Lang)
+@(
+    searchForm : Form[models.Query],
+    action: Call,
+    searchTerm: Option[String] = None,
+    searchResult: Option[SearchResult] = None
+)(implicit
+    request : Request[AnyContent],
+    messages: Messages,
+    application: Application,
+    lang: Lang
+)
 
 @clc = @{ Application.instanceCache[AwrsLanguageController].apply(application) }
 
@@ -43,12 +53,12 @@
 }
 
 @headers = {
-    @(searchTerm, searchResult)match {
+    @(searchTerm, searchResult) match {
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
-            <p class="lede" id="search-lede" aria-hidden="true">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), ""))</p>
-}
+            <p class="form-hint" id="search-lede" aria-hidden="true">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), ""))</p>
+        }
     }
 }
 

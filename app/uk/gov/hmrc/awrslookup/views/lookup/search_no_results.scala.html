@@ -7,18 +7,27 @@
 @import results._
 @import play.api.Application
 
-
-@(searchForm: Form[models.Query], action: Call, searchTerm: Option[String] = None, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages, application: Application, lang: Lang)
+@(
+    searchForm: Form[models.Query],
+    action: Call,
+    searchTerm: Option[String] = None,
+    errorMessage: Option[String] = None
+)(implicit
+    request: Request[AnyContent],
+    messages: Messages,
+    application: Application,
+    lang: Lang
+)
 
 @noResults = {
-@searchTerm match {
-    case Some(term) => {
-        <div id="no-results">
-            @no_result_warning(term, errorMessage)
-        </div>
+    @searchTerm match {
+        case Some(term) => {
+            <div id="no-results">
+                @no_result_warning(term, errorMessage)
+            </div>
+        }
+        case None => {}
     }
-    case None => {}
-}
 }
 
 @searchbar = {
@@ -45,7 +54,7 @@
     }
     <div class="grid">
         <div class="grid-2-3">
-        @noResults
+            @noResults
         </div>
     </div>
 }
