@@ -1,4 +1,4 @@
-awrs-lookup.nav_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
+awrs-lookup.nav_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchydd alcohol wedi''i gymeradwyo
 
 # Generic Messages
 awrs.generic.back=Yn ôl i chwilio
@@ -32,7 +32,7 @@ awrs.search.query.leading_x_mismatch=Mae''n rhaid i Gyfeirnod Unigryw ddechrau �
 # Lookup page
 awrs.lookup.search.page_title=Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
 awrs.lookup.search.heading=Beth yw Cyfeirnod Unigryw (URN) y cyfanwerthwr neu’r cynhyrchydd?
-awrs.lookup.search.lede=Mae 4 llythyren ac 11 rhif i hwn, fel XXAW 0000 0012 3456
+awrs.lookup.search.lede=Mae 4 llythyren ac 11 rhif i hwn, fel XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn={0}{2}Cyfeirnod Unigryw AWRS{3}{1}
 awrs.lookup.search.isle_of_man=Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
 awrs.lookup.search.no_results=Dim canlyniadau wedi''u canfod ar gyfer {0}
