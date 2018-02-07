@@ -1,14 +1,12 @@
 Frontend of the Alcohol Wholesale Registration Scheme Lookup application
 ====================================================================
 
-[![Build Status](https://travis-ci.org/hmrc/awrs-lookup-frontend.svg)](https://travis-ci.org/hmrc/awrs-lookup-frontend) [ ![Download](https://api.bintray.com/packages/hmrc/releases/awrs-lookup-frontend/images/download.svg) ](https://bintray.com/hmrc/releases/awrs-lookup-frontend/_latestVersion)
-
-This service provides the backend endpoint for the [Alcohol Wholesale Registration Scheme project](https://github.com/hmrc/awrs-frontend).
+[![Build Status](https://travis-ci.org/hmrc/awrs-lookup-frontend.svg?branch=master)](https://travis-ci.org/hmrc/awrs-lookup-frontend) [ ![Download](https://api.bintray.com/packages/hmrc/releases/awrs-lookup-frontend/images/download.svg) ](https://bintray.com/hmrc/releases/awrs-lookup-frontend/_latestVersion)
 
 Summary
 -----------
 
-This service allow a customer to apply for apply for Alcohol Wholesale Registration Scheme.
+This service allow a customer to search for registrations made via the Alcohol Wholesale Registration Scheme service.
 
 Requirements
 ------------
@@ -18,8 +16,7 @@ This service is written in [Scala](http://www.scala-lang.org/) and [Play](http:/
 Authentication
 ------------
 
-This customer logs into this service using [GOV.UK Verify](https://www.gov.uk/government/publications/introducing-govuk-verify/introducing-govuk-verify).
-
+This user logs into this service using the [Government Gateway](http://www.gateway.gov.uk/)
 
 Acronyms
 ---
