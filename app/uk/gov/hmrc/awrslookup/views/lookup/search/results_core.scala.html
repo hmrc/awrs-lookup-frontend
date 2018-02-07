@@ -4,14 +4,19 @@
 @import play.api.Application
 @import models._
 
-
-@(searchForm : Form[models.Query],
-  preFormContent: Option[Html] = None,
-  postFormContent: Option[Html] = None,
-  title : String,
-  searchTerm: String,
-  searchResult: Option[SearchResult] = None
-)(implicit request : Request[AnyContent], messages: Messages, application: Application, lang: Lang)
+@(
+    searchForm : Form[models.Query],
+    preFormContent: Option[Html] = None,
+    postFormContent: Option[Html] = None,
+    title : String,
+    searchTerm: String,
+    searchResult: Option[SearchResult] = None
+)(implicit
+    request : Request[AnyContent],
+    messages: Messages,
+    application: Application,
+    lang: Lang
+)
 
 @searchbar = {
     <div class="search print-hidden">
@@ -20,12 +25,12 @@
             inputClass = "search-awrs",
             parentForm = searchForm,
             maxLength = 140,
-            postInputContent = search_button(id = "search", classAttr = None),
             label = Messages("awrs.lookup.search.label"),
             labelClass = "visuallyhidden",
             searchResult = searchResult
         )
     </div>
+    @search_button(id = "search", classAttr = None)
 }
 
 @pageScripts = {

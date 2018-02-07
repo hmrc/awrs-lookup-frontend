@@ -1,4 +1,4 @@
-@(id: Option[String], classAttr: Option[String])
+@(id: Option[String], classAttr: Option[String])(implicit messages: Messages)
 @getId = {
     @id match {
         case Some(customId) => {id=@customId}
@@ -11,5 +11,4 @@
         case _ => {}
     }
 }
-
-<button @getClass alt="find" type="submit" @getId formnovalidate="formnovalidate"><span class="visuallyhidden">find.</span></button>
+<button @getId @getClass type="submit" formnovalidate>@Messages("awrs.generic.continue")</button>

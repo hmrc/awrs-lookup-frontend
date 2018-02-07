@@ -7,8 +7,17 @@
 @import results._
 @import play.api.Application
 
-
-@(searchForm : Form[models.Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages, application: Application, lang: Lang)
+@(
+    searchForm : Form[models.Query],
+    action: Call,
+    searchTerm: Option[String] = None,
+    searchResult: Option[SearchResult] = None
+)(implicit
+    request : Request[AnyContent],
+    messages: Messages,
+    application: Application,
+    lang: Lang
+)
 
 @h1 = {@searchResult match {
         case Some(SearchResult(results)) if results.size > 1 => { @Messages("awrs.lookup.results.heading_multi_results", results.size, searchTerm.get) }
@@ -34,7 +43,7 @@
 }
 
 @headers = {
-    @(searchTerm, searchResult)match {
+    @(searchTerm, searchResult) match {
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>

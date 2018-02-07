@@ -22,7 +22,6 @@
   postCodeLookupAddressNumber: Option[String] = None,
   additionalHiddenLabelText: Option[String] = None,
   preInputContent: Option[Html] = None,
-  postInputContent: Option[Html] = None,
   searchTerm: Option[String] = None,
   searchResult: Option[SearchResult] = None
 )(implicit  messages: Messages)
@@ -151,5 +150,4 @@
                 aria-labelledby=@ariaLabelledBy
            }
     >
-    @postInputContent
 </div>
