@@ -49,7 +49,7 @@ awrs.lookup.search.label=Enter a valid Unique Reference Number.
 # Results page
 awrs.lookup.results.format_error=Query string format error
 awrs.lookup.results.page_title_no_results=No results found
-awrs.lookup.results.page_title_single=Results
+awrs.lookup.results.page_title_single=Result
 awrs.lookup.results.heading_multi_results=We found {0} results for {1}
 awrs.lookup.results.results_found=We found {0} results
 awrs.lookup.results.group_lede_singular=For the purposes of Alcohol Wholesaler Registration Scheme the group member of {0} is {1}
