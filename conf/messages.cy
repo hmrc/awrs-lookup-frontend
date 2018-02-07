@@ -41,7 +41,7 @@ awrs.lookup.search.label=Rhowch Gyfeirnod Unigryw dilys
 # Results page
 awrs.lookup.results.format_error=Query string format error
 awrs.lookup.results.page_title_no_results=Dim canlyniadau wedi''u darganfod
-awrs.lookup.results.page_title_single={0} - Canlyniad
+awrs.lookup.results.page_title_single=Canlyniad
 awrs.lookup.results.heading_multi_results=Rydym wedi canfod {0} canlyniad for {1}
 awrs.lookup.results.results_found=Rydym wedi canfod {0} canlyniad
 awrs.lookup.results.group_lede_singular=At ddibenion y Cynllun Cofrestru Cyfanwerthwyr Alcohol, aelod grŵp {0} yw {1}
