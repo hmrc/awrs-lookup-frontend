@@ -11,9 +11,8 @@ awrs.generic.continue = Continue
 
 ##### GENERNIC ERROR MESSAGES
 
-awrs.generic.errors_heading = There is a problem with the form
-awrs.generic.error.character_invalid.summary = The Unique Reference Number is not in the correct format
 awrs.generic.error.character_invalid = Invalid characters have been entered
+awrs.generic.error.character_invalid.summary = The Unique Reference Number is not in the correct format
 awrs.generic.error.maximum_length.summary = The {0} is not in the correct format
 awrs.generic.error.maximum_length = The {0} must not be more than {1} characters
 
@@ -26,20 +25,14 @@ awrs.error.technical.message = Try again later
 
 awrs.search.query.empty.summary = The search field is empty
 awrs.search.query.empty = Enter a Unique Reference Number
-awrs.search.query.string_length_mismatch.summary = You must enter a 15 character Unique Reference Number
 awrs.search.query.string_length_mismatch = You must enter a 15 character Unique Reference Number
+awrs.search.query.string_length_mismatch.summary = You must enter a 15 character Unique Reference Number
 
-awrs.search.query.leading_four_characters_length_mismatch.summary = A Unique Reference Number must start with 4 alphabetical characters
-awrs.search.query.leading_four_characters_length_mismatch = A Unique Reference Number must start with 4 alphabetical characters
-
-awrs.search.query.zeros_mismatch.summary = A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
 awrs.search.query.zeros_mismatch = A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
+awrs.search.query.zeros_mismatch.summary = A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
 
-awrs.search.query.default_invalid_urn.summary = You must enter a valid Unique Reference Number
 awrs.search.query.default_invalid_urn = You must enter a valid Unique Reference Number
-
-awrs.search.query.leading_x_mismatch.summary = A Unique Reference Number must start with the letter X
-awrs.search.query.leading_x_mismatch = A Unique Reference Number must start with the letter X
+awrs.search.query.default_invalid_urn.summary = You must enter a valid Unique Reference Number
 
 ##### LOOKUP PAGE
 

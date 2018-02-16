@@ -11,9 +11,8 @@ awrs.generic.continue = Parhau
 
 ##### GENERIC ERROR MESSAGES
 
-awrs.generic.errors_heading = Mae problem gyda''r ffurflen
-awrs.generic.error.character_invalid.summary = Nid yw''r Cyfeirnod Unigryw yn y fformat cywir
 awrs.generic.error.character_invalid = Mae cymeriadau annilys wedi''u nodi
+awrs.generic.error.character_invalid.summary = Nid yw''r Cyfeirnod Unigryw yn y fformat cywir
 awrs.generic.error.maximum_length.summary = Nid yw''r {0} yn y fformat cywir
 awrs.generic.error.maximum_length = Ni all yr {0} fod yn hirach na {1} o gymeriadau
 
@@ -21,16 +20,14 @@ awrs.generic.error.maximum_length = Ni all yr {0} fod yn hirach na {1} o gymeria
 
 awrs.search.query.empty.summary = Mae''r blwch chwilio''n wag
 awrs.search.query.empty = Nodwch Gyfeirnod Unigryw
-awrs.search.query.string_length_mismatch.summary = Mae''n rhaid i chi nodi Cyfeirnod Unigryw 15 cymeriad
 awrs.search.query.string_length_mismatch = Mae''n rhaid i chi nodi Cyfeirnod Unigryw 15 cymeriad
-awrs.search.query.leading_four_characters_length_mismatch.summary = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â 4 cymeriad o''r wyddor
-awrs.search.query.leading_four_characters_length_mismatch = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â 4 cymeriad o''r wyddor
-awrs.search.query.zeros_mismatch.summary = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â 4 cymeriad o''r wyddor wedi''u dilyn gan 5 sero
+awrs.search.query.string_length_mismatch.summary = Mae''n rhaid i chi nodi Cyfeirnod Unigryw 15 cymeriad
+
 awrs.search.query.zeros_mismatch = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â 4 cymeriad o''r wyddor wedi''u dilyn gan 5 sero
-awrs.search.query.default_invalid_urn.summary = Mae''n rhaid i chi nodi Cyfeirnod Unigryw dilys
+awrs.search.query.zeros_mismatch.summary = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â 4 cymeriad o''r wyddor wedi''u dilyn gan 5 sero
+
 awrs.search.query.default_invalid_urn = Mae''n rhaid i chi nodi Cyfeirnod Unigryw dilys
-awrs.search.query.leading_x_mismatch.summary = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â''r llythyren X
-awrs.search.query.leading_x_mismatch = Mae''n rhaid i Gyfeirnod Unigryw ddechrau â''r llythyren X
+awrs.search.query.default_invalid_urn.summary = Mae''n rhaid i chi nodi Cyfeirnod Unigryw dilys
 
 ##### LOOKUP PAGE
 
