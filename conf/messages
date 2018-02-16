@@ -1,75 +1,80 @@
-awrs-lookup.nav_title=Check if an alcohol wholesaler or producer is approved
+awrs-lookup.nav_title = Check if an alcohol wholesaler or producer is approved
 
-# Generic Messages
-awrs.generic.back=Back to search
-awrs.generic.status.approved=Approved
-awrs.generic.status.revoked=No longer approved
-awrs.generic.status.deregistered=No longer approved
-awrs.generic.status.approved_group_member=Approved as part of the group
-awrs.generic.continue=Continue
+##### GENERIC MESSAGES
 
-# Generic Error Messages
-awrs.generic.errors_heading=There is a problem with the form
-awrs.generic.error.character_invalid.summary=The Unique Reference Number is not in the correct format
-awrs.generic.error.character_invalid=Invalid characters have been entered
-awrs.generic.error.maximum_length.summary=The {0} is not in the correct format
-awrs.generic.error.maximum_length=The {0} must not be more than {1} characters
+awrs.generic.back = Back to search
+awrs.generic.status.approved = Approved
+awrs.generic.status.revoked = No longer approved
+awrs.generic.status.deregistered = No longer approved
+awrs.generic.status.approved_group_member = Approved as part of the group
+awrs.generic.continue = Continue
 
-#errrors
-awrs.error.technical.title=Sorry, we'’re experiencing technical difficulties
-awrs.error.technical.message=Try again later
+##### GENERNIC ERROR MESSAGES
 
-# Lookup Form Error Messages
-awrs.search.query.empty.summary=The search field is empty
-awrs.search.query.empty=Enter a Unique Reference Number
-awrs.search.query.string_length_mismatch.summary=You must enter a 15 character Unique Reference Number
-awrs.search.query.string_length_mismatch=You must enter a 15 character Unique Reference Number
+awrs.generic.errors_heading = There is a problem with the form
+awrs.generic.error.character_invalid.summary = The Unique Reference Number is not in the correct format
+awrs.generic.error.character_invalid = Invalid characters have been entered
+awrs.generic.error.maximum_length.summary = The {0} is not in the correct format
+awrs.generic.error.maximum_length = The {0} must not be more than {1} characters
 
-awrs.search.query.leading_four_characters_length_mismatch.summary=A Unique Reference Number must start with 4 alphabetical characters
-awrs.search.query.leading_four_characters_length_mismatch=A Unique Reference Number must start with 4 alphabetical characters
+##### ERRORS 
 
-awrs.search.query.zeros_mismatch.summary=A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
-awrs.search.query.zeros_mismatch=A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
+awrs.error.technical.title = Sorry, we'’re experiencing technical difficulties
+awrs.error.technical.message = Try again later
 
-awrs.search.query.default_invalid_urn.summary=You must enter a valid Unique Reference Number
-awrs.search.query.default_invalid_urn=You must enter a valid Unique Reference Number
+##### LOOKUP FORM ERROR MESSAGES
 
-awrs.search.query.leading_x_mismatch.summary=A Unique Reference Number must start with the letter X
-awrs.search.query.leading_x_mismatch=A Unique Reference Number must start with the letter X
+awrs.search.query.empty.summary = The search field is empty
+awrs.search.query.empty = Enter a Unique Reference Number
+awrs.search.query.string_length_mismatch.summary = You must enter a 15 character Unique Reference Number
+awrs.search.query.string_length_mismatch = You must enter a 15 character Unique Reference Number
 
+awrs.search.query.leading_four_characters_length_mismatch.summary = A Unique Reference Number must start with 4 alphabetical characters
+awrs.search.query.leading_four_characters_length_mismatch = A Unique Reference Number must start with 4 alphabetical characters
 
-# Lookup page
-awrs.lookup.search.page_title=Check if an alcohol wholesaler or producer is approved
-awrs.lookup.search.heading=What is the wholesaler or producer’s URN?
-awrs.lookup.search.lede=This is 4 letters and 11 numbers, like XXAW 000 0012 3456
-awrs.lookup.search.awrs_urn={0}{2}AWRS URN{3}
-awrs.lookup.search.no_results=No results found for {0}
-awrs.lookup.search.no_results.info=Check you have the correct details from the wholesaler or producer and that you have entered them correctly.
-awrs.lookup.search.label=Enter a valid Unique Reference Number.
+awrs.search.query.zeros_mismatch.summary = A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
+awrs.search.query.zeros_mismatch = A Unique Reference Number must start with 4 alphabetical characters followed by 5 zeros
 
-# Results page
-awrs.lookup.results.format_error=Query string format error
-awrs.lookup.results.page_title_no_results=No results found
-awrs.lookup.results.page_title_single=Result
-awrs.lookup.results.heading_multi_results=We found {0} results for {1}
-awrs.lookup.results.results_found=We found {0} results
-awrs.lookup.results.group_lede_singular=For the purposes of Alcohol Wholesaler Registration Scheme the group member of {0} is {1}
-awrs.lookup.results.group_lede_plural=For the purposes of Alcohol Wholesaler Registration Scheme the group members of {0} are {1}
-awrs.lookup.results.group_h1_member_of={0} part of the {1}
-awrs.lookup.results.group_rep_table_heading=Group representative
-awrs.lookup.results.group_member_table_heading=Group members
-awrs.lookup.results.status_label=Status
-awrs.lookup.results.reg_number=Unique Reference Number
-awrs.lookup.results.date_of_reg=Effective date of registration
-awrs.lookup.results.date_of_dereg=Date of deregistration
-awrs.lookup.results.place_of_bus=Principal place of business
-awrs.lookup.results.business_name=Business name
-awrs.lookup.results.trading_name=Trading name
-awrs.lookup.results.unapproved.info=If you make purchases from wholesalers or producers who are no longer approved you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
-awrs.lookup.results.unapproved.what_to_do=What to do if you find a wholesaler or producer you''re dealing with isn''t approved
-awrs.lookup.results.print_link=Print or save for your records
-awrs.lookup.results.no_results.warning_info=It is important that you only make purchases from approved wholesalers or producers who are on the register. If you do trade with wholesalers or producers who are no longer approved you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about
-awrs.lookup.results.no_results.warning_what_to_do=what to do if you find a wholesaler or producer you''re dealing with isn''t on the register
-awrs.lookup.results.approved.warning_info=This check supports your normal due diligence. It is important that you verify the identity of your suppliers with your own
-awrs.lookup.results.approved.warning_info2=additional checks as a trade buyer
-awrs.lookup.results.search_date=Search date
+awrs.search.query.default_invalid_urn.summary = You must enter a valid Unique Reference Number
+awrs.search.query.default_invalid_urn = You must enter a valid Unique Reference Number
+
+awrs.search.query.leading_x_mismatch.summary = A Unique Reference Number must start with the letter X
+awrs.search.query.leading_x_mismatch = A Unique Reference Number must start with the letter X
+
+##### LOOKUP PAGE
+
+awrs.lookup.search.page_title = Check if an alcohol wholesaler or producer is approved
+awrs.lookup.search.heading = What is the wholesaler or producer’s URN?
+awrs.lookup.search.lede = This is 4 letters and 11 numbers, like XXAW 000 0012 3456
+awrs.lookup.search.awrs_urn = {0}{2}AWRS URN{3}
+awrs.lookup.search.no_results = No results found for {0}
+awrs.lookup.search.no_results.info = Check you have the correct details from the wholesaler or producer and that you have entered them correctly.
+awrs.lookup.search.label = Enter a valid Unique Reference Number.
+
+##### RESULTS PAGE
+
+awrs.lookup.results.format_error = Query string format error
+awrs.lookup.results.page_title_no_results = No results found
+awrs.lookup.results.page_title_single = Result
+awrs.lookup.results.heading_multi_results = We found {0} results for {1}
+awrs.lookup.results.results_found = We found {0} results
+awrs.lookup.results.group_lede_singular = For the purposes of Alcohol Wholesaler Registration Scheme the group member of {0} is {1}
+awrs.lookup.results.group_lede_plural = For the purposes of Alcohol Wholesaler Registration Scheme the group members of {0} are {1}
+awrs.lookup.results.group_h1_member_of = {0} part of the {1}
+awrs.lookup.results.group_rep_table_heading = Group representative
+awrs.lookup.results.group_member_table_heading = Group members
+awrs.lookup.results.status_label = Status
+awrs.lookup.results.reg_number = Unique Reference Number
+awrs.lookup.results.date_of_reg = Effective date of registration
+awrs.lookup.results.date_of_dereg = Date of deregistration
+awrs.lookup.results.place_of_bus = Principal place of business
+awrs.lookup.results.business_name = Business name
+awrs.lookup.results.trading_name = Trading name
+awrs.lookup.results.unapproved.info = If you make purchases from wholesalers or producers who are no longer approved you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
+awrs.lookup.results.unapproved.what_to_do = What to do if you find a wholesaler or producer you''re dealing with isn''t approved
+awrs.lookup.results.print_link = Print or save for your records
+awrs.lookup.results.no_results.warning_info = It is important that you only make purchases from approved wholesalers or producers who are on the register. If you do trade with wholesalers or producers who are no longer approved you could face prosecution, be liable to a penalty, and have your alcohol stock seized. Find out more about
+awrs.lookup.results.no_results.warning_what_to_do = what to do if you find a wholesaler or producer you''re dealing with isn''t on the register
+awrs.lookup.results.approved.warning_info = This check supports your normal due diligence. It is important that you verify the identity of your suppliers with your own
+awrs.lookup.results.approved.warning_info2 = additional checks as a trade buyer
+awrs.lookup.results.search_date = Search date
