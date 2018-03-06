@@ -1,21 +1,19 @@
-# these are used for the purpose of testing the error message API
-testkey1= result1
-testkey1.summary= result1 
-test.withprefix.testkey2= result2 {0} {1} {2} 
-test.withprefix.testkey2.summary= result2 {0} {1} {2} 
-testkey3= result {0} {1} 
-testkey3.summary= result {0} {1}
+##### THESE ARE USED FOR THE PURPOSE OF TESTING THE ERROR MESSAGE API
+testkey1 = result1
+testkey1.summary = result1 
+test.withprefix.testkey2 = result2 {0} {1} {2} 
+test.withprefix.testkey2.summary = result2 {0} {1} {2} 
+testkey3 = result {0} {1} 
+testkey3.summary = result {0} {1}
 
-testkey.tooEarly=too early
-testkey.tooEarly.summary=too early summary
-testkey.emptyDate=empty date
-testkey.emptyDate.summary=empty date summary
-testkey.invalidDate=invalid date
-testkey.invalidDate.summary=invalid date summary
+testkey.tooEarly = too early
+testkey.tooEarly.summary = too early summary
+testkey.emptyDate = empty date
+testkey.emptyDate.summary = empty date summary
+testkey.invalidDate = invalid date
+testkey.invalidDate.summary = invalid date summary
 
-#********************************************************************************
-# User Research Banner
-#********************************************************************************
+##### USER RESEARCH BANNER
 
 urbanner.message.text = Help improve digital services by joining the HMRC user panel (opens in new window)
 urbanner.message.reject = No thanks
