@@ -21,7 +21,7 @@
 )
 
 @tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
-    <h2 class="heading-medium @additionalClasses" id="@{name}_heading">@heading</h2>
+    <h2 class="heading-large  no-bottom-border" id="@{name}_heading">@heading</h2>
 }
 
 @tableHeadingSmall(name: String, heading: String, additionalClasses: Option[String] = "member-section") = {
@@ -31,16 +31,31 @@
 @common(showRegNumber: Boolean) = {
     @showRegNumber match {
         case true => {
-            @table_row(s"${id}_awrs_reg", Messages("awrs.lookup.results.reg_number"), result.awrsRefFormatted)
-        }
+                <div class="grid grid-1-2">
+                    <h2 class="heading-small">@Messages("awrs.lookup.results.reg_number")</h2>
+                    <p>@result.awrsRefFormatted</p>
+                </div>
+}
         case false => {}
     }
-    @table_row(s"${id}_awrs_status", Messages("awrs.lookup.results.status_label"), result.status.map(_.name))
-    @table_row(s"${id}_reg_date", Messages("awrs.lookup.results.date_of_reg"), result.registrationDateFormatted)
+
+<div class="grid grid-1-2">
+    <h2 class="heading-small">@Messages("awrs.lookup.results.status_label")</h2>
+    <p>@result.status.map(_.name)</p>
+</div>
+<div class="grid grid-1-2">
+    <h2 class="heading-small">@Messages("awrs.lookup.results.date_of_reg")</h2>
+    <p>@result.registrationDateFormatted</p>
+</div>
+
 
     @result.status match {
         case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
-            @table_row(s"${id}_end_date", Messages("awrs.lookup.results.date_of_dereg"), result.registrationEndDateFormatted)
+        <div class="grid grid-1-2">
+            <h2 class="heading-small">@Messages("awrs.lookup.results.date_of_dereg")</h2>
+            <p>@result.registrationEndDateFormatted</p>
+        </div>
+
         }
         case _ =>{}
     }
@@ -49,16 +64,10 @@
 @address(someAddress: Option[Address], id: String) = {
     @someAddress match {
         case Some(address) => {
-            @table_row(s"${id}_address", Messages("awrs.lookup.results.place_of_bus"),
-                spans(ListMap(
-                    s"${id}_addressLine1" -> address.addressLine1,
-                    s"${id}_addressLine2" -> address.addressLine2,
-                    s"${id}_addressLine3" -> address.addressLine3,
-                    s"${id}_addressLine4" -> address.addressLine4,
-                    s"${id}_postcode" -> address.postcode,
-                    s"${id}_country" -> address.addressCountry)
-                )
-            )
+                <div class="grid grid-1-2">
+                    <h2 class="heading-small">@Messages("awrs.lookup.results.principle_place_Business")</h2>
+                    <p>@address.addressLine1<br>@address.addressLine2<br>@address.addressLine3<br>@address.addressLine4<br>@address.postcode<br>@address.addressCountry</p>
+                </div>
         }
         case _ => {}
     }
@@ -84,8 +93,12 @@
 }
 
 @info(info: Info, id: String = id) = {
-    @table_row(s"${id}_businessName", Messages("awrs.lookup.results.business_name"), info.businessName)
-    @table_row(s"${id}_tradingName", Messages("awrs.lookup.results.trading_name"), info.tradingName)
+
+    <div class="grid grid-1-2">
+        <h2 class="heading-small">@Messages("awrs.lookup.results.business_name")</h2>
+        <p>@info.businessName</p>
+    </div>
+
     @address(info.address, id)
 }
 
@@ -102,17 +115,25 @@
 }
 
 @group(group: Group) = {
-    <h1 class="heading-xlarge" id="results-heading">
-        @mainHeading
-    </h1>
-    @headerRegNumberHighlight(result)
-    <p id="results-lede" class="lede">@groupLedge(group)</p>
-    @status_warning(result)
+
+
+
+<div class="grid">
+    <div class="grid-row">
+        <h1 class="heading-xlarge" id="results-heading">
+            @mainHeading
+        </h1>
+        @headerRegNumberHighlight(result)
+
+     @status_warning(result)
+
     @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
-    <table id="results-table" role="presentation">
+
         @common(showRegNumber = true)
         @info(group.info)
-    </table>
+</div>
+</div>
+
     @tableHeadingMedium(id+"_members", Messages("awrs.lookup.results.group_member_table_heading"))
     @group.members.zipWithIndex.map {
         case (memberInfo: Info, index: Int) => {

@@ -71,3 +71,6 @@ awrs.lookup.results.no_results.warning_what_to_do = what to do if you find a who
 awrs.lookup.results.approved.warning_info = This check supports your normal due diligence. It is important that you verify the identity of your suppliers with your own
 awrs.lookup.results.approved.warning_info2 = additional checks as a trade buyer
 awrs.lookup.results.search_date = Search date
+awrs.lookup.checkURN = check a URN
+awrs.lookup.or = or
+awrs.lookup.results.principle_place_Business = Principal place of business

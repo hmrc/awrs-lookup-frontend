@@ -18,29 +18,11 @@
     lang: Lang
 )
 
-@searchbar = {
-    <div class="search print-hidden">
-        @awrsInputTypeText(
-            field = searchForm("query"),
-            inputClass = "search-awrs",
-            parentForm = searchForm,
-            maxLength = 140,
-            label = Messages("awrs.lookup.search.label"),
-            labelClass = "visuallyhidden",
-            searchResult = searchResult
-        )
-    </div>
-    @search_button(id = "search", classAttr = None)
-}
-
 @pageScripts = {
     <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
 }
 
 @views.html.main_template(title = title, bodyClasses = None, scriptElem = pageScripts) {
-    @helper.form(action = controllers.routes.LookupController.show(false), 'id -> "search-form") {
-        @searchbar
-    }
     <div class="grid">
         <div class="grid-2-3">
             @preFormContent

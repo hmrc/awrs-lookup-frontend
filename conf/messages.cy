@@ -72,3 +72,5 @@ awrs.lookup.results.search_date = Dyddiad y chwiliad
 
 urbanner.message.text = Helpwch i wella gwasanaethau digidol drwy ymuno â phanel defnyddwyr CThEM (yn agor ffenestr newydd)
 urbanner.message.reject = Dim diolch
+awrs.lookup.checkURN = wirio'r Cyfeirnod Unigryw (URN)
+awrs.lookup.or = neu
