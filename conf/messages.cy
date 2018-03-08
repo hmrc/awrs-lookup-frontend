@@ -74,4 +74,4 @@ awrs.lookup.checkURN = wirio'r Cyfeirnod Unigryw (URN)
 awrs.lookup.or = neu
 awrs.lookup.results.Approved_group_members = Aelodau grŵp sydd wedi eu cymeradwyo
 awrs.lookup.results.URN = URN
-awrs.lookup.results.Group_members = Group members
+awrs.lookup.results.Group_members = Aelodau''r grŵp
