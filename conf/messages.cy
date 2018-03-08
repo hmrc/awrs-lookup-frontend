@@ -62,8 +62,8 @@ awrs.lookup.results.unapproved.what_to_do = Yr hyn i''w wneud os dewch yn ymwybo
 awrs.lookup.results.print_link = Argraffu neu gadw ar gyfer eich cofnodion
 awrs.lookup.results.no_results.warning_info = Mae''n bwysig eich bod yn prynu dim ond oddi wrth gyfanwerthwyr neu gynhyrchwyr sydd wedi''u cymeradwyo ac sydd ar y gofrestr. Os byddwch yn delio gyda chyfanwerthwyr neu gynhyrchwyr nad ydynt mwyach wedi''u cymeradwyo, gallech gael eich erlyn, bod yn agored i gosb, a chael eich stoc alcohol wedi''i atafaelu. Mae rhagor o wybodaeth ar gael
 awrs.lookup.results.no_results.warning_what_to_do = yr hyn i''w wneud os dewch yn ymwybodol nad yw cyfanwerthwr neu gynhyrchydd rydych yn delio ag ef ar y cofrestr
-awrs.lookup.results.approved.warning_info = Mae''r gwiriad hwn yn cefnogi''ch diwydrwydd dyladwy arferol. Mae''n bwysig eich bod yn cadarnhau pwy yw''ch cyflenwyr drwy ddefnyddio''ch
-awrs.lookup.results.approved.warning_info2 = gwiriadau ychwanegol personol fel prynwr masnach
+awrs.lookup.results.approved.warning_info = Mae'r gwiriad hwn yn cefnogi'ch diwydrwydd dyladwy arferol. Rhaid i chi gadarnhau pwy yw'r cyflenwyr drwy
+awrs.lookup.results.approved.warning_info2 = ddefnyddio gwiriadau ychwanegol fel prynwr masnach.
 awrs.lookup.results.search_date = Dyddiad y chwiliad
 
 ##### USER RESEARCH BANNER
