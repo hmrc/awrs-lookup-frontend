@@ -145,7 +145,7 @@
     @group.members.zipWithIndex.map {
         case (memberInfo: Info, index: Int) => {
            <div class="grid-row">
-                <div class="grid grid-1-2">
+                <div class="grid grid-1-2" id='result_member_@{index}_heading' >
                     <h2 class="heading-small" id="result_tradingName_label">@Messages("awrs.lookup.results.trading_name")</h2>
                     <p id="result_tradingName_detail">@knownName(memberInfo)</p>
                 </div>
