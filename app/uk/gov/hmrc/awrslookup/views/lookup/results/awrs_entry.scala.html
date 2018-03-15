@@ -104,7 +104,7 @@
     <h1 class="heading-xlarge" id="results-heading">
         @mainHeading
     </h1>
-    @headerRegNumberHighlight(result)
+<div style="margin-bottom:30px"></div>
     @status_warning(result)
     <table id="results-table" role="presentation">
         @common(showRegNumber = true)
@@ -119,7 +119,7 @@
         <h1 class="heading-xlarge" id="results-heading">
             @mainHeading
         </h1>
-        @headerRegNumberHighlight(result)
+
 
         @status_warning(result)
         <p id="results-lede" class="lede">@groupLedge(group)</p>
@@ -150,7 +150,6 @@
                     <p id="result_tradingName_detail">@knownName(memberInfo)</p>
                 </div>
 
-                @memberStatus(id = s"${id}_member_$index")
                 @info(memberInfo, id = s"${id}_member_$index")
 
           </div>
