@@ -56,6 +56,7 @@ awrs.lookup.results.place_of_bus = Prif safle''r busnes
 awrs.lookup.results.business_name = Enw''r busnes
 awrs.lookup.results.trading_name = Enw masnachu
 awrs.lookup.results.unapproved.info = Os prynwch oddi wrth gyfanwerthwyr neu gynhyrchwyr nad ydynt bellach wedi''u cymeradwyo gallech gael eich erlyn, bod yn agored i gosb, a chael eich stoc alcohol wedi''i atafaelu.
+awrs.lookup.results.no_results.find_out = Darganfyddwch fwy am
 awrs.lookup.results.unapproved.what_to_do = Yr hyn i''w wneud os dewch yn ymwybodol nad yw cyfanwerthwr neu gynhyrchydd rydych yn delio ag ef wedi''i gymeradwyo
 awrs.lookup.results.print_link = Argraffu neu gadw ar gyfer eich cofnodion
 awrs.lookup.results.no_results.warning_what_to_do = yr hyn i''w wneud os dewch yn ymwybodol nad yw cyfanwerthwr neu gynhyrchydd rydych yn delio ag ef ar y cofrestr
@@ -63,7 +64,7 @@ awrs.lookup.results.approved.warning_info = Mae'r gwiriad hwn yn cefnogi'ch diwy
 awrs.lookup.results.approved.warning_info2 = ddefnyddio gwiriadau ychwanegol fel prynwr masnach
 awrs.lookup.results.search_date = Dyddiad y chwiliad
 awrs.lookup.search.info = Dim ond oddi wrth cyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os ydych yn prynu oddi wrth cyfanwerthwyr neu gynhyrchwyr sydd heb eu cymeradwyo, gallech wynebu'r canlynol:
-awrs.lookup.search.no_results.info =  Check you have the correct details from the wholesaler or producer and you entered them correctly.
+awrs.lookup.search.no_results.info =  Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu''r cynhyrchwr a''ch bod wedi''u nodi''n gywir
 
 ##### USER RESEARCH BANNER
 

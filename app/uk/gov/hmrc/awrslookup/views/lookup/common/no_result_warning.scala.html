@@ -7,10 +7,11 @@
 
 
 @whatToDo = {
-    <a class="print-hidden" id="due_diligence_link" data-journey-click="what-to-do-no-results-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.
+  <p>Find out more about <a class="print-hidden" id="due_diligence_link" data-journey-click="what-to-do-no-results-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.</p>
 }
 
 @searchedFor = {
+          <h1 class="heading-xlarge">@Messages("awrs.lookup.search.not_found")</h1>
 
             <div class="panel panel-indent panel-border-wide space">
                 <p>@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format(searchTermWithNoResult.replaceAll("\\s", "")))</p>
@@ -40,32 +41,34 @@
                 <div>
                     <strong>@Messages("awrs.lookup.search.info")
                         <ul class="list list-bullet">
-                            <li>be prosecuted</li>
-                            <li>be fined</li>
-                            <li>have your alcohol stock seized</li>
+                            <li style="font-weight: 600;">be prosecuted</li>
+                            <li style="font-weight: 600;">be fined</li>
+                            <li style="font-weight: 600;">have your alcohol stock seized</li>
                         </ul>
                     </strong>
                 </div>
             </div>
-<p>Find out more about <a href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">what to do if you find a wholesaler or producer you're dealing with isn't on the register</a>.</p>
+
+@whatToDo
+<a class="button margin-top button--spaced" href="check-the-awrs-register" role="button">@Messages("awrs.lookup.check_urn")</a>
 }
 
 @info = @{
     errorMessage match {
         case Some(_) => {}
         case _ => {
-            <!--warning_core(warningText)-->
             infoContent
         }
     }
 }
 
 
-<h1 class="heading-xlarge">@Messages("awrs.lookup.search.not_found")</h1>
-
 @panel
 
 @info
+
+
+
 
 
 
