@@ -21,6 +21,8 @@
 
 @invalidURN(message:String) = {
      <h1 id="no-results-search-term" class="heading-medium">@Messages(message+ ".summary")</h1>
+     <p>@Messages("awrs.lookup.search.no_results.info")</p>
+    @checkURN
 }
 
 
@@ -54,7 +56,10 @@
             </div>
 
 @whatToDo
-<a class="button margin-top button--spaced" href="check-the-awrs-register" role="button">@Messages("awrs.lookup.check_urn")</a>
+@checkURN
+}
+@checkURN = {
+  <a class="button margin-top button--spaced" href="check-the-awrs-register" role="button">@Messages("awrs.lookup.check_urn")</a>
 }
 
 @info = @{
