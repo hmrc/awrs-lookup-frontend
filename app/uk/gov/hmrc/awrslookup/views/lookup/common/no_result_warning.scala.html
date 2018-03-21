@@ -7,7 +7,7 @@
 
 
 @whatToDo = {
-  <p>Find out more about <a class="print-hidden" id="due_diligence_link" data-journey-click="what-to-do-no-results-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.</p>
+  <p>@Messages("awrs.lookup.results.no_results.find_out") <a class="print-hidden" id="due_diligence_link" data-journey-click="what-to-do-no-results-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.</p>
 }
 
 @searchedFor = {
@@ -22,7 +22,7 @@
 @invalidURN(message:String) = {
      <h1 id="no-results-search-term" class="heading-medium">@Messages(message+ ".summary")</h1>
      <p>@Messages("awrs.lookup.search.no_results.info")</p>
-    @checkURN
+     @checkURN
 }
 
 
@@ -47,9 +47,9 @@
                 <div>
                     <strong>@Messages("awrs.lookup.search.info")
                         <ul class="list list-bullet">
-                            <li style="font-weight: 600;">be prosecuted</li>
-                            <li style="font-weight: 600;">be fined</li>
-                            <li style="font-weight: 600;">have your alcohol stock seized</li>
+                            <li style="font-weight: 600;">@Messages("awrs.lookup.search.info.bullet.1")</li>
+                            <li style="font-weight: 600;">@Messages("awrs.lookup.search.info.bullet.2")</li>
+                            <li style="font-weight: 600;">@Messages("awrs.lookup.search.info.bullet.3")</li>
                         </ul>
                     </strong>
                 </div>

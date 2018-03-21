@@ -65,6 +65,10 @@ awrs.lookup.results.approved.warning_info2 = ddefnyddio gwiriadau ychwanegol fel
 awrs.lookup.results.search_date = Dyddiad y chwiliad
 awrs.lookup.search.info = Dim ond oddi wrth cyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os ydych yn prynu oddi wrth cyfanwerthwyr neu gynhyrchwyr sydd heb eu cymeradwyo, gallech wynebu'r canlynol:
 awrs.lookup.search.no_results.info =  Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu''r cynhyrchwr a''ch bod wedi''u nodi''n gywir
+awrs.lookup.search.info.bullet.1 = erlyniad
+awrs.lookup.search.info.bullet.2 = dirwy
+awrs.lookup.search.info.bullet.3 = eich alcohol yn cael ei atafaelu
+
 
 ##### USER RESEARCH BANNER
 
@@ -75,3 +79,4 @@ awrs.lookup.or = neu
 awrs.lookup.results.Approved_group_members = Aelodau grŵp sydd wedi eu cymeradwyo
 awrs.lookup.results.URN = URN
 awrs.lookup.results.Group_members = Aelodau''r grŵp
+awrs.lookup.check_urn = Gwirio Cyfeirnod Unigryw (URN)

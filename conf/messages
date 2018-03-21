@@ -46,7 +46,9 @@ awrs.lookup.search.label = Enter a valid Unique Reference Number.
 awrs.lookup.search.search_for = You searched for {0}
 awrs.lookup.search.not_found = Not found
 awrs.lookup.search.info = You must only buy from approved wholesalers or producers. If you buy from wholesalers or producers who are not approved you could:
-
+awrs.lookup.search.info.bullet.1 = be prosecuted
+awrs.lookup.search.info.bullet.2 = be fined
+awrs.lookup.search.info.bullet.3 = have your alcohol stock seized
 ##### RESULTS PAGE
 
 awrs.lookup.results.format_error = Query string format error
