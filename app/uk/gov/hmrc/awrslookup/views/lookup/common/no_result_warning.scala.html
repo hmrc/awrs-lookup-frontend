@@ -11,7 +11,7 @@
 }
 
 @searchedFor = {
-          <h1 class="heading-xlarge">@Messages("awrs.lookup.search.not_found")</h1>
+          <h1 class="heading-xlarge" id="not-found">@Messages("awrs.lookup.search.not_found")</h1>
 
             <div class="panel panel-indent panel-border-wide space">
                 <p>@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format(searchTermWithNoResult.replaceAll("\\s", "")))</p>
