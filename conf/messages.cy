@@ -32,7 +32,7 @@ awrs.search.query.default_invalid_urn.summary = Mae''n rhaid i chi nodi Cyfeirno
 ##### LOOKUP PAGE
 
 awrs.lookup.search.page_title = Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi''i gymeradwyo
-awrs.lookup.search.heading = Beth yw Cyfeirnod Unigryw (URN) y cyfanwerthwr neu’r cynhyrchydd?
+awrs.lookup.search.heading = Beth yw Cyfeirnod Unigryw (URN) y cyfanwerthwr neu''r cynhyrchydd?
 awrs.lookup.search.lede = Mae 4 llythyren ac 11 rhif i hwn, fel XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn = {0}{2}Cyfeirnod Unigryw AWRS{3}{1}
 awrs.lookup.search.isle_of_man = Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
@@ -60,7 +60,7 @@ awrs.lookup.results.unapproved.what_to_do = Yr hyn i''w wneud os dewch yn ymwybo
 awrs.lookup.results.print_link = Argraffu neu gadw ar gyfer eich cofnodion
 awrs.lookup.results.no_results.warning_info = Mae''n bwysig eich bod yn prynu dim ond oddi wrth gyfanwerthwyr neu gynhyrchwyr sydd wedi''u cymeradwyo ac sydd ar y gofrestr. Os byddwch yn delio gyda chyfanwerthwyr neu gynhyrchwyr nad ydynt mwyach wedi''u cymeradwyo, gallech gael eich erlyn, bod yn agored i gosb, a chael eich stoc alcohol wedi''i atafaelu. Mae rhagor o wybodaeth ar gael
 awrs.lookup.results.no_results.warning_what_to_do = yr hyn i''w wneud os dewch yn ymwybodol nad yw cyfanwerthwr neu gynhyrchydd rydych yn delio ag ef ar y cofrestr
-awrs.lookup.results.approved.warning_info = Mae'r gwiriad hwn yn cefnogi'ch diwydrwydd dyladwy arferol. Rhaid i chi gadarnhau pwy yw'r cyflenwyr drwy
+awrs.lookup.results.approved.warning_info = Mae''r gwiriad hwn yn cefnogi''ch diwydrwydd dyladwy arferol. Rhaid i chi gadarnhau pwy yw''r cyflenwyr drwy
 awrs.lookup.results.approved.warning_info2 = ddefnyddio gwiriadau ychwanegol fel prynwr masnach
 awrs.lookup.results.search_date = Dyddiad y chwiliad
 
@@ -68,7 +68,7 @@ awrs.lookup.results.search_date = Dyddiad y chwiliad
 
 urbanner.message.text = Helpwch i wella gwasanaethau digidol drwy ymuno â phanel defnyddwyr CThEM (yn agor ffenestr newydd)
 urbanner.message.reject = Dim diolch
-awrs.lookup.checkURN = wirio'r Cyfeirnod Unigryw (URN)
+awrs.lookup.checkURN = wirio''r Cyfeirnod Unigryw (URN)
 awrs.lookup.or = neu
 awrs.lookup.results.Approved_group_members = Aelodau grŵp sydd wedi eu cymeradwyo
 awrs.lookup.results.URN = URN

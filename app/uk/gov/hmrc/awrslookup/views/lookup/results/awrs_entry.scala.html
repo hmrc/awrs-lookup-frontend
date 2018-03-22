@@ -41,17 +41,18 @@
         case false => {}
     }
 
-
-<div class="grid grid-1-2">
-    <h2 class="heading-small" id="result_reg_date_label">@Messages("awrs.lookup.results.date_of_reg")</h2>
-    <p id="result_reg_date_detail">@result.registrationDateFormatted</p>
-</div>
+@if(result.registrationDate.isDefined) {
+    <div class="grid grid-1-2">
+        <h2 class="heading-small" id="result_reg_date_label">@Messages("awrs.lookup.results.date_of_reg")</h2>
+        <p id="result_reg_date_detail">@result.registrationDateFormatted</p>
+    </div>
+}
 
 
     @result.status match {
         case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
         <div class="grid grid-1-2">
-            <h2 class="heading-small">@Messages("awrs.lookup.results.date_of_dereg")</h2>
+            <h2 class="heading-small" id="result_end_date_label">@Messages("awrs.lookup.results.date_of_dereg")</h2>
             <p>@result.registrationEndDateFormatted</p>
         </div>
 
@@ -92,10 +93,12 @@
 
 @info(info: Info, id: String = id) = {
 
-    <div class="grid grid-1-2">
-        <h2 class="heading-small" id="result_businessName_label">@Messages("awrs.lookup.results.business_name")</h2>
-        <p id="result_businessName_detail">@info.businessName</p>
-    </div>
+    @if(info.businessName.isDefined) {
+        <div class="grid grid-1-2">
+            <h2 class="heading-small" id="result_businessName_label">@Messages("awrs.lookup.results.business_name")</h2>
+            <p id="result_businessName_detail">@info.businessName</p>
+        </div>
+    }
 
     @address(info.address, id)
 }
