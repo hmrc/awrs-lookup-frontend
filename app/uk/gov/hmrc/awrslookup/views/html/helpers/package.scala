@@ -60,38 +60,6 @@ package object helpers {
     case Some(name) => name
   }
 
-  def groupLedge(group: Group)(implicit messages: Messages): Html = {
-    val groupName = knownName(group.info)
-    val text = (list: String) => group.members.size match {
-      case 1 => Messages("awrs.lookup.results.group_lede_singular", groupName, list)
-      case _ => Messages("awrs.lookup.results.group_lede_plural", groupName, list)
-    }
-
-    def tag(info: Info, ind: Int) = s"""<a href=#result_member_${ind}_heading id=result_member_${ind}_lede>${knownName(info)}</a>"""
-
-    val Init = ""
-
-    @tailrec
-    def loop(current: String, leftOvers: List[(Info, Int)]): String = leftOvers match {
-      case Nil => current
-      case (info, ind) :: Nil =>
-        current + (current match {
-          case Init => tag(info, ind)
-          case _ => " and " + tag(info, ind)
-        })
-      case (info, ind) :: t =>
-        loop(
-          current = current + (current match {
-            case Init => tag(info, ind)
-            case _ => ", " + tag(info, ind)
-          }),
-          leftOvers = t
-        )
-    }
-
-    Html(text(loop(Init, group.members.zipWithIndex) + "."))
-  }
-
   // TODO optimisation, currently we're calling the similarity function multiple times for each element,
   // refactor to reduce the calls
   private[helpers] def infoMatchCoEff(info: Info, searchTerm: String): Double = {
