@@ -80,7 +80,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     "display a 'No results found' page when a non existent reference is entered" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
       val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
-      document.getElementById("no-results-search-term").text.replaceAll(" ", "") should include(Messages("awrs.lookup.search.no_results", testAwrsRef).replaceAll(" ", ""))
+      document.getElementById("not-found").text should include(Messages("awrs.lookup.search.not_found"))
     }
 
     "display a list of awrs entries when a valid reference is entered and multiple are found" in {

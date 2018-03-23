@@ -36,9 +36,9 @@ awrs.lookup.search.heading = Beth yw Cyfeirnod Unigryw (URN) y cyfanwerthwr neu'
 awrs.lookup.search.lede = Mae 4 llythyren ac 11 rhif i hwn, fel XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn = {0}{2}Cyfeirnod Unigryw AWRS{3}{1}
 awrs.lookup.search.isle_of_man = Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
-awrs.lookup.search.no_results = Dim canlyniadau wedi''u canfod ar gyfer {0}
-awrs.lookup.search.no_results.info = Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu''r cynhyrchwr a''ch bod wedi''u nodi''n gywir
 awrs.lookup.search.label = Rhowch Gyfeirnod Unigryw dilys
+awrs.lookup.search.search_for = Gwnaethoch chwilio am {0}
+awrs.lookup.search.not_found = Dim canlyniadau
 
 ##### RESULTS PAGE
 
@@ -56,13 +56,19 @@ awrs.lookup.results.place_of_bus = Prif safle''r busnes
 awrs.lookup.results.business_name = Enw''r busnes
 awrs.lookup.results.trading_name = Enw masnachu
 awrs.lookup.results.unapproved.info = Os prynwch oddi wrth gyfanwerthwyr neu gynhyrchwyr nad ydynt bellach wedi''u cymeradwyo gallech gael eich erlyn, bod yn agored i gosb, a chael eich stoc alcohol wedi''i atafaelu.
+awrs.lookup.results.no_results.find_out = Darganfyddwch fwy am
 awrs.lookup.results.unapproved.what_to_do = Yr hyn i''w wneud os dewch yn ymwybodol nad yw cyfanwerthwr neu gynhyrchydd rydych yn delio ag ef wedi''i gymeradwyo
 awrs.lookup.results.print_link = Argraffu neu gadw ar gyfer eich cofnodion
-awrs.lookup.results.no_results.warning_info = Mae''n bwysig eich bod yn prynu dim ond oddi wrth gyfanwerthwyr neu gynhyrchwyr sydd wedi''u cymeradwyo ac sydd ar y gofrestr. Os byddwch yn delio gyda chyfanwerthwyr neu gynhyrchwyr nad ydynt mwyach wedi''u cymeradwyo, gallech gael eich erlyn, bod yn agored i gosb, a chael eich stoc alcohol wedi''i atafaelu. Mae rhagor o wybodaeth ar gael
 awrs.lookup.results.no_results.warning_what_to_do = yr hyn i''w wneud os dewch yn ymwybodol nad yw cyfanwerthwr neu gynhyrchydd rydych yn delio ag ef ar y cofrestr
 awrs.lookup.results.approved.warning_info = Mae''r gwiriad hwn yn cefnogi''ch diwydrwydd dyladwy arferol. Rhaid i chi gadarnhau pwy yw''r cyflenwyr drwy
 awrs.lookup.results.approved.warning_info2 = ddefnyddio gwiriadau ychwanegol fel prynwr masnach
 awrs.lookup.results.search_date = Dyddiad y chwiliad
+awrs.lookup.search.info = Dim ond oddi wrth cyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os ydych yn prynu oddi wrth cyfanwerthwyr neu gynhyrchwyr sydd heb eu cymeradwyo, gallech wynebu'r canlynol:
+awrs.lookup.search.no_results.info =  Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu''r cynhyrchwr a''ch bod wedi''u nodi''n gywir
+awrs.lookup.search.info.bullet.1 = erlyniad
+awrs.lookup.search.info.bullet.2 = dirwy
+awrs.lookup.search.info.bullet.3 = eich alcohol yn cael ei atafaelu
+
 
 ##### USER RESEARCH BANNER
 
@@ -73,3 +79,4 @@ awrs.lookup.or = neu
 awrs.lookup.results.Approved_group_members = Aelodau grŵp sydd wedi eu cymeradwyo
 awrs.lookup.results.URN = URN
 awrs.lookup.results.Group_members = Aelodau''r grŵp
+awrs.lookup.check_urn = Gwirio Cyfeirnod Unigryw (URN)
