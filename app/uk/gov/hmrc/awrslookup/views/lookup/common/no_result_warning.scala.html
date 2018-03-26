@@ -14,14 +14,16 @@
           <h1 class="heading-xlarge" id="not-found">@Messages("awrs.lookup.search.not_found")</h1>
 
             <div class="panel panel-indent panel-border-wide space">
-                <p>@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format(searchTermWithNoResult.replaceAll("\\s", "")))</p>
-                <p>@Messages("awrs.lookup.search.no_results.info")</p>
+                <p id="no-results-search-term">@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format
+                        (searchTermWithNoResult
+                        .replaceAll("\\s", "")))</p>
+                <p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
             </div>
 }
 
 @invalidURN(message:String) = {
      <h1 id="no-results-search-term" class="heading-medium">@Messages(message+ ".summary")</h1>
-     <p>@Messages("awrs.lookup.search.no_results.info")</p>
+     <p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
      @checkURN
 }
 
