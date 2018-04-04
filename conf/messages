@@ -8,7 +8,7 @@ awrs.generic.status.revoked = No longer approved
 awrs.generic.status.deregistered = No longer approved
 awrs.generic.status.approved_group_member = Approved as part of the group
 awrs.generic.continue = Continue
-awrs.generic.important = Important&nbsp;information
+awrs.generic.important = Important information
 
 ##### GENERNIC ERROR MESSAGES
 
