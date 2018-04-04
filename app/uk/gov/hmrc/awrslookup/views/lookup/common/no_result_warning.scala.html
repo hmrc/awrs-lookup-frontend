@@ -5,37 +5,81 @@
 
 @(searchTermWithNoResult: String, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
-@warningText = {
-@Messages("awrs.lookup.results.no_results.warning_info") @whatToDo
-}
 
 @whatToDo = {
-    <a class="print-hidden" id="due_diligence_link" data-journey-click="what-to-do-no-results-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.
+  <p>@Messages("awrs.lookup.results.no_results.find_out") <a class="print-hidden" id="due_diligence_link" data-journey-click="what-to-do-no-results-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.no_results.warning_what_to_do")</a>.</p>
 }
 
-@heading = @{
+@searchedFor = {
+          <h1 class="heading-xlarge" id="not-found">@Messages("awrs.lookup.search.not_found")</h1>
+
+            <div class="panel panel-indent panel-border-wide space">
+                <p id="no-results-search-term">@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format
+                        (searchTermWithNoResult
+                        .replaceAll("\\s", "")))</p>
+                <p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
+            </div>
+}
+
+@invalidURN(message:String) = {
+     <h1 id="no-results-search-term" class="heading-medium">@Messages(message+ ".summary")</h1>
+     <p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
+     @checkURN
+}
+
+
+@panel = @{
     errorMessage match {
-        case Some(message) => Messages(message + ".summary")
+        case Some(message) => invalidURN(message)
         case _ => {
-            Messages("awrs.lookup.search.no_results", AwrsNumberFormatter.format(searchTermWithNoResult.replaceAll("\\s", "")))
+
+             searchedFor
         }
     }
+}
+
+@infoContent = {
+
+            <div id="notice">
+                <div class="warnicon">
+                    <i>
+                        <img src=@routes.Assets.at("images/icon-important.png") alt="important information.">
+                    </i>
+                </div>
+                <div>
+                    <strong>@Messages("awrs.lookup.search.info")
+                        <ul class="list list-bullet">
+                            <li style="font-weight: 600;">@Messages("awrs.lookup.search.info.bullet.1")</li>
+                            <li style="font-weight: 600;">@Messages("awrs.lookup.search.info.bullet.2")</li>
+                            <li style="font-weight: 600;">@Messages("awrs.lookup.search.info.bullet.3")</li>
+                        </ul>
+                    </strong>
+                </div>
+            </div>
+
+@whatToDo
+@checkURN
+}
+@checkURN = {
+  <a class="button margin-top button--spaced" href="check-the-awrs-register" role="button">@Messages("awrs.lookup.check_urn")</a>
 }
 
 @info = @{
     errorMessage match {
         case Some(_) => {}
         case _ => {
-            warning_core(warningText)
+            infoContent
         }
     }
 }
 
 
-<h1 id="no-results-search-term" class="heading-medium" aria-label="@formatForAiraLabel(heading)">@heading</h1>
+@panel
 
-<p id="no-results-info">@Messages("awrs.lookup.search.no_results.info")</p>
 @info
+
+
+
 
 
 

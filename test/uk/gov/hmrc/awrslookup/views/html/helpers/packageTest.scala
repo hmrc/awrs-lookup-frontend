@@ -71,63 +71,6 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
     }
   }
 
-  "groupLedge function" should {
-    def testInfo(member: Int) = Info(
-      tradingName = s"test-$member"
-    )
-
-    def testGroup(members: Int) = Group(
-      awrsRef = "",
-      registrationDate = "",
-      status = Approved,
-      info = Info(),
-      members = List.fill(members)(testInfo(members))
-    )
-
-    // this function keeps the beginning of the string stopping at the first {
-    // i.e. should end at the location of the first variable argument to the message
-    def leadingString(str: String) = str.substring(0, str.indexOf("{1}"))
-
-    def testLeadingMessage(numMembers: Int, msgKey: String) = {
-      val testData = testGroup(numMembers)
-      val soupDoc: Document = groupLedge(testData)
-      val text = soupDoc.text()
-      val singular = Messages(msgKey, knownName(testData.info)).toString.htmlTrim
-      val leadStr = leadingString(singular)
-
-      text should startWith(leadStr)
-
-      // test the llinks exists and are correctly indexed
-      val links = soupDoc.getElementsByTag("a")
-      links.size() shouldBe testData.members.size
-      links.zipWithIndex.foreach {
-        case (link, ind) =>
-          link.attr("href") shouldBe s"#result_member_${ind}_heading"
-      }
-
-      // test the text are correct:
-      // if only 1 member: member 1
-      // if only 2 members: member 1 and member2
-      // if more than 2 members: member 1, member2, ..., memberN-1 and memberN
-      val membersStr = text.replaceFirst(leadStr, "")
-      val expectedMembersStr = testData.members.size match {
-        case 1 => knownName(testData.members.head)
-        case 2 => knownName(testData.members.head) + " and " + knownName(testData.members(1))
-        case _ =>
-          val names = testData.members.map(knownName)
-          names.dropRight(1).mkString(", ") + " and " + names.last
-      }
-      membersStr shouldBe expectedMembersStr + "."
-    }
-
-    "return the singular version of the lede if there is only 1 member" in testLeadingMessage(1, "awrs.lookup.results.group_lede_singular")
-
-    (2 to 4).foreach(num =>
-      s"return the plural version of the lede if for $num member" in testLeadingMessage(num, "awrs.lookup.results.group_lede_plural")
-    )
-
-  }
-
   val testInfo = TestUtils.testInfo("")
   val epsilon = 1e-2f
 
