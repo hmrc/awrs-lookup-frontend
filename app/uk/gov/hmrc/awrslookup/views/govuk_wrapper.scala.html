@@ -61,18 +61,9 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendApp
 
 @footerLinks = {}
 
-@betaBanner = {
-    @uiLayouts.betaBanner(
-        userLoggedIn = true,
-        betaFeedbackUrl = appConfig.betaFeedbackUnauthenticatedUrl,
-        betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
-        showFeedbackLinkInBetaBanner = true
-    )
-}
-
 @serviceInfo = {
     @uiLayouts.serviceInfo(
-        betaBanner = betaBanner,
+        betaBanner = HtmlFormat.empty,
         includeGridWrapper = false,
         serviceInfoContent = Some(serviceInfoContent),
         includeHMRCBranding = false
