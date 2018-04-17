@@ -20,7 +20,6 @@ import uk.gov.hmrc.play.config.ServicesConfig
 
 trait AppConfig {
   val analyticsToken: Option[String]
-  val betaFeedbackUnauthenticatedUrl: String
   val externalReportProblemUrl: String
   val analyticsHost: String
   val reportAProblemPartialUrl: String
@@ -46,9 +45,5 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   override lazy val externalReportProblemUrl = s"$contactHost/contact/problem_reports"
 
   override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
-
-  //TODO deal with beta banner feedback link
-  val feedBackURL = loadConfig(s"beta-feedback.feedBackURL")
-  override lazy val betaFeedbackUnauthenticatedUrl = s"$feedBackURL"
 
 }
