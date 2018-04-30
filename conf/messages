@@ -19,7 +19,7 @@ awrs.generic.error.maximum_length = The {0} must not be more than {1} characters
 
 ##### ERRORS 
 
-awrs.error.technical.title = Sorry, we'’re experiencing technical difficulties
+awrs.error.technical.title = Sorry, we are experiencing technical difficulties
 awrs.error.technical.message = Try again later
 
 ##### LOOKUP FORM ERROR MESSAGES
@@ -66,7 +66,7 @@ awrs.lookup.results.place_of_bus = Principal place of business
 awrs.lookup.results.business_name = Business name
 awrs.lookup.results.trading_name = Trading name
 awrs.lookup.results.unapproved.info = If you make purchases from wholesalers or producers who are no longer approved you could face prosecution, be liable to a penalty, and have your alcohol stock seized.
-awrs.lookup.results.unapproved.what_to_do = What to do if you find a wholesaler or producer you''re dealing with isn''t approved
+awrs.lookup.results.unapproved.what_to_do = What to do if you find a wholesaler or producer you are dealing with is not approved
 awrs.lookup.results.print_link = Print or save for your records
 awrs.lookup.results.no_results.find_out = Find out more about
 awrs.lookup.results.no_results.warning_what_to_do = what to do if you find a wholesaler or producer you''re dealing with isn''t on the register
