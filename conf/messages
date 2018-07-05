@@ -19,7 +19,8 @@ awrs.generic.error.maximum_length = The {0} must not be more than {1} characters
 
 ##### ERRORS 
 
-awrs.error.technical.title = Sorry, we are experiencing technical difficulties
+awrs.error.technical.title = Sorry, we are experiencing technical difficulties - Check if an alcohol wholesaler or producer is approved - GOV.UK
+awrs.error.technical.heading = Sorry, we are experiencing technical difficulties
 awrs.error.technical.message = Try again later
 
 ##### LOOKUP FORM ERROR MESSAGES
@@ -37,7 +38,7 @@ awrs.search.query.default_invalid_urn.summary = You must enter a valid Unique Re
 
 ##### LOOKUP PAGE
 
-awrs.lookup.search.page_title = Check if an alcohol wholesaler or producer is approved
+awrs.lookup.search.page_title = Check if an alcohol wholesaler or producer is approved - Check if an alcohol wholesaler or producer is approved - GOV.UK
 awrs.lookup.search.heading = What is the wholesaler or producer’s URN?
 awrs.lookup.search.lede = This is 4 letters and 11 numbers, like XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn = {0}{2}AWRS URN{3}
@@ -54,8 +55,8 @@ awrs.lookup.search.info.bullet.3 = have your alcohol stock seized
 ##### RESULTS PAGE
 
 awrs.lookup.results.format_error = Query string format error
-awrs.lookup.results.page_title_no_results = No results found
-awrs.lookup.results.page_title_single = Result
+awrs.lookup.results.page_title_no_results = No results found - Check if an alcohol wholesaler or producer is approved - GOV.UK
+awrs.lookup.results.page_title_single = Result - Check if an alcohol wholesaler or producer is approved - GOV.UK
 awrs.lookup.results.heading_multi_results = We found {0} results for {1}
 awrs.lookup.results.results_found = We found {0} results
 awrs.lookup.results.group_h1_member_of = {0} part of the {1}
