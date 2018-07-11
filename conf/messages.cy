@@ -32,7 +32,7 @@ awrs.search.query.default_invalid_urn.summary = Mae’n rhaid i chi nodi Cyfeirn
 
 ##### LOOKUP PAGE
 
-awrs.lookup.search.page_title = Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
+awrs.lookup.search.page_title = Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
 awrs.lookup.search.heading = Beth yw Cyfeirnod Unigryw (URN) y cyfanwerthwr neu’r cynhyrchydd?
 awrs.lookup.search.lede = Mae 4 llythyren ac 11 rhif i hwn, fel XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn = {0}{2}Cyfeirnod Unigryw AWRS{3}{1}
@@ -44,7 +44,7 @@ awrs.lookup.search.not_found = Dim canlyniadau
 ##### RESULTS PAGE
 
 awrs.lookup.results.format_error = Query string format error
-awrs.lookup.results.page_title_no_results = Dim canlyniadau wedi’u darganfod - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
+awrs.lookup.results.page_title_no_results = Dim canlyniadau - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
 awrs.lookup.results.page_title_single = Canlyniad - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
 awrs.lookup.results.heading_multi_results = Rydym wedi canfod {0} canlyniad for {1}
 awrs.lookup.results.results_found = Rydym wedi canfod {0} canlyniad

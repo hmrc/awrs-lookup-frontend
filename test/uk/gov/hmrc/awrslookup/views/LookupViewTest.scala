@@ -21,7 +21,7 @@ import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.i18n.Messages
 import play.api.libs.json.Json
-import play.api.mvc.{AnyContentAsEmpty, Cookie, Cookies}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.awrslookup.controllers.LookupController
@@ -52,10 +52,10 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     
     "display an empty search page landed on for the first time" in {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
+      document.title shouldBe Messages("awrs.lookup.search.page_title")
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
       document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),"), Messages("awrs.lookup.search.isle_of_man", "", "")))
       document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
-
       document.getElementById("query").text shouldBe ""
     }
 
@@ -64,6 +64,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
+      document.title shouldBe Messages("awrs.lookup.results.page_title_single")
       document.getElementById("results-heading").text should include(info.tradingName.getOrElse(info.businessName.getOrElse("")))
       document.getElementById("result_awrs_status_label").text should include(Messages("awrs.lookup.results.status_label"))
       document.getElementById("result_awrs_status_detail").text should include(head.status.name)
@@ -80,6 +81,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     "display a 'No results found' page when a non existent reference is entered" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
       val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
+      document.title shouldBe Messages("awrs.lookup.results.page_title_no_results")
       document.getElementById("not-found").text should include(Messages("awrs.lookup.search.not_found"))
     }
 
