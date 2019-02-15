@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,13 +75,15 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
   val epsilon = 1e-2f
 
   "infoMatchCoEff" should {
-    val test = testInfo.copy(businessName = "FRANCE")
-    infoMatchCoEff(test, "france") shouldBe 1.0 +- epsilon
-    infoMatchCoEff(test, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+    "do this" in {
+      val test = testInfo.copy(businessName = "FRANCE")
+      infoMatchCoEff(test, "france") shouldBe 1.0 +- epsilon
+      infoMatchCoEff(test, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
 
-    val test2 = testInfo.copy(tradingName = "FRANCE")
-    infoMatchCoEff(test2, "france") shouldBe 1.0 +- epsilon
-    infoMatchCoEff(test2, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+      val test2 = testInfo.copy(tradingName = "FRANCE")
+      infoMatchCoEff(test2, "france") shouldBe 1.0 +- epsilon
+      infoMatchCoEff(test2, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+    }
   }
 
   "bestMatchName" should {

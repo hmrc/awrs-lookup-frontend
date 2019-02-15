@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.audit
 
+import play.api.Play
 import uk.gov.hmrc.awrslookup.FrontendAuditConnector
 import uk.gov.hmrc.play.audit.model.DataEvent
 import uk.gov.hmrc.play.audit.AuditExtensions
@@ -25,9 +26,9 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 trait Auditable {
 
-  def appName: String = AppName.appName
+  def appName: String = AppName(Play.current.configuration).appName
 
-  def audit: Audit = new Audit(AppName.appName, FrontendAuditConnector)
+  def audit: Audit = new Audit(appName, FrontendAuditConnector)
 
   def sendDataEvent(transactionName: String,
                     path: String = "N/A",

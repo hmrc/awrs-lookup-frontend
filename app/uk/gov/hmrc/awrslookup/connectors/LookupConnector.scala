@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,29 +18,31 @@ package uk.gov.hmrc.awrslookup.connectors
 
 import java.net.URLEncoder
 
+import play.api.Play
 import play.api.libs.json.Json
+import uk.gov.hmrc.awrslookup.WSHttp
 import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.forms.prevalidation
 import uk.gov.hmrc.awrslookup.models.SearchResult
-import uk.gov.hmrc.awrslookup.{FrontendAuditConnector, WSHttp}
-import uk.gov.hmrc.awrslookup.utils.LoggingUtils
-import uk.gov.hmrc.play.audit.model.Audit
-import uk.gov.hmrc.play.config.{AppName, ServicesConfig}
-import uk.gov.hmrc.play.http._
-
-import scala.concurrent.Future
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
+import uk.gov.hmrc.awrslookup.utils.LoggingUtils
+import uk.gov.hmrc.http.{HeaderCarrier, HttpGet, HttpResponse, InternalServerException}
+import uk.gov.hmrc.play.config.ServicesConfig
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpGet, HttpResponse, InternalServerException }
+import scala.concurrent.Future
 
 
 trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingUtils {
 
+  def mode : play.api.Mode.Mode = Play.current.mode
+  def runModeConfiguration : play.api.Configuration = Play.current.configuration
   val http: HttpGet = WSHttp
   lazy val middleServiceURL = baseUrl("awrs-lookup")
   lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
   lazy val byNameUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/${encode(query)}"""
+
+  val referenceNotFoundString = "AWRS reference not found"
 
   def encode(query: String): String = {
     URLEncoder.encode(query, "UTF-8").replaceAll("\\+", "%20")
@@ -59,7 +61,7 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
       }
     case 404 =>
       response.body match {
-        case x if x != null && x.contains(LookupConnector.referenceNotFoundString) => None
+        case x if x != null && x.contains(referenceNotFoundString) => None
         case _ =>
           err(s"[ $auditLookupTxName ] - The remote endpoint has indicated that no data can be found ## ")
           info(s"[ $auditLookupTxName ] - Query ## $logRef")
@@ -93,11 +95,4 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
 
 }
 
-object LookupConnector extends LookupConnector {
-
-  override val appName = "awrs-lookup-frontend"
-  override val audit: Audit = new Audit(AppName.appName, FrontendAuditConnector)
-
-  val referenceNotFoundString = "AWRS reference not found"
-
-}
+object LookupConnector extends LookupConnector
