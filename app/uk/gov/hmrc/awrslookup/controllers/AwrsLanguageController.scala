@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,13 @@
 package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
-
 import play.api.Play.current
 import play.api.i18n.{Lang, MessagesApi}
 import play.api.mvc.Call
-import uk.gov.hmrc.play.config.RunMode
 import uk.gov.hmrc.play.language.LanguageController
 
 
-class AwrsLanguageController @Inject()(implicit val messagesApi: MessagesApi) extends LanguageController with RunMode {
+class AwrsLanguageController @Inject()(implicit messagesApi: MessagesApi) extends LanguageController {
   val English = Lang("en")
   val Welsh = Lang("cy")
 
@@ -34,5 +32,5 @@ class AwrsLanguageController @Inject()(implicit val messagesApi: MessagesApi) ex
   override def languageMap: Map[String, Lang] = Map("English" -> English,
     "Cymraeg" -> Welsh)
 
-  override protected def fallbackURL: String = current.configuration.getString(s"$env.language.fallbackUrl").getOrElse("/")
+  override protected def fallbackURL: String = current.configuration.getString("language.fallbackUrl").getOrElse("/")
 }

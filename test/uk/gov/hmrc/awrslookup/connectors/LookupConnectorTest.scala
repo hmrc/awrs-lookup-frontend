@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,38 +21,20 @@ import java.util.UUID
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.http.Status._
-import play.api.libs.json.{JsResultException, JsValue, Json}
+import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.awrslookup.WSHttp
 import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
-import uk.gov.hmrc.play._
-import uk.gov.hmrc.play.audit.http.HttpAuditing
-import uk.gov.hmrc.play.audit.http.connector.AuditConnector
-import uk.gov.hmrc.play.config.{AppName, RunMode}
-import uk.gov.hmrc.play.http.ws.{WSGet, WSPost, WSPut}
-
-import scala.concurrent.Future
 import uk.gov.hmrc.http._
 import uk.gov.hmrc.http.logging.SessionId
-import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
+
+import scala.concurrent.Future
 
 class LookupConnectorTest extends AwrsUnitTestTraits {
 
-  object TestAuditConnector extends AuditConnector with AppName with RunMode {
-    override lazy val auditingConfig = LoadAuditingConfig("auditing")
-  }
-
-  class MockHttp extends HttpGet with WSGet with HttpPost with WSPost with HttpPut with WSPut with HttpAuditing {
-
-    val hooks = Seq(AuditingHook)
-
-    override def auditConnector: AuditConnector = TestAuditConnector
-
-    override def appName: String = app.configuration.getString("appName").getOrElse("awrs-lookup-frontend")
-  }
-
-  val mockWSHttp = mock[MockHttp]
+  val mockWSHttp: WSHttp = mock[WSHttp]
 
   object TestLookupConnector extends LookupConnector {
     override val http: HttpGet with HttpPost with HttpPut = mockWSHttp

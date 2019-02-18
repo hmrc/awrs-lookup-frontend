@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ import play.twirl.api.Html
 import uk.gov.hmrc.crypto.ApplicationCrypto
 import uk.gov.hmrc.play.config.{AppName, ControllerConfig, RunMode}
 import uk.gov.hmrc.play.frontend.bootstrap.DefaultFrontendGlobal
-
 import javax.inject.Inject
+import play.api.Mode.Mode
 import play.api.http.DefaultHttpFilters
 import play.filters.headers.SecurityHeadersFilter
-import uk.gov.hmrc.play.frontend.filters.{ FrontendAuditFilter, FrontendLoggingFilter, MicroserviceFilterSupport }
+import uk.gov.hmrc.play.frontend.filters.{FrontendAuditFilter, FrontendLoggingFilter, MicroserviceFilterSupport}
 
 object FrontendGlobal
   extends DefaultFrontendGlobal {
@@ -41,7 +41,7 @@ object FrontendGlobal
 
   override def onStart(app: Application) {
     super.onStart(app)
-    ApplicationCrypto.verifyConfiguration()
+    new ApplicationCrypto(Play.current.configuration.underlying).verifyConfiguration()
   }
 
   class Filters @Inject() (securityHeadersFilter: SecurityHeadersFilter) extends DefaultHttpFilters(securityHeadersFilter)
@@ -60,7 +60,7 @@ object LoggingFilter extends FrontendLoggingFilter with MicroserviceFilterSuppor
   override def controllerNeedsLogging(controllerName: String) = ControllerConfiguration.paramsForController(controllerName).needsLogging
 }
 
-object AuditFilter extends FrontendAuditFilter with RunMode with AppName with MicroserviceFilterSupport {
+object AuditFilter extends FrontendAuditFilter with AppName with MicroserviceFilterSupport {
 
   override lazy val maskedFormFields = Seq("password")
 
@@ -69,4 +69,6 @@ object AuditFilter extends FrontendAuditFilter with RunMode with AppName with Mi
   override lazy val auditConnector = FrontendAuditConnector
 
   override def controllerNeedsAuditing(controllerName: String) = ControllerConfiguration.paramsForController(controllerName).needsAuditing
+
+  override protected def appNameConfiguration: Configuration = Play.current.configuration
 }

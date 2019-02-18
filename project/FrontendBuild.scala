@@ -11,22 +11,19 @@ private object AppDependencies {
   import play.core.PlayVersion
   import play.sbt.PlayImport._
 
-  private val playHealthVersion = "2.1.0"
-  private val frontendBootstrapVersion = "8.24.0"
-  private val playPartialsVersion = "6.1.0"
-  private val hmrcTestVersion = "2.4.0"
-  private val scalaTestVersion = "2.2.6"
-  private val scalaTestPlusPlayVersion = "1.5.1"
+  private val frontendBootstrapVersion = "12.3.0"
+  private val playPartialsVersion = "6.5.0"
+  private val hmrcTestVersion = "3.4.0-play-25"
+  private val scalaTestVersion = "3.0.5"
+  private val scalaTestPlusPlayVersion = "2.0.1"
   private val pegdownVersion = "1.6.0"
   private val mockitoVersion = "1.10.19"
-  private val playLanguageVersion = "3.0.0"
+  private val playLanguageVersion = "3.4.0"
 
   val compile = Seq(
-    filters,
     ws,
     "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
-    "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-health" % playHealthVersion
+    "uk.gov.hmrc" %% "play-partials" % playPartialsVersion
   )
 
   trait TestDependencies {
