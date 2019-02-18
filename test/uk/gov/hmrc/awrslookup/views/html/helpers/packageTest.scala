@@ -75,7 +75,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
   val epsilon = 1e-2f
 
   "infoMatchCoEff" should {
-    "do this" in {
+    "match with specific confidence" in {
       val test = testInfo.copy(businessName = "FRANCE")
       infoMatchCoEff(test, "france") shouldBe 1.0 +- epsilon
       infoMatchCoEff(test, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
