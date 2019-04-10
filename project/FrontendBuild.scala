@@ -11,9 +11,9 @@ private object AppDependencies {
   import play.core.PlayVersion
   import play.sbt.PlayImport._
 
-  private val frontendBootstrapVersion = "12.3.0"
-  private val playPartialsVersion = "6.5.0"
-  private val hmrcTestVersion = "3.4.0-play-25"
+  private val frontendBootstrapVersion = "12.6.0"
+  private val playPartialsVersion = "6.7.0-play-25"
+  private val hmrcTestVersion = "3.6.0-play-25"
   private val scalaTestVersion = "3.0.5"
   private val scalaTestPlusPlayVersion = "2.0.1"
   private val pegdownVersion = "1.6.0"
