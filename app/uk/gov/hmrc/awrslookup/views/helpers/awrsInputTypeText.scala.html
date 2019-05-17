@@ -15,9 +15,9 @@
  *@
 
 @import uk.gov.hmrc.awrslookup._
-@import forms.validation.util._
-@import views.html.helpers._
-@import models._
+@import uk.gov.hmrc.awrslookup.forms.validation.util._
+@import uk.gov.hmrc.awrslookup.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.models._
 
 @(
   field: Field,
@@ -40,7 +40,7 @@
   preInputContent: Option[Html] = None,
   searchTerm: Option[String] = None,
   searchResult: Option[SearchResult] = None
-)(implicit  messages: Messages)
+)(implicit  messages: MessagesApi, provider: MessagesProvider)
 
 @fieldErrors = @{
     parentForm match {

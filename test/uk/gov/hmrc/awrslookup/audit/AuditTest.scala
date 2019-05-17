@@ -18,12 +18,12 @@ package uk.gov.hmrc.awrslookup.audit
 
 import java.util.concurrent.ConcurrentLinkedQueue
 
-import uk.gov.hmrc.awrslookup.FrontendAuditConnector
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.audit.model.Audit._
 import uk.gov.hmrc.play.audit.model.{Audit, AuditAsMagnet, DataEvent}
-import uk.gov.hmrc.http.HeaderCarrier
 
-class AuditTest() extends Audit("test", FrontendAuditConnector) {
+class AuditTest(auditConnector: AuditConnector) extends Audit("test", auditConnector) {
   var capturedTxName: String = ""
   var capturedInputs: Map[String, String] = Map.empty
   private val dataEvents = new ConcurrentLinkedQueue[DataEvent]

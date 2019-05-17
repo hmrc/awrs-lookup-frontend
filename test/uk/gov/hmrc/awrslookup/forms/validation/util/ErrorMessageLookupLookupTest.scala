@@ -17,9 +17,7 @@
 package uk.gov.hmrc.awrslookup.forms.validation.util
 
 
-import uk.gov.hmrc.awrslookup._
-import forms.validation.util.ErrorMessageLookup._
-import play.api.test.FakeApplication
+import uk.gov.hmrc.awrslookup.forms.validation.util.ErrorMessageLookup._
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 
 class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
@@ -42,7 +40,6 @@ class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
   private def trimString(str: String): String =
     str.trim
 
-  implicit override lazy val app: FakeApplication = FakeApplication()
   "The Message Handler" should {
     // currently using messages.en as the inputs for these tests
     // better to replace these with mock data somehow
@@ -63,7 +60,7 @@ class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
         }
         "it is a SummaryErrorInfo instance with no additional parameters" in {
           val key: String = "testkey1"
-          val testData: MessageLookup = SummaryError(key, "anchor")
+          val testData: MessageLookup = SummaryError(key, anchor = "anchor")
           val message: String = messageLookup(testData)
           message shouldBe trimString(messagesFileContent(key))
         }

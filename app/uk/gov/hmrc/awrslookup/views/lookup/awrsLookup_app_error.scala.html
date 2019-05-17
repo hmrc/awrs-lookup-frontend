@@ -14,14 +14,15 @@
  * limitations under the License.
  *@
 
-@()(implicit request: Request[AnyRef])
+@import uk.gov.hmrc.awrslookup.views.html.main_template
+
+@this(mainTemplate: main_template)
+@()(implicit request: Request[AnyRef], messagesProvider: MessagesProvider, lang: Lang)
 @import play.twirl.api.Html
 @import uk.gov.hmrc.play.views.html.helpers._
-@import play.api.i18n.Messages.Implicits._
-@import play.api.Play.current
 
 
-@uk.gov.hmrc.awrslookup.views.html.main_template(title = Messages("awrs.error.technical.title")) {
+@mainTemplate(title = Messages("awrs.error.technical.title")) {
 
     <div>
         <h1 id="application-error-header" class="heading-xlarge">@Html(Messages("awrs.error.technical.heading"))</h1>

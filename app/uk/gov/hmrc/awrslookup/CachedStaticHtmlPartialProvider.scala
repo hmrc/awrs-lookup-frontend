@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.awrslookup.controllers.util
+package uk.gov.hmrc.awrslookup
 
-import play.api.i18n.I18nSupport
-import play.api.mvc.MessagesControllerComponents
-import uk.gov.hmrc.awrslookup.utils.ImplicitConversions
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import javax.inject.Inject
+import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
+import uk.gov.hmrc.play.partials.CachedStaticHtmlPartialRetriever
 
-
-abstract class AwrsLookupController(mcc: MessagesControllerComponents) extends FrontendController(mcc) with ImplicitConversions with I18nSupport
+class CachedStaticHtmlPartialProvider @Inject()(override val httpGet: DefaultHttpClient) extends CachedStaticHtmlPartialRetriever

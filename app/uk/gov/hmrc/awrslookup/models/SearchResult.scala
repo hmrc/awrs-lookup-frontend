@@ -18,6 +18,7 @@ package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json._
 import uk.gov.hmrc.awrslookup.utils.{AwrsNumberFormatter, LetterPairSimilarity, AwrsDateFormatter}
+import play.api.libs.functional.syntax._
 
 sealed trait AwrsEntry {
 
@@ -84,7 +85,13 @@ object AwrsEntry {
     }).get
   }
 
-  implicit val formatter = Json.format[AwrsEntry]
+  implicit val reads: Reads[AwrsEntry] = (
+    (JsPath \ "class").read[String] and (JsPath \ "data").read[JsValue]
+    )(AwrsEntry.apply _)
+
+  implicit val writes: OWrites[AwrsEntry] = (
+    (JsPath \ "class").write[String] and (JsPath \ "data").write[JsValue]
+  )(unlift(AwrsEntry.unapply))
 }
 
 object SearchResult {

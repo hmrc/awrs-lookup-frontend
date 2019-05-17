@@ -18,29 +18,31 @@ package uk.gov.hmrc.awrslookup.connectors
 
 import java.net.URLEncoder
 
-import play.api.Play
-import play.api.libs.json.Json
-import uk.gov.hmrc.awrslookup.WSHttp
+import javax.inject.Inject
+import play.api.libs.json.{JsError, JsSuccess, Json}
+import play.api.{Configuration, Environment}
 import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.forms.prevalidation
-import uk.gov.hmrc.awrslookup.models.SearchResult
+import uk.gov.hmrc.awrslookup.models.{AwrsEntry, AwrsStatus, SearchResult}
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
 import uk.gov.hmrc.awrslookup.utils.LoggingUtils
-import uk.gov.hmrc.http.{HeaderCarrier, HttpGet, HttpResponse, InternalServerException}
-import uk.gov.hmrc.play.config.ServicesConfig
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, InternalServerException}
+import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
+import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 
-trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingUtils {
+class LookupConnector @Inject()(loggingUtils: LoggingUtils,
+                                http: DefaultHttpClient,
+                                val runModeConfiguration: Configuration,
+                                mode: RunMode,
+                                servicesConfig: ServicesConfig) extends RawResponseReads {
 
-  def mode : play.api.Mode.Mode = Play.current.mode
-  def runModeConfiguration : play.api.Configuration = Play.current.configuration
-  val http: HttpGet = WSHttp
-  lazy val middleServiceURL = baseUrl("awrs-lookup")
-  lazy val byUrnUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
-  lazy val byNameUrl = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/${encode(query)}"""
+  lazy val middleServiceURL: String = servicesConfig.baseUrl("awrs-lookup")
+  lazy val byUrnUrl: String => String = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
+  lazy val byNameUrl: String => String = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/${encode(query)}"""
 
   val referenceNotFoundString = "AWRS reference not found"
 
@@ -51,34 +53,34 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
   private def responseCore(logRef: String)(response: HttpResponse): Future[Option[SearchResult]] = response.status match {
     case 200 =>
       val responseJson = response.json
-      debug(s"[ $auditLookupTxName - $logRef ] - Json:\n$responseJson\n")
+      loggingUtils.debug(s"[ ${loggingUtils.auditLookupTxName} - $logRef ] - Json:\n$responseJson\n")
       val parse = Json.fromJson[SearchResult](responseJson)
       parse.isSuccess match {
         case true => parse.get
         case _ =>
-          err(s"[ $auditLookupTxName - $logRef ] - Invalid Json recieved from AWRS-LOOKUP")
+          loggingUtils.err(s"[ ${loggingUtils.auditLookupTxName} - $logRef ] - Invalid Json recieved from AWRS-LOOKUP")
           throw new InternalServerException("Invalid json")
       }
     case 404 =>
       response.body match {
         case x if x != null && x.contains(referenceNotFoundString) => None
         case _ =>
-          err(s"[ $auditLookupTxName ] - The remote endpoint has indicated that no data can be found ## ")
-          info(s"[ $auditLookupTxName ] - Query ## $logRef")
+          loggingUtils.err(s"[ ${loggingUtils.auditLookupTxName} ] - The remote endpoint has indicated that no data can be found ## ")
+          loggingUtils.info(s"[ ${loggingUtils.auditLookupTxName} ] - Query ## $logRef")
           throw new InternalServerException("URL not found")
       }
     case 400 => {
       val error = response.status
-      info(s"[ $eventTypeBadRequest - $logRef ] - Currently experiencing technical difficulties: $error")
+      loggingUtils.info(s"[ ${loggingUtils.eventTypeBadRequest} - $logRef ] - Currently experiencing technical difficulties: $error")
       throw new LookupExceptions(s"technical error $error")
     }
     case 500 => {
       val error = response.status
-      info(s"[ $auditLookupTxName - $logRef] - Currently experiencing technical difficulties: $error")
+      loggingUtils.info(s"[ ${loggingUtils.auditLookupTxName} - $logRef] - Currently experiencing technical difficulties: $error")
       throw new LookupExceptions(s"technical error $error")
     }
     case status =>
-      err(s"[ $auditLookupTxName - $logRef ] - Unsuccessful return of data. Status code: $status")
+      loggingUtils.err(s"[ ${loggingUtils.auditLookupTxName} - $logRef ] - Unsuccessful return of data. Status code: $status")
       throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
   }
 
@@ -94,5 +96,3 @@ trait LookupConnector extends ServicesConfig with RawResponseReads with LoggingU
 
 
 }
-
-object LookupConnector extends LookupConnector

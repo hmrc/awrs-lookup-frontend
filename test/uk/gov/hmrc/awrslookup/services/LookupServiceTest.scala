@@ -26,10 +26,7 @@ import scala.concurrent.Future
 class LookupServiceTest extends AwrsUnitTestTraits
   with MockLookupConnector {
 
-  object LookupServiceTest extends LookupService {
-    val connector: LookupConnector = mockLookupConnector
-  }
-
+  object LookupServiceTest extends LookupService(mockLookupConnector)
   "LookupService" should {
     
     "call lookup connector search by urn in lookup if the query is a valid AWRS number" in {

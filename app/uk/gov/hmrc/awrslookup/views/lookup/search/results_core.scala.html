@@ -15,13 +15,17 @@
  *@
 
 @import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.views.html.main_template
+@import uk.gov.hmrc.awrslookup.models._
 @import uk.gov.hmrc.play.views.html.helpers.{form => _, _}
-@import views.html.helpers._
 @import play.api.Application
 @import models._
 
+@this(mainTemplate: main_template)
 @(
-    searchForm : Form[models.Query],
+    searchForm : Form[Query],
     preFormContent: Option[Html] = None,
     postFormContent: Option[Html] = None,
     title : String,
@@ -30,7 +34,6 @@
 )(implicit
     request : Request[AnyContent],
     messages: Messages,
-    application: Application,
     lang: Lang
 )
 
@@ -38,7 +41,7 @@
     <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
 }
 
-@views.html.main_template(title = title, bodyClasses = None, scriptElem = pageScripts) {
+@mainTemplate(title = title, bodyClasses = None, scriptElem = pageScripts) {
     <div class="grid">
         <div class="grid-2-3">
             @preFormContent

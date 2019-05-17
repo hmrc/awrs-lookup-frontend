@@ -1,9 +1,7 @@
 import sbt.Keys._
 import sbt.Tests.{SubProcess, Group}
 import sbt._
-import play.routes.compiler.StaticRoutesGenerator
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
-import play.sbt.routes.RoutesKeys.routesGenerator
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 import uk.gov.hmrc.SbtArtifactory
 

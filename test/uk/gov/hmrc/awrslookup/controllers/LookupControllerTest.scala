@@ -27,22 +27,23 @@ import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
 import play.api.test.Helpers._
+import uk.gov.hmrc.awrslookup.views.html.error_template
+import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
 
 import scala.concurrent.Future
 
 class LookupControllerTest extends AwrsUnitTestTraits {
   val mockLookupService: LookupService = mock[LookupService]
   val lookupFailure = Json.parse( """{"reason": "Generic test reason"}""")
+  val searchMain: search_main = app.injector.instanceOf[search_main]
+  val searchNoResults: search_no_results = app.injector.instanceOf[search_no_results]
+  val singleResult: single_result = app.injector.instanceOf[single_result]
+  val multipleResult: multiple_results = app.injector.instanceOf[multiple_results]
+  val errorTemplate: error_template = app.injector.instanceOf[error_template]
 
-  object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi, application = app) {
-    override val lookupService: LookupService = mockLookupService
-  }
+  object TestLookupController extends LookupController(mcc, mockLookupService, searchMain, searchNoResults, singleResult, multipleResult, errorTemplate)
 
   "Lookup Controller " should {
-
-    "use the correct Lookup service" in {
-      new LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi, application = app).lookupService shouldBe LookupService
-    }
 
     "in show, lookup awrs entry when passed a valid awrs reference" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))

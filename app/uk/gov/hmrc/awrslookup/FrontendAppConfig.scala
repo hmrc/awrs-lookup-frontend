@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.awrslookup
 
-import play.api.{Configuration, Play}
-import play.api.Mode.Mode
-import uk.gov.hmrc.play.config.ServicesConfig
+import javax.inject.Inject
+import play.api.Configuration
+import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
 
 trait AppConfig {
   val analyticsToken: Option[String]
@@ -28,23 +28,20 @@ trait AppConfig {
   val reportAProblemNonJSUrl: String
 }
 
-object FrontendAppConfig extends AppConfig with ServicesConfig {
+class FrontendAppConfig @Inject()(servicesConfig: ServicesConfig, val mode: RunMode, val configuration: Configuration) extends AppConfig {
 
-  override protected def mode: Mode = Play.current.mode
-  override protected def runModeConfiguration: Configuration = Play.current.configuration
+  private def loadConfig(key: String) = servicesConfig.getConfString(key, throw new Exception(s"Missing configuration key: $key"))
 
-  private def loadConfig(key: String) = getConfString(key,throw new Exception(s"Missing configuration key: $key"))
-
-  private val contactFrontendService = baseUrl("contact-frontend")
+  private val contactFrontendService = servicesConfig.baseUrl("contact-frontend")
   private val contactHost = loadConfig(s"contact-frontend.host")
   private val contactFormServiceIdentifier = "AWRS-LOOKUP"
 
-  val urBannerLink = loadConfig("urBanner.external-urls.ur-page")
+  val urBannerLink: String = loadConfig("urBanner.external-urls.ur-page")
 
-  val showUrBanner:Boolean = loadConfig("urBanner.toggled").toBoolean
+  val showUrBanner: Boolean = loadConfig("urBanner.toggled").toBoolean
 
-  override lazy val analyticsToken: Option[String] = Some(getString(s"google-analytics.token"))
-  override lazy val analyticsHost: String = getString(s"google-analytics.host")
+  override lazy val analyticsToken: Option[String] = Some(servicesConfig.getString(s"google-analytics.token"))
+  override lazy val analyticsHost: String = servicesConfig.getString(s"google-analytics.host")
   override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports?secure=true"
 
   override lazy val externalReportProblemUrl = s"$contactHost/contact/problem_reports"

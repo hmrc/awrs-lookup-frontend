@@ -21,7 +21,7 @@ import forms.validation.util.ErrorMessageInterpreter._
 import forms.validation.util.{FieldError, MessageLookup, SummaryError}
 import org.scalatest.Matchers._
 import play.api.data.Form
-import play.api.i18n.Messages
+import play.api.i18n.{Messages, MessagesApi}
 
 
 package object util extends FormValidationTestAPI with TestUtilAPI {
@@ -46,7 +46,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
   }
 
 
-  def assertErrorMessageIsCorrectlyPopulated(errorMessage: MessageLookup)(implicit messages: Messages): Unit = {
+  def assertErrorMessageIsCorrectlyPopulated(errorMessage: MessageLookup)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val message = errorMessage.toString()
     withClue("The message key must be placed in conf/messages: ") {
       message should not be errorMessage.msgKey
@@ -59,7 +59,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertFormIsValid[T](form: Form[T], testData: Map[String, String])(implicit messages: Messages): Unit = {
+  def assertFormIsValid[T](form: Form[T], testData: Map[String, String])(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val formWithNoErrorsInField = form.bind(testData)
     withClue(f"There shouldn't be any errors in this form:\ntestData=$testData\n") {
       withClue(s"Error found:\n${formWithNoErrorsInField.errors}\n") {
@@ -81,7 +81,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     )
   }
 
-  def assertFieldError(formWithErrors: Form[_], fieldId: String, expected: FieldError)(implicit messages: Messages): Unit = {
+  def assertFieldError(formWithErrors: Form[_], fieldId: String, expected: FieldError)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     import forms.prevalidation._
     val fieldError = getFieldErrors(formWithErrors(fieldId), formWithErrors)
     withClue(f"The following test is conducted for the field: '$fieldId'\n") {
@@ -103,28 +103,28 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertNotThisFieldError(form: Form[_], fieldId: String, unacceptable: FieldError)(implicit messages: Messages): Unit = {
+  def assertNotThisFieldError(form: Form[_], fieldId: String, unacceptable: FieldError)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val fieldError = getFieldErrors(form(fieldId), form)
     if (fieldError.nonEmpty) {
       fieldError.head should not equal unacceptable
     }
   }
 
-  def assertHasNoFieldError(form: Form[_], fieldId: String)(implicit messages: Messages): Unit = {
+  def assertHasNoFieldError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val fieldError = getFieldErrors(form(fieldId), form)
     withClue(f"This field should not generate any errors:\nerror=$fieldError\n") {
       fieldError.isEmpty shouldBe true
     }
   }
 
-  def assertHasFieldError(form: Form[_], fieldId: String)(implicit messages: Messages): Unit = {
+  def assertHasFieldError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val fieldError = getFieldErrors(form(fieldId), form)
     withClue("This field should generate at least one error: ") {
       fieldError.nonEmpty shouldBe true
     }
   }
 
-  def assertSummaryError(formWithErrors: Form[_], fieldId: String, expected: SummaryError)(implicit messages: Messages): Unit = {
+  def assertSummaryError(formWithErrors: Form[_], fieldId: String, expected: SummaryError)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     import forms.prevalidation._
     val summaryErrors = getSummaryErrors(formWithErrors)
     val summaryErrorStrs = summaryErrors.map(err => err.anchor + trimBothAndCompressFunc(err.toString))
@@ -134,19 +134,19 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     assertErrorMessageIsCorrectlyPopulated(expected)
   }
 
-  def assertNotThisSummaryError(form: Form[_], fieldId: String, unacceptable: SummaryError)(implicit messages: Messages): Unit = {
+  def assertNotThisSummaryError(form: Form[_], fieldId: String, unacceptable: SummaryError)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val summaryErrors = getSummaryErrors(form)
     summaryErrors should not contain unacceptable
   }
 
-  def assertHasNoAnchorFromSummaryError(form: Form[_], fieldId: String)(implicit messages: Messages): Unit = {
+  def assertHasNoAnchorFromSummaryError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val summaryErrors = getSummaryErrors(form)
     withClue("This field should not generate any errors: ") {
       summaryErrors.foreach(summaryError => summaryError.anchor should not be fieldId)
     }
   }
 
-  def assertFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(implicit messages: Messages): Unit = {
+  def assertFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     def coreTest(testData: Map[String, String]): Unit = {
       val formWithErrors = form.bind(testData)
       withClue(f"$fieldId should not be empty:\n") {
@@ -164,7 +164,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertDateFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(implicit messages: Messages): Unit = {
+  def assertDateFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val dayFieldId = f"$fieldId.day"
     val monthFieldId = f"$fieldId.month"
     val yearFieldId = f"$fieldId.year"
@@ -188,7 +188,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertFieldCannotBeExceedMaxLength(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, maxLengthExpectationO: MaxLengthOption[ExpectedFieldExceedsMaxLength])(implicit messages: Messages): Unit =
+  def assertFieldCannotBeExceedMaxLength(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, maxLengthExpectationO: MaxLengthOption[ExpectedFieldExceedsMaxLength])(implicit messages: Messages, messagesApi: MessagesApi): Unit =
     maxLengthExpectationO match {
       case MaxLengthIsHandledByTheRegEx() =>
       case MaxLengthDefinition(maxLengthExpectation) =>
@@ -214,7 +214,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
         }
     }
 
-  def assertFieldConformsExpectedFormats(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, formatConfig: ExpectedFieldFormat)(implicit messages: Messages): Unit = {
+  def assertFieldConformsExpectedFormats(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, formatConfig: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     withClue("You must provide at least one case of invalid format : ") {
       formatConfig.invalidFormats.nonEmpty shouldBe true
     }
@@ -239,7 +239,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertEnumFieldSatisfy(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(implicit messages: Messages): Unit = {
+  def assertEnumFieldSatisfy(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     validEnumValues.foreach { enumCase =>
       val validData = generateFormTestData(preCond, fieldId, enumCase.toString)
       val formWithNoErrorsInField = form.bind(validData)
@@ -257,7 +257,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertFieldIgnoresEmptyConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String)(implicit messages: Messages): Unit = {
+  def assertFieldIgnoresEmptyConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val testData = generateFormTestData(preCond, fieldId, "")
     val formWithoutFieldError = form.bind(testData)
     withClue(f"$fieldId should be allowed to be empty when:\n'$preCond'\n") {
@@ -266,7 +266,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertFieldIgnoresMaxLengthConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, maxLength: Int)(implicit messages: Messages): Unit = {
+  def assertFieldIgnoresMaxLengthConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, maxLength: Int)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val invalidLen =
       generateFormTestData(preCond, fieldId,
         generateFieldTestDataInThisFormat(DataFormat("a", maxLength + 1)))
@@ -277,7 +277,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertFieldIgnoresFormatsConstraitsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, formatConfig: ExpectedFieldFormat)(implicit messages: Messages): Unit = {
+  def assertFieldIgnoresFormatsConstraitsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, formatConfig: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     // test invalids
     withClue(f"$fieldId should not conform to any format constraints when:\n'$preCond':\n") {
       formatConfig.invalidFormats.foreach { invalidFormat =>
@@ -300,7 +300,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     }
   }
 
-  def assertEnumFieldIgnoresConstraintsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(implicit messages: Messages): Unit = {
+  def assertEnumFieldIgnoresConstraintsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     validEnumValues.foreach { enumCase =>
       val validData = generateFormTestData(preCond, fieldId, enumCase.toString)
       val formWithNoErrorsInField = form.bind(validData)
@@ -318,56 +318,56 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
   implicit def singleFieldTestFunctions(fieldIdString: String)(implicit form: Form[_]) = new ImplicitSingleFieldTestAPI {
     override implicit val fieldId = fieldIdString
 
-    def assertFieldIsCompulsory(config: CompulsoryFieldValidationExpectations)(implicit messages: Messages): Unit =
+    def assertFieldIsCompulsory(config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       assertFieldIsCompulsoryWhen(Map[String, String](), config)
 
-    def assertFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryFieldValidationExpectations)(implicit messages: Messages): Unit = {
+    def assertFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       assertFieldCannotBeEmpty(condition)(form, fieldId, config.fieldIsEmptyExpectation)
       assertFieldCannotBeExceedMaxLength(condition)(form, fieldId, config.maxLengthExpectation)
       assertFieldConformsExpectedFormats(condition)(form, fieldId, config.formatExpectations)
     }
 
-    def assertFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryFieldValidationExpectations)(implicit messages: Messages): Unit =
+    def assertFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertFieldIsCompulsoryWhen(condition, config))
 
-    def assertFieldIsOptional(config: OptionalFieldValidationExpectations)(implicit messages: Messages): Unit =
+    def assertFieldIsOptional(config: OptionalFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       assertFieldIsOptionalWhen(Map[String, String](), config)
 
-    def assertFieldIsOptionalWhen(condition: Map[String, String], config: OptionalFieldValidationExpectations)(implicit messages: Messages): Unit = {
+    def assertFieldIsOptionalWhen(condition: Map[String, String], config: OptionalFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       assertFieldCannotBeExceedMaxLength(condition)(form, fieldId, config.maxLengthExpectation)
       assertFieldConformsExpectedFormats(condition)(form, fieldId, config.formatExpectations)
     }
 
-    def assertFieldIsOptionalWhen(conditions: Set[Map[String, String]], config: OptionalFieldValidationExpectations)(implicit messages: Messages): Unit =
+    def assertFieldIsOptionalWhen(conditions: Set[Map[String, String]], config: OptionalFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertFieldIsOptionalWhen(condition, config))
 
-    def assertEnumFieldIsCompulsory(config: CompulsoryEnumValidationExpectations)(implicit messages: Messages): Unit =
+    def assertEnumFieldIsCompulsory(config: CompulsoryEnumValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       assertEnumFieldIsCompulsoryWhen(Map[String, String](), config)
 
-    def assertEnumFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryEnumValidationExpectations)(implicit messages: Messages): Unit = {
+    def assertEnumFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryEnumValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       assertFieldCannotBeEmpty(condition)(form, fieldId, config.fieldIsEmptyExpectation)
       assertEnumFieldSatisfy(condition)(form, fieldId, config.validEnumValues, config.invalidEnumValues)
     }
 
-    def assertEnumFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryEnumValidationExpectations)(implicit messages: Messages): Unit =
+    def assertEnumFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryEnumValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertEnumFieldIsCompulsoryWhen(condition, config))
 
-    def assertFieldIsIgnoredWhen(condition: Map[String, String], config: FieldToIgnore)(implicit messages: Messages): Unit = {
+    def assertFieldIsIgnoredWhen(condition: Map[String, String], config: FieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       assertFieldIgnoresEmptyConstraintWhen(condition)(form, fieldId)
       if (config.maxLength.nonEmpty)
         assertFieldIgnoresMaxLengthConstraintWhen(condition)(form, fieldId, config.maxLength.get)
       assertFieldIgnoresFormatsConstraitsWhen(condition)(form, fieldId, config.formatExpectations)
     }
 
-    def assertFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: FieldToIgnore)(implicit messages: Messages): Unit =
+    def assertFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: FieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertFieldIsIgnoredWhen(condition, config))
 
-    def assertEnumFieldIsIgnoredWhen(condition: Map[String, String], config: EnumFieldToIgnore)(implicit messages: Messages): Unit = {
+    def assertEnumFieldIsIgnoredWhen(condition: Map[String, String], config: EnumFieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       assertFieldIgnoresEmptyConstraintWhen(condition)(form, fieldId)
       assertEnumFieldIgnoresConstraintsWhen(condition)(form, fieldId, config.validEnumValues, config.invalidEnumValues)
     }
 
-    def assertEnumFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: EnumFieldToIgnore)(implicit messages: Messages): Unit =
+    def assertEnumFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: EnumFieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertEnumFieldIsIgnoredWhen(condition, config))
   }
 
@@ -375,40 +375,40 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
 
     override implicit val fieldIds = fieldIdsString
 
-    private def commonTestForAnswered(testData: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages): Unit = {
+    private def commonTestForAnswered(testData: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val formWithErrors = form.bind(testData)
       formWithErrors.hasErrors shouldBe true
       assertSummaryError(formWithErrors, config.anchor, config.fieldIsEmptyExpectation.summaryError)
       fieldIds.foreach(fieldId => assertFieldError(formWithErrors, fieldId, config.fieldIsEmptyExpectation.fieldError))
     }
 
-    private def commonTestForAnsweredIsIgnored(testData: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages): Unit = {
+    private def commonTestForAnsweredIsIgnored(testData: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val formWithoutErrorsInFields = form.bind(testData)
       assertHasNoAnchorFromSummaryError(formWithoutErrorsInFields, config.anchor)
       fieldIds.foreach(fieldId => assertHasNoFieldError(formWithoutErrorsInFields, fieldId))
     }
 
-    def assertAtLeastOneFieldMustNotBeEmptyWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages): Unit = {
+    def assertAtLeastOneFieldMustNotBeEmptyWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val testData = generateFormTestData(condition, fieldIds, "")
       withClue(f"The following test is conducted for: at least one of: '$fieldIds' must not be empty:\n") {
         commonTestForAnswered(testData, config)
       }
     }
 
-    def assertAtLeastOneFieldMustNotBeEmptyWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(implicit messages: Messages): Unit =
+    def assertAtLeastOneFieldMustNotBeEmptyWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertAtLeastOneFieldMustNotBeEmptyWhen(condition, config))
 
-    def assertAllFieldsCannotBeAnsweredWithInvalidWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages): Unit = {
+    def assertAllFieldsCannotBeAnsweredWithInvalidWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val testData = generateFormTestData(condition, fieldIds, invalidAnswer)
       withClue(f"The following test is conducted for: at least one of: '$fieldIds' must not be answered with $invalidAnswer:\n") {
         commonTestForAnswered(testData, config)
       }
     }
 
-    def assertAllFieldsCannotBeAnsweredWithInvalidWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages): Unit =
+    def assertAllFieldsCannotBeAnsweredWithInvalidWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertAllFieldsCannotBeAnsweredWithInvalidWhen(condition, config, invalidAnswer))
 
-    def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages): Unit = {
+    def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val testData = generateFormTestData(condition, fieldIds, "")
 
       val formWithoutErrorsInFields = form.bind(testData)
@@ -418,17 +418,17 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
       }
     }
 
-    def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(implicit messages: Messages): Unit =
+    def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(condition, config))
 
-    def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages): Unit = {
+    def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val testData = generateFormTestData(condition, fieldIds, invalidAnswer)
       withClue(f"The following test is conducted for: at least one of: '$fieldIds' must be not be answered with $invalidAnswer constraint should be ignored when:\n'$condition'") {
         commonTestForAnsweredIsIgnored(testData, config)
       }
     }
 
-    def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages): Unit =
+    def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       conditions.foreach(condition => assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(condition, config, invalidAnswer))
   }
 

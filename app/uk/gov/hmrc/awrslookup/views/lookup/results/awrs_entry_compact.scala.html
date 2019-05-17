@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.awrslookup.models._
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html._
-@import helpers._
+@import views.html.helpers._
 @import lookup.results._
 @import java.net.{URLEncoder, URLDecoder}
 
@@ -43,6 +43,6 @@
     <a class="result-link" id="result_@id" href="@controllers.routes.LookupController.show(fromMulti = true)?originalSearchTerm=@{searchTerm}&query=@{result.awrsRef}">
         <h2 class="heading-small">@{resultNameToDisplay}</h2>
     </a>
-    @headerRegNumberHighlight(result, attrClass = "form-hint", id = id)
+    @headerRegNumberHighlight(result, attrClass = "form-hint", id = Some(id))
     <p id="address_@id">@address</p>
 </div>

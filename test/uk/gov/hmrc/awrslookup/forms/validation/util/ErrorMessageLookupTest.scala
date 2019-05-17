@@ -25,11 +25,9 @@ import forms.validation.util.ErrorMessageInterpreter.getSummaryErrors
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.{Constraint, Valid, ValidationResult}
-import play.api.test.FakeApplication
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 
 class ErrorMessageLookupTest extends AwrsUnitTestTraits {
-  implicit override lazy val app: FakeApplication = FakeApplication()
 
   case class TestModel(field1: String, field2: String, field3: String)
   def getCCParams(cc: AnyRef): Map[String, String] =

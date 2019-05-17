@@ -17,13 +17,15 @@
 @import uk.gov.hmrc.play.views.html.helpers._
 @import uk.gov.hmrc.awrslookup._
 @import uk.gov.hmrc.awrslookup.models._
-@import views.html._
-@import helpers._
-@import lookup.results._
-@import common._
-@import lookup.search._
+@import uk.gov.hmrc.awrslookup._
+@import uk.gov.hmrc.play.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.common._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.results._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.search._
 @import play.api.Application
 
+@this(resultsCore: results_core)
 @(
     searchForm : Form[models.Query],
     action: Call,
@@ -35,7 +37,6 @@
 )(implicit
     request: Request[AnyContent],
     messages: Messages,
-    application: Application,
     lang: Lang
 )
 
@@ -60,9 +61,9 @@
     @awrsPrintLink()
 }
 
-@results_core(
+@resultsCore(
     searchForm = searchForm,
-    preFormContent = preContent,
+    preFormContent = Some(preContent),
     postFormContent = None,
     title = Messages("awrs.lookup.results.page_title_single"),
     searchTerm = searchTerm,

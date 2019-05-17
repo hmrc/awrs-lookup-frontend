@@ -14,14 +14,15 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.awrslookup.controllers.AwrsLanguageController
 @import play.api.Application
 @import uk.gov.hmrc.awrslookup.FrontendAppConfig
-@import layouts.{govuk_template => hmrcGovUkTemplate}
+@import views.html.layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
+@import play.twirl.api.HtmlFormat
+@import uk.gov.hmrc.awrslookup.CachedStaticHtmlPartialProvider
 
-
-@(appConfig: uk.gov.hmrc.awrslookup.AppConfig,
+@this(appConfig: FrontendAppConfig, partialProvider: CachedStaticHtmlPartialProvider)
+@(
 title: String,
 mainClass: Option[String] = None,
 mainDataAttributes: Option[Html] = None,
@@ -32,9 +33,7 @@ linkElement : Option[Html] = None,
 mainContent: Html = HtmlFormat.empty,
 serviceInfoContent: Html = HtmlFormat.empty,
 scriptElem: Option[Html] = None,
-isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendAppConfig.showUrBanner)(implicit request: Request[_], messages: Messages,application: Application, lang: Lang)
-
-@clc = @{ Application.instanceCache[AwrsLanguageController].apply(application) }
+isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.showUrBanner)(implicit request: Request[_], messages: Messages, lang: Lang)
 
 @head = {
     @uiLayouts.head(
@@ -56,7 +55,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendApp
         uk.gov.hmrc.awrslookup.views.html.helpers.fullWidthBanner(
             Some(uk.gov.hmrc.awrslookup.views.html.helpers.fullWidthBannerContentUr(
             messages("urbanner.message.text"),
-            FrontendAppConfig.urBannerLink,
+            appConfig.urBannerLink,
             Some("test")
         ))
         )
@@ -88,7 +87,10 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendApp
 
 @mainContentHeader = {
     @if(!isErrorPage) {
-        @uk.gov.hmrc.awrslookup.views.html.helpers.awrsLanguageSelection(clc.languageMap, clc.langToCall)
+        @uk.gov.hmrc.awrslookup.views.html.helpers.awrsLanguageSelection(Map(
+            "english" -> Lang("en"),
+            "cymraeg" -> Lang("cy")
+        ), uk.gov.hmrc.awrslookup.controllers.routes.AwrsLanguageController.switchToLanguage, None)
     }
 
     @if(contentHeader.isDefined) {
@@ -97,7 +99,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = FrontendApp
 }
 
 @getHelpForm = {
-    @uk.gov.hmrc.awrslookup.CachedStaticHtmlPartialProvider.getPartialContent(appConfig.reportAProblemPartialUrl)
+    @partialProvider.getPartialContent(appConfig.reportAProblemPartialUrl)
 }
 
 

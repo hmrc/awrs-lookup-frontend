@@ -22,23 +22,22 @@ import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.awrslookup.WSHttp
 import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.models.SearchResult
-import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
+import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, LoggingUtils}
 import uk.gov.hmrc.http._
 import uk.gov.hmrc.http.logging.SessionId
+import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 
 import scala.concurrent.Future
 
 class LookupConnectorTest extends AwrsUnitTestTraits {
 
-  val mockWSHttp: WSHttp = mock[WSHttp]
+  val mockWSHttp: DefaultHttpClient = mock[DefaultHttpClient]
+  val loggingUtils: LoggingUtils = app.injector.instanceOf[LoggingUtils]
 
-  object TestLookupConnector extends LookupConnector {
-    override val http: HttpGet with HttpPost with HttpPut = mockWSHttp
-  }
+  object TestLookupConnector extends LookupConnector(loggingUtils, mockWSHttp, configuration, runMode, servicesConfig)
 
   override def beforeEach {
     super.beforeEach
@@ -64,7 +63,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedResult: Option[SearchResult] = None
       val expectedURL = s"""$urnURL$testAwrsRef"""
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-      val response = HttpResponse(NOT_FOUND, Json.toJson[String](LookupConnector.referenceNotFoundString))
+      val response = HttpResponse(NOT_FOUND, Json.toJson[String](TestLookupConnector.referenceNotFoundString))
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       await(result) shouldBe expectedResult
@@ -138,7 +137,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedResult: Option[SearchResult] = None
       val expectedURL = s"""$nameURL$testAwrsRef"""
       implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-      val response = HttpResponse(NOT_FOUND, Json.toJson[String](LookupConnector.referenceNotFoundString))
+      val response = HttpResponse(NOT_FOUND, Json.toJson[String](TestLookupConnector.referenceNotFoundString))
       when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByName(testAwrsRef)
       await(result) shouldBe expectedResult
