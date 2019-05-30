@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.forms.validation.util
 
-import play.api.i18n.Messages
+import play.api.i18n.{Messages, MessagesApi}
 
 /**
   * This API is designed to look up messages from conf/messages using an instance of the MessageLookup returned by the
@@ -27,19 +27,19 @@ import play.api.i18n.Messages
   * This API currently does not support different locales
   */
 trait ErrorMessageLookup {
-  def messageLookup(lookup: MessageLookup)(implicit messages: Messages): String
+  def messageLookup(lookup: MessageLookup)(implicit messages: Messages, messagesApi: MessagesApi): String
 }
 
 
 object ErrorMessageLookup extends ErrorMessageLookup {
 
-  @inline def messageLookup(lookup: MessageLookup)(implicit messages: Messages): String = messageLookup(lookup.msgKey, lookup.msgArgs)
+  @inline def messageLookup(lookup: MessageLookup)(implicit messages: Messages, messagesApi: MessagesApi): String = messageLookup(lookup.msgKey, lookup.msgArgs)
 
-  private def messageLookup(key: String, params: MessageArguments)(implicit messages: Messages): String =
+  private def messageLookup(key: String, params: MessageArguments)(implicit messages: Messages, messagesApi: MessagesApi): String =
     Messages(key, MessageArguments({
       for (param <- params.args) yield {
         param match {
-          case EmbeddedMessage(x: String, args: MessageArguments, _) => messageLookup(x, args)
+          case EmbeddedMessage(x: String, args: MessageArguments) => messageLookup(x, args)
           case _ => param.toString
         }
       }

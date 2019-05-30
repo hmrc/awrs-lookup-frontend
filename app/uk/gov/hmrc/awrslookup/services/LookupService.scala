@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.services
 
+import javax.inject.Inject
 import uk.gov.hmrc.awrslookup.connectors.LookupConnector
 import uk.gov.hmrc.awrslookup.forms.{SearchForm, prevalidation}
 import uk.gov.hmrc.awrslookup.models.SearchResult
@@ -23,9 +24,7 @@ import uk.gov.hmrc.awrslookup.models.SearchResult
 import scala.concurrent.Future
 import uk.gov.hmrc.http.HeaderCarrier
 
-trait LookupService {
-
-  val connector: LookupConnector
+class LookupService @Inject()(val connector: LookupConnector) {
 
   def lookup(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
     prevalidation.trimAllFunc(queryString).toUpperCase.matches(SearchForm.awrsRefRegEx) match {
@@ -33,8 +32,4 @@ trait LookupService {
       case false => connector.queryByName(queryString)
     }
 
-}
-
-object LookupService extends LookupService {
-  override val connector: LookupConnector = LookupConnector
 }

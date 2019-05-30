@@ -92,7 +92,7 @@ object ErrorMessageFactory extends ErrorMessageFactory {
 
   private def argsToString(args: Any): String =
     args match {
-      case EmbeddedMessage(x, y, _) => f"${embeddedStart}%s${mkFieldErr(x, y)}%s${embeddedEnd}%s"
+      case EmbeddedMessage(x, y) => f"${embeddedStart}%s${mkFieldErr(x, y)}%s${embeddedEnd}%s"
       case _ => args.toString
     }
 

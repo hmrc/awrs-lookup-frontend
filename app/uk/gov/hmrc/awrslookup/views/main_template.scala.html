@@ -15,13 +15,15 @@
  *@
 
 @import play.api.Application
+@import uk.gov.hmrc.awrslookup.views.html.govuk_wrapper
 
+@this(govUkWrapper: govuk_wrapper)
 @(title: String,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
   mainClass: Option[String] = None,
-  scriptElem: Option[Html] = None)(mainContent: Html)(implicit request : Request[_], messages: Messages, application: Application, lang: Lang)
+  scriptElem: Option[Html] = None)(mainContent: Html)(implicit request : Request[_], messages: Messages, lang: Lang)
 
 @import uk.gov.hmrc.play.views.html.layouts
 
@@ -41,8 +43,7 @@
 }
 
 
-@govuk_wrapper(appConfig = uk.gov.hmrc.awrslookup.FrontendAppConfig,
-               title = title,
+@govUkWrapper(title = title,
                mainClass = mainClass,
                bodyClasses = bodyClasses,
                sidebar = sidebar,

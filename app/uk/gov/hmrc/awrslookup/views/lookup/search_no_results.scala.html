@@ -16,22 +16,24 @@
 
 @import uk.gov.hmrc.awrslookup._
 @import uk.gov.hmrc.play.views.html.helpers._
-@import views.html.helpers._
-@import models._
-@import common._
-@import search._
-@import results._
+@import uk.gov.hmrc.awrslookup.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.models._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.common._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.search._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.results._
 @import play.api.Application
+@import uk.gov.hmrc.awrslookup.views.html.main_template
 
+@this(mainTemplate: main_template)
 @(
-    searchForm: Form[models.Query],
+    searchForm: Form[Query],
     action: Call,
     searchTerm: Option[String] = None,
     errorMessage: Option[String] = None
 )(implicit
     request: Request[AnyContent],
-    messages: Messages,
-    application: Application,
+    messagesProvider: MessagesProvider,
+    messagesApi: MessagesApi,
     lang: Lang
 )
 
@@ -64,7 +66,7 @@
     <script type="text/javascript" src='@routes.Assets.at("javascripts/awrs.js")'></script>
 }
 
-@views.html.main_template(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, scriptElem = pageScripts) {
+@mainTemplate(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, scriptElem = pageScripts) {
     <div class="grid">
         <div class="grid-2-3">
             @noResults

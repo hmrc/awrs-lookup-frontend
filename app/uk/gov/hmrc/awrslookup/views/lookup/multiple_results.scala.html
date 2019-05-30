@@ -17,21 +17,22 @@
 @import uk.gov.hmrc.awrslookup._
 @import uk.gov.hmrc.play.views.html.helpers._
 @import views.html.helpers._
-@import models._
-@import common._
-@import search._
-@import results._
+@import uk.gov.hmrc.awrslookup.models._
+@import uk.gov.hmrc.awrslookup.views.html.helpers._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.common._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.search._
+@import uk.gov.hmrc.awrslookup.views.html.lookup.results._
 @import play.api.Application
 
+@this(resultsCore: results_core)
 @(
-    searchForm : Form[models.Query],
+    searchForm : Form[Query],
     action: Call,
     searchTerm: Option[String] = None,
     searchResult: Option[SearchResult] = None
 )(implicit
     request : Request[AnyContent],
     messages: Messages,
-    application: Application,
     lang: Lang
 )
 
@@ -68,7 +69,7 @@
     }
 }
 
-@results_core(
+@resultsCore(
     searchForm = searchForm,
     preFormContent = headers,
     postFormContent = results,

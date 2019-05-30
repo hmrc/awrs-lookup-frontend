@@ -18,20 +18,17 @@
 
 @(langMap  : Map[String, Lang],
 langToCall : (String => Call),
-customClass: Option[String] = None)(implicit  messages: Messages, lang: Lang)
+customClass: Option[String] = None)(implicit messages: Messages, lang: Lang)
 
 <div class="available-languages">
     @langMap.map { case (key: String, value: Lang) =>
-        @if(lang.code != value.code) {
-            @Link.toInternalPage(
-            id      = Some(s"$key-switch"),
-            url     = s"${langToCall(key)}",
-            value   = Some(key.capitalize)).toHtml
-        }else{
-            @lang.code match{
-               case "en" => {@key |}
-               case _ => {| @key}
-            }
+        @if(messages.lang.code != value.code) {
+            @Html(s"""<a id="$key-switch" href="${langToCall(key)}" target="_self" data-sso="false">${key.capitalize}</a>""")
+        } else {
+            @key.capitalize
+        }
+        @if(key != langMap.last._1) {
+            @Html(" | ")
         }
     }
 </div>

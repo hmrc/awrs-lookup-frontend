@@ -18,17 +18,19 @@ package uk.gov.hmrc.awrslookup.utils
 
 import org.mockito.Matchers
 import org.scalatest.BeforeAndAfterEach
-import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.OneServerPerSuite
-import play.api.{Configuration, Environment}
+import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.{Lang, Messages, MessagesApi}
+import play.api.mvc.MessagesControllerComponents
+import play.api.{Configuration, Environment}
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
 import uk.gov.hmrc.play.test.UnitSpec
 
 import scala.concurrent.Future
-import uk.gov.hmrc.http.HeaderCarrier
 
 
-trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterEach with OneServerPerSuite {
+trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterEach with GuiceOneAppPerSuite {
 
   implicit lazy val hc = HeaderCarrier()
 
@@ -40,11 +42,17 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
 
   implicit val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
 
-  implicit val messages = Messages(Lang("en"), messagesApi)
+  implicit val messages: Messages = messagesApi.preferred(Seq(Lang("en")))
 
   implicit val environment: Environment = app.injector.instanceOf[Environment]
 
   implicit val configuration: Configuration = app.injector.instanceOf[Configuration]
+
+  val mcc: MessagesControllerComponents = app.injector.instanceOf[MessagesControllerComponents]
+
+  val servicesConfig: ServicesConfig = app.injector.instanceOf[ServicesConfig]
+
+  val runMode: RunMode = app.injector.instanceOf[RunMode]
 
 
   // used to help mock setup functions to clarify if certain results should be mocked.

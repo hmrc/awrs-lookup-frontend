@@ -20,7 +20,7 @@ import org.jsoup.nodes.Document
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.i18n.Messages
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,19 +28,24 @@ import uk.gov.hmrc.awrslookup.controllers.LookupController
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.TestUtils.{testBusinessSearchResult, _}
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
+import uk.gov.hmrc.awrslookup.views.html.error_template
+import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
 
 import scala.concurrent.Future
 
 class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
   val mockLookupService: LookupService = mock[LookupService]
-  val lookupFailure = Json.parse( """{"reason": "Generic test reason"}""")
+  val lookupFailure: JsValue = Json.parse( """{"reason": "Generic test reason"}""")
+  val searchMain: search_main = app.injector.instanceOf[search_main]
+  val searchNoResults: search_no_results = app.injector.instanceOf[search_no_results]
+  val singleResult: single_result = app.injector.instanceOf[single_result]
+  val multipleResult: multiple_results = app.injector.instanceOf[multiple_results]
+  val errorTemplate: error_template = app.injector.instanceOf[error_template]
 
   def testRequest(query: Option[String]): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, "/awrs-lookup-frontend" + query.fold("")(q => s"?query=$q"))
 
-  object TestLookupController extends LookupController(environment = environment, configuration = configuration, messagesApi = messagesApi,application = app) {
-    override val lookupService: LookupService = mockLookupService
-  }
+  object TestLookupController extends LookupController(mcc, mockLookupService , searchMain, searchNoResults, singleResult, multipleResult, errorTemplate)
 
 
   "Lookup Controller " should {
