@@ -21,12 +21,13 @@ import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import uk.gov.hmrc.play.language.LanguageUtils
 
 
 class AwrsLanguageController @Inject()(configuration: ServicesConfig,
                                        mcc: MessagesControllerComponents,
-                                       override implicit val messagesApi: MessagesApi) extends FrontendController(mcc) with I18nSupport {
+                                       override implicit val messagesApi: MessagesApi)
+  extends FrontendController(mcc) with I18nSupport {
+
   val English = Lang("en")
   val Welsh = Lang("cy")
 
@@ -42,6 +43,6 @@ class AwrsLanguageController @Inject()(configuration: ServicesConfig,
 
     val redirectURL = request.headers.get(REFERER).getOrElse(fallbackURL)
 
-    Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(LanguageUtils.FlashWithSwitchIndicator)
+    Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(Flash(Map("switching-language" -> "true")))
   }
 }

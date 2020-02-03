@@ -1,20 +1,17 @@
 import sbt.Keys._
-import sbt.Tests.{SubProcess, Group}
+import sbt.Tests.{Group, SubProcess}
 import sbt._
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
-import uk.gov.hmrc.SbtArtifactory
 
 trait MicroService {
 
   import uk.gov.hmrc._
   import DefaultBuildSettings.{oneForkedJvmPerTest => _, _}
-  import uk.gov.hmrc.{SbtAutoBuildPlugin}
+  import TestPhases._
+  import uk.gov.hmrc.SbtAutoBuildPlugin
   import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
   import uk.gov.hmrc.versioning.SbtGitVersioning
-
-
-  import TestPhases._
 
   val appName: String
 
@@ -47,7 +44,7 @@ trait MicroService {
     .settings(publishingSettings: _*)
     .settings(defaultSettings(): _*)
     .settings(
-      scalaVersion := "2.11.11",
+      scalaVersion := "2.11.12",
       libraryDependencies ++= appDependencies,
       retrieveManaged := true,
       evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)
