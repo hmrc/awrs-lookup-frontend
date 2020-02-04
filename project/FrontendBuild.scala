@@ -12,19 +12,19 @@ private object AppDependencies {
   import play.sbt.PlayImport._
 
   private val playPartialsVersion = "6.9.0-play-26"
-  private val hmrcTestVersion = "3.8.0-play-26"
-  private val scalaTestVersion = "3.0.7"
-  private val scalaTestPlusPlayVersion = "3.1.2"
+  private val hmrcTestVersion = "3.9.0-play-26"
+  private val scalaTestVersion = "3.0.8"
+  private val scalaTestPlusPlayVersion = "3.1.3"
   private val pegdownVersion = "1.6.0"
   private val mockitoVersion = "1.10.19"
-  private val playLanguageVersion = "3.4.0"
+  private val playLanguageVersion = "4.2.0-play-26"
 
   val compile = Seq(
     ws,
-    "uk.gov.hmrc" %% "bootstrap-play-26" % "0.40.0",
+    "uk.gov.hmrc" %% "bootstrap-play-26" % "1.3.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
-    "uk.gov.hmrc" %% "govuk-template" % "5.35.0-play-26",
-    "uk.gov.hmrc" %% "play-ui" % "7.40.0-play-26",
+    "uk.gov.hmrc" %% "govuk-template" % "5.48.0-play-26",
+    "uk.gov.hmrc" %% "play-ui" % "8.8.0-play-26",
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 
@@ -40,7 +40,7 @@ private object AppDependencies {
         "org.scalatest" %% "scalatest" % scalaTestVersion % scope,
         "org.scalatestplus.play" %% "scalatestplus-play" % scalaTestPlusPlayVersion % scope,
         "org.pegdown" % "pegdown" % pegdownVersion % scope,
-        "org.jsoup" % "jsoup" % "1.8.1" % scope,
+        "org.jsoup" % "jsoup" % "1.12.1" % scope,
         "com.typesafe.play" %% "play-test" % PlayVersion.current % scope,
         "org.mockito" % "mockito-all" % mockitoVersion % scope
       )
