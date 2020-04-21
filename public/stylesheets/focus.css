@@ -24,18 +24,20 @@ select:focus,
     border: 2px solid transparent;
 }
 
-.button:focus, .button--secondary:focus:not(:active):not(:hover) {
-    outline: 3px solid transparent;
+.button:focus:not(:active):not(:hover), .button--secondary:focus:not(:active):not(:hover) {
+    border-color: #fd0;
     color: #0b0c0c;
     background-color: #fd0;
-    -webkit-box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-    text-decoration: none;
+    -webkit-box-shadow: 0 2px 0 #0b0c0c;
+    box-shadow: 0 2px 0 #0b0c0c;
+    outline: 3px solid transparent;
 }
 
 .button:focus, .button--secondary:focus {
     border-color: #fd0;
     outline: 3px solid transparent;
+    -webkit-box-shadow: inset 0 0 0 1px #fd0;
+    box-shadow: inset 0 0 0 1px #fd0;
 }
 
 .postcode-lookup {
