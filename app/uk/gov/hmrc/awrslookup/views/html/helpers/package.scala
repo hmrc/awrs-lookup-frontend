@@ -41,12 +41,6 @@ package object helpers {
     string.replace("AWRS","A. W R S.").replace("URN", "U R N")
   }
 
-  def theTime(dateTime: DateTime = DateTime.now()): String = {
-    val jsonDateTimeFormat = new SimpleDateFormat("d MMMM yyyy h:mma")
-    jsonDateTimeFormat.setTimeZone(TimeZone.getTimeZone("Europe/London"))
-    jsonDateTimeFormat.format(dateTime.toDate()).replace("AM", "am").replace("PM", "pm")
-  }
-
   def spans(strings: Map[String, Option[String]]): Html =
     Html(
       strings.map {

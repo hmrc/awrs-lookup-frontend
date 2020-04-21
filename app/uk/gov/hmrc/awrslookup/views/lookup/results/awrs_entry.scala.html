@@ -43,7 +43,22 @@
 @common(showRegNumber: Boolean) = {
 <div class="grid grid-1-2">
     <h2 class="heading-small" id="result_awrs_status_label">@Messages("awrs.lookup.results.status_label")</h2>
-    <p id="result_awrs_status_detail">@result.status.map(_.name)</p>
+    <p id="result_awrs_status_detail">
+        @result.status match {
+            case AwrsStatus.Approved => {
+                @Messages("awrs.generic.status.approved")
+            }
+            case AwrsStatus.DeRegistered => {
+                @Messages("awrs.generic.status.deregistered")
+            }
+            case AwrsStatus.Revoked => {
+                @Messages("awrs.generic.status.revoked")
+            }
+            case _ => {
+                @Messages("awrs.generic.status.notfound")
+            }
+        }
+    </p>
 </div>
 
     @showRegNumber match {
@@ -59,7 +74,7 @@
 @if(result.registrationDate.isDefined) {
     <div class="grid grid-1-2">
         <h2 class="heading-small" id="result_reg_date_label">@Messages("awrs.lookup.results.date_of_reg")</h2>
-        <p id="result_reg_date_detail">@result.registrationDateFormatted</p>
+        <p id="result_reg_date_detail">@AwrsDateFormatter.showDateTranslation(result.registrationDate)</p>
     </div>
 }
 
@@ -68,7 +83,7 @@
         case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
         <div class="grid grid-1-2">
             <h2 class="heading-small" id="result_end_date_label">@Messages("awrs.lookup.results.date_of_dereg")</h2>
-            <p>@result.registrationEndDateFormatted</p>
+            <p>@AwrsDateFormatter.showDateTranslation(result.registrationEndDate)</p>
         </div>
 
         }

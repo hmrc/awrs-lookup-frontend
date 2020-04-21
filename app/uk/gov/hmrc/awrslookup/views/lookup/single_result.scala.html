@@ -24,6 +24,7 @@
 @import uk.gov.hmrc.awrslookup.views.html.lookup.results._
 @import uk.gov.hmrc.awrslookup.views.html.lookup.search._
 @import play.api.Application
+@import uk.gov.hmrc.awrslookup.utils.AwrsDateFormatter
 
 @this(resultsCore: results_core)
 @(
@@ -56,7 +57,7 @@
 
 @preContent = {
     <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
-    @searchDate()
+    <p id="search-date">@Messages("awrs.lookup.results.search_date" ) @AwrsDateFormatter.showDateTimeNowTranslation()</p> 
     @status_approved(result)
     @awrsPrintLink()
 }

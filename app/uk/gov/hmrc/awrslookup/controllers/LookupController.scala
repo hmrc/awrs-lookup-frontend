@@ -67,7 +67,7 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
         }
       }.recover {
         case _ =>
-          Ok(errorTemplate(Messages("awrs.error.technical.title"), Messages("awrs.error.technical.title"), Messages("awrs.error.technical.message")))
+          Ok(errorTemplate(Messages("awrs.error.technical.title"), Messages("awrs.error.technical.heading"), Messages("awrs.error.technical.message")))
       }
 
     )

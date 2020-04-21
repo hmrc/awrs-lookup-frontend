@@ -32,16 +32,6 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
   // this is shadowed so we would use the implicit conversion defined in the package instead
   override def convertToOption[T, U <: T](value: U): Option[T] = ???
 
-  "theTime function" should {
-    val testDateFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
-    "format the time correctly" in {
-      val amTime = DateTime.parse("04/02/2011 08:27:05", testDateFormat)
-      val pmTime = DateTime.parse("04/12/2011 20:27:05", testDateFormat)
-      theTime(amTime) shouldBe "4 February 2011 8:27am"
-      theTime(pmTime) shouldBe "4 December 2011 8:27pm"
-    }
-  }
-
   "spans function" should {
     "Output only defined elements in <span> tags" in {
       val testData: Map[String, Option[String]] = Map[String, Option[String]]("addressLine1" -> "line1", "addressLine2" -> "line2", "addressLine3" -> None, "addressLine4" -> "line4")

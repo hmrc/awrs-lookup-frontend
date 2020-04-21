@@ -59,7 +59,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
       document.title shouldBe Messages("awrs.lookup.search.page_title")
       document.getElementById("search-heading").text shouldBe Messages("awrs.lookup.search.heading")
-      document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),"), Messages("awrs.lookup.search.isle_of_man", "", "")))
+      document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
       document.getElementById("search-lede").text should include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
       document.getElementById("query").text shouldBe ""
     }
@@ -72,7 +72,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       document.title shouldBe Messages("awrs.lookup.results.page_title_single")
       document.getElementById("results-heading").text should include(info.tradingName.getOrElse(info.businessName.getOrElse("")))
       document.getElementById("result_awrs_status_label").text should include(Messages("awrs.lookup.results.status_label"))
-      document.getElementById("result_awrs_status_detail").text should include(head.status.name)
+      document.getElementById("result_awrs_status_detail").text should include(Messages("awrs.generic.status." + head.status.name.toLowerCase))
       document.getElementById("result_awrs_reg_label").text should include(Messages("awrs.lookup.results.URN"))
       document.getElementById("result_awrs_reg_detail").text.replaceAll(" ", "") should include(head.awrsRef)
       document.getElementById("result_reg_date_label").text should include(Messages("awrs.lookup.results.date_of_reg"))
@@ -81,6 +81,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       document.getElementById("result_businessName_detail_result").text should include(info.businessName.get)
       document.getElementById("result_address_label_result").text should include(Messages("awrs.lookup.results.place_of_bus"))
       document.getElementById("result_address_detail_result").text should include(info.address.get.addressLine1.get)
+      document.getElementById("search-date").text should include(Messages("awrs.lookup.results.search_date"))
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {
