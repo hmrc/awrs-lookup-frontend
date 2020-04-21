@@ -10,22 +10,7 @@
 
 .content__body {
     width:100%;
-    }
-
-.search-awrs {
-	float: left;
-	width: calc(62% - 50px - 1em);
-	height: 40px;
-	margin-right: 2px;
-	padding-left: 0;
-	border: 2px solid #6f777b;
 }
-
-input[type="text"] {
-	border: 2px solid #6f777b;
-	padding: 4px;
-}
-
 
 .search {
     position: relative;
@@ -39,7 +24,6 @@ input[type="text"] {
 
 #search-form {
     clear:both;
-    overflow:hidden;
     width:100%;
     padding:0;
     margin:0;
