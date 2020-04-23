@@ -80,8 +80,8 @@
     @someAddress match {
         case Some(address) => {
                 <div class="grid grid-1-2">
-                    <h2 class="heading-small" id="result_address_label">@Messages("awrs.lookup.results.place_of_bus")</h2>
-                    <p id="result_address_detail">@address.addressLine1<br>@address.addressLine2<br>@address.addressLine3<br>@address.addressLine4<br>@address.postcode<br>@address.addressCountry</p>
+                    <h2 class="heading-small" id="result_address_label_@id">@Messages("awrs.lookup.results.place_of_bus")</h2>
+                    <p id="result_address_detail_@id">@address.addressLine1<br>@address.addressLine2<br>@address.addressLine3<br>@address.addressLine4<br>@address.postcode<br>@address.addressCountry</p>
                 </div>
         }
         case _ => {}
@@ -91,7 +91,7 @@
 @memberStatus(id: String = id) = {
 
     <div class="grid grid-1-2">
-        <h2 class="heading-small" id="result_awrs_status_label">@Messages("awrs.lookup.results.status_label")</h2>
+        <h2 class="heading-small" id="result_awrs_status_label_member">@Messages("awrs.lookup.results.status_label")</h2>
         @result.status match {
         case AwrsStatus.DeRegistered => {
             <p id="result_awrs_status_detail">@Messages("awrs.generic.status.deregistered")</p>
@@ -110,8 +110,8 @@
 
     @if(info.businessName.isDefined) {
         <div class="grid grid-1-2">
-            <h2 class="heading-small" id="result_businessName_label">@Messages("awrs.lookup.results.business_name")</h2>
-            <p id="result_businessName_detail">@info.businessName</p>
+            <h2 class="heading-small" id="result_businessName_label_@id">@Messages("awrs.lookup.results.business_name")</h2>
+            <p id="result_businessName_detail_@id">@info.businessName</p>
         </div>
     }
 
@@ -163,11 +163,11 @@
         case (memberInfo: Info, index: Int) => {
            <div class="grid-row">
                 <div class="grid grid-1-2" id='result_member_@{index}_heading' >
-                    <h2 class="heading-small" id="result_tradingName_label">@Messages("awrs.lookup.results.trading_name")</h2>
-                    <p id="result_tradingName_detail">@knownName(memberInfo)</p>
+                    <h2 class="heading-small" id="result_tradingName_label_@{index}">@Messages("awrs.lookup.results.trading_name")</h2>
+                    <p id="result_tradingName_detail_@{index}">@knownName(memberInfo)</p>
                 </div>
 
-                @info(memberInfo, id = s"${id}_member_$index")
+                @info(memberInfo, index.toString)
 
           </div>
 
