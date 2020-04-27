@@ -77,10 +77,10 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       document.getElementById("result_awrs_reg_detail").text.replaceAll(" ", "") should include(head.awrsRef)
       document.getElementById("result_reg_date_label").text should include(Messages("awrs.lookup.results.date_of_reg"))
       document.getElementById("result_reg_date_detail").text should include(head.registrationDate.get)
-      document.getElementById("result_businessName_label").text should include(Messages("awrs.lookup.results.business_name"))
-      document.getElementById("result_businessName_detail").text should include(info.businessName.get)
-      document.getElementById("result_address_label").text should include(Messages("awrs.lookup.results.place_of_bus"))
-      document.getElementById("result_address_detail").text should include(info.address.get.addressLine1.get)
+      document.getElementById("result_businessName_label_result").text should include(Messages("awrs.lookup.results.business_name"))
+      document.getElementById("result_businessName_detail_result").text should include(info.businessName.get)
+      document.getElementById("result_address_label_result").text should include(Messages("awrs.lookup.results.place_of_bus"))
+      document.getElementById("result_address_detail_result").text should include(info.address.get.addressLine1.get)
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {
