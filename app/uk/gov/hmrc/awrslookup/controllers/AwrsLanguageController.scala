@@ -22,7 +22,6 @@ import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
-
 class AwrsLanguageController @Inject()(configuration: ServicesConfig,
                                        mcc: MessagesControllerComponents,
                                        override implicit val messagesApi: MessagesApi)
@@ -36,6 +35,9 @@ class AwrsLanguageController @Inject()(configuration: ServicesConfig,
   def languageMap: Map[String, Lang] = Map("english" -> English,
     "cymraeg" -> Welsh)
 
+  private val SwitchIndicatorKey = "switching-language"
+  private val FlashWithSwitchIndicator = Flash(Map(SwitchIndicatorKey -> "true"))
+
   protected def fallbackURL: String = configuration.getConfString("language.fallbackUrl", "/")
 
   def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>
@@ -43,6 +45,6 @@ class AwrsLanguageController @Inject()(configuration: ServicesConfig,
 
     val redirectURL = request.headers.get(REFERER).getOrElse(fallbackURL)
 
-    Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(Flash(Map("switching-language" -> "true")))
+    Redirect(redirectURL).withLang(Lang.apply(lang.code)).flashing(FlashWithSwitchIndicator)
   }
 }

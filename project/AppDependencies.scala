@@ -1,13 +1,6 @@
 import sbt._
 
-object FrontendBuild extends Build with MicroService {
-
-  val appName = "awrs-lookup-frontend"
-
-  override lazy val appDependencies: Seq[ModuleID] = AppDependencies()
-}
-
-private object AppDependencies {
+object AppDependencies {
   import play.core.PlayVersion
   import play.sbt.PlayImport._
 
@@ -47,5 +40,5 @@ private object AppDependencies {
     }.test
   }
 
-  def apply() = compile ++ Test()
+  def apply(): Seq[ModuleID] = compile ++ Test()
 }
