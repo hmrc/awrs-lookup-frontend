@@ -1,13 +1,6 @@
 import sbt._
 
-object FrontendBuild extends Build with MicroService {
-
-  val appName = "awrs-lookup-frontend"
-
-  override lazy val appDependencies: Seq[ModuleID] = AppDependencies()
-}
-
-private object AppDependencies {
+object AppDependencies {
   import play.core.PlayVersion
   import play.sbt.PlayImport._
 
@@ -24,7 +17,7 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "bootstrap-play-26" % "1.7.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
     "uk.gov.hmrc" %% "govuk-template" % "5.54.0-play-26",
-    "uk.gov.hmrc" %% "play-ui" % "8.8.0-play-26",
+    "uk.gov.hmrc" %% "play-ui" % "8.9.0-play-26",
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 
@@ -47,5 +40,5 @@ private object AppDependencies {
     }.test
   }
 
-  def apply() = compile ++ Test()
+  def apply(): Seq[ModuleID] = compile ++ Test()
 }
