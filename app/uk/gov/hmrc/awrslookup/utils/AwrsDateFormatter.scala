@@ -15,17 +15,41 @@
  */
 
 package uk.gov.hmrc.awrslookup.utils
-import java.text.SimpleDateFormat
 
-import scala.util.Try
+import java.time.{LocalDate, LocalDateTime}
+import java.time.format.{DateTimeFormatter, ResolverStyle, DateTimeParseException}
+import play.api.i18n.Messages
 
 object AwrsDateFormatter {
 
-  @inline def format(str: String) = formatOrElse(str, str)
+  private val datePattern = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  private val resolverStyle = ResolverStyle.STRICT
 
-  def formatOrElse(str: String, elseString: String) = Try[String] {
-    val jsonDateTimeFormat = new SimpleDateFormat("d MMMM yyyy")
-    jsonDateTimeFormat.format(jsonDateTimeFormat.parse(str))
-  }.getOrElse(elseString)
+  def showDateTranslation(str: Option[String])(implicit  messages: Messages): String = {
+    try {
+        val date = stringToLocalDate(str.get, datePattern)
+        val formatter = DateTimeFormatter.ofPattern(setDateTimeFormat(date.getMonthValue)).withResolverStyle(resolverStyle)
+        date.format(formatter)
+    } catch {
+        case e: DateTimeParseException => ""
+    }
+  }
 
+  def showDateTimeNowTranslation(dateTime: LocalDateTime = LocalDateTime.now())(implicit  messages: Messages): String = {
+    try {
+      val format = setDateTimeFormat(dateTime.getMonthValue, true)
+      val formatter = DateTimeFormatter.ofPattern(format).withResolverStyle(resolverStyle)
+      dateTime.format(formatter).replace("AM", "am").replace("PM", "pm")
+    } catch {
+        case e: DateTimeParseException => ""
+    }
+  }
+
+  def setDateTimeFormat(monthValue: Int, showTime: Boolean = false)(implicit  messages: Messages): String = {
+    s"""d '${messages(s"month.${monthValue}")}' uuuu""" + (if (showTime) " h:mma" else "")
+  }
+
+  private def stringToLocalDate(dateString: String, format: DateTimeFormatter): LocalDate = {
+    LocalDate.parse(dateString, format)
+  }
 }

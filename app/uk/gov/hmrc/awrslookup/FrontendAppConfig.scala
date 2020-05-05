@@ -42,10 +42,9 @@ class FrontendAppConfig @Inject()(servicesConfig: ServicesConfig, val mode: RunM
 
   override lazy val analyticsToken: Option[String] = Some(servicesConfig.getString(s"google-analytics.token"))
   override lazy val analyticsHost: String = servicesConfig.getString(s"google-analytics.host")
-  override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports?secure=true"
-
   override lazy val externalReportProblemUrl = s"$contactHost/contact/problem_reports"
 
-  override lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
+  override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
+  override lazy val reportAProblemNonJSUrl = s"$contactFrontendService/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
 
 }

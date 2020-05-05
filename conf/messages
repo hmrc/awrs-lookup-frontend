@@ -6,6 +6,7 @@ awrs.generic.back = Back to search
 awrs.generic.status.approved = Approved
 awrs.generic.status.revoked = No longer approved
 awrs.generic.status.deregistered = No longer approved
+awrs.generic.status.notfound = Not found
 awrs.generic.status.approved_group_member = Approved as part of the group
 awrs.generic.continue = Continue
 awrs.generic.important = Important information
@@ -43,7 +44,6 @@ awrs.lookup.search.heading = What is the wholesaler or producer’s URN?
 awrs.lookup.search.lede = This is 4 letters and 11 numbers, like XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn = {0}{2}AWRS URN{3}
 awrs.lookup.search.no_results.info =  Check you have the correct details from the wholesaler or producer and you entered them correctly.
-
 awrs.lookup.search.label = Enter a valid Unique Reference Number.
 awrs.lookup.search.search_for = You searched for {0}
 awrs.lookup.search.not_found = Not found
@@ -81,3 +81,23 @@ awrs.lookup.results.Approved_group_members = Approved group members
 awrs.lookup.results.URN = URN
 awrs.lookup.results.Group_members = Group members
 awrs.lookup.check_urn = Check a URN
+
+##### USER RESEARCH BANNER
+
+urbanner.message.text = Help improve digital services by joining the HMRC user panel (opens in new window)
+urbanner.message.reject = No thanks
+
+##### Months
+
+month.1 = January
+month.2 = February
+month.3 = March
+month.4 = April
+month.5 = May
+month.6 = June
+month.7 = July
+month.8 = August
+month.9 = September
+month.10 = October
+month.11 = November
+month.12 = December

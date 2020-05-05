@@ -6,6 +6,7 @@ awrs.generic.back = Yn ôl i chwilio
 awrs.generic.status.approved = Cymeradwywyd
 awrs.generic.status.revoked = Heb ei gymeradwyo mwyach
 awrs.generic.status.deregistered = Heb ei gymeradwyo mwyach
+awrs.generic.status.notfound = Dim canlyniadau
 awrs.generic.status.approved_group_member = Cymeradwywyd fel rhan o’r grŵp
 awrs.generic.continue = Parhau
 awrs.generic.important = Gwybodaeth bwysig
@@ -16,6 +17,12 @@ awrs.generic.error.character_invalid = Mae cymeriadau annilys wedi’u nodi
 awrs.generic.error.character_invalid.summary = Nid yw’r Cyfeirnod Unigryw yn y fformat cywir
 awrs.generic.error.maximum_length.summary = Nid yw’r {0} yn y fformat cywir
 awrs.generic.error.maximum_length = Ni all yr {0} fod yn hirach na {1} o gymeriadau
+
+##### ERRORS 
+
+awrs.error.technical.title = Mae’n ddrwg gennym, rydym yn profi anawsterau technegol – GOV.UK
+awrs.error.technical.heading = Mae’n ddrwg gennym, rydym yn profi anawsterau technegol
+awrs.error.technical.message = Rhowch gynnig arall arni yn nes ymlaen
 
 ##### LOOKUP FORM ERROR MESSAGES
 
@@ -36,10 +43,14 @@ awrs.lookup.search.page_title = Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcoho
 awrs.lookup.search.heading = Beth yw Cyfeirnod Unigryw (URN) y cyfanwerthwr neu’r cynhyrchydd?
 awrs.lookup.search.lede = Mae 4 llythyren ac 11 rhif i hwn, fel XXAW 000 0012 3456
 awrs.lookup.search.awrs_urn = {0}{2}Cyfeirnod Unigryw AWRS{3}{1}
-awrs.lookup.search.isle_of_man = Nid yw cyfanwerthwyr neu gynhyrchwyr yn {0}Ynys Manaw{1} ar y gofrestr hon
+awrs.lookup.search.no_results.info =  Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu’r cynhyrchwr a’ch bod wedi’u nodi’n gywir
 awrs.lookup.search.label = Rhowch Gyfeirnod Unigryw dilys
 awrs.lookup.search.search_for = Gwnaethoch chwilio am {0}
 awrs.lookup.search.not_found = Dim canlyniadau
+awrs.lookup.search.info = Dim ond oddi wrth cyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os ydych yn prynu oddi wrth cyfanwerthwyr neu gynhyrchwyr sydd heb eu cymeradwyo, gallech wynebu’r canlynol:
+awrs.lookup.search.info.bullet.1 = erlyniad
+awrs.lookup.search.info.bullet.2 = dirwy
+awrs.lookup.search.info.bullet.3 = eich alcohol yn cael ei atafaelu
 
 ##### RESULTS PAGE
 
@@ -48,7 +59,7 @@ awrs.lookup.results.page_title_no_results = Dim canlyniadau - Gwiriwch a yw cyfa
 awrs.lookup.results.page_title_single = Canlyniad - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
 awrs.lookup.results.heading_multi_results = Rydym wedi canfod {0} canlyniad for {1}
 awrs.lookup.results.results_found = Rydym wedi canfod {0} canlyniad
-awrs.lookup.results.group_h1_member_of = {0} part of the {1}
+awrs.lookup.results.group_h1_member_of = Rhan {0} o’r {1}
 awrs.lookup.results.group_rep_table_heading = Cynrychiolydd y grŵp
 awrs.lookup.results.status_label = Statws
 awrs.lookup.results.date_of_reg = Dyddiad y daw’r cofrestriad i rym
@@ -64,19 +75,30 @@ awrs.lookup.results.no_results.warning_what_to_do = yr hyn i’w wneud os dewch 
 awrs.lookup.results.approved.warning_info = Mae’r gwiriad hwn yn cefnogi’ch diwydrwydd dyladwy arferol. Rhaid i chi gadarnhau pwy yw’r cyflenwyr drwy
 awrs.lookup.results.approved.warning_info2 = ddefnyddio gwiriadau ychwanegol fel prynwr masnach
 awrs.lookup.results.search_date = Dyddiad y chwiliad
-awrs.lookup.search.info = Dim ond oddi wrth cyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os ydych yn prynu oddi wrth cyfanwerthwyr neu gynhyrchwyr sydd heb eu cymeradwyo, gallech wynebu’r canlynol:
-awrs.lookup.search.no_results.info =  Gwiriwch fod gennych y manylion cywir gan y cyfanwerthwr neu’r cynhyrchwr a’ch bod wedi’u nodi’n gywir
-awrs.lookup.search.info.bullet.1 = erlyniad
-awrs.lookup.search.info.bullet.2 = dirwy
-awrs.lookup.search.info.bullet.3 = eich alcohol yn cael ei atafaelu
-
-##### USER RESEARCH BANNER
-
-urbanner.message.text = Helpwch i wella gwasanaethau digidol drwy ymuno â phanel defnyddwyr CThEM (yn agor ffenestr newydd)
-urbanner.message.reject = Dim diolch
 awrs.lookup.checkURN = wirio’r Cyfeirnod Unigryw (URN)
 awrs.lookup.or = neu
 awrs.lookup.results.Approved_group_members = Aelodau grŵp sydd wedi eu cymeradwyo
 awrs.lookup.results.URN = URN
 awrs.lookup.results.Group_members = Aelodau’r grŵp
 awrs.lookup.check_urn = Gwirio Cyfeirnod Unigryw (URN)
+
+##### USER RESEARCH BANNER
+
+urbanner.message.text = Helpwch i wella gwasanaethau digidol drwy ymuno â phanel defnyddwyr CThEM (yn agor ffenestr newydd)
+urbanner.message.reject = Dim diolch
+
+
+##### Months
+
+month.1 = Ionawr
+month.2 = Chwefror
+month.3 = Mawrth
+month.4 = Ebrill
+month.5 = Mai
+month.6 = Mehefin
+month.7 = Gorffennaf
+month.8 = Awst
+month.9 = Medi
+month.10 = Hydref
+month.11 = Tachwedd
+month.12 = Rhagfyr

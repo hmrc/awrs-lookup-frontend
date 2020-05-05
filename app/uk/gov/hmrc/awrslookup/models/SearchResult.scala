@@ -15,9 +15,8 @@
  */
 
 package uk.gov.hmrc.awrslookup.models
-
 import play.api.libs.json._
-import uk.gov.hmrc.awrslookup.utils.{AwrsNumberFormatter, LetterPairSimilarity, AwrsDateFormatter}
+import uk.gov.hmrc.awrslookup.utils.AwrsNumberFormatter
 import play.api.libs.functional.syntax._
 
 sealed trait AwrsEntry {
@@ -28,11 +27,7 @@ sealed trait AwrsEntry {
 
   def registrationDate: Option[String]
 
-  @inline final def registrationDateFormatted: Option[String] = Some(AwrsDateFormatter.format(registrationDate.getOrElse("")))
-
   def registrationEndDate: Option[String]
-
-  @inline final def registrationEndDateFormatted: Option[String] = Some(AwrsDateFormatter.format(registrationEndDate.getOrElse("")))
 
   def status: AwrsStatus
 

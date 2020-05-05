@@ -16,16 +16,10 @@
 
 package uk.gov.hmrc.awrslookup.views.html
 
-import java.text.SimpleDateFormat
-import java.util.TimeZone
-
-import org.joda.time.DateTime
 import play.api.i18n.Messages
 import play.twirl.api.Html
 import uk.gov.hmrc.awrslookup.models.{Address, Group, Info}
 import uk.gov.hmrc.awrslookup.utils.LetterPairSimilarity
-
-import scala.annotation.tailrec
 
 package object helpers {
 
@@ -39,12 +33,6 @@ package object helpers {
 
   def formatForAiraLabel(string: String): String = {
     string.replace("AWRS","A. W R S.").replace("URN", "U R N")
-  }
-
-  def theTime(dateTime: DateTime = DateTime.now()): String = {
-    val jsonDateTimeFormat = new SimpleDateFormat("d MMMM yyyy h:mma")
-    jsonDateTimeFormat.setTimeZone(TimeZone.getTimeZone("Europe/London"))
-    jsonDateTimeFormat.format(dateTime.toDate()).replace("AM", "am").replace("PM", "pm")
   }
 
   def spans(strings: Map[String, Option[String]]): Html =

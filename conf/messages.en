@@ -12,8 +12,3 @@ testkey.emptyDate = empty date
 testkey.emptyDate.summary = empty date summary
 testkey.invalidDate = invalid date
 testkey.invalidDate.summary = invalid date summary
-
-##### USER RESEARCH BANNER
-
-urbanner.message.text = Help improve digital services by joining the HMRC user panel (opens in new window)
-urbanner.message.reject = No thanks

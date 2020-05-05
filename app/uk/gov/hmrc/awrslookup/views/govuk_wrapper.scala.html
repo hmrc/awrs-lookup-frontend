@@ -18,6 +18,7 @@
 @import uk.gov.hmrc.awrslookup.FrontendAppConfig
 @import views.html.layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
+@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 @import play.twirl.api.HtmlFormat
 @import uk.gov.hmrc.awrslookup.CachedStaticHtmlPartialProvider
 
@@ -99,9 +100,8 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
 }
 
 @getHelpForm = {
-    @partialProvider.getPartialContent(appConfig.reportAProblemPartialUrl)
+    @uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)
 }
-
 
 @content = {
     @uiLayouts.main_content(
