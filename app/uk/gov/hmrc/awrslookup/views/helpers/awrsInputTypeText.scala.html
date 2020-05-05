@@ -142,7 +142,7 @@
 @ariaLabelledBy = {
     @(searchTerm, searchResult)match {
         case (Some(_), _) | (_, Some(_)) => {"@{inputIdStr}_field"}
-        case _ => {"search-lede"}
+        case _ => {""}
     }
 }
 
@@ -156,7 +156,7 @@
            name="@field.name"
            id="@inputIdStr"
            value="@value"
-           aria-label="Enter the Unique Reference Number"
+           aria-label="@Messages("awrs.search.query.empty")"
            @maxLengthValue
            @dataAttributesStr
            @requiredStr

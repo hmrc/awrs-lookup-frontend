@@ -14,27 +14,28 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.awrslookup._
-@import views.html.helpers._
-@import models._
+    @import uk.gov.hmrc.awrslookup._
+    @import views.html.helpers._
+    @import models._
 
-@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
+    @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
-@warning(text: Html) = {
-    @warning_core(text)
-}
-
-@warningText = {
-    @Messages("awrs.lookup.results.unapproved.info") @whatToDo
-}
-
-@whatToDo = {
-    <span class="print-hidden"><a id="due_diligence_link" data-journey-click="what-to-do-unapproved-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.unapproved.what_to_do")</a>.</span>
-}
-
-@result.status match {
-    case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
-        @warning(warningText)
+    @warningText = {
+    <br>
+    <div class="indent-warning" style="font-weight: bold">
+        <span class="visuallyhidden">@Messages("awrs.lookup.warning")</span>
+        @Messages("awrs.lookup.results.unapproved.info") @whatToDo
+    </div>
+    <br>
     }
-    case _ => {}
-}
+
+    @whatToDo = {
+        <span class="print-hidden"><a id="due_diligence_link" data-journey-click="what-to-do-unapproved-page:click:info" href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#what-to-do-if-you-find-a-wholesaler-youre-dealing-with-isnt-approved">@Messages("awrs.lookup.results.unapproved.what_to_do")</a>.</span>
+    }
+
+    @result.status match {
+        case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
+            @warningText
+        }
+        case _ => {}
+    }

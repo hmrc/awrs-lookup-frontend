@@ -72,7 +72,7 @@
         case (Some(_), _) | (_, Some(_)) => {}
         case _ => {
             <h1 class="heading-xlarge" id="search-heading">@Messages("awrs.lookup.search.heading")</h1>
-            <p class="form-hint" id="search-lede" aria-hidden="true">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), ""))</p>
+            <p class="form-hint" id="search-lede">@Html(Messages("awrs.lookup.search.lede", awrs_urn(), ""))</p>
         }
     }
 }

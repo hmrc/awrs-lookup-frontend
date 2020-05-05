@@ -14,23 +14,25 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.awrslookup._
-@import models._
+    @import uk.gov.hmrc.awrslookup._
+    @import models._
 
-@(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
+    @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
-@warning(text: Html) = {
-    @warning_core(text)
-}
+    @approvedText = {
+        <br>
+        <div class="indent-warning" style="font-weight: bold">
+         <span class="visuallyhidden">@Messages("awrs.lookup.warning")</span>
+         @Messages("awrs.lookup.results.approved.warning_info")
+           <a id="due_diligence_link"
+              data-journey-click="link - click:Results page:additional checks as a trade buyer"
+              href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations">
+              @Messages("awrs.lookup.results.approved.warning_info2")</a>.
+        </div>
+        <br>
+     }
 
-@approvedText = {
-    @Messages("awrs.lookup.results.approved.warning_info")
-        <a id="due_diligence_link"
-           data-journey-click="link - click:Results page:additional checks as a trade buyer"
-           href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations">@Messages("awrs.lookup.results.approved.warning_info2")</a>.
-}
-
-@result.status match {
-    case AwrsStatus.Approved => { @warning(approvedText) }
-    case _ => {}
+    @result.status match {
+        case AwrsStatus.Approved => {@approvedText}
+        case _ => {}
 }

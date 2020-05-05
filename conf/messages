@@ -81,6 +81,7 @@ awrs.lookup.results.Approved_group_members = Approved group members
 awrs.lookup.results.URN = URN
 awrs.lookup.results.Group_members = Group members
 awrs.lookup.check_urn = Check a URN
+awrs.lookup.warning = Warning
 
 ##### USER RESEARCH BANNER
 

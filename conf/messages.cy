@@ -81,6 +81,7 @@ awrs.lookup.results.Approved_group_members = Aelodau grŵp sydd wedi eu cymeradw
 awrs.lookup.results.URN = URN
 awrs.lookup.results.Group_members = Aelodau’r grŵp
 awrs.lookup.check_urn = Gwirio Cyfeirnod Unigryw (URN)
+awrs.lookup.warning = Rhybudd
 
 ##### USER RESEARCH BANNER
 
