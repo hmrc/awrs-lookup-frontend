@@ -17,7 +17,6 @@
 package uk.gov.hmrc.awrslookup.controllers
 
 import javax.inject.Inject
-import play.api.Application
 import play.api.i18n.{Lang, Messages}
 import play.api.mvc._
 import uk.gov.hmrc.awrslookup._
@@ -31,8 +30,8 @@ import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.views.html.error_template
 import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class LookupController @Inject()(mcc: MessagesControllerComponents,
                                  val lookupService: LookupService,

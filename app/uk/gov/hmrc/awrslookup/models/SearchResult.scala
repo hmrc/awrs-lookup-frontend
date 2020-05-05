@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.awrslookup.models
 import play.api.libs.json._
-import uk.gov.hmrc.awrslookup.utils.{AwrsNumberFormatter}
+import uk.gov.hmrc.awrslookup.utils.AwrsNumberFormatter
 import play.api.libs.functional.syntax._
 
 sealed trait AwrsEntry {

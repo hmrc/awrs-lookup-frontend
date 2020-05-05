@@ -16,16 +16,10 @@
 
 package uk.gov.hmrc.awrslookup.views.html
 
-import java.text.SimpleDateFormat
-import java.util.TimeZone
-
-import org.joda.time.DateTime
 import play.api.i18n.Messages
 import play.twirl.api.Html
 import uk.gov.hmrc.awrslookup.models.{Address, Group, Info}
 import uk.gov.hmrc.awrslookup.utils.LetterPairSimilarity
-
-import scala.annotation.tailrec
 
 package object helpers {
 
