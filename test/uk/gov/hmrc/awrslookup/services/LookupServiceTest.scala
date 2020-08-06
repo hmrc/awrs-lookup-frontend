@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.awrslookup.services
 
-import uk.gov.hmrc.awrslookup.connectors.LookupConnector
 import uk.gov.hmrc.awrslookup.connectors.mocks.MockLookupConnector
 import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits

@@ -4,7 +4,7 @@ object AppDependencies {
   import play.core.PlayVersion
   import play.sbt.PlayImport._
 
-  private val playPartialsVersion = "6.10.0-play-27"
+  private val playPartialsVersion = "6.11.0-play-27"
   private val scalaTestPlusPlayVersion = "4.0.3"
   private val pegdownVersion = "1.6.0"
   private val mockitoVersion = "1.10.19"
@@ -12,7 +12,7 @@ object AppDependencies {
 
   val compile = Seq(
     ws,
-    "uk.gov.hmrc" %% "bootstrap-frontend-play-27" % "2.23.0",
+    "uk.gov.hmrc" %% "bootstrap-frontend-play-27" % "2.24.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
     "uk.gov.hmrc" %% "govuk-template" % "5.55.0-play-27",
     "uk.gov.hmrc" %% "play-ui" % "8.11.0-play-27",

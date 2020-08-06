@@ -20,13 +20,11 @@ import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.i18n.Messages
 import play.api.libs.json.Json
-import play.api.mvc.Result
 import play.api.test.FakeRequest
-import play.api.test.Helpers.OK
+import play.api.test.Helpers.{OK, _}
 import uk.gov.hmrc.awrslookup.services.LookupService
-import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
-import play.api.test.Helpers._
+import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import uk.gov.hmrc.awrslookup.views.html.error_template
 import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
 
