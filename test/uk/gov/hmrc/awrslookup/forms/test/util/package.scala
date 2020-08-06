@@ -20,11 +20,12 @@ import uk.gov.hmrc.awrslookup._
 import forms.validation.util.ErrorMessageInterpreter._
 import forms.validation.util.{FieldError, MessageLookup, SummaryError}
 import org.scalatest.Matchers._
+import org.scalatest.MustMatchers
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 
 
-package object util extends FormValidationTestAPI with TestUtilAPI {
+package object util extends MustMatchers with FormValidationTestAPI with TestUtilAPI {
 
   /**
     * function to allow easy attachment of prefix to field ids regardless of whether the
@@ -63,7 +64,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     val formWithNoErrorsInField = form.bind(testData)
     withClue(f"There shouldn't be any errors in this form:\ntestData=$testData\n") {
       withClue(s"Error found:\n${formWithNoErrorsInField.errors}\n") {
-        formWithNoErrorsInField.hasErrors shouldBe false
+        formWithNoErrorsInField.hasErrors mustBe false
       }
     }
     formWithNoErrorsInField.bind(testData).fold(
@@ -74,7 +75,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
           withClue(f"original data\t=\t$testData\nsubmitted form\t=\t${formWithNoErrorsInField.data}\nformdata\t=\t$formdata\n\nrefilledForm\t=\t${refilledForm.data}\n\n") {
             val dset1 = formWithNoErrorsInField.data
             val dset2 = refilledForm.data
-            dset1.keys.foreach(key => dset1.get(key) shouldBe dset2.get(key))
+            dset1.keys.foreach(key => dset1.get(key) mustBe dset2.get(key))
           }
         }
       }
@@ -87,10 +88,10 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     withClue(f"The following test is conducted for the field: '$fieldId'\n") {
       withClue(f"The current form error is'\n${formWithErrors.errors}\n") {
         withClue("An error is expected but the field remained valid: ") {
-          fieldError.nonEmpty shouldBe true
+          fieldError.nonEmpty mustBe true
         }
         withClue("There should be exactly 1 error message per field: ") {
-          fieldError.length shouldBe 1
+          fieldError.length mustBe 1
         }
         val actualError = fieldError.head
         withClue("The error message for the field differs from the expected:\n") {
@@ -113,14 +114,14 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
   def assertHasNoFieldError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val fieldError = getFieldErrors(form(fieldId), form)
     withClue(f"This field should not generate any errors:\nerror=$fieldError\n") {
-      fieldError.isEmpty shouldBe true
+      fieldError.isEmpty mustBe true
     }
   }
 
   def assertHasFieldError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     val fieldError = getFieldErrors(form(fieldId), form)
     withClue("This field should generate at least one error: ") {
-      fieldError.nonEmpty shouldBe true
+      fieldError.nonEmpty mustBe true
     }
   }
 
@@ -150,7 +151,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     def coreTest(testData: Map[String, String]): Unit = {
       val formWithErrors = form.bind(testData)
       withClue(f"$fieldId should not be empty:\n") {
-        formWithErrors.hasErrors shouldBe true
+        formWithErrors.hasErrors mustBe true
         assertFieldError(formWithErrors, fieldId, fieldIsEmptyExpectation.fieldError)
         assertSummaryError(formWithErrors, fieldId, fieldIsEmptyExpectation.summaryError)
       }
@@ -172,7 +173,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
     def coreTest(testData: Map[String, String]): Unit = {
       val formWithErrors = form.bind(testData)
       withClue(f"$fieldId should not be empty:\n") {
-        formWithErrors.hasErrors shouldBe true
+        formWithErrors.hasErrors mustBe true
         assertFieldError(formWithErrors, fieldId, fieldIsEmptyExpectation.fieldError)
         assertSummaryError(formWithErrors, fieldId, fieldIsEmptyExpectation.summaryError)
       }
@@ -198,7 +199,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
 
         withClue(f"$fieldId must not exceed the max length of ${maxLengthExpectation.maxLength}%d:\ntestdata=$invalidLen\n") {
           val formWithErrors = form.bind(invalidLen)
-          formWithErrors.hasErrors shouldBe true
+          formWithErrors.hasErrors mustBe true
           assertFieldError(formWithErrors, fieldId, maxLengthExpectation.fieldError)
           assertSummaryError(formWithErrors, fieldId, maxLengthExpectation.summaryError)
         }
@@ -216,14 +217,14 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
 
   def assertFieldConformsExpectedFormats(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, formatConfig: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
     withClue("You must provide at least one case of invalid format : ") {
-      formatConfig.invalidFormats.nonEmpty shouldBe true
+      formatConfig.invalidFormats.nonEmpty mustBe true
     }
     // test invalids
     formatConfig.invalidFormats.foreach { invalidFormat =>
       val invalidData = generateFormTestData(preCond, fieldId, invalidFormat.invalidCase)
       val formWithErrors = form.bind(invalidData)
       withClue(f"$fieldId should not be valid when its value is:\n'$invalidData':\n") {
-        formWithErrors.hasErrors shouldBe true
+        formWithErrors.hasErrors mustBe true
         assertFieldError(formWithErrors, fieldId, invalidFormat.fieldError)
         assertSummaryError(formWithErrors, fieldId, invalidFormat.summaryError)
       }
@@ -377,7 +378,7 @@ package object util extends FormValidationTestAPI with TestUtilAPI {
 
     private def commonTestForAnswered(testData: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val formWithErrors = form.bind(testData)
-      formWithErrors.hasErrors shouldBe true
+      formWithErrors.hasErrors mustBe true
       assertSummaryError(formWithErrors, config.anchor, config.fieldIsEmptyExpectation.summaryError)
       fieldIds.foreach(fieldId => assertFieldError(formWithErrors, fieldId, config.fieldIsEmptyExpectation.fieldError))
     }

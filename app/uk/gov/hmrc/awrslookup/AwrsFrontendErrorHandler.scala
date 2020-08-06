@@ -17,12 +17,11 @@
 package uk.gov.hmrc.awrslookup
 
 import javax.inject.Inject
-import play.api.Application
 import play.api.i18n.{Lang, MessagesApi}
 import play.api.mvc.Request
 import play.twirl.api.Html
 import uk.gov.hmrc.awrslookup.views.html.error_template
-import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
+import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 
 class AwrsFrontendErrorHandler @Inject()(implicit val messagesApi: MessagesApi,
                                          errorTemplate: error_template) extends FrontendErrorHandler {

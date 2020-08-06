@@ -14,14 +14,8 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.awrslookup._
-@import uk.gov.hmrc.play.views.html.helpers._
-@import views.html.helpers._
 @import uk.gov.hmrc.awrslookup.models._
-@import uk.gov.hmrc.awrslookup.views.html.lookup.common._
 @import uk.gov.hmrc.awrslookup.views.html.lookup.search._
-@import uk.gov.hmrc.awrslookup.views.html.lookup.results._
-@import play.api.Application
 
 @this(resultsCore: results_core)
 @(searchForm : Form[Query], action: Call, searchTerm: Option[String] = None, searchResult: Option[SearchResult] = None)(implicit request : Request[AnyContent], messages: Messages, lang: Lang)
@@ -32,6 +26,6 @@
     searchForm = searchForm,
     preFormContent = None,
     postFormContent = None,
-    title = searchTitle.toString,
+    title = searchTitle,
     searchTerm = searchTerm.get
 )

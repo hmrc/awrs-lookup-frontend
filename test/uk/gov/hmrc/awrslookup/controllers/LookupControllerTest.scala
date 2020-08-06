@@ -48,13 +48,13 @@ class LookupControllerTest extends AwrsUnitTestTraits {
     "in show, lookup awrs entry when passed a valid awrs reference" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val result = TestLookupController.show(false).apply(FakeRequest())
-      status(result) shouldBe OK
+      status(result) mustBe OK
     }
 
     "in byNameShow, lookup awrs entries by name" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val result = TestLookupController.show(true).apply(FakeRequest())
-      status(result) shouldBe OK
+      status(result) mustBe OK
     }
 
 
@@ -69,19 +69,19 @@ class LookupControllerTest extends AwrsUnitTestTraits {
         case _ => ""
       }
       val oResult = route(app, FakeRequest(GET, "/check-the-awrs-register" + qString))
-      oResult shouldBe 'defined
+      oResult mustBe 'defined
       val result = oResult.get
-      status(result) shouldBe OK
+      status(result) mustBe OK
       val doc = result.getDocument
       doc.getElementById("no-results-search-term")
     }
 
     "do not show error if there is no query string" in {
-      callLookupFrontEndAndReturnSummaryError(None) shouldBe null
+      callLookupFrontEndAndReturnSummaryError(None) mustBe null
     }
 
     "show error if the query field is empty" in {
-      callLookupFrontEndAndReturnSummaryError("").text shouldBe Messages("awrs.search.query.empty.summary")
+      callLookupFrontEndAndReturnSummaryError("").text mustBe Messages("awrs.search.query.empty.summary")
     }
 
   }

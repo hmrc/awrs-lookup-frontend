@@ -19,15 +19,15 @@ package uk.gov.hmrc.awrslookup.connectors
 import java.net.URLEncoder
 
 import javax.inject.Inject
-import play.api.libs.json.{JsError, JsSuccess, Json}
-import play.api.{Configuration, Environment}
+import play.api.Configuration
+import play.api.libs.json.Json
 import uk.gov.hmrc.awrslookup.exceptions.LookupExceptions
 import uk.gov.hmrc.awrslookup.forms.prevalidation
-import uk.gov.hmrc.awrslookup.models.{AwrsEntry, AwrsStatus, SearchResult}
+import uk.gov.hmrc.awrslookup.models.SearchResult
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions._
 import uk.gov.hmrc.awrslookup.utils.LoggingUtils
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, InternalServerException}
-import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -37,7 +37,6 @@ import scala.concurrent.Future
 class LookupConnector @Inject()(loggingUtils: LoggingUtils,
                                 http: DefaultHttpClient,
                                 val runModeConfiguration: Configuration,
-                                mode: RunMode,
                                 servicesConfig: ServicesConfig) extends RawResponseReads {
 
   lazy val middleServiceURL: String = servicesConfig.baseUrl("awrs-lookup")

@@ -14,18 +14,17 @@
  * limitations under the License.
  *@
 
-@import play.api.Application
 @import uk.gov.hmrc.awrslookup.views.html.govuk_wrapper
+@import uk.gov.hmrc.play.views.html.layouts.Sidebar
+@import uk.gov.hmrc.play.views.html.layouts.Article
 
-@this(govUkWrapper: govuk_wrapper)
+@this(govUkWrapper: govuk_wrapper, layoutSidebar: Sidebar, layoutsArticle: Article)
 @(title: String,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
   mainClass: Option[String] = None,
   scriptElem: Option[Html] = None)(mainContent: Html)(implicit request : Request[_], messages: Messages, lang: Lang)
-
-@import uk.gov.hmrc.play.views.html.layouts
 
 @linkElement = {
     <link rel="stylesheet" href=@routes.Assets.at("stylesheets/custom.css?version=1")>
@@ -40,7 +39,7 @@
 
 @sidebar = {
     @if(sidebarLinks.isDefined) {
-        @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+        @layoutSidebar(sidebarLinks.get, Some("sidebar"))
     }
 }
 
@@ -51,7 +50,7 @@
                sidebar = sidebar,
                contentHeader = contentHeader,
                linkElement = Some(linkElement),
-               mainContent = layouts.article(mainContent),
+               mainContent = layoutsArticle(mainContent),
                serviceInfoContent = serviceInfoContent,
                scriptElem = scriptElem
 )

@@ -36,7 +36,7 @@ class LookupServiceTest extends AwrsUnitTestTraits
       assert(testAwrs != notTestAwrs)
 
       val dataToReturn: Future[Option[SearchResult]] = SearchResult(Nil)
-      val noDataToReturn: Future[Option[SearchResult]] = None
+      val noDataToReturn: Future[Option[SearchResult]] = Future.successful(None)
 
       // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
       // then 'noDataToReturn' is returned
@@ -44,8 +44,8 @@ class LookupServiceTest extends AwrsUnitTestTraits
       mockLookupConnectorWithOnly(queryByName = (AnyMatcher, noDataToReturn))
       mockLookupConnectorWithOnly(queryByUrn = (EqMatcher(testAwrs), dataToReturn))
 
-      LookupServiceTest.lookup(testAwrs) shouldBe dataToReturn
-      LookupServiceTest.lookup(notTestAwrs) shouldBe noDataToReturn
+      LookupServiceTest.lookup(testAwrs) mustBe dataToReturn
+      LookupServiceTest.lookup(notTestAwrs) mustBe noDataToReturn
     }
 
     "call lookup connector search by name in lookup if the query is not a valid AWRS number" in {
@@ -55,7 +55,7 @@ class LookupServiceTest extends AwrsUnitTestTraits
       assert(testAwrs != notTestAwrs)
 
       val dataToReturn: Future[Option[SearchResult]] = SearchResult(Nil)
-      val noDataToReturn: Future[Option[SearchResult]] = None
+      val noDataToReturn: Future[Option[SearchResult]] = Future.successful(None)
 
       // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
       // then 'noDataToReturn' is returned
@@ -63,8 +63,8 @@ class LookupServiceTest extends AwrsUnitTestTraits
       mockLookupConnectorWithOnly(queryByName = (AnyMatcher, noDataToReturn)) // must be placed before the eq matcher
       mockLookupConnectorWithOnly(queryByName = (EqMatcher(testAwrs), dataToReturn))
 
-      LookupServiceTest.lookup(testAwrs) shouldBe dataToReturn
-      LookupServiceTest.lookup(notTestAwrs) shouldBe noDataToReturn
+      LookupServiceTest.lookup(testAwrs) mustBe dataToReturn
+      LookupServiceTest.lookup(notTestAwrs) mustBe noDataToReturn
     }
   }
 

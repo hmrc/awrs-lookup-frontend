@@ -50,7 +50,6 @@ object MappingUtilAPI {
       expectedKey.equals(mappingKey) match {
         case true => mapping
         case false => //TODO need more tests to see if this can be simplified, could prob just append
-          val prefix = expectedKey.replace(mappingKey, "")
           mapping.withPrefix(expectedKey)
       }
     }
@@ -108,7 +107,6 @@ object MappingUtilAPI {
       expectedKey.equals(mappingKey) match {
         case true => mapping
         case false => //TODO need more tests to see if this can be simplified, could prob just append
-          val prefix = expectedKey.replace(mappingKey, "")
           mapping.withPrefix(expectedKey)
       }
     }

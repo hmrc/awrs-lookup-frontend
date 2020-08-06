@@ -48,8 +48,6 @@
   * ********************************************************************************************************************/
 package uk.gov.hmrc.awrslookup.forms.validation.util
 
-import javax.inject.Inject
-
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 
 /**
@@ -253,7 +251,7 @@ case class FieldError (msgKey: String, msgArgs: MessageArguments = MessageArgume
 
 // These constaints are used by the factory and extractor to construct and extract the error messages from their configs.
 // These constans only used for the string manipulation version of the implementation.
-private object ErrorDelimiterConstants {
+object ErrorDelimiterConstants {
   val summaryIdMarker = "#"
   val paramDelimiter = ";"
   val fieldDelimiter = ":"

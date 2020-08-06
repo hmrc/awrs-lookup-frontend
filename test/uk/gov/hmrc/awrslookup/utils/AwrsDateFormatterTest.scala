@@ -27,16 +27,16 @@ class AwrsDateFormatterTest extends AwrsUnitTestTraits with HtmlUtils {
     
     "returns a translateable date string from a string that matches the format (d MMMM yyyy)" in {
       val dateString = "1 April 2017"
-      AwrsDateFormatter.showDateTranslation(dateString) shouldBe "1 April 2017"
+      AwrsDateFormatter.showDateTranslation(dateString) mustBe "1 April 2017"
     }
 
     "returns empty string when given date does not match the requred date format (d MMMM yyyy)" in {
       val dateString1 = "sdfsdfssdfs"
       val dateString2 = "2122-33-22"
       val dateString3 = ""
-      AwrsDateFormatter.showDateTranslation(dateString1) shouldBe ""
-      AwrsDateFormatter.showDateTranslation(dateString2) shouldBe ""
-      AwrsDateFormatter.showDateTranslation(dateString3) shouldBe ""
+      AwrsDateFormatter.showDateTranslation(dateString1) mustBe ""
+      AwrsDateFormatter.showDateTranslation(dateString2) mustBe ""
+      AwrsDateFormatter.showDateTranslation(dateString3) mustBe ""
     }
   }
 
@@ -44,8 +44,8 @@ class AwrsDateFormatterTest extends AwrsUnitTestTraits with HtmlUtils {
     "returns a translateable date and time string" in {
       val amTime = LocalDateTime.parse("2011-02-04 08:27:05", dateTimePattern)
       val pmTime = LocalDateTime.parse("2011-12-04 20:27:05", dateTimePattern)
-      AwrsDateFormatter.showDateTimeNowTranslation(amTime) shouldBe "4 February 2011 8:27am"
-      AwrsDateFormatter.showDateTimeNowTranslation(pmTime) shouldBe "4 December 2011 8:27pm"
+      AwrsDateFormatter.showDateTimeNowTranslation(amTime) mustBe "4 February 2011 8:27am"
+      AwrsDateFormatter.showDateTimeNowTranslation(pmTime) mustBe "4 December 2011 8:27pm"
     }
   }
 
@@ -55,13 +55,13 @@ class AwrsDateFormatterTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "showTime is true" should {
       "returns a LocalDateTime format with a time correctly" in {
-        AwrsDateFormatter.setDateTimeFormat(monthValue, true) shouldBe "d 'May' uuuu h:mma"
+        AwrsDateFormatter.setDateTimeFormat(monthValue, true) mustBe "d 'May' uuuu h:mma"
       }
     }
 
     "showTime is false" should {
       "returns a LocalDateTime format without a time correctly" in {
-        AwrsDateFormatter.setDateTimeFormat(monthValue, false) shouldBe "d 'May' uuuu"
+        AwrsDateFormatter.setDateTimeFormat(monthValue, false) mustBe "d 'May' uuuu"
       }
     }
   }

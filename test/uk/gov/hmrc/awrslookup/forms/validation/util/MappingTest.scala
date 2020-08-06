@@ -83,7 +83,7 @@ class MappingTest extends AwrsUnitTestTraits {
         form2.fold(
           form2WithErrors => {},
           model_2 => {
-            model shouldBe model_2
+            model mustBe model_2
           })
       })
   }
@@ -169,10 +169,10 @@ class MappingTest extends AwrsUnitTestTraits {
         form.bind(data).fold(
           errors => {},
           model => {
-            model.ignoredField shouldBe None
-            model.ignoredField2 shouldBe None
-            model.field1 shouldBe Some("me")
-            model.field1a shouldBe "me2"
+            model.ignoredField mustBe None
+            model.ignoredField2 mustBe None
+            model.field1 mustBe Some("me")
+            model.field1a mustBe "me2"
           }
         )
       }

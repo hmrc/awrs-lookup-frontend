@@ -38,7 +38,7 @@ class ModelTests extends AwrsUnitTestTraits {
       val json = Json.toJson[AwrsEntry](testObj)
 
       val convBack = Json.fromJson[AwrsEntry](json)
-      convBack.get shouldBe testObj
+      convBack.get mustBe testObj
     }
 
     "Correctly convert Group to json and back" in {
@@ -56,7 +56,7 @@ class ModelTests extends AwrsUnitTestTraits {
       val json = Json.toJson[AwrsEntry](testObj)
 
       val convBack = Json.fromJson[AwrsEntry](json)
-      convBack.get shouldBe testObj
+      convBack.get mustBe testObj
     }
   }
 

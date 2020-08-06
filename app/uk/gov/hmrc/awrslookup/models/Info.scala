@@ -18,8 +18,6 @@ package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json._
 
-import uk.gov.hmrc.awrslookup._
-
 case class Info(businessName: Option[String] = None,
                 tradingName: Option[String] = None,
                 fullName: Option[String] = None,

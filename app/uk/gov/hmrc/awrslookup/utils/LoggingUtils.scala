@@ -17,7 +17,7 @@
 package uk.gov.hmrc.awrslookup.utils
 
 import javax.inject.Inject
-import play.api.Logger
+import play.api.Logging
 import uk.gov.hmrc.awrslookup.audit.Auditable
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -25,7 +25,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 // This means that any Splunk audit calls will automatically be logged as DEBUG to aid local debugging but not appear in
 // the production logs. All trace and debug calls will only appear locally so should only be used for local debugging
 // and not for anything that you would want to see logged in production.
-class LoggingUtils @Inject()(auditable: Auditable) {
+class LoggingUtils @Inject()(auditable: Auditable) extends Logging {
 
   final val auditLookupTxName: String = "AwrsLookup"
 
@@ -41,7 +41,7 @@ class LoggingUtils @Inject()(auditable: Auditable) {
   private def splunkToLogger(transactionName: String, detail: Map[String, String], eventType: String): String =
     s"${if (eventType.nonEmpty) eventType + "\n"}$transactionName\n$detail"
 
-  private def splunkFunction(transactionName: String, detail: Map[String, String], eventType: String)(implicit hc: HeaderCarrier) = {
+  private def splunkFunction(transactionName: String, detail: Map[String, String], eventType: String)(implicit hc: HeaderCarrier): Unit = {
     debug(splunkString + splunkToLogger(transactionName, detail, eventType))
     auditable.sendDataEvent(
       transactionName = transactionName,
@@ -52,23 +52,23 @@ class LoggingUtils @Inject()(auditable: Auditable) {
 
   def audit(transactionName: String, detail: Map[String, String], eventType: String)(implicit hc: HeaderCarrier) = splunkFunction(transactionName, detail, eventType)
 
-  @inline def trace(msg: String) = Logger.trace(msg)
+  @inline def trace(msg: String) = logger.trace(msg)
 
   @inline def trace(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = trace(splunkToLogger(transactionName, detail, eventType))
 
-  @inline def debug(msg: String) = Logger.debug(msg)
+  @inline def debug(msg: String) = logger.debug(msg)
 
   @inline def debug(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = debug(splunkToLogger(transactionName, detail, eventType))
 
-  @inline def info(msg: String) = Logger.info(msg)
+  @inline def info(msg: String) = logger.info(msg)
 
   @inline def info(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = info(splunkToLogger(transactionName, detail, eventType))
 
-  @inline def warn(msg: String) = Logger.warn(msg)
+  @inline def warn(msg: String) = logger.warn(msg)
 
   @inline def warn(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = warn(splunkToLogger(transactionName, detail, eventType))
 
-  @inline def err(msg: String) = Logger.error(msg)
+  @inline def err(msg: String) = logger.error(msg)
 
   @inline def err(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = err(splunkToLogger(transactionName, detail, eventType))
 

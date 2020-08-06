@@ -49,27 +49,27 @@ class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
           val key: String = "testkey1"
           val testData: MessageLookup = FieldError(key)
           val message: String = messageLookup(testData)
-          message shouldBe trimString(messagesFileContent(key))
+          message mustBe trimString(messagesFileContent(key))
         }
         "it is a FieldErrorInfo instance with additional parameters" in {
           val key: String = "test.withprefix.testkey2"
           val args: Seq[Any] = Seq("hello", 2, "world")
           val testData: MessageLookup = FieldError(key, MessageArguments(args: _*))
           val message: String = messageLookup(testData)
-          message shouldBe trimString(messagesFileContent(key).replaceAll(messagesArgumentMarkupRegex, "%s").format(args.map(x => x.toString): _*))
+          message mustBe trimString(messagesFileContent(key).replaceAll(messagesArgumentMarkupRegex, "%s").format(args.map(x => x.toString): _*))
         }
         "it is a SummaryErrorInfo instance with no additional parameters" in {
           val key: String = "testkey1"
           val testData: MessageLookup = SummaryError(key, anchor = "anchor")
           val message: String = messageLookup(testData)
-          message shouldBe trimString(messagesFileContent(key))
+          message mustBe trimString(messagesFileContent(key))
         }
         "it is a SummaryErrorInfo instance with additional parameters" in {
           val key: String = "test.withprefix.testkey2"
           val args: Seq[Any] = Seq("hello", 2, "world")
           val testData: MessageLookup = SummaryError(key, MessageArguments(args: _*), "anchor")
           val message: String = messageLookup(testData)
-          message shouldBe trimString(messagesFileContent(key).replaceAll(messagesArgumentMarkupRegex, "%s").format(args.map(x => x.toString): _*))
+          message mustBe trimString(messagesFileContent(key).replaceAll(messagesArgumentMarkupRegex, "%s").format(args.map(x => x.toString): _*))
         }
       }
 
@@ -86,7 +86,7 @@ class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
           val expectedEmbedded = trimString(messagesFileContent(embeddedKey).replaceAll(messagesArgumentMarkupRegex, "%s").format(embededArgs.map(x => x.toString): _*))
           // intentionally leaving the second arg as {1}
           val expectedOutter = messagesFileContent(outterkey).replaceFirst(messagesArgumentMarkupRegex, "%s").format(expectedEmbedded)
-          message shouldBe trimString(expectedOutter)
+          message mustBe trimString(expectedOutter)
         }
         "it is a SummaryErrorInfo instance" in {
           val outterkey: String = "testkey3"
@@ -100,7 +100,7 @@ class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
           val expectedEmbedded = trimString(messagesFileContent(embeddedKey).replaceAll(messagesArgumentMarkupRegex, "%s").format(embededArgs.map(x => x.toString): _*))
           // intentionally leaving the second arg as {1}
           val expectedOutter = messagesFileContent(outterkey).replaceFirst(messagesArgumentMarkupRegex, "%s").format(expectedEmbedded)
-          message shouldBe trimString(expectedOutter)
+          message mustBe trimString(expectedOutter)
         }
       }
     }
