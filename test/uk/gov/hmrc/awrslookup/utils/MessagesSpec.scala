@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.awrslookup.utils
 
+import org.scalatestplus.play.PlaySpec
 import play.api.i18n.Messages
 import play.api.i18n.Messages.MessageSource
-import uk.gov.hmrc.play.test.UnitSpec
 
 import scala.io.Source
 
-class MessagesSpec extends UnitSpec  {
+class MessagesSpec extends PlaySpec {
 
   private val MatchSingleQuoteOnly = """\w+'{1}\w+""".r
   private val MatchBacktickQuoteOnly = """`+""".r
@@ -33,7 +33,7 @@ class MessagesSpec extends UnitSpec  {
   "All message files" should {
     "have the same set of keys" in {
       withClue(describeMismatch(englishMessages.keySet, welshMessages.keySet)) {
-        welshMessages.keySet shouldBe englishMessages.keySet
+        welshMessages.keySet mustBe englishMessages.keySet
       }
     }
 
@@ -47,7 +47,7 @@ class MessagesSpec extends UnitSpec  {
       assertCorrectUseOfQuotes("Welsh", welshMessages)
     }
     "have a resolvable message for keys which take args" in {
-      countMessagesWithArgs(welshMessages).size shouldBe countMessagesWithArgs(englishMessages).size
+      countMessagesWithArgs(welshMessages).size mustBe countMessagesWithArgs(englishMessages).size
     }
   }
 
@@ -62,14 +62,14 @@ class MessagesSpec extends UnitSpec  {
 
   private def assertNonEmpty(label: String, messages: Map[String, String]) = messages.foreach { case (key: String, value: String) =>
     withClue(s"In $label, there is an empty value for the key:[$key][$value]") {
-      value.trim.isEmpty shouldBe false
+      value.trim.isEmpty mustBe false
     }
   }
 
   private def assertCorrectUseOfQuotes(label: String, messages: Map[String, String]) = messages.foreach { case (key: String, value: String) =>
     withClue(s"In $label, there is an unescaped or invalid quote:[$key][$value]") {
-      MatchSingleQuoteOnly.findFirstIn(value).isDefined shouldBe false
-      MatchBacktickQuoteOnly.findFirstIn(value).isDefined shouldBe false
+      MatchSingleQuoteOnly.findFirstIn(value).isDefined mustBe false
+      MatchBacktickQuoteOnly.findFirstIn(value).isDefined mustBe false
     }
   }
 

@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.awrslookup.views.html.helpers
 
+import java.time.format.DateTimeFormatter
+
 import org.jsoup.nodes.Document
 import uk.gov.hmrc.awrslookup.models.AwrsStatus.Approved
 import uk.gov.hmrc.awrslookup.models.{Group, Info}
@@ -32,11 +34,11 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
       val soupDoc: Document = spans(testData)
       val spanTags = soupDoc.getElementsByTag("span")
       withClue(s"span tags found:\n$spanTags\n") {
-        spanTags.size() shouldBe 3
+        spanTags.size() mustBe 3
       }
       testData.foreach {
         case (id: String, Some(x)) =>
-          spanTags.text().contains(x) shouldBe true
+          spanTags.text().contains(x) mustBe true
         case _ =>
       }
     }
@@ -46,12 +48,12 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
     val testName = "testName"
     "Return trading name if known" in {
       val info = Info(tradingName = testName, businessName = "not test name")
-      knownName(info) shouldBe testName
+      knownName(info) mustBe testName
     }
 
     "Return business name if trading name is not known" in {
       val info = Info(businessName = testName, tradingName = None)
-      knownName(info) shouldBe testName
+      knownName(info) mustBe testName
     }
   }
 
@@ -61,12 +63,12 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
   "infoMatchCoEff" should {
     "match with specific confidence" in {
       val test = testInfo.copy(businessName = "FRANCE")
-      infoMatchCoEff(test, "france") shouldBe 1.0 +- epsilon
-      infoMatchCoEff(test, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+      infoMatchCoEff(test, "france") mustBe 1.0 +- epsilon
+      infoMatchCoEff(test, "REPUBLIC OF FRANCE") mustBe 0.56 +- epsilon
 
       val test2 = testInfo.copy(tradingName = "FRANCE")
-      infoMatchCoEff(test2, "france") shouldBe 1.0 +- epsilon
-      infoMatchCoEff(test2, "REPUBLIC OF FRANCE") shouldBe 0.56 +- epsilon
+      infoMatchCoEff(test2, "france") mustBe 1.0 +- epsilon
+      infoMatchCoEff(test2, "REPUBLIC OF FRANCE") mustBe 0.56 +- epsilon
     }
   }
 
@@ -75,9 +77,9 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
       val testName = "FRANCE"
       val testName2 = "REPUBLIC OF FRANCE"
       val test = testInfo.copy(businessName = testName, tradingName = testName2)
-      bestMatchName(test, testName) shouldBe testName
-      bestMatchName(test, testName2) shouldBe testName2
-      bestMatchName(test, "REPUBLIC") shouldBe testName2
+      bestMatchName(test, testName) mustBe testName
+      bestMatchName(test, testName2) mustBe testName2
+      bestMatchName(test, "REPUBLIC") mustBe testName2
     }
   }
 
@@ -98,7 +100,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
       )
 
       val info = memberWithTheClosestMatch(g.members, "my bus")
-      info shouldBe testInfo.copy(businessName = "my bus")
+      info mustBe testInfo.copy(businessName = "my bus")
     }
   }
 
@@ -109,7 +111,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
       val testValue = "FRANCE"
       val g = testGroup.copy(info = testInfo.copy(businessName = testValue))
       val actual = groupSearchBestMatchInfo(g, searchTerm = testValue)
-      actual shouldBe testValue
+      actual mustBe testValue
     }
 
     "return the member's name if the search term matches a member" in {
@@ -123,7 +125,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
         )
       )
       val actual = groupSearchBestMatchInfo(g, searchTerm = testValue)
-      actual shouldBe s"$testValue part of the ${knownName(testGroup.info)}"
+      actual mustBe s"$testValue part of the ${knownName(testGroup.info)}"
     }
   }
 

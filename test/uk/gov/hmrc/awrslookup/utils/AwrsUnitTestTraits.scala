@@ -18,19 +18,20 @@ package uk.gov.hmrc.awrslookup.utils
 
 import org.mockito.Matchers
 import org.scalatest.BeforeAndAfterEach
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.{Lang, Messages, MessagesApi}
 import play.api.mvc.MessagesControllerComponents
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
-import uk.gov.hmrc.play.test.UnitSpec
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import play.api.test.Helpers.{await => helperAwait, defaultAwaitTimeout}
 
 import scala.concurrent.Future
 
 
-trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterEach with GuiceOneAppPerSuite {
+trait AwrsUnitTestTraits extends PlaySpec with MockitoSugar with BeforeAndAfterEach with GuiceOneAppPerSuite {
 
   implicit lazy val hc = HeaderCarrier()
 
@@ -52,9 +53,6 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
 
   val servicesConfig: ServicesConfig = app.injector.instanceOf[ServicesConfig]
 
-  val runMode: RunMode = app.injector.instanceOf[RunMode]
-
-
   // used to help mock setup functions to clarify if certain results should be mocked.
   sealed trait MockConfiguration[+A] {
     final def get = this match {
@@ -68,6 +66,10 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
     }
   }
 
+  def await[A](result: Future[A]): A = {
+    helperAwait(result)
+  }
+
   case class Configure[A](config: A) extends MockConfiguration[A]
 
   case object DoNotConfigure extends MockConfiguration[Nothing]
@@ -76,9 +78,9 @@ trait AwrsUnitTestTraits extends UnitSpec with MockitoSugar with BeforeAndAfterE
 
   implicit def convertToMockConfiguration2[T](value: T): MockConfiguration[Option[T]] = Configure(value)
 
-  implicit def convertToMockConfiguration3[T](value: T): MockConfiguration[Future[T]] = Configure(value)
+  implicit def convertToMockConfiguration3[T](value: T): MockConfiguration[Future[T]] = Configure(Future.successful(value))
 
-  implicit def convertToMockConfiguration4[T](value: T): MockConfiguration[Future[Option[T]]] = Configure(Some(value))
+  implicit def convertToMockConfiguration4[T](value: T): MockConfiguration[Future[Option[T]]] = Configure(Future.successful(Some(value)))
 
   implicit def convertToMockConfiguration5[T](err: Throwable): MockConfiguration[Future[Option[T]]] = Configure(err)
 

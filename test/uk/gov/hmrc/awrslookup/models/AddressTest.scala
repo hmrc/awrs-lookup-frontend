@@ -36,32 +36,32 @@ class AddressTest extends AwrsUnitTestTraits {
       val add2 = Address(line1, line2, addressLine4 = line4, addressCountry = country)
       val add3 = Address(line1, line2)
 
-      add1.equals(add1a) shouldBe true
-      add1.equals(add2) shouldBe false
-      add1.equals(add3) shouldBe false
-      add2.equals(add3) shouldBe false
-      add1.equals(null) shouldBe false
+      add1.equals(add1a) mustBe true
+      add1.equals(add2) mustBe false
+      add1.equals(add3) mustBe false
+      add2.equals(add3) mustBe false
+      add1.equals(null) mustBe false
 
-      add1.hashCode shouldBe add1a.hashCode()
-      add1.hashCode should not be add2.hashCode()
-      add3.hashCode should not be add2.hashCode()
-      add3.hashCode should not be add1.hashCode()
+      add1.hashCode mustBe add1a.hashCode()
+      add1.hashCode must not be add2.hashCode()
+      add3.hashCode must not be add2.hashCode()
+      add3.hashCode must not be add1.hashCode()
 
-      add1.toString shouldBe add1.toStringSeq.reduce(_ + ", " + _)
-      add2.toString shouldBe add2.toStringSeq.reduce(_ + ", " + _)
-      add3.toString shouldBe add3.toStringSeq.reduce(_ + ", " + _)
+      add1.toString mustBe add1.toStringSeq.reduce(_ + ", " + _)
+      add2.toString mustBe add2.toStringSeq.reduce(_ + ", " + _)
+      add3.toString mustBe add3.toStringSeq.reduce(_ + ", " + _)
     }
 
     "toStringSeq should only return a sequence of the populated fields" in {
       val test = Address(line1, line2, addressLine4 = line4, addressCountry = country)
       val expected = Seq(line1, line2, line4, country)
-      test.toStringSeq shouldBe expected
+      test.toStringSeq mustBe expected
 
       val test2 = Some(test)
-      test2.toStringSeq shouldBe expected
+      test2.toStringSeq mustBe expected
 
       val none: Option[Address] = None
-      none.toStringSeq shouldBe Seq()
+      none.toStringSeq mustBe Seq()
     }
 
   }

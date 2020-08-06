@@ -23,17 +23,17 @@ class LetterPairSimilarityTest extends AwrsUnitTestTraits {
       val test = "hello"
       val expected = List("he", "el", "ll", "lo")
       val actual = LetterPairSimilarity.letterPairs(test)
-      actual shouldBe expected
+      actual mustBe expected
 
       val test2 = "a"
       val expected2 = List("a")
       val actual2 = LetterPairSimilarity.letterPairs(test2)
-      actual2 shouldBe expected2
+      actual2 mustBe expected2
 
       val test3 = ""
       val expected3 = List("")
       val actual3 = LetterPairSimilarity.letterPairs(test3)
-      actual3 shouldBe expected3
+      actual3 mustBe expected3
     }
   }
 
@@ -43,7 +43,7 @@ class LetterPairSimilarityTest extends AwrsUnitTestTraits {
       val expected1 = LetterPairSimilarity.letterPairs("hello")
       val expected2 = LetterPairSimilarity.letterPairs("world")
       val actual = LetterPairSimilarity.wordLetterPairs(test)
-      actual shouldBe expected1 ++ expected2
+      actual mustBe expected1 ++ expected2
     }
   }
 
@@ -51,7 +51,7 @@ class LetterPairSimilarityTest extends AwrsUnitTestTraits {
     val epsilon = 1e-2f
     def test(str1: String, str2: String, expectedP: Double) = {
       val actual = LetterPairSimilarity.compareStrings(str1, str2)
-      actual shouldBe expectedP +- epsilon
+      actual mustBe expectedP +- epsilon
     }
 
     "return 1 for an exact match" in {

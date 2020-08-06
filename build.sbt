@@ -1,11 +1,13 @@
 import uk.gov.hmrc._
 import DefaultBuildSettings._
+import sbt.Keys.scalacOptions
 import uk.gov.hmrc.SbtAutoBuildPlugin
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 import uk.gov.hmrc.versioning.SbtGitVersioning
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName: String = "awrs-lookup-frontend"
+val silencerVersion = "1.7.1"
 
 lazy val appDependencies : Seq[ModuleID] = AppDependencies()
 lazy val plugins : Seq[Plugins] = Seq.empty
@@ -38,7 +40,12 @@ lazy val microservice = Project(appName, file("."))
     scalaVersion := "2.12.11",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
-    evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)
+    evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
+    scalacOptions += "-P:silencer:pathFilters=views;routes",
+    libraryDependencies ++= Seq(
+      compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
+      "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
+    )
   )
   .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)

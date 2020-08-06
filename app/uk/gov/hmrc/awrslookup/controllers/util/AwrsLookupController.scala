@@ -19,7 +19,7 @@ package uk.gov.hmrc.awrslookup.controllers.util
 import play.api.i18n.I18nSupport
 import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.awrslookup.utils.ImplicitConversions
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 
 abstract class AwrsLookupController(mcc: MessagesControllerComponents) extends FrontendController(mcc) with ImplicitConversions with I18nSupport

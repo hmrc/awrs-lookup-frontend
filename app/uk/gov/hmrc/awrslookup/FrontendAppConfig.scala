@@ -18,7 +18,7 @@ package uk.gov.hmrc.awrslookup
 
 import javax.inject.Inject
 import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 trait AppConfig {
   val analyticsToken: Option[String]
@@ -28,7 +28,7 @@ trait AppConfig {
   val reportAProblemNonJSUrl: String
 }
 
-class FrontendAppConfig @Inject()(servicesConfig: ServicesConfig, val mode: RunMode, val configuration: Configuration) extends AppConfig {
+class FrontendAppConfig @Inject()(servicesConfig: ServicesConfig, val configuration: Configuration) extends AppConfig {
 
   private def loadConfig(key: String) = servicesConfig.getConfString(key, throw new Exception(s"Missing configuration key: $key"))
 

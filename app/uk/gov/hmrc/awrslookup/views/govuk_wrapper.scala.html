@@ -14,15 +14,17 @@
  * limitations under the License.
  *@
 
-@import play.api.Application
 @import uk.gov.hmrc.awrslookup.FrontendAppConfig
 @import views.html.layouts.{govuk_template => hmrcGovUkTemplate}
-@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
 @import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 @import play.twirl.api.HtmlFormat
 @import uk.gov.hmrc.awrslookup.CachedStaticHtmlPartialProvider
+@import uk.gov.hmrc.play.views.html.helpers.ReportAProblemLink
+@import uk.gov.hmrc.play.views.html.layouts._
 
-@this(appConfig: FrontendAppConfig, partialProvider: CachedStaticHtmlPartialProvider)
+@this(appConfig: FrontendAppConfig, partialProvider: CachedStaticHtmlPartialProvider, uiHead: Head, uiHeaderNav: HeaderNav, footer: Footer, uiServiceInfo: ServiceInfo, uiMainContentHeader: MainContentHeader,
+        reportAProblemLink: ReportAProblemLink, uiMainContent: MainContent, footerLinks: FooterLinks)
+
 @(
 title: String,
 mainClass: Option[String] = None,
@@ -37,14 +39,14 @@ scriptElem: Option[Html] = None,
 isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.showUrBanner)(implicit request: Request[_], messages: Messages, lang: Lang)
 
 @head = {
-    @uiLayouts.head(
+    @uiHead(
       linkElem = linkElement,
       headScripts = None)
     <meta name="format-detection" content="telephone=no" />
 }
 
 @insideHeader = {
-    @uiLayouts.header_nav(
+    @uiHeaderNav(
       navTitle = Some(Messages("awrs-lookup.nav_title")),
       navTitleLink = None,
       showBetaLink = false,
@@ -65,7 +67,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
 }
 
 @bodyEnd = {
-    @uiLayouts.footer(
+    @footer(
       analyticsToken = appConfig.analyticsToken,
       analyticsHost = appConfig.analyticsHost,
       ssoUrl = None,
@@ -78,7 +80,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
 @footerLinks = {}
 
 @serviceInfo = {
-    @uiLayouts.serviceInfo(
+    @uiServiceInfo(
         betaBanner = HtmlFormat.empty,
         includeGridWrapper = false,
         serviceInfoContent = Some(serviceInfoContent),
@@ -95,7 +97,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
     }
 
     @if(contentHeader.isDefined) {
-        @uiLayouts.main_content_header(contentHeader = contentHeader.get)
+        @uiMainContentHeader(contentHeader = contentHeader.get)
     }
 }
 
@@ -104,7 +106,7 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
 }
 
 @content = {
-    @uiLayouts.main_content(
+    @uiMainContent(
       article = mainContent,
       mainClass = mainClass,
       mainDataAttributes = mainDataAttributes,
@@ -114,4 +116,4 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
       sidebar = sidebar)
 }
 
-@hmrcGovUkTemplate(Some(title.replace("&#x27;","\'").replace("&amp;", "&")), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiLayouts.footer_links()), true)(content)
+@hmrcGovUkTemplate(Some(title.replace("&#x27;","\'").replace("&amp;", "&")), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(footerLinks), nav = true)(content)
