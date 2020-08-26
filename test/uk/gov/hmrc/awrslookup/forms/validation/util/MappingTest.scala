@@ -75,17 +75,22 @@ class MappingTest extends AwrsUnitTestTraits {
   // this test expects valid form data as input
   // it fills the form then tests the fill method of the form.
   // the correctness of the fill method depends on the unbinding method
-  def performFillFormTest[T](form: Form[T], data: FormData)(implicit messages: Messages) {
-    form.bind(data).fold(
-      errors => {},
-      model => {
-        val form2 = form.fill(model)
-        form2.fold(
-          form2WithErrors => {},
-          model_2 => {
-            model mustBe model_2
-          })
-      })
+  private def fillForm[T](form: Form[T], model: T): Unit = {
+    val filledForm: Form[T] = form.fill(model)
+    filledForm.fold[Unit](
+      hasErrors = _ => (),
+      success   = model_2 => {
+        model mustBe model_2
+    })
+  }
+
+  def performFillFormTest[T](form: Form[T], data: FormData): Unit = {
+    val boundForm: Form[T] = form.bind(data)
+
+    boundForm.fold(
+      hasErrors = _ => (),
+      success   = model => fillForm(form, model)
+    )
   }
 
   val defaultCompulsoryMapping = (fieldId: String) => compulsoryText(CompulsoryTextFieldMappingParameter(

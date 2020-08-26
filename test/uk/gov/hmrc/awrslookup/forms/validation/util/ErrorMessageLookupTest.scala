@@ -31,19 +31,20 @@ class ErrorMessageLookupTest extends AwrsUnitTestTraits {
 
   case class TestModel(field1: String, field2: String, field3: String)
   def getCCParams(cc: AnyRef): Map[String, String] =
-    (Map[String, String]() /: cc.getClass.getDeclaredFields) { (a, f) =>
+    cc.getClass.getDeclaredFields.foldLeft(Map[String, String]()) { (a, f) =>
       f.setAccessible(true)
-      a + (f.getName -> f.get(cc).toString())
+      a + (f.getName -> f.get(cc).toString)
     }.-("$outer")
   val emptyMap: Map[String, String] = getCCParams(TestModel("", "", ""))
 
-  def customConstraint[A, B](extractor: A => B, validation: (B) => ValidationResult): Constraint[A] =
+  def customConstraint[A, B](extractor: A => B, validation: B => ValidationResult): Constraint[A] =
     Constraint("t1")(model => validation(extractor(model)))
 
   def isEmpty(fieldValue: String, errorMessageWhenEmpty: ValidationResult): ValidationResult =
-    fieldValue.isEmpty match {
-      case false => Valid
-      case true  => errorMessageWhenEmpty
+    if (fieldValue.isEmpty) {
+      errorMessageWhenEmpty
+    } else {
+      Valid
     }
 
   val testModelMapping = mapping(
@@ -138,7 +139,7 @@ class ErrorMessageLookupTest extends AwrsUnitTestTraits {
         val field2Errors = getFieldErrors(formWithErrors("field2"), formWithErrors)
         field2Errors mustBe empty
         val field3Errors = getFieldErrors(formWithErrors("field3"), formWithErrors)
-        field2Errors mustBe empty
+        field3Errors mustBe empty
       }
 
       "multiple ids are defined, all fields with id should be associated with the error" in {
@@ -444,7 +445,7 @@ class ErrorMessageLookupTest extends AwrsUnitTestTraits {
           val summarys: Seq[SummaryError] = getSummaryErrors(formWithErrors)
           val summary: SummaryError = summarys.head
           summary.msgKey mustBe msgKey
-          val temp = messageLookup(embeddedMessage)
+          messageLookup(embeddedMessage)
           summary.msgArgs mustBe MessageArguments(messageLookup(embeddedMessage), messageLookup(embeddedMessage), messageLookup(innerembeddedMessage))
           summary.anchor mustBe singleId.anchor
         }
