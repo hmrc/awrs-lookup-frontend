@@ -183,7 +183,7 @@ case class ExpectedFieldFormat(invalidFormats: List[ExpectedInvalidFieldFormat],
 case class CompulsoryFieldValidationExpectations(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, maxLengthExpectation: MaxLengthOption[ExpectedFieldExceedsMaxLength], formatExpectations: ExpectedFieldFormat) {
   def toOptionalFieldValidationExpectations: OptionalFieldValidationExpectations = new OptionalFieldValidationExpectations(maxLengthExpectation, formatExpectations)
 
-  def toFieldToIgnore: FieldToIgnore = new FieldToIgnore(
+  def toFieldToIgnore: FieldToIgnore = FieldToIgnore(
     maxLengthExpectation match {
       case MaxLengthDefinition(maxLength) => Option(maxLength.maxLength)
       case _ => None
@@ -191,12 +191,12 @@ case class CompulsoryFieldValidationExpectations(fieldIsEmptyExpectation: Expect
 }
 
 object CompulsoryFieldValidationExpectations {
-  def apply(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, maxLengthExpectation: ExpectedFieldExceedsMaxLength, formatExpectations: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi) =
+  def apply(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, maxLengthExpectation: ExpectedFieldExceedsMaxLength, formatExpectations: ExpectedFieldFormat) =
     new CompulsoryFieldValidationExpectations(fieldIsEmptyExpectation, MaxLengthDefinition(maxLengthExpectation), formatExpectations)
 }
 
 case class OptionalFieldValidationExpectations(maxLengthExpectation: MaxLengthOption[ExpectedFieldExceedsMaxLength], formatExpectations: ExpectedFieldFormat) {
-  def toFieldToIgnore: FieldToIgnore = new FieldToIgnore(
+  def toFieldToIgnore: FieldToIgnore = FieldToIgnore(
     maxLengthExpectation match {
       case MaxLengthDefinition(maxLength) => Option(maxLength.maxLength)
       case _ => None
@@ -204,7 +204,7 @@ case class OptionalFieldValidationExpectations(maxLengthExpectation: MaxLengthOp
 }
 
 object OptionalFieldValidationExpectations {
-  def apply(maxLengthExpectation: ExpectedFieldExceedsMaxLength, formatExpectations: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi) =
+  def apply(maxLengthExpectation: ExpectedFieldExceedsMaxLength, formatExpectations: ExpectedFieldFormat) =
     new OptionalFieldValidationExpectations(MaxLengthDefinition(maxLengthExpectation), formatExpectations)
 }
 
@@ -215,9 +215,7 @@ case class CompulsoryEnumValidationExpectations(fieldIsEmptyExpectation: Expecte
 object CompulsoryEnumValidationExpectations {
   private val empty: Set[Enumeration#Value] = Set[Enumeration#Value]()
 
-  def apply(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, expectedEnum: Enumeration)(implicit messages: Messages, messagesApi: MessagesApi) = new CompulsoryEnumValidationExpectations(fieldIsEmptyExpectation, expectedEnum.values.toSet, empty)
-
-  //TODO add constructor to auto add unused enum#values from the enum to the ignore list
+  def apply(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, expectedEnum: Enumeration) = new CompulsoryEnumValidationExpectations(fieldIsEmptyExpectation, expectedEnum.values.toSet, empty)
 }
 
 case class FieldToIgnore(maxLength: Option[Int], formatExpectations: ExpectedFieldFormat)
@@ -227,7 +225,7 @@ case class EnumFieldToIgnore(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, vali
 object EnumFieldToIgnore {
   private val empty: Set[Enumeration#Value] = Set[Enumeration#Value]()
 
-  def apply(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, expectedEnum: Enumeration)(implicit messages: Messages, messagesApi: MessagesApi) = new EnumFieldToIgnore(fieldIsEmptyExpectation, expectedEnum.values.toSet, empty)
+  def apply(fieldIsEmptyExpectation: ExpectedFieldIsEmpty, expectedEnum: Enumeration) = new EnumFieldToIgnore(fieldIsEmptyExpectation, expectedEnum.values.toSet, empty)
 }
 
 case class CrossFieldValidationExpectations(anchor: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)

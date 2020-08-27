@@ -24,10 +24,6 @@ class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {
 
   private val messagesArgumentMarkupRegex = "\\{\\d+\\}"
 
-  // used for configuring the test data
-  private def testDataToString(data: Map[String, String]): String =
-    data.toList.flatMap(e => List(f"${e._1}%s=${e._2}%s")).mkString("\n")
-
   private val messagesFileContent =
     Map("testkey1" -> " result1 ",
       "testkey1.summary" -> " result1 ",
