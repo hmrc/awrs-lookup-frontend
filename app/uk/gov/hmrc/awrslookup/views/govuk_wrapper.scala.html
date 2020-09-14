@@ -23,7 +23,7 @@
 @import uk.gov.hmrc.play.views.html.layouts._
 
 @this(appConfig: FrontendAppConfig, partialProvider: CachedStaticHtmlPartialProvider, uiHead: Head, uiHeaderNav: HeaderNav, footer: Footer, uiServiceInfo: ServiceInfo, uiMainContentHeader: MainContentHeader,
-        reportAProblemLink: ReportAProblemLink, uiMainContent: MainContent, footerLinks: FooterLinks)
+        reportAProblemLink: ReportAProblemLink, uiMainContent: MainContent, footer_links: FooterLinks)
 
 @(
 title: String,
@@ -116,4 +116,4 @@ isErrorPage : Boolean = false, isUserResearchBannerVisible:Boolean = appConfig.s
       sidebar = sidebar)
 }
 
-@hmrcGovUkTemplate(Some(title.replace("&#x27;","\'").replace("&amp;", "&")), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(footerLinks), nav = true)(content)
+@hmrcGovUkTemplate(Some(title.replace("&#x27;","\'").replace("&amp;", "&")), bodyClasses)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(footer_links()), nav = true)(content)
