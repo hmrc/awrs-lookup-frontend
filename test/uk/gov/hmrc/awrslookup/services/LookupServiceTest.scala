@@ -16,56 +16,44 @@
 
 package uk.gov.hmrc.awrslookup.services
 
-import uk.gov.hmrc.awrslookup.connectors.mocks.MockLookupConnector
-import uk.gov.hmrc.awrslookup.models.SearchResult
+import org.mockito.Matchers
+import org.mockito.Mockito.when
+import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.awrslookup.connectors.LookupConnector
+import uk.gov.hmrc.awrslookup.models.{AwrsEntry, AwrsStatus, Business, Info, SearchResult}
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 
 import scala.concurrent.Future
 
-class LookupServiceTest extends AwrsUnitTestTraits
-  with MockLookupConnector {
+class LookupServiceTest extends AwrsUnitTestTraits {
 
-  object LookupServiceTest extends LookupService(mockLookupConnector)
   "LookupService" should {
     
-    "call lookup connector search by urn in lookup if the query is a valid AWRS number" in {
+    "call lookup connector and return a the response" in {
       val testAwrs = "XXAW00000123456"
-      val notTestAwrs = ""
 
-      assert(testAwrs != notTestAwrs)
+      val data: JsValue = Json.toJson(Business(
+        awrsRef = "XXAW00000123456",
+        registrationDate = Some("2020-04-01"),
+        status = AwrsStatus("Approved"),
+        info = Info(businessName = Some("BusinessTest"),
+        tradingName = Some("tradeName"),
+        fullName = Some("fullName"),
+        address = None),
+        registrationEndDate = None
+        )
+      )
 
-      val dataToReturn: Future[Option[SearchResult]] = SearchResult(Nil)
-      val noDataToReturn: Future[Option[SearchResult]] = Future.successful(None)
+      val dataToReturn: Future[Option[SearchResult]] = SearchResult(List(AwrsEntry("Business", data)))
 
-      // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
-      // then 'noDataToReturn' is returned
-      // and 'dataToReturn' is returned otherwise
-      mockLookupConnectorWithOnly(queryByName = (AnyMatcher, noDataToReturn))
-      mockLookupConnectorWithOnly(queryByUrn = (EqMatcher(testAwrs), dataToReturn))
+      val mockLookupConnector = mock[LookupConnector]
 
-      LookupServiceTest.lookup(testAwrs) mustBe dataToReturn
-      LookupServiceTest.lookup(notTestAwrs) mustBe noDataToReturn
-    }
+      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any())).thenReturn(dataToReturn)
+      val lookupService = new LookupService(mockLookupConnector)
 
-    "call lookup connector search by name in lookup if the query is not a valid AWRS number" in {
-      val testAwrs = "testvalue"
-      val notTestAwrs = ""
+      val resultWithData = lookupService.lookup(testAwrs)
+      resultWithData mustBe dataToReturn
 
-      assert(testAwrs != notTestAwrs)
-
-      val dataToReturn: Future[Option[SearchResult]] = SearchResult(Nil)
-      val noDataToReturn: Future[Option[SearchResult]] = Future.successful(None)
-
-      // set it up so that if the parameter used in lookup connector doesn't match 'testAwrs'
-      // then 'noDataToReturn' is returned
-      // and 'dataToReturn' is returned otherwise
-      mockLookupConnectorWithOnly(queryByName = (AnyMatcher, noDataToReturn)) // must be placed before the eq matcher
-      mockLookupConnectorWithOnly(queryByName = (EqMatcher(testAwrs), dataToReturn))
-
-      LookupServiceTest.lookup(testAwrs) mustBe dataToReturn
-      LookupServiceTest.lookup(notTestAwrs) mustBe noDataToReturn
     }
   }
-
-
 }

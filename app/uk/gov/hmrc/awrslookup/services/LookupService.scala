@@ -18,18 +18,13 @@ package uk.gov.hmrc.awrslookup.services
 
 import javax.inject.Inject
 import uk.gov.hmrc.awrslookup.connectors.LookupConnector
-import uk.gov.hmrc.awrslookup.forms.{SearchForm, prevalidation}
 import uk.gov.hmrc.awrslookup.models.SearchResult
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
-import uk.gov.hmrc.http.HeaderCarrier
 
 class LookupService @Inject()(val connector: LookupConnector) {
 
   def lookup(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
-    prevalidation.trimAllFunc(queryString).toUpperCase.matches(SearchForm.awrsRefRegEx) match {
-      case true => connector.queryByUrn(queryString)
-      case false => connector.queryByName(queryString)
-    }
-
+      connector.queryByUrn(queryString)
 }

@@ -33,7 +33,6 @@ import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-
 class LookupConnector @Inject()(loggingUtils: LoggingUtils,
                                 http: DefaultHttpClient,
                                 val runModeConfiguration: Configuration,
@@ -41,7 +40,6 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
 
   lazy val middleServiceURL: String = servicesConfig.baseUrl("awrs-lookup")
   lazy val byUrnUrl: String => String = (query: String) => s"""$middleServiceURL/awrs-lookup/query/urn/$query"""
-  lazy val byNameUrl: String => String = (query: String) => s"""$middleServiceURL/awrs-lookup/query/name/${encode(query)}"""
 
   val referenceNotFoundString = "AWRS reference not found"
 
@@ -87,11 +85,4 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
     val getURL = byUrnUrl(prevalidation.trimAllFunc(query).toUpperCase)
     http.GET(getURL) flatMap responseCore(s"ByUrl[ $query ]")
   }
-
-  def queryByName(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
-    val getURL = byNameUrl(query)
-    http.GET(getURL) flatMap responseCore(s"ByName[ $query ]")
-  }
-
-
 }

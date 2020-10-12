@@ -28,7 +28,7 @@ import uk.gov.hmrc.awrslookup.forms.prevalidation.PrevalidationAPI
 import uk.gov.hmrc.awrslookup.models.{Query, SearchResult}
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.views.html.error_template
-import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
+import uk.gov.hmrc.awrslookup.views.html.lookup.{search_main, search_no_results, single_result}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -38,15 +38,13 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
                                  searchMain: search_main,
                                  searchNoResults: search_no_results,
                                  singleResult: single_result,
-                                 multipleResults: multiple_results,
                                  errorTemplate: error_template) extends AwrsLookupController(mcc) with RawResponseReads {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call,
-                                                 lookupCall: lookupServiceCall,
-                                                 fromMulti: Boolean,
-                                                 originalSearchTerm: Option[String])(implicit request: Request[AnyContent]): Future[Result] = {
+                                                 lookupCall: lookupServiceCall
+                                                 )(implicit request: Request[AnyContent]): Future[Result] = {
     implicit val lang: Lang = request.lang
     preValidationForm.bindFromRequest.fold(
       formWithErrors => {
@@ -59,10 +57,9 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
         lookupCall(queryString) map {
           case None | Some(SearchResult(Nil)) =>
             Ok(searchNoResults(preValidationForm.form, action, searchTerm = queryString, errorMessage = None))
-          case Some(result@SearchResult(list)) if list.size > 1 =>
-            Ok(multipleResults(searchForm.form, action, searchTerm = queryString, searchResult = result))
+
           case Some(r: SearchResult) =>
-            Ok(singleResult(searchForm.form, action, r.results.head, searchTerm = queryString, fromMulti = fromMulti, originalSearchTerm = originalSearchTerm, searchResult = r)) // single result
+            Ok(singleResult(searchForm.form, action, r.results.head, searchTerm = queryString, searchResult = r)) // single result
         }
       }.recover {
         case _ =>
@@ -72,22 +69,17 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
     )
   }
 
-
-  def show(fromMulti: Boolean = false): Action[AnyContent] = Action.async {
+  def show(): Action[AnyContent] = Action.async {
 
     implicit request =>
 
       val lang: Lang = request.lang
-      val action = controllers.routes.LookupController.show(fromMulti)
-      (request.queryString.get(SearchForm.query).isDefined, request.queryString.get("originalSearchTerm").isDefined) match {
-        case (true, true) =>
-          validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = Some(request.queryString.get("originalSearchTerm").get.head))
-        case (true, false) =>
-          validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup, fromMulti = fromMulti, originalSearchTerm = None)
-        case _ => Ok(searchMain(searchForm.form, action)(request, request2Messages, messagesApi, lang))
+      val action = controllers.routes.LookupController.show()
+      if (request.queryString.contains(SearchForm.query)) {
+        validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup)
+      } else {
+        Ok(searchMain(searchForm.form, action)(request, request2Messages, messagesApi, lang))
       }
-
   }
-
 
 }

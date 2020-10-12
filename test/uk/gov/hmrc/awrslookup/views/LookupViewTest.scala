@@ -29,7 +29,7 @@ import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.TestUtils.{testBusinessSearchResult, _}
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import uk.gov.hmrc.awrslookup.views.html.error_template
-import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
+import uk.gov.hmrc.awrslookup.views.html.lookup.{search_main, search_no_results, single_result}
 
 import scala.concurrent.Future
 
@@ -39,24 +39,23 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
   val searchMain: search_main = app.injector.instanceOf[search_main]
   val searchNoResults: search_no_results = app.injector.instanceOf[search_no_results]
   val singleResult: single_result = app.injector.instanceOf[single_result]
-  val multipleResult: multiple_results = app.injector.instanceOf[multiple_results]
   val errorTemplate: error_template = app.injector.instanceOf[error_template]
 
   def testRequest(query: Option[String]): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, "/awrs-lookup-frontend" + query.fold("")(q => s"?query=$q"))
 
-  object TestLookupController extends LookupController(mcc, mockLookupService , searchMain, searchNoResults, singleResult, multipleResult, errorTemplate)
+  object TestLookupController extends LookupController(mcc, mockLookupService , searchMain, searchNoResults, singleResult, errorTemplate)
 
 
   "Lookup Controller " should {
 
     "display the UR banner if cookie is not set" in {
-      val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
+      val document: Document = TestLookupController.show().apply(testRequest(query = None))
       document.getElementsByClass("banner-panel__close").text mustBe Messages("urbanner.message.reject")
     }
     
     "display an empty search page landed on for the first time" in {
-      val document: Document = TestLookupController.show(false).apply(testRequest(query = None))
+      val document: Document = TestLookupController.show().apply(testRequest(query = None))
 
       document.title mustBe Messages("awrs.lookup.search.page_title")
       document.getElementById("search-heading").text mustBe Messages("awrs.lookup.search.heading")
@@ -67,7 +66,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "display an awrs entry when a valid reference is entered" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
+      val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
 
@@ -88,16 +87,10 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
 
     "display a 'No results found' page when a non existent reference is entered" in {
       when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
-      val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
+      val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
       document.title mustBe Messages("awrs.lookup.results.page_title_no_results")
       document.getElementById("not-found").text must include(Messages("awrs.lookup.search.not_found"))
     }
 
-    "display a list of awrs entries when a valid reference is entered and multiple are found" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessListSearchResult)))
-      val document: Document = TestLookupController.show(false).apply(testRequest(testAwrsRef))
-      val noOfResults = testBusinessListSearchResult.results.size
-      document.getElementById("search-heading").text must include(Messages("awrs.lookup.results.heading_multi_results", noOfResults, testAwrsRef))
-    }
   }
 }

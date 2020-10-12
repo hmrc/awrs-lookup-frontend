@@ -30,7 +30,7 @@ class AwrsDateFormatterTest extends AwrsUnitTestTraits with HtmlUtils {
       AwrsDateFormatter.showDateTranslation(dateString) mustBe "1 April 2017"
     }
 
-    "returns empty string when given date does not match the requred date format (d MMMM yyyy)" in {
+    "returns empty string when given date does not match the required date format (d MMMM yyyy)" in {
       val dateString1 = "sdfsdfssdfs"
       val dateString2 = "2122-33-22"
       val dateString3 = ""

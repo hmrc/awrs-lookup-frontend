@@ -16,30 +16,30 @@
 
 package uk.gov.hmrc.awrslookup.controllers
 
+import org.jsoup.nodes.Element
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.i18n.Messages
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{OK, _}
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
 import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
 import uk.gov.hmrc.awrslookup.views.html.error_template
-import uk.gov.hmrc.awrslookup.views.html.lookup.{multiple_results, search_main, search_no_results, single_result}
+import uk.gov.hmrc.awrslookup.views.html.lookup.{search_main, search_no_results, single_result}
 
 import scala.concurrent.Future
 
 class LookupControllerTest extends AwrsUnitTestTraits {
   val mockLookupService: LookupService = mock[LookupService]
-  val lookupFailure = Json.parse( """{"reason": "Generic test reason"}""")
+  val lookupFailure: JsValue = Json.parse( """{"reason": "Generic test reason"}""")
   val searchMain: search_main = app.injector.instanceOf[search_main]
   val searchNoResults: search_no_results = app.injector.instanceOf[search_no_results]
   val singleResult: single_result = app.injector.instanceOf[single_result]
-  val multipleResult: multiple_results = app.injector.instanceOf[multiple_results]
   val errorTemplate: error_template = app.injector.instanceOf[error_template]
 
-  object TestLookupController extends LookupController(mcc, mockLookupService, searchMain, searchNoResults, singleResult, multipleResult, errorTemplate)
+  object TestLookupController extends LookupController(mcc, mockLookupService, searchMain, searchNoResults, singleResult, errorTemplate)
 
   "Lookup Controller " should {
 
@@ -49,19 +49,12 @@ class LookupControllerTest extends AwrsUnitTestTraits {
       status(result) mustBe OK
     }
 
-    "in byNameShow, lookup awrs entries by name" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val result = TestLookupController.show(true).apply(FakeRequest())
-      status(result) mustBe OK
-    }
-
-
   }
 
   "lookup routes" should {
     import HtmlUtils._
 
-    def callLookupFrontEndAndReturnSummaryError(query: Option[String]) = {
+    def callLookupFrontEndAndReturnSummaryError(query: Option[String]): Element = {
       val qString = query match {
         case Some(q) => "?query=" + q
         case _ => ""
