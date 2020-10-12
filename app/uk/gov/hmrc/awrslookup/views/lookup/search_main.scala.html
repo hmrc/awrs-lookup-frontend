@@ -35,8 +35,7 @@
 
 @searchTitle = @{
     (searchTerm, searchResult) match {
-        case (Some(_), (None | Some(SearchResult(Nil))))            => Messages("awrs.lookup.results.page_title_no_results")
-        case (_ , (Some(SearchResult(list)))) if list.size > 1      => Messages("awrs.lookup.results.heading_multi_results", searchTerm.get)
+        case (Some(_), (None | Some(SearchResult(Nil)))) => Messages("awrs.lookup.results.page_title_no_results")
         case _ => Messages("awrs.lookup.search.page_title")
     }
 }
@@ -45,22 +44,8 @@
     <p id="result-count">@Messages("awrs.lookup.results.results_found", size)</p>
 }
 
-@multiResults(results: List[AwrsEntry]) = {
-    <h1 class="heading-medium" id="search-heading">@Messages("awrs.lookup.results.heading_multi_results", results.size, searchTerm.get)</h1>
-    <div id = "search-results">
-        @results.zipWithIndex.map {
-            case (result, ind) => {
-                @awrs_entry_compact(result, ind.toString, searchTerm.fold("")(x => x))
-            }
-        }
-    </div>
-}
-
 @results = {
-    @searchResult match {
-        case Some(SearchResult(results)) if results.size > 1 => { @multiResults(results) }
-        case _ => {}
-    }
+    @searchResult
 }
 
 @headers = {

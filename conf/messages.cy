@@ -57,7 +57,6 @@ awrs.lookup.search.info.bullet.3 = eich alcohol yn cael ei atafaelu
 awrs.lookup.results.format_error = Query string format error
 awrs.lookup.results.page_title_no_results = Dim canlyniadau - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
 awrs.lookup.results.page_title_single = Canlyniad - Gwiriwch a yw cyfanwerthwr neu gynhyrchwr alcohol wedi’i gymeradwyo - GOV.UK
-awrs.lookup.results.heading_multi_results = Rydym wedi canfod {0} canlyniad for {1}
 awrs.lookup.results.results_found = Rydym wedi canfod {0} canlyniad
 awrs.lookup.results.group_h1_member_of = Rhan {0} o’r {1}
 awrs.lookup.results.group_rep_table_heading = Cynrychiolydd y grŵp

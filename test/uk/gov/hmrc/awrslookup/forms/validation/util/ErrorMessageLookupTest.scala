@@ -64,7 +64,7 @@ class ErrorMessageLookupTest extends AwrsUnitTestTraits {
       Form(testModelMapping.verifying(customConstraint((model: TestModel) => model.field1, fieldIsEmpty)))
     }
 
-    "correctly extract the error summary infomation" when {
+    "correctly extract the error summary information" when {
 
       "there are no summary messages defined" in {
         //setup

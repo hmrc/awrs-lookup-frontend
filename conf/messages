@@ -57,7 +57,6 @@ awrs.lookup.search.info.bullet.3 = have your alcohol stock seized
 awrs.lookup.results.format_error = Query string format error
 awrs.lookup.results.page_title_no_results = Not found - Check if an alcohol wholesaler or producer is approved - GOV.UK
 awrs.lookup.results.page_title_single = Result - Check if an alcohol wholesaler or producer is approved - GOV.UK
-awrs.lookup.results.heading_multi_results = We found {0} results for {1}
 awrs.lookup.results.results_found = We found {0} results
 awrs.lookup.results.group_h1_member_of = {0} part of the {1}
 awrs.lookup.results.group_rep_table_heading = Group representative

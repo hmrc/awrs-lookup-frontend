@@ -17,17 +17,17 @@
 package uk.gov.hmrc.awrslookup.models
 
 import play.api.libs.json.Json
-import uk.gov.hmrc.awrslookup.models.AwrsStatus.Approved
+import uk.gov.hmrc.awrslookup.models.AwrsStatus.{Approved, DeRegistered, Revoked}
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 
 
 class ModelTests extends AwrsUnitTestTraits {
 
-  val testInfo = Info("testBusinessName", "testTradingName", "testFullName",
+  val testInfo: Info = Info("testBusinessName", "testTradingName", "testFullName",
     Address("testline1", "testline2", "testline3", "testline4", "testPostCode", "testCountry"))
 
   "AwrsEntry" should {
-    "Correctly convert Business to json and back" in {
+    "Correctly convert Business to json and back with status Approved" in {
       val testObj: AwrsEntry = Business(
         awrsRef = "testValue",
         registrationDate = "01/01/1970",
@@ -41,11 +41,25 @@ class ModelTests extends AwrsUnitTestTraits {
       convBack.get mustBe testObj
     }
 
-    "Correctly convert Group to json and back" in {
+    "Correctly convert Business to json and back with status DeRegistered" in {
+      val testObj: AwrsEntry = Business(
+        awrsRef = "testValue",
+        registrationDate = "01/01/1970",
+        status = DeRegistered,
+        registrationEndDate = "01/01/2017",
+        info = testInfo
+      )
+      val json = Json.toJson[AwrsEntry](testObj)
+
+      val convBack = Json.fromJson[AwrsEntry](json)
+      convBack.get mustBe testObj
+    }
+
+    "Correctly convert Group to json and back with status Revoked" in {
       val testObj: AwrsEntry = Group(
         awrsRef = "testValue",
         registrationDate = "01/01/1970",
-        status = Approved,
+        status = Revoked,
         registrationEndDate = "01/01/2017",
         info = testInfo,
         members = List(

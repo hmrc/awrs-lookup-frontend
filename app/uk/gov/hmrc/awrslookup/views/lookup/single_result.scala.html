@@ -28,8 +28,6 @@
     action: Call,
     result: models.AwrsEntry,
     searchTerm: String,
-    fromMulti: Boolean = false,
-    originalSearchTerm: Option[String] = None,
     searchResult: Option[SearchResult] = None
 )(implicit
     request: Request[AnyContent],
@@ -45,14 +43,11 @@
 }
 
 @whichHeading(group: Group) = {
-    @fromMulti match {
-        case true => {@groupSearchBestMatchInfo(group, originalSearchTerm.get)}
-        case _ => {@knownName(group.info)}
-    }
+    @knownName(group.info)
 }
 
 @preContent = {
-    <div>@awrs_entry(result, "result", searchTerm, fromMulti, originalSearchTerm, heading.toString)</div>
+    <div>@awrs_entry(result, "result", searchTerm, heading.toString)</div>
     <p id="search-date">@Messages("awrs.lookup.results.search_date" ) @AwrsDateFormatter.showDateTimeNowTranslation()</p> 
     @status_approved(result)
     @awrsPrintLink()

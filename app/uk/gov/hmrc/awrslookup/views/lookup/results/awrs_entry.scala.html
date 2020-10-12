@@ -25,8 +25,6 @@
     result: AwrsEntry,
     id: String,
     searchTerm: String,
-    fromMulti: Boolean = false,
-    originalSearchTerm: Option[String] = None,
     mainHeading: Html
 )(implicit
     request : Request[AnyContent],
@@ -36,7 +34,6 @@
 @tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
     <h2 class="heading-large  no-bottom-border" id="@{name}_heading">@heading</h2>
 }
-
 
 @common(showRegNumber: Boolean) = {
 <div class="grid grid-1-2">

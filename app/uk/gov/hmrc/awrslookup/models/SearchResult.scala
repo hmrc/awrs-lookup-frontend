@@ -18,6 +18,7 @@ package uk.gov.hmrc.awrslookup.models
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import uk.gov.hmrc.awrslookup.utils.AwrsNumberFormatter
+import scala.util.matching.Regex
 
 sealed trait AwrsEntry {
 
@@ -54,16 +55,16 @@ case class Group(awrsRef: String,
                 ) extends AwrsEntry
 
 object Business {
-  implicit val formatter = Json.format[Business]
+  implicit val formatter: OFormat[Business] = Json.format[Business]
 }
 
 object Group {
-  implicit val formatter = Json.format[Group]
+  implicit val formatter: OFormat[Group] = Json.format[Group]
 }
 
 object AwrsEntry {
 
-  val awrsFormatPattern = "([A-Za-z]{4})([0-9]{3})([0-9]{4})([0-9]{4})".r
+  val awrsFormatPattern: Regex = "([A-Za-z]{4})([0-9]{3})([0-9]{4})([0-9]{4})".r
 
   def unapply(foo: AwrsEntry): Option[(String, JsValue)] = {
     val (prod: Product, sub) = foo match {
@@ -90,5 +91,5 @@ object AwrsEntry {
 }
 
 object SearchResult {
-  implicit val formatter = Json.format[SearchResult]
+  implicit val formatter: OFormat[SearchResult] = Json.format[SearchResult]
 }

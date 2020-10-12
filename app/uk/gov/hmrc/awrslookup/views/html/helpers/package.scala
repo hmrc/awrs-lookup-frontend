@@ -16,10 +16,8 @@
 
 package uk.gov.hmrc.awrslookup.views.html
 
-import play.api.i18n.Messages
 import play.twirl.api.Html
-import uk.gov.hmrc.awrslookup.models.{Address, Group, Info}
-import uk.gov.hmrc.awrslookup.utils.LetterPairSimilarity
+import uk.gov.hmrc.awrslookup.models.Info
 
 package object helpers {
 
@@ -47,48 +45,4 @@ package object helpers {
     case None | Some("") => info.businessName.fold("")(x => x)
     case Some(name) => name
   }
-
-  // TODO optimisation, currently we're calling the similarity function multiple times for each element,
-  // refactor to reduce the calls
-  private[helpers] def infoMatchCoEff(info: Info, searchTerm: String): Double = {
-    val tn = info.tradingName.fold("")(x => x)
-    val bn = info.businessName.fold("")(x => x)
-    val tnMatchPerc = LetterPairSimilarity.compareStrings(tn, searchTerm)
-    val bnMatchPerc = LetterPairSimilarity.compareStrings(bn, searchTerm)
-    tnMatchPerc > bnMatchPerc match {
-      case true => tnMatchPerc
-      case false => bnMatchPerc
-    }
-  }
-
-  def bestMatchName(info: Info, searchTerm: String): String = {
-    val tn = info.tradingName.fold("")(x => x)
-    val bn = info.businessName.fold("")(x => x)
-    val tnMatchPerc = LetterPairSimilarity.compareStrings(tn, searchTerm)
-    val bnMatchPerc = LetterPairSimilarity.compareStrings(bn, searchTerm)
-    tnMatchPerc > bnMatchPerc match {
-      case true => tn
-      case false => bn
-    }
-  }
-
-  private[helpers] def memberWithTheClosestMatch(members: List[Info], searchTerm: String): Info =
-    members.sortBy {
-      (info: Info) =>
-        // sortBy will order in asc, but we need it in desc, 1-x is used here since the percentage will always be
-        // between 0 and 1
-        1 - infoMatchCoEff(info, searchTerm)
-    }.head
-
-  def groupSearchBestMatchInfo(group: Group, searchTerm: String)(implicit messages: Messages): String = {
-    val bestMatch = memberWithTheClosestMatch(group.members :+ group.info, searchTerm)
-    bestMatch == group.info match {
-      case true => bestMatchName(bestMatch, searchTerm)
-      case false => Messages("awrs.lookup.results.group_h1_member_of", bestMatchName(bestMatch, searchTerm), knownName(group.info))
-    }
-  }
-
-  def groupSearchBestMatchAddress(group: Group, searchTerm: String)(implicit messages: Messages): Option[Address] =
-    memberWithTheClosestMatch(group.members :+ group.info, searchTerm).address
-
 }

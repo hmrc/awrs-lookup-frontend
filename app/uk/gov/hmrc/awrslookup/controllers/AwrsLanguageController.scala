@@ -27,8 +27,8 @@ class AwrsLanguageController @Inject()(configuration: ServicesConfig,
                                        override implicit val messagesApi: MessagesApi)
   extends FrontendController(mcc) with I18nSupport {
 
-  val English = Lang("en")
-  val Welsh = Lang("cy")
+  val English: Lang = Lang("en")
+  val Welsh: Lang = Lang("cy")
 
   def langToCall(lang: String): Call = routes.AwrsLanguageController.switchToLanguage(lang)
 
