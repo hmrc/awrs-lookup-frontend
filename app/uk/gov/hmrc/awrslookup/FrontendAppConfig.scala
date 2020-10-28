@@ -32,7 +32,7 @@ class FrontendAppConfig @Inject()(servicesConfig: ServicesConfig, val configurat
 
   private def loadConfig(key: String) = servicesConfig.getConfString(key, throw new Exception(s"Missing configuration key: $key"))
 
-  private val contactFrontendService = servicesConfig.baseUrl("contact-frontend")
+  private val contactFrontendService = servicesConfig.getString("contact-frontend.host")
   private val contactHost = loadConfig(s"contact-frontend.host")
   private val contactFormServiceIdentifier = "AWRS-LOOKUP"
 
