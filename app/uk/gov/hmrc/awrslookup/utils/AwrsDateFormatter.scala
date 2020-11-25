@@ -36,13 +36,9 @@ object AwrsDateFormatter {
   }
 
   def showDateTimeNowTranslation(dateTime: LocalDateTime = LocalDateTime.now())(implicit  messages: Messages): String = {
-    try {
       val format = setDateTimeFormat(dateTime.getMonthValue, true)
       val formatter = DateTimeFormatter.ofPattern(format).withResolverStyle(resolverStyle)
       dateTime.format(formatter).replace("AM", "am").replace("PM", "pm")
-    } catch {
-        case e: DateTimeParseException => ""
-    }
   }
 
   def setDateTimeFormat(monthValue: Int, showTime: Boolean = false)(implicit  messages: Messages): String = {

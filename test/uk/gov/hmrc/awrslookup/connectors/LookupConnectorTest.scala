@@ -121,4 +121,22 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       thrown.getMessage must include("Unsuccessful return of data. Status code")
     }
   }
+
+  ".encode" should {
+    "return a string with replaced UTF values for /" in {
+
+      TestLookupConnector.encode(urnURL) mustBe "%2Fawrs-lookup%2Fquery%2Furn%2F"
+    }
+
+    "return a string with replaced UTF values for space" in {
+
+      TestLookupConnector.encode("awrs-lookup query") mustBe "awrs-lookup%20query"
+    }
+
+    "return a string with replaced UTF values for multiple spaces" in {
+
+      TestLookupConnector.encode("a b c") mustBe "a%20b%20c"
+    }
+
+  }
 }

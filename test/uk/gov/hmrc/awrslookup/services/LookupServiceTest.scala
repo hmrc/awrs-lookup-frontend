@@ -55,5 +55,20 @@ class LookupServiceTest extends AwrsUnitTestTraits {
       resultWithData mustBe dataToReturn
 
     }
+
+    "call lookup connector and return an exception" in {
+      val testAwrs = "XXAW00000123456"
+
+      val dataToReturn: Future[Option[SearchResult]] = new Exception ("test implicit exception thrown")
+
+      val mockLookupConnector = mock[LookupConnector]
+
+      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any())).thenReturn(dataToReturn)
+      val lookupService = new LookupService(mockLookupConnector)
+
+      val resultWithData = lookupService.lookup(testAwrs)
+      resultWithData mustBe dataToReturn
+
+    }
   }
 }

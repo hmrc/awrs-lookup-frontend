@@ -42,9 +42,9 @@ class AwrsLanguageController @Inject()(configuration: ServicesConfig,
   private val SwitchIndicatorKey = "switching-language"
   private val FlashWithSwitchIndicator = Flash(Map(SwitchIndicatorKey -> "true"))
 
-  protected def fallbackURL: String = configuration.getConfString("language.fallbackUrl", "/")
+  protected[controllers] def fallbackURL: String = configuration.getConfString("language.fallbackUrl", "/")
 
-  private def asRelativeUrl(url: String): Option[String] = {
+  private[controllers] def asRelativeUrl(url: String): Option[String] = {
     for {
       uri      <- Try(new URI(url)).toOption
       path     <- Option(uri.getPath).filterNot(_.isEmpty)
