@@ -60,6 +60,13 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
 
       TestLanguageController.asRelativeUrl(url + uri) mustBe Some(uri)
     }
+
+    "return a relative url without a query or fragment" in {
+      val url = "https://www.tax.service.gov.uk"
+      val uri = "/check-the-awrs-register/language/en"
+
+      TestLanguageController.asRelativeUrl(url + uri) mustBe Some(uri)
+    }
   }
 
   ".switchToLanguage" should {

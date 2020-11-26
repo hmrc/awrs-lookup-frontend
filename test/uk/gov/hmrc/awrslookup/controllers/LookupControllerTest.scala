@@ -25,7 +25,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{OK, _}
 import uk.gov.hmrc.awrslookup.services.LookupService
 import uk.gov.hmrc.awrslookup.utils.TestUtils._
-import uk.gov.hmrc.awrslookup.utils.{AwrsUnitTestTraits, HtmlUtils}
+import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
+import uk.gov.hmrc.awrslookup.utils.HtmlUtils._
 import uk.gov.hmrc.awrslookup.views.html.error_template
 import uk.gov.hmrc.awrslookup.views.html.lookup.{search_main, search_no_results, single_result}
 
@@ -49,10 +50,18 @@ class LookupControllerTest extends AwrsUnitTestTraits {
       status(result) mustBe OK
     }
 
+    "render a technical error" when {
+      "an exception is received from the lookup call" in {
+        when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(new Exception("failed"))
+        val html = FutureResultUtil(TestLookupController.show()(FakeRequest("GET", "check-the-awrs-register/?query=XXAW00000123554"))).getDocument
+
+        html.title() mustBe "Sorry, we are experiencing technical difficulties - GOV.UK"
+      }
+    }
+
   }
 
   "lookup routes" should {
-    import HtmlUtils._
 
     def callLookupFrontEndAndReturnSummaryError(query: Option[String]): Element = {
       val qString = query match {

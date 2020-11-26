@@ -25,8 +25,6 @@ trait ImplicitConversions {
   implicit def futureUtil[T, S <: T](data: S): Future[T] = Future.successful(data)
 
   implicit def futureUtil2[T, S <: T](data: S): Future[Option[T]] = Future.successful(Some(data))
-
-  implicit def futureUtil[T](exception: Throwable): Future[T] = Future.failed(exception)
 }
 
 object ImplicitConversions extends ImplicitConversions
