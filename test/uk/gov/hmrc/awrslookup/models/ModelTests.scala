@@ -20,7 +20,6 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.awrslookup.models.AwrsStatus.{Approved, DeRegistered, Revoked}
 import uk.gov.hmrc.awrslookup.utils.AwrsUnitTestTraits
 
-
 class ModelTests extends AwrsUnitTestTraits {
 
   val testInfo: Info = Info("testBusinessName", "testTradingName", "testFullName",
@@ -71,6 +70,17 @@ class ModelTests extends AwrsUnitTestTraits {
 
       val convBack = Json.fromJson[AwrsEntry](json)
       convBack.get mustBe testObj
+    }
+  }
+
+  "AwrsStatus" should {
+    "Correctly convert an invalid status to -01" in {
+      val json = Json.parse("""{
+        | "code": "invalid status",
+        | "name": "invalid name"
+        }""".stripMargin)
+      val model = Json.fromJson[AwrsStatus](json)
+      model.get.code mustBe "-01"
     }
   }
 
