@@ -18,9 +18,9 @@ lazy val scoverageSettings = {
   Seq(
     ScoverageKeys.coverageExcludedPackages  :=
       """<empty>;app.*;config.*;Reverse.*;.*AuthService.*;models/.data/..*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup;prod.*;
-        |testOnlyDoNotUseInAppConf.*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup.views.*;
-        |uk.gov.hmrc.awrslookup.audit.*;uk.gov.hmrc.awrslookup.forms.prevalidation.*;uk.gov.hmrc.awrslookup.forms.validation.util.*;
-        |uk.gov.hmrc.awrslookup.utils.LoggingUtils;
+        |testOnlyDoNotUseInAppConf.*;uk.gov.hmrc.BuildInfo;views.*;
+        |audit.*;forms.prevalidation.*;forms.validation.util.*;
+        |utils.LoggingUtils;
         """.stripMargin,
     ScoverageKeys.coverageMinimum := 80,
     ScoverageKeys.coverageFailOnMinimum := false,
@@ -45,6 +45,11 @@ lazy val microservice = Project(appName, file("."))
     libraryDependencies ++= Seq(
       compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
       "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
+    ),
+    TwirlKeys.templateImports ++= Seq(
+      "uk.gov.hmrc.govukfrontend.views.html.components._",
+      "uk.gov.hmrc.govukfrontend.views.html.helpers._",
+      "uk.gov.hmrc.hmrcfrontend.views.html.{components => hmrcComponents}"
     )
   )
   .configs(IntegrationTest)

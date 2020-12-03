@@ -1,4 +1,6 @@
 awrs-lookup.nav_title = Check if an alcohol wholesaler or producer is approved
+service.name = Check if an alcohol wholesaler or producer is approved
+service.homePageUrl = /check-the-awrs-register
 
 ##### GENERIC MESSAGES
 
@@ -11,7 +13,13 @@ awrs.generic.status.approved_group_member = Approved as part of the group
 awrs.generic.continue = Continue
 awrs.generic.important = Important information
 
-##### GENERNIC ERROR MESSAGES
+footer.links.accessibility.text   = Accessibility statement
+footer.links.cookies.text         = Cookies
+footer.links.privacy_policy.text         = Privacy policy
+footer.links.terms_and_conditions.text = Terms and conditions
+footer.links.help_page.text       = Help using GOV.UK
+
+##### GENERIC ERROR MESSAGES
 
 awrs.generic.error.character_invalid = Invalid characters have been entered
 awrs.generic.error.character_invalid.summary = The Unique Reference Number is not in the correct format
