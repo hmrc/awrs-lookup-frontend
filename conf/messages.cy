@@ -71,6 +71,7 @@ awrs.lookup.results.group_rep_table_heading = Cynrychiolydd y grŵp
 awrs.lookup.results.status_label = Statws
 awrs.lookup.results.date_of_reg = Dyddiad y daw’r cofrestriad i rym
 awrs.lookup.results.date_of_dereg = Dyddiad dadgofrestru
+awrs.lookup.results.not_applicable = Ddim yn berthnasol
 awrs.lookup.results.place_of_bus = Prif safle’r busnes
 awrs.lookup.results.business_name = Enw’r busnes
 awrs.lookup.results.trading_name = Enw masnachu

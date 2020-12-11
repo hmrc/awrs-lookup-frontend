@@ -21,12 +21,10 @@
 @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
 @warningText = {
-    <br>
     <div class="indent-warning" style="font-weight: bold">
         <span class="visuallyhidden">@Messages("awrs.lookup.warning")</span>
         @Messages("awrs.lookup.results.unapproved.info") @whatToDo
     </div>
-    <br>
 }
 
 @whatToDo = {
@@ -35,7 +33,7 @@
 
 @result.status match {
     case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
-        @warning(WarningText(content = HtmlContent(Messages("awrs.lookup.results.unapproved.info") + whatToDo)))
+        @warning(WarningText(content = HtmlContent(Messages("awrs.lookup.results.unapproved.info") + whatToDo), classes = "govuk-!-padding-top-6"))
     }
     case _ => {}
 }

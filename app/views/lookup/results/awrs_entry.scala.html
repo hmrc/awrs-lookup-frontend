@@ -82,7 +82,13 @@
                     </div>
 
                 }
-                case _ => {}
+                case _ => {
+                    <div class="grid grid-1-2">
+                        <h2 class="govuk-heading-s" id="result_end_date_label">@Messages("awrs.lookup.results.date_of_dereg")</h2>
+                        <p class="govuk-body">@messages("awrs.lookup.results.not_applicable")</p>
+                    </div>
+
+                }
             }
         </div>
     </div>
@@ -157,7 +163,6 @@
     <h1 class="govuk-heading-xl" id="results-heading">
         @mainHeading
     </h1>
-    <div style="margin-bottom:30px"></div>
     @status_warning(result)
     <table id="results-table" role="presentation">
         @common(showRegNumber = true)

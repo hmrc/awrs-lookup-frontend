@@ -21,8 +21,7 @@
 @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
 @approvedText = {
-    <br>
-    <div class="indent-warning" style="font-weight: bold">
+    <div class="indent-warning govuk-!-padding-6" style="font-weight: bold">
      <span class="visuallyhidden">@Messages("awrs.lookup.warning")</span>
      @Messages("awrs.lookup.results.approved.warning_info")
        <a id="due_diligence_link"
