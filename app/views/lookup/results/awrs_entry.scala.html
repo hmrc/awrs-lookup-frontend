@@ -1,0 +1,189 @@
+@*
+ * Copyright 2020 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models._
+@import views.html._
+@import lookup.common._
+@import views.html.helpers._
+@import utils.AwrsDateFormatter
+
+@this(status_warning: status_warning)
+
+@(result: AwrsEntry,
+    id: String,
+    searchTerm: String,
+    mainHeading: Html
+)(implicit
+    request : Request[AnyContent],
+    messages: Messages
+)
+
+@tableHeadingMedium(name: String, heading: String, additionalClasses: Option[String] = "group-section") = {
+    <h2 class="govuk-heading-l no-bottom-border" id="@{name}_heading">@heading</h2>
+}
+
+@common(showRegNumber: Boolean) = {
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            <h2 class="govuk-heading-s" id="result_awrs_status_label">@Messages("awrs.lookup.results.status_label")</h2>
+            <p id="result_awrs_status_detail" class="govuk-body">
+                @result.status match {
+                    case AwrsStatus.Approved => {
+                        @Messages("awrs.generic.status.approved")
+                    }
+                    case AwrsStatus.DeRegistered => {
+                        @Messages("awrs.generic.status.deregistered")
+                    }
+                    case AwrsStatus.Revoked => {
+                        @Messages("awrs.generic.status.revoked")
+                    }
+                    case _ => {
+                        @Messages("awrs.generic.status.notfound")
+                    }
+                }
+            </p>
+        </div>
+        <div class="govuk-grid-column-one-half">
+            @showRegNumber match {
+                case true => {
+                        <h2 class="govuk-heading-s" id="result_awrs_reg_label">@Messages("awrs.lookup.results.URN")</h2>
+                        <p id="result_awrs_reg_detail" class="govuk-body">@result.awrsRefFormatted</p>
+                }
+                case false => {}
+            }
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            @if(result.registrationDate.isDefined) {
+                <h2 class="govuk-heading-s" id="result_reg_date_label">@Messages("awrs.lookup.results.date_of_reg")</h2>
+                <p id="result_reg_date_detail" class="govuk-body">@AwrsDateFormatter.showDateTranslation(result.registrationDate)</p>
+            }
+        </div>
+        <div class="govuk-grid-column-one-half">
+            @result.status match {
+                case AwrsStatus.DeRegistered | AwrsStatus.Revoked => {
+                    <div class="grid grid-1-2">
+                        <h2 class="govuk-heading-s" id="result_end_date_label">@Messages("awrs.lookup.results.date_of_dereg")</h2>
+                        <p class="govuk-body">@AwrsDateFormatter.showDateTranslation(result.registrationEndDate)</p>
+                    </div>
+
+                }
+                case _ => {
+                    <div class="grid grid-1-2">
+                        <h2 class="govuk-heading-s" id="result_end_date_label">@Messages("awrs.lookup.results.date_of_dereg")</h2>
+                        <p class="govuk-body">@messages("awrs.lookup.results.not_applicable")</p>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+}
+
+@address(someAddress: Option[Address], id: String) = {
+    @someAddress match {
+        case Some(address) => {
+            <h2 class="govuk-heading-s" id="result_address_label_@id">@Messages("awrs.lookup.results.place_of_bus")</h2>
+            <p id="result_address_detail_@id" class="govuk-body">@address.addressLine1<br>@address.addressLine2<br>@address.addressLine3<br>@address.addressLine4<br>@address.postcode<br>@address.addressCountry</p>
+        }
+        case _ => {}
+    }
+}
+
+@memberStatus(id: String = id) = {
+    <h2 class="heading-small govuk-heading-l" id="result_awrs_status_label_member">@Messages("awrs.lookup.results.status_label")</h2>
+    @result.status match {
+        case AwrsStatus.DeRegistered => {
+            <p id="result_awrs_status_detail" class="govuk-body">@Messages("awrs.generic.status.deregistered")</p>
+        }
+        case AwrsStatus.Revoked => {
+            <p id="result_awrs_status_detail" class="govuk-body">@Messages("awrs.generic.status.revoked")</p>
+        }
+        case _ => {
+            <p id="result_awrs_status_detail" class="govuk-body">@Messages("awrs.generic.status.approved_group_member")</p>
+        }
+    }
+}
+
+@info(info: Info, id: String = id) = {
+    <div class="govuk-grid-column-one-half">
+        @if(info.businessName.isDefined) {
+            <h2 class="govuk-heading-s" id="result_businessName_label_@id">@Messages("awrs.lookup.results.business_name")</h2>
+            <p id="result_businessName_detail_@id" class="govuk-body">@info.businessName</p>
+        }
+    </div>
+    <div class="govuk-grid-column-one-half">
+        @address(info.address, id)
+    </div>
+}
+
+@groupMembers(group: Group) = {
+    @result.status match {
+        case AwrsStatus.Approved => {
+            @tableHeadingMedium(id+"_members", Messages("awrs.lookup.results.Approved_group_members"))
+        }
+        case _ => {
+            @tableHeadingMedium(id+"_members", Messages("awrs.lookup.results.Group_members"))
+        }
+    }
+
+    @group.members.zipWithIndex.map {
+        case (memberInfo: Info, index: Int) => {
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half" id='result_member_@{index}_heading'>
+                    <h2 class="govuk-heading-s" id="result_tradingName_label_@{index}">@Messages("awrs.lookup.results.trading_name")</h2>
+                    <p class="govuk-body" id="result_tradingName_detail_@{index}">@knownName(memberInfo)</p>
+                </div>
+
+                @info(memberInfo, index.toString)
+
+            </div>
+
+            <div class="grid border"></div>
+
+        }
+    }
+}
+
+@business(business: Business) = {
+    <h1 class="govuk-heading-xl" id="results-heading">
+        @mainHeading
+    </h1>
+    @status_warning(result)
+    <table id="results-table" role="presentation">
+        @common(showRegNumber = true)
+        <div class="govuk-grid-row">
+            @info(business.info)
+        </div>
+    </table>
+}
+
+@group(group: Group) = {
+    <h1 class="govuk-heading-xl" id="results-heading">@mainHeading</h1>
+    @status_warning(result)
+    @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
+    @common(showRegNumber = true)
+    <div class="govuk-grid-row">
+        @info(group.info)
+    </div>
+    @groupMembers(group: Group)
+}
+
+@result match {
+    case  bus : Business => { @business(bus) }
+    case  grp : Group    => { @group(grp) }
+}

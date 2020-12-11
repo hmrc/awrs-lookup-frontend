@@ -1,0 +1,63 @@
+@*
+ * Copyright 2020 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models._
+@import views.html.helpers._
+@import utils.AwrsDateFormatter
+@import views.html.lookup.search.results_core
+@import views.html.lookup.results.awrs_entry
+@import views.html.lookup.common.status_approved
+
+@this(resultsCore: results_core, awrs_entry: awrs_entry, status_approved: status_approved)
+@(
+    searchForm : Form[models.Query],
+    action: Call,
+    result: models.AwrsEntry,
+    searchTerm: String,
+    searchResult: Option[SearchResult] = None
+)(implicit
+    request: Request[AnyContent],
+    messages: Messages,
+    lang: Lang
+)
+
+@heading = {
+    @result match {
+        case  bus : Business => { @knownName(bus.info) }
+        case  grp : Group    => { @whichHeading(grp) }
+    }
+}
+
+@whichHeading(group: Group) = {
+    @knownName(group.info)
+}
+
+@preContent = {
+    <div>@awrs_entry(result, "result", searchTerm, heading.toString)</div>
+    <p id="search-date" class="govuk-body">@Messages("awrs.lookup.results.search_date" ) @AwrsDateFormatter.showDateTimeNowTranslation()</p>
+    @status_approved(result)
+    @awrsPrintLink()
+}
+
+@resultsCore(
+    searchForm = searchForm,
+    preFormContent = Some(preContent),
+    postFormContent = None,
+    title = Messages("awrs.lookup.results.page_title_single"),
+    searchTerm = searchTerm,
+    searchResult = searchResult
+)
+
