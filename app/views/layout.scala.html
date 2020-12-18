@@ -14,16 +14,11 @@
  * limitations under the License.
  *@
 
-@import play.twirl.api.HtmlFormat
 @import config.FrontendAppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.LanguageSelect
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.Cy
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.En
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
-@import uk.gov.hmrc.hmrcfrontend.views.Aliases.ReportTechnicalIssue
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.hmrcFooter
 @import uk.gov.hmrc.hmrcfrontend.config.AccessibilityStatementConfig
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcFooterItems
+@import uk.gov.hmrc.hmrcfrontend.views.Aliases.ReportTechnicalIssue
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En, LanguageSelect}
 
 @this(
         appConfig: FrontendAppConfig,
@@ -48,7 +43,7 @@
     @contentBlock
 
     @problemLink(
-        ReportTechnicalIssue("awrs-lookup-frontend", messages.lang.code match {
+        ReportTechnicalIssue(serviceCode = "awrs-lookup-frontend", language = messages.lang.code match {
             case "en" => En
             case "cy" => Cy
         }, classes = Some("print-hidden"))
