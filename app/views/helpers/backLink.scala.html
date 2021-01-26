@@ -1,5 +1,5 @@
 @*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,4 +15,4 @@
  *@
 
 @(backUrl: String = controllers.routes.LookupController.show().toString, printHidden: Boolean = false)(implicit messages: Messages)
-<a id="back" class="back-link print-hidden" href="@backUrl">@Messages("awrs.generic.back")</a>
+<a id="back" class="print-hidden govuk-back-link" href="@backUrl">@Messages("awrs.generic.back")</a>
