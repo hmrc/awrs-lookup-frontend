@@ -17,14 +17,13 @@
 package controllers
 
 import controllers.Assets.Redirect
-import controllers.AwrsLanguageController
 import play.api.i18n.I18nSupport.ResultWithMessagesApi
 import play.api.i18n.Lang
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{cookies, defaultAwaitTimeout}
-import utils.AwrsUnitTestTraits
 import uk.gov.hmrc.http.{SessionKeys => HMRCSessionKeys}
+import utils.AwrsUnitTestTraits
 
 class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
 
