@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.ReportTechnicalIssue
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En, LanguageSelect}
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
 
 @this(
         appConfig: FrontendAppConfig,
@@ -26,10 +27,15 @@
         head: GovukHeader,
         problemLink: HmrcReportTechnicalIssue,
         languageSelection: hmrcComponents.hmrcLanguageSelect,
-        accessibilityStatementConfig: AccessibilityStatementConfig
+        accessibilityStatementConfig: AccessibilityStatementConfig,
+        hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 )
 
 @(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+
+@headBlock = {
+    @hmrcTrackingConsentSnippet()
+}
 
 @beforeContentBlock = {
 
@@ -52,7 +58,7 @@
 
 @govukLayout(
     pageTitle = pageTitle,
-    headBlock = None,
+    headBlock = Some(headBlock),
     beforeContentBlock = Some(beforeContentBlock),
     footerItems = Seq(
         FooterItem(href = Some(appConfig.cookies), text = Some(messages("footer.links.cookies.text"))),
