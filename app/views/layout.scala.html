@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En, LanguageSelect}
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
+@import views.html.helper.CSPNonce
 
 @this(
         appConfig: FrontendAppConfig,
@@ -34,7 +35,7 @@
 @(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @headBlock = {
-    @hmrcTrackingConsentSnippet()
+    @hmrcTrackingConsentSnippet(nonce = CSPNonce.get)
 }
 
 @beforeContentBlock = {
