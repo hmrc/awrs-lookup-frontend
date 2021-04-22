@@ -8,14 +8,14 @@ object AppDependencies {
   private val scalaTestPlusPlayVersion = "4.0.3"
   private val pegdownVersion = "1.6.0"
   private val mockitoVersion = "1.10.19"
-  private val playLanguageVersion = "4.10.0-play-27"
+  private val playLanguageVersion = "4.12.0-play-27"
 
   val compile = Seq(
     ws,
     "uk.gov.hmrc" %% "bootstrap-frontend-play-27" % "3.4.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-frontend-govuk" % "0.68.0-play-27",
-    "uk.gov.hmrc" %% "play-frontend-hmrc" % "0.56.0-play-27",
+    "uk.gov.hmrc" %% "play-frontend-govuk" % "0.71.0-play-27",
+    "uk.gov.hmrc" %% "play-frontend-hmrc" % "0.58.0-play-27",
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 
