@@ -17,6 +17,7 @@
 package forms.prevalidation
 
 import play.api.data.Form
+import scala.language.implicitConversions
 
 
 object TrimOption extends Enumeration {

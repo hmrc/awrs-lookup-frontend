@@ -27,6 +27,7 @@ import play.api.{Configuration, Environment}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import play.api.test.Helpers.{await => helperAwait, defaultAwaitTimeout}
+import scala.language.implicitConversions
 
 import scala.concurrent.Future
 

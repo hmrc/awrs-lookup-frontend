@@ -22,6 +22,7 @@ import org.scalatest.Matchers._
 import org.scalatest.MustMatchers
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
+import scala.language.implicitConversions
 
 
 package object util extends MustMatchers with FormValidationTestAPI with TestUtilAPI {

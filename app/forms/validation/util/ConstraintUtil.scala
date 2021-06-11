@@ -18,6 +18,7 @@ package forms.validation.util
 
 import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationResult}
+import scala.language.implicitConversions
 
 object ConstraintUtil {
 
