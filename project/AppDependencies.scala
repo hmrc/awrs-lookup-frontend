@@ -14,8 +14,8 @@ object AppDependencies {
     ws,
     "uk.gov.hmrc" %% "bootstrap-frontend-play-27" % "3.4.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-frontend-govuk" % "0.71.0-play-27",
-    "uk.gov.hmrc" %% "play-frontend-hmrc" % "0.58.0-play-27",
+    "uk.gov.hmrc" %% "play-frontend-govuk" % "0.75.0-play-27",
+    "uk.gov.hmrc" %% "play-frontend-hmrc" % "0.71.0-play-27",
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 
