@@ -20,9 +20,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.mvc.Result
 import play.twirl.api.Html
-
 import scala.concurrent.Future
 import play.api.test.Helpers._
+import scala.language.implicitConversions
 
 
 trait HtmlUtils {

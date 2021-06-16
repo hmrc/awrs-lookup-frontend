@@ -17,6 +17,7 @@
 package utils
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 
 trait ImplicitConversions {

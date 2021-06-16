@@ -19,6 +19,7 @@ package forms.test.util
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
 import forms.validation.util._
+import scala.language.implicitConversions
 
 
 trait ImplicitSingleFieldTestAPI {
