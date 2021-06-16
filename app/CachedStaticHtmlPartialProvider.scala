@@ -18,4 +18,4 @@ import javax.inject.Inject
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 import uk.gov.hmrc.play.partials.CachedStaticHtmlPartialRetriever
 
-class CachedStaticHtmlPartialProvider @Inject()(override val httpGet: DefaultHttpClient) extends CachedStaticHtmlPartialRetriever
+abstract class CachedStaticHtmlPartialProvider @Inject()(override val httpGet: DefaultHttpClient) extends CachedStaticHtmlPartialRetriever

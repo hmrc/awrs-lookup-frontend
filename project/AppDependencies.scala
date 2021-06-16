@@ -4,18 +4,18 @@ object AppDependencies {
   import play.core.PlayVersion
   import play.sbt.PlayImport._
 
-  private val playPartialsVersion = "6.11.0-play-27"
+  private val playPartialsVersion = "8.1.0-play-27"
   private val scalaTestPlusPlayVersion = "4.0.3"
   private val pegdownVersion = "1.6.0"
   private val mockitoVersion = "1.10.19"
-  private val playLanguageVersion = "4.12.0-play-27"
+  private val playLanguageVersion = "5.1.0-play-27"
 
   val compile = Seq(
     ws,
-    "uk.gov.hmrc" %% "bootstrap-frontend-play-27" % "3.4.0",
+    "uk.gov.hmrc" %% "bootstrap-frontend-play-27" % "5.4.0",
     "uk.gov.hmrc" %% "play-partials" % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-frontend-govuk" % "0.75.0-play-27",
-    "uk.gov.hmrc" %% "play-frontend-hmrc" % "0.71.0-play-27",
+    "uk.gov.hmrc" %% "play-frontend-govuk" % "0.77.0-play-27",
+    "uk.gov.hmrc" %% "play-frontend-hmrc" % "0.72.0-play-27",
     "uk.gov.hmrc" %% "play-language" % playLanguageVersion
   )
 

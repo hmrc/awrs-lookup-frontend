@@ -27,7 +27,7 @@ import models.SearchResult
 import utils.TestUtils._
 import utils.{AwrsUnitTestTraits, LoggingUtils}
 import uk.gov.hmrc.http._
-import uk.gov.hmrc.http.logging.SessionId
+import uk.gov.hmrc.http.SessionId
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 
 import scala.concurrent.Future
@@ -55,7 +55,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedResult: Option[SearchResult] = testBusinessSearchResult
       val lookupSuccess: JsValue = SearchResult.formatter.writes(expectedResult.get)
       val expectedURL = s"""$urnURL$testAwrsRef"""
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(HttpResponse(OK, lookupSuccess, Map.empty[String, Seq[String]])))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       await(result) mustBe expectedResult
@@ -65,7 +65,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedResult: Option[SearchResult] = None
       val expectedURL = s"""$urnURL$testAwrsRef"""
       val response = HttpResponse(NOT_FOUND, Json.toJson[String](TestLookupConnector.referenceNotFoundString), Map.empty[String, Seq[String]])
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       await(result) mustBe expectedResult
@@ -74,7 +74,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
     "return an exception when the middle service is not found" in {
       val expectedURL = s"""$urnURL$testAwrsRef"""
       val response = HttpResponse(NOT_FOUND, "")
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       val thrown = the[InternalServerException] thrownBy await(result)
@@ -84,7 +84,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
     "an exception when invalid json is returned" in {
       val invalidJson: JsValue = Json.toJson[String]("""{"key" : "invalid json"}""")
       val expectedURL = s"""$urnURL$testAwrsRef"""
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(HttpResponse(OK, invalidJson, Map.empty[String, Seq[String]])))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       val thrown = the[InternalServerException] thrownBy await(result)
@@ -94,7 +94,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
     "return 'technical error 400' when a 400 error is returned" in {
       val expectedURL = s"""$urnURL$testAwrsRef"""
       val response = HttpResponse(BAD_REQUEST, "")
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       val thrown = the[LookupExceptions] thrownBy await(result)
@@ -104,7 +104,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
     "return 'technical error 500' when a 500 error is returned" in {
       val expectedURL = s"""$urnURL$testAwrsRef"""
       val response = HttpResponse(INTERNAL_SERVER_ERROR, "")
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       val thrown = the[LookupExceptions] thrownBy await(result)
@@ -114,7 +114,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
     "return an exception when the middle service returns any other status code" in {
       val expectedURL = s"""$urnURL$testAwrsRef"""
       val response = HttpResponse(BAD_GATEWAY, "")
-      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL))(Matchers.any(), Matchers.any(), Matchers.any()))
+      when(mockWSHttp.GET[HttpResponse](Matchers.endsWith(expectedURL), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
         .thenReturn(Future.successful(response))
       val result = TestLookupConnector.queryByUrn(testAwrsRef)
       val thrown = the[InternalServerException] thrownBy await(result)
