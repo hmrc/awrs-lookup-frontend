@@ -1,9 +1,6 @@
-import uk.gov.hmrc._
-import DefaultBuildSettings._
 import sbt.Keys.scalacOptions
-import uk.gov.hmrc.SbtAutoBuildPlugin
+import uk.gov.hmrc.DefaultBuildSettings._
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
-import uk.gov.hmrc.versioning.SbtGitVersioning
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName: String = "awrs-lookup-frontend"
