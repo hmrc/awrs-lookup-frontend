@@ -87,7 +87,7 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
     "use the English language" in {
       val result = TestLanguageController.switchToLanguage("english")(fakeRequest)
       cookies(result).get(messagesApi.langCookieName) mustBe
-        Some(Cookie("PLAY_LANG", "en", None, "/", None, secure = false, httpOnly = false, Some(Cookie.SameSite.Lax)))
+        Some(Cookie("PLAY_LANG", "en", None, "/", None, secure = false, httpOnly = true, Some(Cookie.SameSite.Lax)))
     }
 
     "redirect to the referrer with the correct welsh language and correct toggle setting" in {
@@ -104,7 +104,7 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
     "use the Welsh language" in {
       val result = TestLanguageController.switchToLanguage("cymraeg")(fakeRequest)
       cookies(result).get(messagesApi.langCookieName) mustBe
-        Some(Cookie("PLAY_LANG", "cy", None, "/", None, secure = false, httpOnly = false, Some(Cookie.SameSite.Lax)))
+        Some(Cookie("PLAY_LANG", "cy", None, "/", None, secure = false, httpOnly = true, Some(Cookie.SameSite.Lax)))
     }
 
     "redirect to the referrer with the default language and correct toggle setting" in {
@@ -121,7 +121,7 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
     "use the English language when unsupported language is used" in {
       val result = TestLanguageController.switchToLanguage("nonsupported")(fakeRequest)
       cookies(result).get(messagesApi.langCookieName) mustBe
-        Some(Cookie("PLAY_LANG", "en", None, "/", None, secure = false, httpOnly = false, Some(Cookie.SameSite.Lax)))
+        Some(Cookie("PLAY_LANG", "en", None, "/", None, secure = false, httpOnly = true, Some(Cookie.SameSite.Lax)))
     }
   }
 
