@@ -15,8 +15,12 @@
  *@
 
 @import models._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 @this(warning : GovukWarningText)
+
 
 @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
 
