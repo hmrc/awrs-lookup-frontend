@@ -21,31 +21,24 @@
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En, LanguageSelect}
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
 @import views.html.helper.CSPNonce
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcHeader
 
 @this(
         appConfig: FrontendAppConfig,
-        govukLayout: GovukLayout,
-        head: GovukHeader,
+        hmrcLayout: HmrcLayout,
+        head: HmrcHeader,
         problemLink: HmrcReportTechnicalIssue,
-        languageSelection: hmrcComponents.hmrcLanguageSelect,
         accessibilityStatementConfig: AccessibilityStatementConfig,
         hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 )
 
 @(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
-@headBlock = {
+@headBlockString = {
     @hmrcTrackingConsentSnippet(nonce = CSPNonce.get)
     <!--[if lte IE 8]><link href='@routes.Assets.versioned("stylesheets/application-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
     <!--[if gt IE 8]><!--><link href='@routes.Assets.versioned("stylesheets/application.css")' media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
-}
-
-@beforeContentBlock = {
-
-    @{languageSelection(LanguageSelect(messages.lang.code match {
-        case "en" => En
-        case "cy" => Cy
-    }, appConfig.languageLinks: _*))}
 }
 
 @content = {
@@ -59,15 +52,9 @@
     )
 }
 
-@govukLayout(
+@hmrcLayout(
     pageTitle = pageTitle,
-    headBlock = Some(headBlock),
-    beforeContentBlock = Some(beforeContentBlock),
-    footerItems = Seq(
-        FooterItem(href = Some(appConfig.cookies), text = Some(messages("footer.links.cookies.text"))),
-        FooterItem(href = accessibilityStatementConfig.url, text = Some(messages("footer.links.accessibility.text"))),
-        FooterItem(href = Some(appConfig.privacy), text = Some(messages("footer.links.privacy_policy.text"))),
-        FooterItem(href = Some(appConfig.termsConditions), text = Some(messages("footer.links.terms_and_conditions.text"))),
-        FooterItem(href = Some(appConfig.govukHelp), text = Some(messages("footer.links.help_page.text")))
-    ),
-    bodyEndBlock = scripts)(content)
+    isWelshTranslationAvailable = true,
+    serviceUrl = Some(routes.LookupController.show().url),
+    nonce = CSPNonce.get,
+    additionalScriptsBlock = scripts)(content)

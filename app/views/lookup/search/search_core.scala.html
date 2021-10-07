@@ -18,8 +18,16 @@
 @import views.html.helpers._
 @import views.html.lookup.search._
 @import views.html.main_template
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @this(mainTemplate: main_template, button: GovukButton, input: GovukInput)
+
 @(
     searchForm : Form[Query],
     preFormContent: Option[Html] = None,
