@@ -18,14 +18,15 @@ package forms.test
 
 import forms.validation.util.ErrorMessageInterpreter._
 import forms.validation.util.{FieldError, MessageLookup, SummaryError}
-import org.scalatest.Matchers._
-import org.scalatest.MustMatchers
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
+
 import scala.language.implicitConversions
 
 
-package object util extends MustMatchers with FormValidationTestAPI with TestUtilAPI {
+package object util extends Matchers with FormValidationTestAPI with TestUtilAPI {
 
   /**
     * function to allow easy attachment of prefix to field ids regardless of whether the
@@ -316,8 +317,8 @@ package object util extends MustMatchers with FormValidationTestAPI with TestUti
     }
   }
 
-  implicit def singleFieldTestFunctions(fieldIdString: String)(implicit form: Form[_]) = new ImplicitSingleFieldTestAPI {
-    override implicit val fieldId = fieldIdString
+  implicit def singleFieldTestFunctions(fieldIdString: String)(implicit form: Form[_]): ImplicitSingleFieldTestAPI = new ImplicitSingleFieldTestAPI {
+    override implicit val fieldId: String = fieldIdString
 
     def assertFieldIsCompulsory(config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit =
       assertFieldIsCompulsoryWhen(Map[String, String](), config)
@@ -372,9 +373,9 @@ package object util extends MustMatchers with FormValidationTestAPI with TestUti
       conditions.foreach(condition => assertEnumFieldIsIgnoredWhen(condition, config))
   }
 
-  implicit def crossFieldTestFunctions(fieldIdsString: Set[String])(implicit form: Form[_]) = new ImplicitCrossFieldTestAPI {
+  implicit def crossFieldTestFunctions(fieldIdsString: Set[String])(implicit form: Form[_]): ImplicitCrossFieldTestAPI = new ImplicitCrossFieldTestAPI {
 
-    override implicit val fieldIds = fieldIdsString
+    override implicit val fieldIds: Set[String] = fieldIdsString
 
     private def commonTestForAnswered(testData: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit = {
       val formWithErrors = form.bind(testData)

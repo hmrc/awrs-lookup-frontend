@@ -16,9 +16,9 @@
 
 package controllers
 
-import controllers.Assets.Redirect
 import play.api.i18n.I18nSupport.ResultWithMessagesApi
 import play.api.i18n.Lang
+import play.api.mvc.Results.Redirect
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{cookies, defaultAwaitTimeout}
