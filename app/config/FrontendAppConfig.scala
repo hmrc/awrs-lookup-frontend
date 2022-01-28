@@ -41,12 +41,6 @@ class FrontendAppConfig @Inject()(servicesConfig: ServicesConfig, val configurat
 
   val showUrBanner: Boolean = loadConfig("urBanner.toggled").toBoolean
 
-  lazy val cookies: String = servicesConfig.getString("urls.footer.cookies")
-  lazy val accessibilityStatement: String = servicesConfig.getString("urls.footer.accessibility_statement")
-  lazy val privacy: String = servicesConfig.getString("urls.footer.privacy_policy")
-  lazy val termsConditions: String = servicesConfig.getString("urls.footer.terms_and_conditions")
-  lazy val govukHelp: String = servicesConfig.getString("urls.footer.help_page")
-
   override lazy val externalReportProblemUrl = s"$contactHost/contact/problem_reports"
 
   override lazy val reportAProblemPartialUrl = s"$contactFrontendService/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
