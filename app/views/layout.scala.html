@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
 @import views.html.helper.CSPNonce
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcHeader
 
 @this(
         hmrcLayout: HmrcLayout,
@@ -31,8 +30,6 @@
 
 @headBlockString = {
     @hmrcTrackingConsentSnippet(nonce = CSPNonce.get)
-    <!--[if lte IE 8]><link href='@routes.Assets.versioned("stylesheets/application-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
-    <!--[if gt IE 8]><!--><link href='@routes.Assets.versioned("stylesheets/application.css")' media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
 }
 
 @content = {
