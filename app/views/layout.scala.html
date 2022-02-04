@@ -14,22 +14,15 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
-@import uk.gov.hmrc.hmrcfrontend.config.AccessibilityStatementConfig
-@import uk.gov.hmrc.hmrcfrontend.views.Aliases.ReportTechnicalIssue
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcReportTechnicalIssue
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcReportTechnicalIssueHelper
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En, LanguageSelect}
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
 @import views.html.helper.CSPNonce
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcHeader
 
 @this(
-        appConfig: FrontendAppConfig,
         hmrcLayout: HmrcLayout,
-        head: HmrcHeader,
-        problemLink: HmrcReportTechnicalIssue,
-        accessibilityStatementConfig: AccessibilityStatementConfig,
+        problemLinkHelper: HmrcReportTechnicalIssueHelper,
         hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 )
 
@@ -37,19 +30,11 @@
 
 @headBlockString = {
     @hmrcTrackingConsentSnippet(nonce = CSPNonce.get)
-    <!--[if lte IE 8]><link href='@routes.Assets.versioned("stylesheets/application-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
-    <!--[if gt IE 8]><!--><link href='@routes.Assets.versioned("stylesheets/application.css")' media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
 }
 
 @content = {
     @contentBlock
-
-    @problemLink(
-        ReportTechnicalIssue(serviceCode = "awrs-lookup-frontend", language = messages.lang.code match {
-            case "en" => En
-            case "cy" => Cy
-        }, classes = Some("print-hidden"))
-    )
+    @problemLinkHelper()
 }
 
 @hmrcLayout(

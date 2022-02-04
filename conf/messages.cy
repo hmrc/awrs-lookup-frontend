@@ -2,12 +2,6 @@ awrs-lookup.nav_title = Gwiriwch a yw cyfanwerthwr neu gynhyrchydd alcohol wedi�
 service.name = Gwiriwch a yw cyfanwerthwr neu gynhyrchydd alcohol wedi’i gymeradwyo
 service.homePageUrl = /check-the-awrs-register
 
-footer.links.accessibility.text = Datganiad hygyrchedd
-footer.links.cookies.text = Cwcis
-footer.links.privacy_policy.text = Polisi preifatrwydd
-footer.links.terms_and_conditions.text = Telerau ac Amodau
-footer.links.help_page.text = Help wrth ddefnyddio GOV.UK
-
 ##### GENERIC MESSAGES
 
 awrs.generic.back = Yn ôl i chwilio

@@ -13,12 +13,6 @@ awrs.generic.status.approved_group_member = Approved as part of the group
 awrs.generic.continue = Continue
 awrs.generic.important = Important information
 
-footer.links.accessibility.text   = Accessibility statement
-footer.links.cookies.text         = Cookies
-footer.links.privacy_policy.text         = Privacy policy
-footer.links.terms_and_conditions.text = Terms and conditions
-footer.links.help_page.text       = Help using GOV.UK
-
 ##### GENERIC ERROR MESSAGES
 
 awrs.generic.error.character_invalid = Invalid characters have been entered
