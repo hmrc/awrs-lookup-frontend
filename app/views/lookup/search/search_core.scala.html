@@ -18,6 +18,7 @@
 @import views.html.helpers._
 @import views.html.lookup.search._
 @import views.html.main_template
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
@@ -49,9 +50,15 @@
             id = "query",
             name = "query",
             classes = "govuk-input--width-20",
-            hint = Hint(classes = "govuk-visually-hidden", content = HtmlContent(Messages("awrs.lookup.search.label")))
+            label = Label(
+              isPageHeading = true,
+              classes = "govuk-label--xl",
+              content = Text(Messages("awrs.lookup.search.heading"))
+            ),
+            hint = Hint(content = HtmlContent(Messages("awrs.lookup.search.lede", awrs_urn(), "")))
         ))
     </div>
+
 
     @button(Button(content = Text(Messages("awrs.generic.continue")), attributes = Map("id" -> "search")))
 }

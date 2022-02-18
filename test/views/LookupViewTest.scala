@@ -53,9 +53,8 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
       val document: Document = TestLookupController.show().apply(testRequest(query = None))
 
       document.title mustBe Messages("awrs.lookup.search.page_title")
-      document.getElementById("search-heading").text mustBe Messages("awrs.lookup.search.heading")
-      document.getElementById("search-lede").text must include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
-      document.getElementById("search-lede").text must include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
+      document.select("h1").text mustBe Messages("awrs.lookup.search.heading")
+      document.getElementById("query-hint").text must include(Messages("awrs.lookup.search.lede", Messages("awrs.lookup.search.awrs_urn","","","(","),")))
       document.getElementById("query").text mustBe ""
     }
 
