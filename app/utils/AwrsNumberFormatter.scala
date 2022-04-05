@@ -17,15 +17,16 @@
 package utils
 
 import scala.util.Try
+import scala.util.matching.Regex
 
 
 object AwrsNumberFormatter {
 
-  val awrsFormatPattern = "([A-Za-z]{4})([0-9]{3})([0-9]{4})([0-9]{4})".r
+  val awrsFormatPattern: Regex = "([A-Za-z]{4})([0-9]{3})([0-9]{4})([0-9]{4})".r
 
-  @inline def format(str: String) = formatOrElse(str, str)
+  @inline def format(str: String): String = formatOrElse(str, str)
 
-  def formatOrElse(str: String, elseString: String) = Try[String] {
+  def formatOrElse(str: String, elseString: String): String = Try[String] {
     val awrsFormatPattern(a, b, c, d) = str
     a + " " + b + " " + c + " " + d
   }.getOrElse(elseString)

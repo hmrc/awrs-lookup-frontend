@@ -21,7 +21,10 @@
 @import views.html.lookup.results.awrs_entry
 @import views.html.lookup.common.status_approved
 
-@this(resultsCore: results_core, awrs_entry: awrs_entry, status_approved: status_approved)
+@this(resultsCore: results_core,
+      awrs_entry: awrs_entry,
+      status_approved: status_approved,
+      awrsPrintLink: awrsPrintLink)
 @(
     searchForm : Form[models.Query],
     action: Call,
