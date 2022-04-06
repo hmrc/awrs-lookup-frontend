@@ -18,8 +18,9 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(warning : GovukWarningText)
+@this(warning : GovukWarningText, govukButton : GovukButton)
 
 @(searchTermWithNoResult: String, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
@@ -72,7 +73,10 @@
     @checkURN
 }
 @checkURN = {
-  <a class="button margin-top button--spaced govuk-button" href="check-the-awrs-register" role="button">@Messages("awrs.lookup.check_urn")</a>
+    @govukButton(Button(
+        href = Some("check-the-awrs-register"),
+        content = Text(messages("awrs.lookup.check_urn"))
+    ))
 }
 
 @info = @{

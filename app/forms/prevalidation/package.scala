@@ -22,27 +22,27 @@ package object prevalidation {
 
   import TrimOption._
 
-  val defaultTrims = Map[String, TrimOption](
+  val defaultTrims: Map[String, TrimOption] = Map[String, TrimOption](
     "query" -> all
   )
 
   import CaseOption._
 
-  val defaultCases = Map[String, CaseOption](
+  val defaultCases: Map[String, CaseOption] = Map[String, CaseOption](
     "query" -> upper
   )
 
-  val trimAllFunc = (value: String) => value.replaceAll("[\\s]", "")
-  val trimBothFunc = (value: String) => value.trim
-  val trimBothAndCompressFunc = (value: String) => value.trim.replaceAll("[\\s]{2,}", " ")
+  val trimAllFunc: String => String = (value: String) => value.replaceAll("[\\s]", "")
+  val trimBothFunc: String => String = (value: String) => value.trim
+  val trimBothAndCompressFunc: String => String = (value: String) => value.trim.replaceAll("[\\s]{2,}", " ")
 
-  def PreprocessedForm[T](validation: Form[T], trimRules: Map[String, TrimOption] = defaultTrims, caseRules: Map[String, CaseOption] = defaultCases) = {
+  def PreprocessedForm[T](validation: Form[T], trimRules: Map[String, TrimOption] = defaultTrims, caseRules: Map[String, CaseOption] = defaultCases): PrevalidationAPI[T] = {
     val trules = trimRules
     val crules = caseRules
     new PrevalidationAPI[T] {
-      override val formValidation = validation
-      override val trimRules = trules
-      override val caseRules = crules
+      override val formValidation: Form[T] = validation
+      override val trimRules: Map[String, TrimOption] = trules
+      override val caseRules: Map[String, CaseOption] = crules
     }
   }
 

@@ -81,7 +81,7 @@ object ConstraintUtil {
   // always valid is required in case an empty sequence is passed in
   def alwaysValidConstraint[A]: Constraint[A] = Constraint[A]((a: A) => Valid)
 
-  def andThenSeqChain[A](seq: Seq[Constraint[A]]) = seq.foldLeft(alwaysValidConstraint[A])(_ andThen _)
+  def andThenSeqChain[A](seq: Seq[Constraint[A]]): Constraint[A] = seq.foldLeft(alwaysValidConstraint[A])(_ andThen _)
 
   def preConditionToConstraint[A](cond: A => Boolean, c: Constraint[A]): Constraint[A] =
     Constraint[A]({
@@ -152,7 +152,7 @@ object ConstraintUtil {
 
   // custom Option[MaxLengthConstraintDefinition]
   sealed trait MaxLengthConstraintOption[+A] {
-    def toOption = this match {
+    def toOption: Option[A] = this match {
       case MaxLengthConstraintDefinition(maxLength) => Some(maxLength)
       case MaxLengthConstraintIsHandledByTheRegEx() => None
     }

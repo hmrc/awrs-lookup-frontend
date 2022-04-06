@@ -33,7 +33,7 @@ case class Address(
                     addressCountry: Option[String] = None
                   ) {
 
-  override def toString = toStringSeq.mkString(", ")
+  override def toString: String = toStringSeq.mkString(", ")
 
 
   override def equals(obj: Any): Boolean = obj match {
@@ -57,7 +57,7 @@ case class Address(
 }
 
 object Address {
-  implicit val formatter = Json.format[Address]
+  implicit val formatter: OFormat[Address] = Json.format[Address]
 
   implicit class AddressUtil(address: Option[Address]) {
     def toStringSeq: Seq[String] = address.fold(Seq[String]())(x => x.toStringSeq)
@@ -66,5 +66,5 @@ object Address {
 }
 
 object Info {
-  implicit val formatter = Json.format[Info]
+  implicit val formatter: OFormat[Info] = Json.format[Info]
 }

@@ -14,12 +14,20 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@this(govukButton : GovukButton)
 @()(implicit messages: Messages)
-<div class="form-group print-hidden">
-   <a class="govuk-link" id="print" href="javascript:window.print();"
-         class="govuk-button"
-         data-module="govuk-button"
-         role="button">@Messages("awrs.lookup.results.print_link")
+
+<div class="govuk-form-group print-hidden govuk-!-padding-bottom-5">
+    <div class="govuk-form-group">
+        @govukButton(Button(
+            href = Some("check-the-awrs-register"),
+            content = Text(messages("awrs.lookup.check_urn"))
+        ))
+    </div>
+
+   <a class="govuk-link govuk-!-font-size-19" id="print" href="javascript:window.print();">
+       @Messages("awrs.lookup.results.print_link")
    </a>
-    <p class="govuk-body">@Messages("awrs.lookup.or") <a href="check-the-awrs-register" class="govuk-link">@Messages("awrs.lookup.checkURN")</a></p>
 </div>
