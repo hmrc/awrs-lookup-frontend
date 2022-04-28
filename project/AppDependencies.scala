@@ -12,9 +12,9 @@ object AppDependencies {
 
   val compile = Seq(
     ws,
-    "uk.gov.hmrc" %% "bootstrap-frontend-play-28" % "5.21.0",
+    "uk.gov.hmrc" %% "bootstrap-frontend-play-28" % "5.24.0",
     "uk.gov.hmrc" %% "play-partials"              % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-frontend-hmrc"         % "3.11.0-play-28",
+    "uk.gov.hmrc" %% "play-frontend-hmrc"         % "3.15.0-play-28",
     "uk.gov.hmrc" %% "play-language"              % playLanguageVersion
   )
 
@@ -26,13 +26,13 @@ object AppDependencies {
   object Test {
     def apply(): Seq[sbt.ModuleID] = new TestDependencies {
       override lazy val test = Seq(
-        "uk.gov.hmrc"            %% "bootstrap-test-play-28" % "5.21.0"                 % scope,
+        "uk.gov.hmrc"            %% "bootstrap-test-play-28" % "5.24.0"                 % scope,
         "org.scalatestplus.play" %% "scalatestplus-play"     % scalaTestPlusPlayVersion % scope,
         "org.pegdown"            %  "pegdown"                % pegdownVersion           % scope,
         "org.jsoup"              %  "jsoup"                  % "1.14.3"                 % scope,
         "com.typesafe.play"      %% "play-test"              % PlayVersion.current      % scope,
         "org.mockito"            %  "mockito-all"            % mockitoVersion           % scope,
-        "org.mockito"            %  "mockito-core"           % "4.4.0"                  % scope,
+        "org.mockito"            %  "mockito-core"           % "4.5.1"                  % scope,
         "org.scalatestplus"      %% "mockito-3-12"           % "3.2.10.0"               % scope
       )
     }.test
