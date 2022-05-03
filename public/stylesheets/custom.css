@@ -1,5 +1,5 @@
 @media print {
-	.print-hidden, .govuk-header, .govuk-skip-link, .service-info, .report-error, a[href]:after, .hmrc-language-select, .govuk-footer {
+	.print-hidden, .govuk-header, .govuk-skip-link, .service-info, .report-error, a[href]:after, .hmrc-language-select, .govuk-footer, .govuk-button {
 		display: none !important;
 	}
     a:link, a:visited, a {
