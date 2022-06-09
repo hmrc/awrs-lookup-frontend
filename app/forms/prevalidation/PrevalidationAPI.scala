@@ -104,10 +104,8 @@ trait PrevalidationAPI[T] {
     (request.body match {
       case body: play.api.mvc.AnyContent if body.asFormUrlEncoded.isDefined => body.asFormUrlEncoded.get
       case body: play.api.mvc.AnyContent if body.asMultipartFormData.isDefined => body.asMultipartFormData.get.asFormUrlEncoded
-      case body: play.api.mvc.AnyContent if body.asJson.isDefined => FormUtils.fromJson(js = body.asJson.get).mapValues(Seq(_))
       case body: Map[_, _] => body.asInstanceOf[Map[String, Seq[String]]]
       case body: play.api.mvc.MultipartFormData[_] => body.asFormUrlEncoded
-      case body: play.api.libs.json.JsValue => FormUtils.fromJson(js = body).mapValues(Seq(_))
       case _ => Map.empty[String, Seq[String]]
     }) ++ request.queryString
   }
