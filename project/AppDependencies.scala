@@ -14,7 +14,7 @@ object AppDependencies {
     ws,
     "uk.gov.hmrc" %% "bootstrap-frontend-play-28" % "5.24.0",
     "uk.gov.hmrc" %% "play-partials"              % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-frontend-hmrc"         % "3.17.0-play-28",
+    "uk.gov.hmrc" %% "play-frontend-hmrc"         % "3.21.0-play-28",
     "uk.gov.hmrc" %% "play-language"              % playLanguageVersion
   )
 
@@ -29,10 +29,10 @@ object AppDependencies {
         "uk.gov.hmrc"            %% "bootstrap-test-play-28" % "5.24.0"                 % scope,
         "org.scalatestplus.play" %% "scalatestplus-play"     % scalaTestPlusPlayVersion % scope,
         "org.pegdown"            %  "pegdown"                % pegdownVersion           % scope,
-        "org.jsoup"              %  "jsoup"                  % "1.14.3"                 % scope,
+        "org.jsoup"              %  "jsoup"                  % "1.15.1"                 % scope,
         "com.typesafe.play"      %% "play-test"              % PlayVersion.current      % scope,
         "org.mockito"            %  "mockito-all"            % mockitoVersion           % scope,
-        "org.mockito"            %  "mockito-core"           % "4.5.1"                  % scope,
+        "org.mockito"            %  "mockito-core"           % "4.6.1"                  % scope,
         "org.scalatestplus"      %% "mockito-3-12"           % "3.2.10.0"               % scope
       )
     }.test
