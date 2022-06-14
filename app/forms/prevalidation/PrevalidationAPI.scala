@@ -120,21 +120,3 @@ trait PrevalidationAPI[T] {
   def form: play.api.data.Form[T] = formValidation
 
 }
-
-// copied the source from play 2.4, this is used by bindFromRequest
-private object FormUtils {
-
-  import play.api.libs.json._
-
-  def fromJson(prefix: String = "", js: JsValue): Map[String, String] = js match {
-    case JsObject(fields) =>
-      fields.map { case (key, value) => fromJson(Option(prefix).filterNot(_.isEmpty).map(_ + ".").getOrElse("") + key, value) }.foldLeft(Map.empty[String, String])(_ ++ _)
-    case JsArray(values) =>
-      values.zipWithIndex.map { case (value, i) => fromJson(prefix + "[" + i + "]", value) }.foldLeft(Map.empty[String, String])(_ ++ _)
-    case JsNull => Map.empty
-    case JsUndefined() => Map.empty
-    case JsBoolean(value) => Map(prefix -> value.toString)
-    case JsNumber(value) => Map(prefix -> value.toString)
-    case JsString(value) => Map(prefix -> value.toString)
-  }
-}
