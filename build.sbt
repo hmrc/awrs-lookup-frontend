@@ -13,12 +13,7 @@ lazy val playSettings : Seq[Setting[_]] = Seq.empty
 lazy val scoverageSettings = {
   import scoverage.ScoverageKeys
   Seq(
-    ScoverageKeys.coverageExcludedPackages  :=
-      """<empty>;app.*;config.*;Reverse.*;.*AuthService.*;models/.data/..*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup;prod.*;
-        |testOnlyDoNotUseInAppConf.*;uk.gov.hmrc.BuildInfo;views.*;
-        |audit.*;forms.prevalidation.*;forms.validation.util.*;
-        |utils.LoggingUtils;
-        """.stripMargin,
+    ScoverageKeys.coverageExcludedPackages  := "<empty>;app.*;config.*;Reverse.*;.*AuthService.*;models/.data/..*;uk.gov.hmrc.BuildInfo;uk.gov.hmrc.awrslookup;prod.*; testOnlyDoNotUseInAppConf.*;uk.gov.hmrc.BuildInfo;views.*; audit.*;forms.prevalidation.*;forms.validation.util.*; utils.LoggingUtils;",
     ScoverageKeys.coverageMinimumStmtTotal := 80,
     ScoverageKeys.coverageFailOnMinimum := false,
     ScoverageKeys.coverageHighlighting := true,
