@@ -148,32 +148,24 @@
                     <h2 class="govuk-heading-s" id="result_tradingName_label_@{index}">@Messages("awrs.lookup.results.trading_name")</h2>
                     <p class="govuk-body" id="result_tradingName_detail_@{index}">@knownName(memberInfo)</p>
                 </div>
-
                 @info(memberInfo, index.toString)
-
             </div>
-
-            <div class="grid border"></div>
-
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
         }
     }
 }
 
 @business(business: Business) = {
-    <h1 class="govuk-heading-xl" id="results-heading">
-        @mainHeading
-    </h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="results-heading">@mainHeading</h1>
     @status_warning(result)
-    <table id="results-table" role="presentation">
-        @common(showRegNumber = true)
-        <div class="govuk-grid-row">
-            @info(business.info)
-        </div>
-    </table>
+    @common(showRegNumber = true)
+    <div class="govuk-grid-row">
+        @info(business.info)
+    </div>
 }
 
 @group(group: Group) = {
-    <h1 class="govuk-heading-xl" id="results-heading">@mainHeading</h1>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="results-heading">@mainHeading</h1>
     @status_warning(result)
     @tableHeadingMedium(id+"_representative", Messages("awrs.lookup.results.group_rep_table_heading"), additionalClasses = None)
     @common(showRegNumber = true)
