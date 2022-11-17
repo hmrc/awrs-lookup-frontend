@@ -32,7 +32,9 @@
 
 @result.status match {
     case AwrsStatus.Approved => {
-        @govukWarningText(WarningText(content = HtmlContent(
+        @govukWarningText(WarningText(
+            iconFallbackText = "Warning",
+            content = HtmlContent(
             Messages("awrs.lookup.results.approved.warning_info") +
                     link +
                     Messages("awrs.lookup.results.approved.warning_info2") +
