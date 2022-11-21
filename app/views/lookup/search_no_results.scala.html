@@ -44,28 +44,8 @@
     }
 }
 
-@searchbar = {
-    <div class="search print-hidden">
-        @awrsInputTypeText(
-            field = searchForm("query"),
-            inputClass = "search-awrs",
-            parentForm = searchForm,
-            maxLength = 140,
-            label = Messages("awrs.lookup.search.label"),
-            labelClass = "visuallyhidden"
-        )
-    </div>
-    @search_button(id = "search", classAttr = None)
-}
-
-@pageScripts = {
-    <script src='@routes.Assets.versioned("javascripts/awrs.js")'></script>
-}
-
-@mainTemplate(title = Messages("awrs.lookup.results.page_title_no_results"), bodyClasses = None, scriptElem = pageScripts) {
-    <div class="grid">
-        <div class="grid-2-3">
-            @noResults
-        </div>
+@mainTemplate(title = Messages("awrs.lookup.results.page_title_no_results")) {
+    <div class="govuk-from-group">
+        @noResults
     </div>
 }

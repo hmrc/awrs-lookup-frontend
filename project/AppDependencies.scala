@@ -8,13 +8,13 @@ object AppDependencies {
   private val scalaTestPlusPlayVersion = "5.1.0"
   private val pegdownVersion           = "1.6.0"
   private val mockitoVersion           = "1.10.19"
-  private val playLanguageVersion      = "5.3.0-play-28"
+  private val playLanguageVersion      = "5.4.0-play-28"
 
   val compile = Seq(
     ws,
     "uk.gov.hmrc" %% "bootstrap-frontend-play-28" % "5.25.0",
     "uk.gov.hmrc" %% "play-partials"              % playPartialsVersion,
-    "uk.gov.hmrc" %% "play-frontend-hmrc"         % "3.31.0-play-28",
+    "uk.gov.hmrc" %% "play-frontend-hmrc"         % "3.33.0-play-28",
     "uk.gov.hmrc" %% "play-language"              % playLanguageVersion
   )
 
@@ -32,7 +32,7 @@ object AppDependencies {
         "org.jsoup"              %  "jsoup"                  % "1.15.3"                 % scope,
         "com.typesafe.play"      %% "play-test"              % PlayVersion.current      % scope,
         "org.mockito"            %  "mockito-all"            % mockitoVersion           % scope,
-        "org.mockito"            %  "mockito-core"           % "4.8.0"                  % scope,
+        "org.mockito"            %  "mockito-core"           % "4.9.0"                  % scope,
         "org.scalatestplus"      %% "mockito-3-12"           % "3.2.10.0"               % scope
       )
     }.test

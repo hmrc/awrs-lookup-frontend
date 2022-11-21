@@ -19,20 +19,9 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
-@this(warning : GovukWarningText)
+@this(govukWarningText : GovukWarningText)
 
 @(result: models.AwrsEntry)(implicit request : Request[AnyContent], messages: Messages)
-
-@approvedText = {
-    <div class="indent-warning govuk-!-padding-6" style="font-weight: bold">
-     <span class="visuallyhidden">@Messages("awrs.lookup.warning")</span>
-     @Messages("awrs.lookup.results.approved.warning_info")
-       <a id="due_diligence_link" class="govuk-link"
-          href="https://www.gov.uk/government/publications/excise-notice-2002-alcohol-wholesaler-registration-scheme/excise-notice-2002-alcohol-wholesaler-registration-scheme#trade-buyers-obligations">
-          @Messages("awrs.lookup.results.approved.warning_info2")</a>.
-    </div>
-    <br>
- }
 
 @link = {
     <a id="due_diligence_link" class="govuk-link"
@@ -43,7 +32,9 @@
 
 @result.status match {
     case AwrsStatus.Approved => {
-        @warning(WarningText(content = HtmlContent(
+        @govukWarningText(WarningText(
+            iconFallbackText = "Warning",
+            content = HtmlContent(
             Messages("awrs.lookup.results.approved.warning_info") +
                     link +
                     Messages("awrs.lookup.results.approved.warning_info2") +

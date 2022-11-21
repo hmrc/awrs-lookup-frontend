@@ -20,7 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@this(warning : GovukWarningText, govukButton : GovukButton)
+@this(govukWarningText : GovukWarningText, govukButton : GovukButton)
 
 @(searchTermWithNoResult: String, errorMessage: Option[String] = None)(implicit request: Request[AnyContent], messages: Messages)
 
@@ -30,14 +30,13 @@
 }
 
 @searchedFor = {
-          <h1 class="govuk-heading-xl" id="not-found">@Messages("awrs.lookup.search.not_found")</h1>
+   <h1 class="govuk-heading-xl" id="not-found">@Messages("awrs.lookup.search.not_found")</h1>
 
-            <div class="panel panel-indent panel-border-wide space">
-                <p id="no-results-search-term" class="govuk-body">@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format
-                        (searchTermWithNoResult
-                        .replaceAll("\\s", "")))</p>
-                <p id="no-results-info" class="govuk-body">@Messages("awrs.lookup.search.no_results.info")</p>
-            </div>
+   <p id="no-results-search-term" class="govuk-body">@Messages("awrs.lookup.search.search_for", AwrsNumberFormatter.format
+                 (searchTermWithNoResult
+                 .replaceAll("\\s", "")))</p>
+   <p id="no-results-info" class="govuk-body">@Messages("awrs.lookup.search.no_results.info")</p>
+
 }
 
 @invalidURN(message:String) = {
@@ -45,7 +44,6 @@
      <p id="no-results-info" class="govuk-body">@Messages("awrs.lookup.search.no_results.info")</p>
      @checkURN
 }
-
 
 @panel = @{
     errorMessage match {
@@ -67,11 +65,15 @@
 }
 
 @infoContent = {
-    @warning(WarningText(content = HtmlContent(warningContent)))
+    @govukWarningText(WarningText(
+        iconFallbackText = "Warning",
+        content = HtmlContent(warningContent)
+    ))
 
     @whatToDo
     @checkURN
 }
+
 @checkURN = {
     @govukButton(Button(
         href = Some("check-the-awrs-register"),
@@ -88,13 +90,6 @@
     }
 }
 
-
 @panel
 
 @info
-
-
-
-
-
-

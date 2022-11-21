@@ -27,7 +27,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
-@this(mainTemplate: main_template, button: GovukButton, input: GovukInput)
+@this(mainTemplate: main_template, govukButton: GovukButton, govukInput: GovukInput)
 
 @(
     searchForm : Form[Query],
@@ -46,7 +46,7 @@
 
 @searchbar = {
     <div class="search">
-        @input(Input(
+        @govukInput(Input(
             id = "query",
             name = "query",
             classes = "govuk-input--width-20",
@@ -55,28 +55,26 @@
               classes = "govuk-label--xl",
               content = Text(Messages("awrs.lookup.search.heading"))
             ),
-            hint = Hint(content = HtmlContent(Messages("awrs.lookup.search.lede", awrs_urn(), "")))
+            hint = Hint(content = HtmlContent(Messages("awrs.lookup.search.lede")))
         ))
     </div>
 
-
-    @button(Button(content = Text(Messages("awrs.generic.continue")), attributes = Map("id" -> "search")))
+   @govukButton(Button(
+        content = Text(Messages("awrs.generic.continue")),
+        attributes = Map("id" -> "search")
+   ))
 }
 
-@pageScripts = {<script src='@routes.Assets.versioned("javascripts/awrs.js")'></script>}
+@mainTemplate(title = title) {
 
-@mainTemplate(title = title, bodyClasses = None, scriptElem = pageScripts) {
-    <div class="grid">
-        <div class="grid-2-3">
-            @preFormContent
-            @*  This uses the play's default form helper which does not include the hidden CSRF token field.
-                This is because currently this service is completely sessionless and stateless thus
-                does not require CSRF protection, and we do not want it to appear in the query String.
-            *@
-            @helper.form(action = action, 'id -> "search-form") {
-                @searchbar
-            }
-            @postFormContent
-        </div>
-    </div>
+    @preFormContent
+    @*  This uses the play's default form helper which does not include the hidden CSRF token field.
+        This is because currently this service is completely sessionless and stateless thus
+        does not require CSRF protection, and we do not want it to appear in the query String.
+    *@
+    @helper.form(action = action, 'id -> "search-form") {
+        @searchbar
+    }
+    @postFormContent
+
 }
