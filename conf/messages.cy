@@ -83,12 +83,6 @@ awrs.lookup.results.Group_members = Aelodau’r grŵp
 awrs.lookup.check_urn = Gwirio Cyfeirnod Unigryw (URN)
 awrs.lookup.warning = Rhybudd
 
-##### USER RESEARCH BANNER
-
-urbanner.message.text = Helpwch i wella gwasanaethau digidol drwy ymuno â phanel defnyddwyr CThEM (yn agor ffenestr newydd)
-urbanner.message.reject = Dim diolch
-
-
 ##### Months
 
 month.1 = Ionawr

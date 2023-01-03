@@ -83,11 +83,6 @@ awrs.lookup.results.Group_members = Group members
 awrs.lookup.check_urn = Check a URN
 awrs.lookup.warning = Warning
 
-##### USER RESEARCH BANNER
-
-urbanner.message.text = Help improve digital services by joining the HMRC user panel (opens in new window)
-urbanner.message.reject = No thanks
-
 ##### Months
 
 month.1 = January
