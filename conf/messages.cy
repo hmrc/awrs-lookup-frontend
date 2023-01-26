@@ -49,10 +49,7 @@ awrs.lookup.search.no_results.info =  Gwiriwch fod gennych y manylion cywir gan 
 awrs.lookup.search.label = Rhowch Gyfeirnod Unigryw dilys
 awrs.lookup.search.search_for = Gwnaethoch chwilio am {0}
 awrs.lookup.search.not_found = Dim canlyniadau
-awrs.lookup.search.info = Dim ond oddi wrth cyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os ydych yn prynu oddi wrth cyfanwerthwyr neu gynhyrchwyr sydd heb eu cymeradwyo, gallech wynebu’r canlynol:
-awrs.lookup.search.info.bullet.1 = erlyniad
-awrs.lookup.search.info.bullet.2 = dirwy
-awrs.lookup.search.info.bullet.3 = eich alcohol yn cael ei atafaelu
+awrs.lookup.search.info = Dim ond oddi wrth gyfanwerthwyr neu gynhyrchwyr cymeradwy y dylech brynu. Os byddwch yn prynu oddi wrth gyfanwerthwyr neu gynhyrchwyr nad ydynt wedi’u cymeradwyo, gallech gael eich erlyn, eich dirwyo neu gall eich stoc alcohol gael ei atafaelu.
 
 ##### RESULTS PAGE
 
