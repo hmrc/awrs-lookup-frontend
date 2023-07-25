@@ -39,8 +39,8 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
 
   object TestLookupConnector extends LookupConnector(loggingUtils, mockWSHttp, configuration, servicesConfig)
 
-  override def beforeEach {
-    super.beforeEach
+  override def beforeEach(): Unit = {
+    super.beforeEach()
     reset(mockWSHttp)
   }
 

@@ -45,7 +45,7 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
                                                  lookupCall: lookupServiceCall
                                                  )(implicit request: Request[AnyContent]): Future[Result] = {
     implicit val lang: Lang = request.lang
-    preValidationForm.bindFromRequest.fold(
+    preValidationForm.bindFromRequest().fold(
       formWithErrors => {
         val query = formWithErrors.data.get("query")
         val err = formWithErrors.errors.head.messages.head.split(".summary#").head

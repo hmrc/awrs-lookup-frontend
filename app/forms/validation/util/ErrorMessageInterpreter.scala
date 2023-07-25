@@ -75,7 +75,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
       extract(messageString)
     } else {
       val msgParam: Array[String] = messageString.split(paramDelimiter, -1).drop(1)
-      MessageArguments(msgParam: _*)
+      MessageArguments(msgParam.toSeq: _*)
     }
 
   /** ************************************ end madness ********************************************/
@@ -99,10 +99,12 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
     }
   }
 
-  private def paramContainsId(id: String, args: Seq[Any]): Boolean = args.map {
-    case arg: String => arg == id //only used for backwards compatibility
-    case TargetFieldIds(anchor, otherids@_*) if otherids.isEmpty => anchor.equals(id)
-    case TargetFieldIds(anchor, otherids@_*) => anchor.equals(id) || otherids.contains(id)
+  private def paramContainsId(id: String, args: Seq[Any]): Boolean = args.map { x =>
+    (x: @unchecked) match {
+      case arg: String => arg == id //only used for backwards compatibility
+      case TargetFieldIds(anchor, otherids@_*) if otherids.isEmpty => anchor.equals(id)
+      case TargetFieldIds(anchor, otherids@_*) => anchor.equals(id) || otherids.contains(id)
+    }
   }.fold(false)(_ || _)
 
   // not sure what field.name == error.args.fold(error.key) { _ + "." + _ } is intended for
@@ -111,7 +113,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
     lazy val filtered =
       form.errors.filter { error =>
         error.key == field.name || paramContainsId(field.name, error.args) || field.name ==
-          error.args.fold(error.key)(_ + "." + _)
+          error.args.fold(error.key)((x, y) => s"$x.$y")
       }
     filtered.map(error => formatFieldError(error))
   }
@@ -128,7 +130,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
 
   def getFieldErrors(field: String, form: Form[_])(implicit messages: Messages, messagesApi: MessagesApi): Seq[FieldError] = {
     lazy val filtered = form.errors.filter { error => error.key == field || error.args.contains(field) || field == error.args.fold(error.key) {
-      _ + "." + _
+      (x, y) => s"$x.$y"
     }
     }
     filtered.map(error => formatFieldError(error))
@@ -161,10 +163,10 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
     form.errors.map { error =>
       val anchor = error.args.nonEmpty match {
         case true => {
-          error.args.head match {
+          (error.args.head: @unchecked) match {
             case arg: String =>
               if (error.key.nonEmpty) {
-                error.key + error.args.fold("")(_ + "." + _)
+                error.key + error.args.fold("")((x, y) => s"$x.$y")
               } else {
                 getAnchorId(error.args)
               }
@@ -227,7 +229,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
       extract2(messageString)
     } else {
       val msgParam: Array[String] = messageString.split(paramDelimiter, -1)
-      MessageArguments(msgParam: _*)
+      MessageArguments(msgParam.toSeq: _*)
     }
 
   /** ************************************ end madness ********************************************/

@@ -68,14 +68,14 @@ trait PrevalidationAPI[T] {
     preprocessFunctions.foldLeft(data)((data, function) => function(data))
 
   private def preprocess(key: String, value: String): String = {
-    val trimmedField: String = trimRules.getOrElse(removeKeyPrefix(key), TrimOption.bothAndCompress) match {
+    val trimmedField: String = (trimRules.getOrElse(removeKeyPrefix(key), TrimOption.bothAndCompress): @unchecked) match {
       case TrimOption.both => trimBothFunc(value)
       case TrimOption.bothAndCompress => trimBothAndCompressFunc(value)
       case TrimOption.all => trimAllFunc(value)
       case TrimOption.none => value
     }
     val sanitisedField: String = XssFilter.filter(trimmedField)
-    caseRules.getOrElse(removeKeyPrefix(key), CaseOption.none) match {
+    (caseRules.getOrElse(removeKeyPrefix(key), CaseOption.none): @unchecked) match {
       case CaseOption.upper => sanitisedField.toUpperCase
       case CaseOption.lower => sanitisedField.toLowerCase
       case CaseOption.none => sanitisedField

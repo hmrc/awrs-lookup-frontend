@@ -69,7 +69,7 @@ class LookupControllerTest extends AwrsUnitTestTraits {
         case _ => ""
       }
       val oResult = route(app, FakeRequest(GET, "/check-the-awrs-register" + qString))
-      oResult mustBe 'defined
+      oResult mustBe Symbol("defined")
       val result = oResult.get
       status(result) mustBe OK
       val doc = result.getDocument

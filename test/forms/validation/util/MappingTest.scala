@@ -116,8 +116,10 @@ class MappingTest extends AwrsUnitTestTraits {
     val expecations = CompulsoryFieldValidationExpectations(emptyError, maxLenError, formatError)
 
     prefixedFieldId assertFieldIsCompulsoryWhen(preCondition, expecations)
-    if (ignoreCondition.nonEmpty)
+    if (ignoreCondition.nonEmpty) {
       prefixedFieldId assertFieldIsIgnoredWhen(ignoreCondition, expecations.toFieldToIgnore)
+    }
+
   }
 
   def optionalFieldTest[T](fieldId: String,
@@ -199,8 +201,8 @@ class MappingTest extends AwrsUnitTestTraits {
       implicit val form = Form(
         mapping(
           "field1" -> optional(text),
-          "field2" -> (defaultCompulsoryMapping("field2") iff field1IsEmpty),
-          "field3" -> (defaultOptionalMapping("field3") iff field1IsEmpty)
+          "field2" -> (defaultCompulsoryMapping("field2") iff field1IsEmpty()),
+          "field3" -> (defaultOptionalMapping("field3") iff field1IsEmpty())
         )(Test.apply)(Test.unapply))
 
       "trigger validation errors" in {
@@ -241,7 +243,7 @@ class MappingTest extends AwrsUnitTestTraits {
       // therefore all submappings should be configurable functions to allow customisation
       val submap = (prefix: Option[String]) => mapping(
         "field1" -> optional(text),
-        "field2" -> (defaultCompulsoryMapping(attachPrefix(prefix, "field2")) iff field1IsEmpty)
+        "field2" -> (defaultCompulsoryMapping(attachPrefix(prefix, "field2")) iff field1IsEmpty())
       )(SubTest.apply)(SubTest.unapply)
 
       implicit val form = Form(mapping(

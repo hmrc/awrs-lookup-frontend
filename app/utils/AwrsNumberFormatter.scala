@@ -16,7 +16,6 @@
 
 package utils
 
-import scala.util.Try
 import scala.util.matching.Regex
 
 
@@ -26,9 +25,10 @@ object AwrsNumberFormatter {
 
   @inline def format(str: String): String = formatOrElse(str, str)
 
-  def formatOrElse(str: String, elseString: String): String = Try[String] {
-    val awrsFormatPattern(a, b, c, d) = str
-    a + " " + b + " " + c + " " + d
-  }.getOrElse(elseString)
+  def formatOrElse(str: String, elseString: String): String =
+    str match {
+      case awrsFormatPattern(a, b, c, d) => a + " " + b + " " + c + " " + d
+      case _ => elseString
+    }
 
 }
