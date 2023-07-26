@@ -21,10 +21,10 @@ import connectors.LookupConnector
 import models.SearchResult
 import uk.gov.hmrc.http.HeaderCarrier
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class LookupService @Inject()(val connector: LookupConnector) {
 
-  def lookup(queryString: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] =
+  def lookup(queryString: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SearchResult]] =
       connector.queryByUrn(queryString)
 }

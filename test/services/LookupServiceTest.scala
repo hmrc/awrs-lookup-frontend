@@ -23,6 +23,7 @@ import connectors.LookupConnector
 import models.{AwrsEntry, AwrsStatus, Business, Info, SearchResult}
 import utils.AwrsUnitTestTraits
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class LookupServiceTest extends AwrsUnitTestTraits {
@@ -48,7 +49,7 @@ class LookupServiceTest extends AwrsUnitTestTraits {
 
       val mockLookupConnector = mock[LookupConnector]
 
-      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any())).thenReturn(dataToReturn)
+      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(dataToReturn)
       val lookupService = new LookupService(mockLookupConnector)
 
       val resultWithData = lookupService.lookup(testAwrs)
@@ -63,7 +64,7 @@ class LookupServiceTest extends AwrsUnitTestTraits {
 
       val mockLookupConnector = mock[LookupConnector]
 
-      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any())).thenReturn(dataToReturn)
+      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(dataToReturn)
       val lookupService = new LookupService(mockLookupConnector)
 
       val resultWithData = lookupService.lookup(testAwrs)

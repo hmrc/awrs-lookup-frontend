@@ -1,7 +1,6 @@
 import sbt.Keys.scalacOptions
 import uk.gov.hmrc.DefaultBuildSettings._
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName: String = "awrs-lookup-frontend"
 val silencerVersion = "1.7.12"
@@ -26,7 +25,6 @@ lazy val microservice = Project(appName, file("."))
   .settings(playSettings ++ scoverageSettings : _*)
   .settings( majorVersion := 0 )
   .settings(scalaSettings: _*)
-  .settings(publishingSettings: _*)
   .settings(defaultSettings(): _*)
   .settings(
     scalaVersion := "2.13.8",
