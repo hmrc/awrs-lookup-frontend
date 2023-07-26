@@ -30,7 +30,7 @@ import utils.TestUtils.{testBusinessSearchResult, _}
 import utils.{AwrsUnitTestTraits, HtmlUtils}
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {

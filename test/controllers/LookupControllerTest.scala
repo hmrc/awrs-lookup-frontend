@@ -29,7 +29,7 @@ import utils.AwrsUnitTestTraits
 import utils.HtmlUtils._
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class LookupControllerTest extends AwrsUnitTestTraits {
