@@ -29,7 +29,6 @@ import services.LookupService
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class LookupController @Inject()(mcc: MessagesControllerComponents,
@@ -40,6 +39,7 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
                                  errorTemplate: error_template) extends AwrsLookupController(mcc) with RawResponseReads {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
+  implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call,
                                                  lookupCall: lookupServiceCall
