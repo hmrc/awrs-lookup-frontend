@@ -21,6 +21,7 @@ import connectors.RawResponseReads
 import forms.SearchForm
 import forms.SearchForm._
 import forms.prevalidation.PrevalidationAPI
+
 import javax.inject.Inject
 import models.{Query, SearchResult}
 import play.api.i18n.{Lang, Messages}
@@ -29,15 +30,14 @@ import services.LookupService
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class LookupController @Inject()(mcc: MessagesControllerComponents,
                                  val lookupService: LookupService,
                                  searchMain: search_main,
                                  searchNoResults: search_no_results,
                                  singleResult: single_result,
-                                 errorTemplate: error_template) extends AwrsLookupController(mcc) with RawResponseReads {
+                                 errorTemplate: error_template)(implicit ec: ExecutionContext) extends AwrsLookupController(mcc) with RawResponseReads {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
 
@@ -45,7 +45,7 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
                                                  lookupCall: lookupServiceCall
                                                  )(implicit request: Request[AnyContent]): Future[Result] = {
     implicit val lang: Lang = request.lang
-    preValidationForm.bindFromRequest.fold(
+    preValidationForm.bindFromRequest().fold(
       formWithErrors => {
         val query = formWithErrors.data.get("query")
         val err = formWithErrors.errors.head.messages.head.split(".summary#").head

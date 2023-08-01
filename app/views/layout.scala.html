@@ -15,9 +15,7 @@
  *@
 
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcReportTechnicalIssueHelper
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En, LanguageSelect}
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
-@import views.html.helper.CSPNonce
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
 
 @this(
@@ -29,7 +27,7 @@
 @(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @headBlockString = {
-    @hmrcTrackingConsentSnippet(nonce = CSPNonce.get)
+    @hmrcTrackingConsentSnippet()
 }
 
 @content = {
@@ -43,5 +41,4 @@
     pageTitle = pageTitle,
     isWelshTranslationAvailable = true,
     serviceUrl = Some(routes.LookupController.show().url),
-    nonce = CSPNonce.get,
     additionalScriptsBlock = scripts)(content)

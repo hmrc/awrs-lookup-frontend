@@ -30,7 +30,7 @@ import utils.TestUtils.{testBusinessSearchResult, _}
 import utils.{AwrsUnitTestTraits, HtmlUtils}
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
@@ -59,7 +59,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display an awrs entry when a valid reference is entered" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
@@ -80,7 +80,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
+      when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(None))
       val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
       document.title mustBe Messages("awrs.lookup.results.page_title_no_results")
       document.getElementById("not-found").text must include(Messages("awrs.lookup.search.not_found"))

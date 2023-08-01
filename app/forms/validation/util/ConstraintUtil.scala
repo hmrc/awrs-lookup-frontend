@@ -189,31 +189,37 @@ object ConstraintUtil {
 
   // sub constraints for text fields
   private def fieldMustNotBeEmptyConstraint[A](config: FieldIsEmptyConstraintParameter): Constraint[A] =
-  Constraint {
-    case str: String =>
-      fieldIsNotEmptyValidationFunction(str, config.errorMessage)
-    case Some(str: String) =>
-      fieldIsNotEmptyValidationFunction(str, config.errorMessage)
+  Constraint { x =>
+    (x: @unchecked) match {
+      case str: String =>
+        fieldIsNotEmptyValidationFunction(str, config.errorMessage)
+      case Some(str: String) =>
+        fieldIsNotEmptyValidationFunction(str, config.errorMessage)
+    }
   }
 
   private def fieldMustBeWithinMaxLengthConstraint[A](config: MaxLengthConstraintOption[FieldMaxLengthConstraintParameter]): Constraint[A] =
-    config match {
+    (config : @unchecked) match {
       case MaxLengthConstraintDefinition(maxLenConfig) =>
-        Constraint {
-          case str: String =>
-            fieldMaxLengthValidationFunction(str, maxLenConfig.len, maxLenConfig.errorMessage)
-          case Some(str: String) =>
-            fieldMaxLengthValidationFunction(str, maxLenConfig.len, maxLenConfig.errorMessage)
+        Constraint { x =>
+          (x: @unchecked) match {
+            case str: String =>
+              fieldMaxLengthValidationFunction(str, maxLenConfig.len, maxLenConfig.errorMessage)
+            case Some(str: String) =>
+              fieldMaxLengthValidationFunction(str, maxLenConfig.len, maxLenConfig.errorMessage)
+          }
         }
       case _ => noConstraint[A]
     }
 
   private def fieldMustHaveValidFormatConstraint[A](config: Seq[FieldFormatConstraintParameter]): Seq[Constraint[A]] =
-    config.map(format => Constraint[A]("") {
-      case str: String =>
-        fieldFormatValidationFunction(str, format.patternMatch)
-      case Some(str: String) =>
-        fieldFormatValidationFunction(str, format.patternMatch)
+    config.map(format => Constraint[A]("") { x =>
+      (x: @unchecked) match {
+        case str: String =>
+          fieldFormatValidationFunction(str, format.patternMatch)
+        case Some(str: String) =>
+          fieldFormatValidationFunction(str, format.patternMatch)
+      }
     })
 
   // generic constraints for text fields on mappings

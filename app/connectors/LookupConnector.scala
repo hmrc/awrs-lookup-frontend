@@ -29,9 +29,7 @@ import utils.LoggingUtils
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, InternalServerException}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class LookupConnector @Inject()(loggingUtils: LoggingUtils,
                                 http: DefaultHttpClient,
@@ -79,7 +77,7 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
       throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
   }
 
-  def queryByUrn(query: String)(implicit hc: HeaderCarrier): Future[Option[SearchResult]] = {
+  def queryByUrn(query: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SearchResult]] = {
     val getURL = byUrnUrl(prevalidation.trimAllFunc(query).toUpperCase)
     http.GET(getURL) flatMap responseCore(s"ByUrl[ $query ]")
   }

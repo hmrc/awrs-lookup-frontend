@@ -17,7 +17,6 @@
 package connectors
 
 import java.util.UUID
-
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.http.Status._
@@ -39,8 +38,8 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
 
   object TestLookupConnector extends LookupConnector(loggingUtils, mockWSHttp, configuration, servicesConfig)
 
-  override def beforeEach {
-    super.beforeEach
+  override def beforeEach(): Unit = {
+    super.beforeEach()
     reset(mockWSHttp)
   }
 
@@ -50,6 +49,7 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
   "LookupConnector by urn" should {
 
     implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
+    implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
     "lookup an awrs entry when a valid reference number is entered" in {
       val expectedResult: Option[SearchResult] = testBusinessSearchResult
