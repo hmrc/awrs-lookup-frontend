@@ -3,7 +3,7 @@ import uk.gov.hmrc.DefaultBuildSettings._
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 
 val appName: String = "awrs-lookup-frontend"
-val silencerVersion = "1.7.12"
+val silencerVersion = "1.17.13"
 
 lazy val appDependencies : Seq[ModuleID] = AppDependencies()
 lazy val plugins : Seq[Plugins] = Seq.empty
