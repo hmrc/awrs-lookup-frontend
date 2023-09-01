@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import views.html.helper.CSPNonce
+
 @this(layout: layout)
 @(title: String,
   sidebarLinks: Option[Html] = None,
@@ -24,7 +26,7 @@
 
 @linkElement = {
     <link rel="stylesheet" href=@routes.Assets.versioned("stylesheets/custom.css")>
-    <script src='@routes.Assets.versioned("javascripts/jquery-3.5.1.min.js")'></script>
+    <script @CSPNonce.attr src='@routes.Assets.versioned("javascripts/jquery-3.5.1.min.js")'></script>
 }
 
 @layout(Some(title), Some(linkElement))(mainContent)
