@@ -72,7 +72,7 @@
         This is because currently this service is completely sessionless and stateless thus
         does not require CSRF protection, and we do not want it to appear in the query String.
     *@
-    @helper.form(action = action, 'id -> "search-form") {
+    @helper.form(action = action, Symbol("id") -> "search-form") {
         @searchbar
     }
     @postFormContent

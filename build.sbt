@@ -3,7 +3,6 @@ import uk.gov.hmrc.DefaultBuildSettings._
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 
 val appName: String = "awrs-lookup-frontend"
-val silencerVersion = "1.17.13"
 
 lazy val appDependencies : Seq[ModuleID] = AppDependencies()
 lazy val plugins : Seq[Plugins] = Seq.empty
@@ -28,14 +27,9 @@ lazy val microservice = Project(appName, file("."))
   .settings(defaultSettings(): _*)
   .settings(
     scalaVersion := "2.13.8",
+    scalacOptions ++= Seq("-Wconf:src=routes/.*:s", "-Ywarn-unused:-implicits", "-Wconf:cat=unused-imports&src=html/.*:s"),
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
-    scalacOptions ++= Seq("-feature", "-P:silencer:pathFilters=views;routes"),
-    scalacOptions += "-Wconf:cat=lint-multiarg-infix:silent",
-    libraryDependencies ++= Seq(
-      compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
-      "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
-    ),
     TwirlKeys.templateImports ++= Seq(
       "uk.gov.hmrc.hmrcfrontend.views.html.{components => hmrcComponents}"
     )

@@ -26,10 +26,6 @@
 
 @(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
-@headBlockString = {
-    @hmrcTrackingConsentSnippet()
-}
-
 @content = {
     @contentBlock
     <div class="print-hidden">
