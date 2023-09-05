@@ -15,9 +15,10 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.helper.CSPNonce
 
 @this(govukButton : GovukButton)
-@()(implicit messages: Messages)
+@()(implicit messages: Messages, request: Request[AnyContent])
 
 <div class="govuk-form-group print-hidden govuk-!-padding-bottom-5">
     <div class="govuk-form-group">
@@ -27,7 +28,12 @@
         ))
     </div>
 
-   <a class="govuk-link govuk-!-font-size-19" id="print" href="javascript:window.print();">
-       @Messages("awrs.lookup.results.print_link")
-   </a>
+   <a class="govuk-link govuk-!-font-size-19" id="printSave" href="#">@messages("awrs.lookup.results.print_link")</a>
+
+    <script @CSPNonce.attr>
+       document.getElementById("printSave").addEventListener("click", function() {
+         window.print()
+       });
+    </script>
+
 </div>
