@@ -28,9 +28,7 @@
     searchResult: Option[SearchResult] = None
 )(implicit
     request : Request[AnyContent],
-    messagesProvider: MessagesProvider,
-    messagesApi: MessagesApi,
-    lang: Lang
+    messagesProvider: MessagesProvider
 )
 
 @searchTitle = @{

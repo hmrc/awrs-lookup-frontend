@@ -24,7 +24,7 @@ import forms.prevalidation.PrevalidationAPI
 
 import javax.inject.Inject
 import models.{Query, SearchResult}
-import play.api.i18n.{Lang, Messages}
+import play.api.i18n.Messages
 import play.api.mvc._
 import services.LookupService
 import views.html.error_template
@@ -44,7 +44,6 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call,
                                                  lookupCall: lookupServiceCall
                                                  )(implicit request: Request[AnyContent]): Future[Result] = {
-    implicit val lang: Lang = request.lang
     preValidationForm.bindFromRequest().fold(
       formWithErrors => {
         val query = formWithErrors.data.get("query")
@@ -72,12 +71,11 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
 
     implicit request =>
 
-      val lang: Lang = request.lang
       val action = controllers.routes.LookupController.show()
       if (request.queryString.contains(SearchForm.query)) {
         validateFormAndSearch(preValidationForm = searchForm, action = action, lookupCall = lookupService.lookup)
       } else {
-        Ok(searchMain(searchForm.form, action)(request, request2Messages, messagesApi, lang))
+        Ok(searchMain(searchForm.form, action)(request, request2Messages))
       }
   }
 

@@ -28,9 +28,7 @@
     errorMessage: Option[String] = None
 )(implicit
     request: Request[AnyContent],
-    messagesProvider: MessagesProvider,
-    messagesApi: MessagesApi,
-    lang: Lang
+    messagesProvider: MessagesProvider
 )
 
 @noResults = {

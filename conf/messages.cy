@@ -9,7 +9,6 @@ awrs.generic.status.approved = Cymeradwywyd
 awrs.generic.status.revoked = Heb ei gymeradwyo mwyach
 awrs.generic.status.deregistered = Heb ei gymeradwyo mwyach
 awrs.generic.status.notfound = Dim canlyniadau
-awrs.generic.status.approved_group_member = Cymeradwywyd fel rhan o’r grŵp
 awrs.generic.continue = Parhau
 awrs.generic.important = Gwybodaeth bwysig
 

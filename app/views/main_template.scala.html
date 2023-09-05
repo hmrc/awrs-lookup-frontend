@@ -22,7 +22,7 @@
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
   mainClass: Option[String] = None,
-  scriptElem: Option[Html] = None)(mainContent: Html)(implicit request : Request[_], messages: Messages, lang: Lang)
+  scriptElem: Option[Html] = None)(mainContent: Html)(implicit request : Request[_], messages: Messages)
 
 @linkElement = {
     <link rel="stylesheet" href=@routes.Assets.versioned("stylesheets/custom.css")>

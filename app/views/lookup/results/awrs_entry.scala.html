@@ -27,7 +27,6 @@
     searchTerm: String,
     mainHeading: Html
 )(implicit
-    request : Request[AnyContent],
     messages: Messages
 )
 
@@ -101,21 +100,6 @@
             <p id="result_address_detail_@id" class="govuk-body">@address.addressLine1<br>@address.addressLine2<br>@address.addressLine3<br>@address.addressLine4<br>@address.postcode<br>@address.addressCountry</p>
         }
         case _ => {}
-    }
-}
-
-@memberStatus(id: String = id) = {
-    <h2 class="heading-small govuk-heading-l" id="result_awrs_status_label_member">@Messages("awrs.lookup.results.status_label")</h2>
-    @result.status match {
-        case AwrsStatus.DeRegistered => {
-            <p id="result_awrs_status_detail" class="govuk-body">@Messages("awrs.generic.status.deregistered")</p>
-        }
-        case AwrsStatus.Revoked => {
-            <p id="result_awrs_status_detail" class="govuk-body">@Messages("awrs.generic.status.revoked")</p>
-        }
-        case _ => {
-            <p id="result_awrs_status_detail" class="govuk-body">@Messages("awrs.generic.status.approved_group_member")</p>
-        }
     }
 }
 

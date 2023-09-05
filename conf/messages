@@ -9,7 +9,6 @@ awrs.generic.status.approved = Approved
 awrs.generic.status.revoked = No longer approved
 awrs.generic.status.deregistered = No longer approved
 awrs.generic.status.notfound = Not found
-awrs.generic.status.approved_group_member = Approved as part of the group
 awrs.generic.continue = Continue
 awrs.generic.important = Important information
 

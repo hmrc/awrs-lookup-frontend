@@ -115,9 +115,9 @@ class MappingTest extends AwrsUnitTestTraits {
 
     val expecations = CompulsoryFieldValidationExpectations(emptyError, maxLenError, formatError)
 
-    prefixedFieldId assertFieldIsCompulsoryWhen(preCondition, expecations)
+    prefixedFieldId.assertFieldIsCompulsoryWhen(preCondition, expecations)
     if (ignoreCondition.nonEmpty) {
-      prefixedFieldId assertFieldIsIgnoredWhen(ignoreCondition, expecations.toFieldToIgnore)
+      prefixedFieldId.assertFieldIsIgnoredWhen(ignoreCondition, expecations.toFieldToIgnore)
     }
 
   }
@@ -133,9 +133,9 @@ class MappingTest extends AwrsUnitTestTraits {
 
     val expecations = OptionalFieldValidationExpectations(maxLenError, formatError)
 
-    prefixedFieldId assertFieldIsOptionalWhen(preCondition, expecations)
+    prefixedFieldId.assertFieldIsOptionalWhen(preCondition, expecations)
     if (ignoreCondition.nonEmpty)
-      prefixedFieldId assertFieldIsIgnoredWhen(ignoreCondition, expecations.toFieldToIgnore)
+      prefixedFieldId.assertFieldIsIgnoredWhen(ignoreCondition, expecations.toFieldToIgnore)
   }
 
 
