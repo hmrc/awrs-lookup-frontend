@@ -18,6 +18,7 @@ package views.html
 
 import play.twirl.api.Html
 import models.Info
+import scala.language.implicitConversions
 
 package object helpers {
 

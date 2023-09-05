@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-import javax.inject.Inject
-import play.api.i18n.{Lang, MessagesApi}
+import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import views.html.error_template
+import javax.inject.Inject
 
 class AwrsFrontendErrorHandler @Inject()(implicit val messagesApi: MessagesApi,
                                          errorTemplate: error_template) extends FrontendErrorHandler {
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]): Html = {
-    implicit val lang: Lang = request.lang
     errorTemplate(pageTitle, heading, message)
   }
 }

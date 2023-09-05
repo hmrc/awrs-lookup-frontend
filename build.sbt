@@ -27,7 +27,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(defaultSettings(): _*)
   .settings(
     scalaVersion := "2.13.8",
-    scalacOptions ++= Seq("-Wconf:src=routes/.*:s", "-Ywarn-unused:-implicits", "-Wconf:cat=unused-imports&src=html/.*:s"),
+    scalacOptions ++= Seq("-feature", "-Wconf:src=routes/.*:s", "-Wconf:cat=unused-imports&src=html/.*:s"),
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
     TwirlKeys.templateImports ++= Seq(
