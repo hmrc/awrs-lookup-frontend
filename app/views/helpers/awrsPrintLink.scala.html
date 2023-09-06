@@ -28,10 +28,11 @@
         ))
     </div>
 
-   <a class="govuk-link govuk-!-font-size-19" id="printSave" href="#">@messages("awrs.lookup.results.print_link")</a>
+    <a class="govuk-link govuk-!-font-size-19" id="printDialogue" href="#printDialogue">@messages("awrs.lookup.results.print_link")</a>
 
     <script @CSPNonce.attr>
-       document.getElementById("printSave").addEventListener("click", function() {
+       document.getElementById("printDialogue").addEventListener("click", function(event) {
+         event.preventDefault()
          window.print()
        });
     </script>
