@@ -30,7 +30,7 @@
 @result.status match {
     case AwrsStatus.Revoked | AwrsStatus.DeRegistered => {
         @govukWarningText(WarningText(
-            iconFallbackText = Option("Warning"),
+            iconFallbackText = Option(Messages("awrs.lookup.warning")),
             content = HtmlContent(Messages("awrs.lookup.results.unapproved.info") + whatToDo),
             classes = "govuk-!-padding-top-6"))
     }
