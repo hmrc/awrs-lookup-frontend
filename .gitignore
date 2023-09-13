@@ -33,3 +33,6 @@ tmp
 bin
 .bsp
 .java-version
+.bloop
+.metals
+project/metals.sbt
