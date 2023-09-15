@@ -16,8 +16,8 @@
 
 package utils
 
-import java.time.{LocalDate, LocalDateTime}
-import java.time.format.{DateTimeFormatter, ResolverStyle, DateTimeParseException}
+import java.time.{LocalDate, LocalDateTime, ZoneId, ZonedDateTime}
+import java.time.format.{DateTimeFormatter, DateTimeParseException, ResolverStyle}
 import play.api.i18n.Messages
 
 object AwrsDateFormatter {
@@ -36,9 +36,9 @@ object AwrsDateFormatter {
   }
 
   def showDateTimeNowTranslation(dateTime: LocalDateTime = LocalDateTime.now())(implicit  messages: Messages): String = {
-      val format = setDateTimeFormat(dateTime.getMonthValue, true)
-      val formatter = DateTimeFormatter.ofPattern(format).withResolverStyle(resolverStyle)
-      dateTime.format(formatter).replace("AM", "am").replace("PM", "pm")
+    val format = setDateTimeFormat(dateTime.getMonthValue, true)
+    val formatter = DateTimeFormatter.ofPattern(format).withResolverStyle(resolverStyle)
+    dateTime.format(formatter).replace("AM", "am").replace("PM", "pm")
   }
 
   def setDateTimeFormat(monthValue: Int, showTime: Boolean = false)(implicit  messages: Messages): String = {
