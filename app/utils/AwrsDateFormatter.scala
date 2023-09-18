@@ -16,9 +16,10 @@
 
 package utils
 
-import java.time.{LocalDate, LocalDateTime, ZoneId, ZonedDateTime}
-import java.time.format.{DateTimeFormatter, DateTimeParseException, ResolverStyle}
 import play.api.i18n.Messages
+
+import java.time.format.{DateTimeFormatter, DateTimeParseException, ResolverStyle}
+import java.time.{LocalDate, LocalDateTime}
 
 object AwrsDateFormatter {
 
@@ -27,22 +28,22 @@ object AwrsDateFormatter {
 
   def showDateTranslation(str: Option[String])(implicit  messages: Messages): String = {
     try {
-        val date = stringToLocalDate(str.get, datePattern)
-        val formatter = DateTimeFormatter.ofPattern(setDateTimeFormat(date.getMonthValue)).withResolverStyle(resolverStyle)
-        date.format(formatter)
+      val date = stringToLocalDate(str.get, datePattern)
+      val formatter = DateTimeFormatter.ofPattern(setDateTimeFormat(date.getMonthValue)).withResolverStyle(resolverStyle)
+      date.format(formatter)
     } catch {
-        case e: DateTimeParseException => ""
+      case _: DateTimeParseException => ""
     }
   }
 
   def showDateTimeNowTranslation(dateTime: LocalDateTime = LocalDateTime.now())(implicit  messages: Messages): String = {
-    val format = setDateTimeFormat(dateTime.getMonthValue, true)
+    val format = setDateTimeFormat(dateTime.getMonthValue, showTime = true)
     val formatter = DateTimeFormatter.ofPattern(format).withResolverStyle(resolverStyle)
     dateTime.format(formatter).replace("AM", "am").replace("PM", "pm")
   }
 
   def setDateTimeFormat(monthValue: Int, showTime: Boolean = false)(implicit  messages: Messages): String = {
-    s"""d '${messages(s"month.${monthValue}")}' uuuu""" + (if (showTime) " h:mma" else "")
+    s"""d '${messages(s"month.$monthValue")}' uuuu""" + (if (showTime) " h:mma" else "")
   }
 
   private def stringToLocalDate(dateString: String, format: DateTimeFormatter): LocalDate = {
