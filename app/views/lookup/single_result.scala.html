@@ -20,11 +20,14 @@
 @import views.html.lookup.search.results_core
 @import views.html.lookup.results.awrs_entry
 @import views.html.lookup.common.status_approved
+@import java.time.ZonedDateTime
+@import java.time.ZoneId
 
 @this(resultsCore: results_core,
       awrs_entry: awrs_entry,
       status_approved: status_approved,
       awrsPrintLink: awrsPrintLink)
+
 @(
     searchForm : Form[models.Query],
     action: Call,
@@ -49,7 +52,7 @@
 
 @preContent = {
     <div>@awrs_entry(result, "result", searchTerm, heading.toString)</div>
-    <p id="search-date" class="govuk-body">@Messages("awrs.lookup.results.search_date" ) @AwrsDateFormatter.showDateTimeNowTranslation()</p>
+    <p id="search-date" class="govuk-body">@Messages("awrs.lookup.results.search_date" ) @AwrsDateFormatter.showDateTimeNowTranslation(ZonedDateTime.now(ZoneId.of("Europe/London")).toLocalDateTime)</p>
     @status_approved(result)
     @awrsPrintLink()
 }
