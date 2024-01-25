@@ -34,13 +34,6 @@ lazy val microservice = Project(appName, file("."))
       "uk.gov.hmrc.hmrcfrontend.views.html.{components => hmrcComponents}"
     )
   )
-  .configs(IntegrationTest)
-  .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
-  .settings(
-    IntegrationTest / fork := false,
-    IntegrationTest / unmanagedSourceDirectories := (IntegrationTest / baseDirectory)(base => Seq(base / "it")).value,
-    addTestReportOption(IntegrationTest, "int-test-reports"),
-    IntegrationTest / parallelExecution := false)
   .settings(resolvers ++= Seq(
     Resolver.jcenterRepo
   ))
