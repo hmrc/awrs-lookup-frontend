@@ -16,12 +16,17 @@
 
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcReportTechnicalIssueHelper
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTrackingConsentSnippet
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcStandardPage
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.ServiceURLs
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.TemplateOverrides
+
+
 
 @this(
-        hmrcLayout: HmrcLayout,
-        problemLink: HmrcReportTechnicalIssueHelper,
-        hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
+hmrcPage: HmrcStandardPage,
+problemLink: HmrcReportTechnicalIssueHelper,
+hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 )
 
 @(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
@@ -33,8 +38,15 @@
     </div>
 }
 
-@hmrcLayout(
-    pageTitle = pageTitle,
-    isWelshTranslationAvailable = true,
-    serviceUrl = Some(routes.LookupController.show().url),
-    additionalScriptsBlock = scripts)(content)
+@hmrcPage(
+    HmrcStandardPageParams(
+        pageTitle = pageTitle,
+        serviceURLs = ServiceURLs(
+            serviceUrl = Some(routes.LookupController.show().url)
+        ),
+        templateOverrides = TemplateOverrides(
+            additionalScriptsBlock = scripts
+        ),
+        isWelshTranslationAvailable = true
+    )
+)(content)
