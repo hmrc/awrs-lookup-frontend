@@ -32,7 +32,8 @@ lazy val microservice = Project(appName, file("."))
     retrieveManaged := true,
     TwirlKeys.templateImports ++= Seq(
       "uk.gov.hmrc.hmrcfrontend.views.html.{components => hmrcComponents}"
-    )
+    ),
+    PlayKeys.playDefaultPort := 9511
   )
   .settings(resolvers ++= Seq(
     Resolver.jcenterRepo
