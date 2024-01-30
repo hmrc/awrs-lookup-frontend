@@ -34,7 +34,7 @@ import scala.concurrent.Future
 
 trait AwrsUnitTestTraits extends PlaySpec with MockitoSugar with BeforeAndAfterEach with GuiceOneAppPerSuite {
 
-  implicit lazy val hc = HeaderCarrier()
+  implicit lazy val hc: HeaderCarrier = HeaderCarrier()
 
   implicit def convertToOption[T, U <: T](value: U): Option[T] = Some(value)
 

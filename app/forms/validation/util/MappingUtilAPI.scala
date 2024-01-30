@@ -18,7 +18,7 @@ package forms.validation.util
 
 import play.api.data.Forms._
 import play.api.data.format._
-import play.api.data.validation.{Invalid, Valid, ValidationResult}
+import play.api.data.validation.{Invalid, Valid}
 import play.api.data.{FieldMapping, FormError, Mapping}
 
 
@@ -29,9 +29,6 @@ object MappingUtilAPI {
   def compulsoryText(config: CompulsoryTextFieldMappingParameter): FieldMapping[Option[String]] = of(CompulsoryTextFieldFormatter(config))
 
   def optionalText(config: OptionalTextFieldMappingParameter): FieldMapping[Option[String]] = of(OptionalTextFieldMapping(config))
-
-  def compulsoryList[T](config: CompulsoryListMappingParameter[T]): Mapping[List[T]] =
-    list(config.mapping).verifying(compulsaryListConstraint(config.emptyErrorMsg))
 
   implicit class MappingUtil(mapping: Mapping[Option[String]]) {
     /**
@@ -98,69 +95,6 @@ object MappingUtilAPI {
     })
 
   }
-
-  implicit class MappingUtil_AddPreconditionToMapping[T](mapping: Mapping[T]) {
-
-    // attach the key to the mapping if they do not have the expected key
-    private def checkKey(expectedKey: String, mapping: Mapping[T]): Mapping[T] = {
-      val mappingKey = mapping.key
-      expectedKey.equals(mappingKey) match {
-        case true => mapping
-        case false => //TODO need more tests to see if this can be simplified, could prob just append
-          mapping.withPrefix(expectedKey)
-      }
-    }
-
-    // used to attach a constraint to an existing mapping
-    def `+`(additionalValidation: CrossFieldConstraint): Mapping[T] = of(new Formatter[T] {
-
-      def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
-        val first: Either[Seq[FormError], T] = checkKey(key, mapping).bind(data)
-
-        val second: ValidationResult = additionalValidation.bind(data)
-
-        def processErr(err: Invalid): Seq[FormError] =
-          err.errors.toSeq.flatten.foldLeft(Seq[FormError]())((seq, ve) => seq ++ FormError(key, ve.message, ve.args))
-
-        first match {
-          case Left(ferrors) => Left(ferrors)
-          case Right(fr) => second match {
-            case inv: Invalid => Left(processErr(inv))
-            case Valid => Right(fr)
-          }
-        }
-      }
-
-      def unbind(key: String, value: T): Map[String, String] =
-        checkKey(key, mapping).unbind(value)
-    })
-
-  }
-
-  class CrossFieldConstraint(val condition: FormQuery, val errorMessage: Invalid, val booleanValueOfInvalid: Boolean = true) {
-
-    def bind(data: Map[String, String]): ValidationResult =
-      condition(data) match {
-        case `booleanValueOfInvalid` => errorMessage
-        case _ => Valid
-      }
-
-    def xiff(preCondition: FormQuery): CrossFieldConstraint =
-      new CrossFieldConstraint(condition, errorMessage, booleanValueOfInvalid) {
-        override def bind(data: Map[String, String]): ValidationResult =
-          preCondition(data) match {
-            case true => super.bind(data)
-            case false => Valid
-          }
-      }
-
-  }
-
-  object CrossFieldConstraint {
-    def apply(condition: FormQuery, errorMessage: Invalid, booleanValueOfInvalid: Boolean = true) =
-      new CrossFieldConstraint(condition, errorMessage, booleanValueOfInvalid)
-  }
-
   def CompulsoryTextFieldFormatter(config: CompulsoryTextFieldMappingParameter): Formatter[Option[String]] = new Formatter[Option[String]] {
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Option[String]] = {
       val value = data.getOrElse(key, "").trim

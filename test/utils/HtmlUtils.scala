@@ -30,11 +30,11 @@ trait HtmlUtils {
   implicit def soupUtil(html: Html): Document = Jsoup.parse(html.toString)
 
   implicit def soupUtil2(str: String): Document = Jsoup.parse(str.toString)
-  implicit def soupUtil3(result: Future[Result]) = Jsoup.parse(contentAsString(result))
+  implicit def soupUtil3(result: Future[Result]): Document = Jsoup.parse(contentAsString(result))
 
   implicit class StringHtmlUtil(str: String) {
     // compress multiple spaces into a single space
-    def htmlTrim = str.replaceAll("[\\s]{2,}", " ")
+    def htmlTrim: String = str.replaceAll("[\\s]{2,}", " ")
   }
 
   implicit class FutureResultUtil(res: Future[Result]) {

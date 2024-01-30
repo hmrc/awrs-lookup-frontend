@@ -239,12 +239,4 @@ object ConstraintUtil {
         andThenSeqChain(fieldMustHaveValidFormatConstraint(config.formatValidations))
       )
     )
-
-  def compulsaryListConstraint[T](errMsgId: => Invalid): Constraint[List[T]] =
-    Constraint[List[T]]({ model: List[T] =>
-      model.nonEmpty && !model.contains("") match {
-        case true => Valid
-        case false => errMsgId
-      }
-    })
 }
