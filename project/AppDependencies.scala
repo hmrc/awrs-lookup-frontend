@@ -4,7 +4,7 @@ object AppDependencies {
   import play.sbt.PlayImport.*
 
   private val bootstrapVersion         = "8.6.0"
-  private val playVersion              = "9.1.0"
+  private val playVersion              = "9.11.0"
 
   val compile: Seq[ModuleID] = Seq(
     ws,
