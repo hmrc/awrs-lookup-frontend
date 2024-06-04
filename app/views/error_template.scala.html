@@ -31,8 +31,4 @@
     @mainContent
 }
 
-@linkElement = {
-    <link href='@routes.Assets.versioned("stylesheets/application.css")' media="screen" rel="stylesheet" type="text/css">
-}
-
-@layout(Some(pageTitle), Some(linkElement))(content)
+@layout(Some(pageTitle))(content)
