@@ -56,7 +56,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
     * *******************************************************************************************
     */
   private def processEmbedded(str: String)(implicit messages: Messages): String =
-  Messages(FieldId(str), extractParam(str).args: _*)
+  Messages(fieldId(str), extractParam(str).args: _*)
 
   private def extract(str: String)(implicit messages: Messages): MessageArguments = {
     val close: Int = str.indexOf(embeddedEnd)
@@ -81,7 +81,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
   /** ************************************ end madness ********************************************/
 
   private def formatFieldError(error: FormError)(implicit messages: Messages, messagesApi: MessagesApi): FieldError = {
-    val msgkey: String = FieldId(error.message)
+    val msgkey: String = fieldId(error.message)
     val params: MessageArguments = extractParam(error.message.split(fieldDelimiter, -1).last)
     FieldError(msgkey, params)
   }
@@ -178,8 +178,8 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
           error.key
         }
       }
-      val msg: String = SummaryId(error.message)
-      val params: MessageArguments = SummaryParam(error.message)
+      val msg: String = summaryId(error.message)
+      val params: MessageArguments = summaryParam(error.message)
       SummaryError(msg, params, anchor.toString)
     }
 
@@ -188,12 +188,12 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
 
   def defaultSummaryId(fieldId: String): String = f"${fieldId}%s.summary"
 
-  private def FieldId(errMsg: String): String =
+  private def fieldId(errMsg: String): String =
     errMsg.split(fieldDelimiter, -1).last.split(paramDelimiter, -1).head
 
-  private def SummaryId(errMsg: String): String = errMsg contains (summaryIdMarker) match {
+  private def summaryId(errMsg: String): String = errMsg contains (summaryIdMarker) match {
     case true => errMsg.split(fieldDelimiter, -1).head.split(summaryIdMarker, -1).head
-    case false => defaultSummaryId(FieldId(errMsg))
+    case false => defaultSummaryId(fieldId(errMsg))
   }
 
   /**
@@ -234,7 +234,7 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
 
   /** ************************************ end madness ********************************************/
 
-  private def SummaryParam(errMsg: String)(implicit messages: Messages): MessageArguments =
+  private def summaryParam(errMsg: String)(implicit messages: Messages): MessageArguments =
   errMsg contains (summaryIdMarker) match {
     case true => errMsg.split(fieldDelimiter, -1).head.split(summaryIdMarker, -1).drop(1) match {
       case x if x.isEmpty => MessageArguments()

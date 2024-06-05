@@ -29,7 +29,7 @@ problemLink: HmrcReportTechnicalIssueHelper,
 hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 )
 
-@(pageTitle: Option[String] = None, scripts: Option[Html])(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+@(pageTitle: Option[String] = None, scripts: Option[Html] = None)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @content = {
     @contentBlock

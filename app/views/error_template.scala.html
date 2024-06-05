@@ -31,9 +31,4 @@
     @mainContent
 }
 
-@linkElement = {
-    <!--[if lte IE 8]><link href='@routes.Assets.versioned("stylesheets/application-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
-    <!--[if gt IE 8]><!--><link href='@routes.Assets.versioned("stylesheets/application.css")' media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
-}
-
-@layout(Some(pageTitle), Some(linkElement))(content)
+@layout(Some(pageTitle))(content)

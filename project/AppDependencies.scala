@@ -1,10 +1,10 @@
-import sbt._
+import sbt.*
 
 object AppDependencies {
-  import play.sbt.PlayImport._
+  import play.sbt.PlayImport.*
 
-  private val bootstrapVersion         = "8.4.0"
-  private val playVersion              = "8.5.0"
+  private val bootstrapVersion         = "8.6.0"
+  private val playVersion              = "9.11.0"
 
   val compile: Seq[ModuleID] = Seq(
     ws,
@@ -13,21 +13,12 @@ object AppDependencies {
     "uk.gov.hmrc" %% "play-frontend-hmrc-play-30" % playVersion
   )
 
-  trait TestDependencies {
-    lazy val scope: String = "test"
-    lazy val test : Seq[ModuleID] = ???
-  }
+  val test: Seq[ModuleID] = Seq(
+    "uk.gov.hmrc" %% "bootstrap-test-play-30" % bootstrapVersion % Test,
+    "org.jsoup"   %  "jsoup"                  % "1.17.2"         % Test,
+    "org.mockito" %  "mockito-all"            % "1.10.19"        % Test,
+    "org.mockito" %  "mockito-core"           % "5.12.0"         % Test
+  )
 
-  object Test {
-    def apply(): Seq[sbt.ModuleID] = new TestDependencies {
-      override lazy val test: Seq[sbt.ModuleID] = Seq(
-        "uk.gov.hmrc" %% "bootstrap-test-play-30" % bootstrapVersion % scope,
-        "org.jsoup"   %  "jsoup"                  % "1.17.2"         % scope,
-        "org.mockito" %  "mockito-all"            % "1.10.19"        % scope,
-        "org.mockito" %  "mockito-core"           % "5.10.0"         % scope
-      )
-    }.test
-  }
-
-  def apply(): Seq[ModuleID] = compile ++ Test()
+  def apply(): Seq[ModuleID] = compile ++ test
 }

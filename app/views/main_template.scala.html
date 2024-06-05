@@ -26,7 +26,7 @@
 
 @linkElement = {
     <link rel="stylesheet" href=@routes.Assets.versioned("stylesheets/custom.css")>
-    <script @CSPNonce.attr src='@routes.Assets.versioned("javascripts/jquery-3.5.1.min.js")'></script>
+    <script type="module" @CSPNonce.attr src='@routes.Assets.versioned("javascripts/jquery-3.5.1.min.js")'></script>
 }
 
 @layout(Some(title), Some(linkElement))(mainContent)
