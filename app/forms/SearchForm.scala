@@ -93,12 +93,12 @@ object SearchForm {
       formatValidations = Seq(formatRules)
     ))
 
-  lazy val searchValidationForm = Form(mapping(
+  lazy val searchValidationForm: Form[Query] = Form(mapping(
     query -> compulsoryQueryField.toStringFormatter
   )(Query.apply)(Query.unapply))
 
-  lazy val searchForm =
-    PreprocessedForm(
+  lazy val searchForm: PrevalidationAPI[Query] =
+    preprocessedForm(
       searchValidationForm,
       trimRules = Map(query -> TrimOption.bothAndCompress),
       caseRules = Map())

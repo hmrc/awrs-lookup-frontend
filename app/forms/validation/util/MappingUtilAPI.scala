@@ -26,9 +26,9 @@ object MappingUtilAPI {
 
   import ConstraintUtil._
 
-  def compulsoryText(config: CompulsoryTextFieldMappingParameter): FieldMapping[Option[String]] = of(CompulsoryTextFieldFormatter(config))
+  def compulsoryText(config: CompulsoryTextFieldMappingParameter): FieldMapping[Option[String]] = of(compulsoryTextFieldFormatter(config))
 
-  def optionalText(config: OptionalTextFieldMappingParameter): FieldMapping[Option[String]] = of(OptionalTextFieldMapping(config))
+  def optionalText(config: OptionalTextFieldMappingParameter): FieldMapping[Option[String]] = of(optionalTextFieldMapping(config))
 
   implicit class MappingUtil(mapping: Mapping[Option[String]]) {
     /**
@@ -95,7 +95,7 @@ object MappingUtilAPI {
     })
 
   }
-  def CompulsoryTextFieldFormatter(config: CompulsoryTextFieldMappingParameter): Formatter[Option[String]] = new Formatter[Option[String]] {
+  def compulsoryTextFieldFormatter(config: CompulsoryTextFieldMappingParameter): Formatter[Option[String]] = new Formatter[Option[String]] {
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Option[String]] = {
       val value = data.getOrElse(key, "").trim
       compulsaryTextFieldMappingConstraints(config)(value) match {
@@ -108,7 +108,7 @@ object MappingUtilAPI {
       Map(key -> value.getOrElse(""))
   }
 
-  def OptionalTextFieldMapping(config: OptionalTextFieldMappingParameter): Formatter[Option[String]] = new Formatter[Option[String]] {
+  def optionalTextFieldMapping(config: OptionalTextFieldMappingParameter): Formatter[Option[String]] = new Formatter[Option[String]] {
 
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Option[String]] = {
       val value = data.getOrElse(key, "").trim

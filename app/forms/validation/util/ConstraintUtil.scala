@@ -65,19 +65,6 @@ object ConstraintUtil {
       })
   }
 
-  // used to combine (data) => conditions together
-  implicit class PreconditionFunctionUtil(c: FormQuery) {
-    def unary_! : FormQuery =
-      (data: FormData) => !c(data)
-
-    def `&&&`(c2: FormQuery): FormQuery =
-      (data: FormData) => c(data) && c2(data)
-
-    def `|||`(c2: FormQuery): FormQuery =
-      (data: FormData) => c(data) || c2(data)
-  }
-
-
   // always valid is required in case an empty sequence is passed in
   def alwaysValidConstraint[A]: Constraint[A] = Constraint[A]((a: A) => Valid)
 
