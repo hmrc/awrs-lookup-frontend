@@ -28,7 +28,6 @@ import utils.ImplicitConversions._
 import utils.LoggingUtils
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, InternalServerException, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -80,7 +79,6 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
 
   def queryByUrn(query: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SearchResult]] = {
     val getURL = byUrnUrl(prevalidation.trimAllFunc(query).toUpperCase)
-//    http.GET(getURL) flatMap responseCore(s"ByUrl[ $query ]")
     http.get(url"$getURL").execute[HttpResponse].flatMap(responseCore(s"ByUrl[ $query ]"))
   }
 }
