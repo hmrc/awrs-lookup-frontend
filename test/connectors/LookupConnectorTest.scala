@@ -35,12 +35,11 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
 
   val loggingUtils: LoggingUtils = app.injector.instanceOf[LoggingUtils]
 
-
   trait ConnectorTest {
     val mockHttpClient: HttpClientV2 = mock[HttpClientV2]
     object TestLookupConnector extends LookupConnector(loggingUtils, mockHttpClient, configuration, servicesConfig)
 
-    def executeGet[A] = {
+    def executeGet[A]: Future[A] = {
       val mockGetRequestBuilder: RequestBuilder = mock[RequestBuilder]
       when(mockGetRequestBuilder.setHeader(any[(String, String)])).thenReturn(mockGetRequestBuilder)
       when(mockHttpClient.get(any[URL])(any[HeaderCarrier])).thenReturn(mockGetRequestBuilder)
@@ -60,55 +59,55 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
       val expectedResult: Option[SearchResult] = testBusinessSearchResult
       val lookupSuccess: JsValue = SearchResult.formatter.writes(expectedResult.get)
       when(executeGet[HttpResponse]).thenReturn(Future.successful(HttpResponse(OK, lookupSuccess, Map.empty[String, Seq[String]])))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
       await(result) mustBe expectedResult
     }
 
     "return no awrs entry when a queried reference number is not in the register" in new ConnectorTest {
       val expectedResult: Option[SearchResult] = None
-      val response = HttpResponse(NOT_FOUND, Json.toJson[String](TestLookupConnector.referenceNotFoundString), Map.empty[String, Seq[String]])
+      val response: HttpResponse = HttpResponse(NOT_FOUND, Json.toJson[String](TestLookupConnector.referenceNotFoundString), Map.empty[String, Seq[String]])
       when(executeGet[HttpResponse]).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
       await(result) mustBe expectedResult
     }
 
     "return an exception when the middle service is not found" in new ConnectorTest {
-      val response = HttpResponse(NOT_FOUND, "")
+      val response: HttpResponse = HttpResponse(NOT_FOUND, "")
       when(executeGet[HttpResponse]).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
-      val thrown = the[InternalServerException] thrownBy await(result)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown: InternalServerException = the[InternalServerException] thrownBy await(result)
       thrown.getMessage mustBe "URL not found"
     }
 
     "an exception when invalid json is returned" in new ConnectorTest {
       val invalidJson: JsValue = Json.toJson[String]("""{"key" : "invalid json"}""")
       when(executeGet[HttpResponse]).thenReturn(Future.successful(HttpResponse(OK, invalidJson, Map.empty[String, Seq[String]])))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
-      val thrown = the[InternalServerException] thrownBy await(result)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown: InternalServerException = the[InternalServerException] thrownBy await(result)
       thrown.getMessage mustBe "Invalid json"
     }
 
     "return 'technical error 400' when a 400 error is returned" in new ConnectorTest {
-      val response = HttpResponse(BAD_REQUEST, "")
+      val response: HttpResponse = HttpResponse(BAD_REQUEST, "")
       when(executeGet[HttpResponse]).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
-      val thrown = the[LookupExceptions] thrownBy await(result)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown: LookupExceptions = the[LookupExceptions] thrownBy await(result)
       thrown.getMessage mustBe "technical error 400"
     }
 
     "return 'technical error 500' when a 500 error is returned" in new ConnectorTest {
-      val response = HttpResponse(INTERNAL_SERVER_ERROR, "")
+      val response: HttpResponse = HttpResponse(INTERNAL_SERVER_ERROR, "")
       when(executeGet[HttpResponse]).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
-      val thrown = the[LookupExceptions] thrownBy await(result)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown: LookupExceptions = the[LookupExceptions] thrownBy await(result)
       thrown.getMessage mustBe "technical error 500"
     }
 
     "return an exception when the middle service returns any other status code" in new ConnectorTest {
-      val response = HttpResponse(BAD_GATEWAY, "")
+      val response: HttpResponse = HttpResponse(BAD_GATEWAY, "")
       when(executeGet[HttpResponse]).thenReturn(Future.successful(response))
-      val result = TestLookupConnector.queryByUrn(testAwrsRef)
-      val thrown = the[InternalServerException] thrownBy await(result)
+      val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)
+      val thrown: InternalServerException = the[InternalServerException] thrownBy await(result)
       thrown.getMessage must include("Unsuccessful return of data. Status code")
     }
   }
