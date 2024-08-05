@@ -27,13 +27,13 @@ import utils.TestUtils._
 import utils.{AwrsUnitTestTraits, LoggingUtils}
 import uk.gov.hmrc.http._
 import uk.gov.hmrc.http.SessionId
-import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import scala.concurrent.Future
 
 class LookupConnectorTest extends AwrsUnitTestTraits {
 
-  val mockWSHttp: DefaultHttpClient = mock[DefaultHttpClient]
+  val mockWSHttp: HttpClientV2 = mock[HttpClientV2]
   val loggingUtils: LoggingUtils = app.injector.instanceOf[LoggingUtils]
 
   object TestLookupConnector extends LookupConnector(loggingUtils, mockWSHttp, configuration, servicesConfig)
