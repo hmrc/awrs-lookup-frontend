@@ -15,16 +15,19 @@
  */
 
 import play.api.i18n.MessagesApi
-import play.api.mvc.Request
+import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
 import views.html.error_template
+
 import javax.inject.Inject
+import scala.concurrent.{ExecutionContext, Future}
 
 class AwrsFrontendErrorHandler @Inject()(implicit val messagesApi: MessagesApi,
+                                         val ec: ExecutionContext,
                                          errorTemplate: error_template) extends FrontendErrorHandler {
 
-  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]): Html = {
-    errorTemplate(pageTitle, heading, message)
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: RequestHeader): Future[Html]= {
+    Future.successful(errorTemplate(pageTitle, heading, message))
   }
 }

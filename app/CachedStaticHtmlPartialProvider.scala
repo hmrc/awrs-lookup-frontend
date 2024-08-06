@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
+import uk.gov.hmrc.http.client.HttpClientV2
+
 import javax.inject.Inject
-import uk.gov.hmrc.play.bootstrap.http.DefaultHttpClient
 import uk.gov.hmrc.play.partials.CachedStaticHtmlPartialRetriever
 
-abstract class CachedStaticHtmlPartialProvider @Inject()(override val httpGet: DefaultHttpClient) extends CachedStaticHtmlPartialRetriever
+abstract class CachedStaticHtmlPartialProvider @Inject()(override val httpClientV2: HttpClientV2) extends CachedStaticHtmlPartialRetriever
