@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package views
 
 import org.jsoup.nodes.Document
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import play.api.i18n.Messages
 import play.api.libs.json.{JsValue, Json}
@@ -59,7 +59,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display an awrs entry when a valid reference is entered" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      when(mockLookupService.lookup(any())(any(), any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
       val head = testBusinessSearchResult.results.head
       val info = head.info
@@ -80,7 +80,7 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(None))
+      when(mockLookupService.lookup(any())(any(), any())).thenReturn(Future.successful(None))
       val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
       document.title mustBe Messages("awrs.lookup.results.page_title_no_results")
       document.getElementById("not-found").text must include(Messages("awrs.lookup.search.not_found"))

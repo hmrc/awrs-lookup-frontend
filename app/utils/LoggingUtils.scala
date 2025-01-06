@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,23 +52,28 @@ class LoggingUtils @Inject()(auditable: Auditable) extends Logging {
     )
   }
 
-  def audit(transactionName: String, detail: Map[String, String], eventType: String)(implicit hc: HeaderCarrier,ec: ExecutionContext): Unit = splunkFunction(transactionName, detail, eventType)
+  def audit(transactionName: String, detail: Map[String, String], eventType: String)(implicit hc: HeaderCarrier,ec: ExecutionContext): Unit =
+    splunkFunction(transactionName, detail, eventType)
 
   @inline def trace(msg: String): Unit = logger.trace(msg)
 
-  @inline def trace(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = trace(splunkToLogger(transactionName, detail, eventType))
+  @inline def trace(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit =
+    trace(splunkToLogger(transactionName, detail, eventType))
 
   @inline def debug(msg: String): Unit = logger.debug(msg)
 
-  @inline def debug(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = debug(splunkToLogger(transactionName, detail, eventType))
+  @inline def debug(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit =
+    debug(splunkToLogger(transactionName, detail, eventType))
 
   @inline def info(msg: String): Unit = logger.info(msg)
 
-  @inline def info(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = info(splunkToLogger(transactionName, detail, eventType))
+  @inline def info(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit =
+    info(splunkToLogger(transactionName, detail, eventType))
 
   @inline def warn(msg: String): Unit = logger.warn(msg)
 
-  @inline def warn(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit = warn(splunkToLogger(transactionName, detail, eventType))
+  @inline def warn(transactionName: String, detail: Map[String, String], eventType: String = ""): Unit =
+    warn(splunkToLogger(transactionName, detail, eventType))
 
   @inline def err(msg: String): Unit = logger.error(msg)
 

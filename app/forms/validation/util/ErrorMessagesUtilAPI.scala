@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,10 @@ object ErrorMessagesUtilAPI {
     FieldIsEmptyConstraintParameter(simpleErrorMessage(fieldId, msgId))
 
 
-  def genericInvalidFormatConstraintParameter(validationFunction: (String) => Boolean, fieldId: String, fieldNameInErrorMessage: String, errorMsg: String = "awrs.generic.error.character_invalid"): Seq[FieldFormatConstraintParameter] =
+  def genericInvalidFormatConstraintParameter(validationFunction: (String) => Boolean,
+                                              fieldId: String,
+                                              fieldNameInErrorMessage: String,
+                                              errorMsg: String = "awrs.generic.error.character_invalid"): Seq[FieldFormatConstraintParameter] =
     Seq[FieldFormatConstraintParameter](
       FieldFormatConstraintParameter(
         (name: String) => validationFunction(name) match {

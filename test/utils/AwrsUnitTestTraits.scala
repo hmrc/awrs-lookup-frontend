@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,8 @@
 
 package utils
 
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.any
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
@@ -56,7 +57,7 @@ trait AwrsUnitTestTraits extends PlaySpec with MockitoSugar with BeforeAndAfterE
 
   // used to help mock setup functions to clarify if certain results should be mocked.
   sealed trait MockConfiguration[+A] {
-    final def get = this match {
+    final def get: A = this match {
       case Configure(config) => config
       case _ => throw new RuntimeException("This element is not to be configured")
     }
@@ -87,8 +88,8 @@ trait AwrsUnitTestTraits extends PlaySpec with MockitoSugar with BeforeAndAfterE
 
   sealed trait MatcherConfiguration[+A] {
     def matcher: A = this match {
-      case AnyMatcher => Matchers.any()
-      case EqMatcher(matchValue) => Matchers.eq(matchValue)
+      case AnyMatcher => any()
+      case EqMatcher(matchValue) => ArgumentMatchers.eq(matchValue)
     }
   }
 
