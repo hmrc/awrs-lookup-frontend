@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package services
 
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.libs.json.{JsValue, Json}
 import connectors.LookupConnector
@@ -49,7 +49,7 @@ class LookupServiceTest extends AwrsUnitTestTraits {
 
       val mockLookupConnector = mock[LookupConnector]
 
-      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(dataToReturn)
+      when(mockLookupConnector.queryByUrn(any())(any(), any())).thenReturn(dataToReturn)
       val lookupService = new LookupService(mockLookupConnector)
 
       val resultWithData = lookupService.lookup(testAwrs)
@@ -64,7 +64,7 @@ class LookupServiceTest extends AwrsUnitTestTraits {
 
       val mockLookupConnector = mock[LookupConnector]
 
-      when(mockLookupConnector.queryByUrn(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(dataToReturn)
+      when(mockLookupConnector.queryByUrn(any())(any(), any())).thenReturn(dataToReturn)
       val lookupService = new LookupService(mockLookupConnector)
 
       val resultWithData = lookupService.lookup(testAwrs)

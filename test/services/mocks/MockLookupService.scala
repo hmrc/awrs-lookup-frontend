@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package services.mocks
 
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import models.SearchResult
 import services.LookupService
@@ -29,6 +29,6 @@ trait MockLookupService extends AwrsUnitTestTraits {
   val mockLookupService = mock[LookupService]
 
   def mockLookupServiceWithOnly(lookupAwrsRef: MockConfiguration[Future[Option[SearchResult]]] = DoNotConfigure): Unit = {
-    lookupAwrsRef ifConfiguredThen (dataToReturn => when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(dataToReturn))
+    lookupAwrsRef ifConfiguredThen (dataToReturn => when(mockLookupService.lookup(any())(any(), any())).thenReturn(dataToReturn))
   }
 }

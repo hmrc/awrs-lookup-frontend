@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -159,7 +159,8 @@ object ConstraintUtil {
 
   case class MaxLengthConstraintIsHandledByTheRegEx() extends MaxLengthConstraintOption[Nothing]
 
-  implicit def castToOption(param: FieldMaxLengthConstraintParameter): MaxLengthConstraintOption[FieldMaxLengthConstraintParameter] = MaxLengthConstraintDefinition(param)
+  implicit def castToOption(param: FieldMaxLengthConstraintParameter): MaxLengthConstraintOption[FieldMaxLengthConstraintParameter] =
+    MaxLengthConstraintDefinition(param)
 
   case class CompulsoryTextFieldMappingParameter(empty: FieldIsEmptyConstraintParameter,
                                                  maxLengthValidation: MaxLengthConstraintOption[FieldMaxLengthConstraintParameter],

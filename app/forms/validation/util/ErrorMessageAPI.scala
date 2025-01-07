@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -182,7 +182,8 @@ trait MessageLookup extends MessageConfig[String] with I18nSupport {
   * @param msgKey  the key in the conf/messages file
   * @param msgArgs any arguments expected by the message in the conf/messages file
   */
-case class EmbeddedMessage (msgKey: String, msgArgs: MessageArguments = MessageArguments())(implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup
+case class EmbeddedMessage (msgKey: String, msgArgs: MessageArguments = MessageArguments())
+                           (implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup
 
 object EmbeddedMessage {
 
@@ -198,7 +199,8 @@ object EmbeddedMessage {
   * @param msgArgs any arguments expected by the message in the conf/messages file
   * @param anchor  where the summary error message will hyper link to
   */
-case class SummaryError (msgKey: String, msgArgs: MessageArguments = MessageArguments(), anchor: String)(implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
+case class SummaryError (msgKey: String, msgArgs: MessageArguments = MessageArguments(), anchor: String)
+                        (implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
   def this(msgKey: String, anchor: String)(implicit messages: Messages, messagesApi: MessagesApi) = this(msgKey, MessageArguments(), anchor)
 
   override def hashCode(): Int = {
@@ -229,7 +231,8 @@ case class SummaryError (msgKey: String, msgArgs: MessageArguments = MessageArgu
   * @param msgKey  the key in the conf/messages file
   * @param msgArgs any arguments expected by the message in the conf/messages file
   */
-case class FieldError (msgKey: String, msgArgs: MessageArguments = MessageArguments())(implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
+case class FieldError (msgKey: String, msgArgs: MessageArguments = MessageArguments())
+                      (implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
   override def hashCode(): Int = {
     var code = this.productPrefix.hashCode()
     val arr = this.productArity

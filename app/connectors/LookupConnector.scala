@@ -23,6 +23,7 @@ import play.api.libs.json.Json
 import exceptions.LookupExceptions
 import forms.prevalidation
 import models.SearchResult
+import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
 import uk.gov.hmrc.http.client.HttpClientV2
 import utils.ImplicitConversions._
 import utils.LoggingUtils
@@ -46,7 +47,7 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
   }
 
   private def responseCore(logRef: String)(response: HttpResponse): Future[Option[SearchResult]] = response.status match {
-    case 200 =>
+    case OK =>
       val responseJson = response.json
       loggingUtils.debug(s"[ ${loggingUtils.auditLookupTxName} - $logRef ] - Json:\n$responseJson\n")
       val parse = Json.fromJson[SearchResult](responseJson)
@@ -56,7 +57,7 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
         loggingUtils.err(s"[ ${loggingUtils.auditLookupTxName} - $logRef ] - Invalid Json recieved from AWRS-LOOKUP")
         throw new InternalServerException("Invalid json")
       }
-    case 404 =>
+    case NOT_FOUND =>
       response.body match {
         case x if x != null && x.contains(referenceNotFoundString) => None
         case _ =>
@@ -64,11 +65,11 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
           loggingUtils.info(s"[ ${loggingUtils.auditLookupTxName} ] - Query ## $logRef")
           throw new InternalServerException("URL not found")
       }
-    case 400 =>
+    case BAD_REQUEST =>
       val error = response.status
       loggingUtils.info(s"[ ${loggingUtils.eventTypeBadRequest} - $logRef ] - Currently experiencing technical difficulties: $error")
       throw new LookupExceptions(s"technical error $error")
-    case 500 =>
+    case INTERNAL_SERVER_ERROR =>
       val error = response.status
       loggingUtils.info(s"[ ${loggingUtils.auditLookupTxName} - $logRef] - Currently experiencing technical difficulties: $error")
       throw new LookupExceptions(s"technical error $error")

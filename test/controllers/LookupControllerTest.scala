@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package controllers
 
 import org.jsoup.nodes.Element
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import play.api.i18n.Messages
 import play.api.libs.json.{JsValue, Json}
@@ -45,14 +45,14 @@ class LookupControllerTest extends AwrsUnitTestTraits {
   "Lookup Controller " should {
 
     "in show, lookup awrs entry when passed a valid awrs reference" in {
-      when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      when(mockLookupService.lookup(any())(any(), any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val result = TestLookupController.show().apply(FakeRequest())
       status(result) mustBe OK
     }
 
     "render a technical error" when {
       "an exception is received from the lookup call" in {
-        when(mockLookupService.lookup(Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(new Exception("failed"))
+        when(mockLookupService.lookup(any())(any(), any())).thenReturn(new Exception("failed"))
         val html = FutureResultUtil(TestLookupController.show()(FakeRequest("GET", "check-the-awrs-register/?query=XXAW00000123554"))).getDocument
 
         html.title() mustBe "Sorry, we are experiencing technical difficulties - GOV.UK"

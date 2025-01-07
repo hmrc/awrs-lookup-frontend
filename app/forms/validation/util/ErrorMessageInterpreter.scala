@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ trait ErrorMessageInterpreter {
 
   def getFieldErrors(field: Field, form: Form[_])(implicit messages: Messages, messagesApi: MessagesApi): Seq[FieldError]
 
-  def getFieldErrors(field: Field, parent: Option[Field] = None)(implicit form: Option[Form[_]] = None, messages: Messages,  messagesApi: MessagesApi): Seq[FieldError]
+  def getFieldErrors(field: Field, parent: Option[Field] = None)
+                    (implicit form: Option[Form[_]] = None, messages: Messages,  messagesApi: MessagesApi): Seq[FieldError]
 
   def getFieldErrors(field: String, form: Form[_])(implicit messages: Messages,  messagesApi: MessagesApi): Seq[FieldError]
 
@@ -118,7 +119,8 @@ object ErrorMessageInterpreter extends ErrorMessageInterpreter {
     filtered.map(error => formatFieldError(error))
   }
 
-  def getFieldErrors(field: Field, parent: Option[Field] = None)(implicit form: Option[Form[_]] = None, messages: Messages, messagesApi: MessagesApi): Seq[FieldError] = {
+  def getFieldErrors(field: Field, parent: Option[Field] = None)
+                    (implicit form: Option[Form[_]] = None, messages: Messages, messagesApi: MessagesApi): Seq[FieldError] = {
     parent match {
       case Some(parent) => getFieldErrors(field, parent)
       case _ => form match {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,10 +101,12 @@ object ErrorMessageFactory extends ErrorMessageFactory {
     case _ => List[String](id.get) ::: List(msgArgs.args.toList map (param => argsToString(param)) mkString (paramDelimiter)) mkString (summaryIdMarker)
   }
 
-  private def mkFieldErr(msgkey: String, msgArgs: MessageArguments): String = List[String](msgkey) ::: msgArgs.args.toList map (param => argsToString(param)) mkString (paramDelimiter)
+  private def mkFieldErr(msgkey: String, msgArgs: MessageArguments): String =
+    List[String](msgkey) ::: msgArgs.args.toList map (param => argsToString(param)) mkString (paramDelimiter)
 
   def createErrorMessage(ids: TargetFieldIds, fieldMsg: FieldErrorConfig, summaryMsg: SummaryErrorConfig): Invalid =
-    createErrorMessage(List[String](mkSummaryErr(summaryMsg.msgKey, summaryMsg.msgArgs)) ::: List(mkFieldErr(fieldMsg.msgKey, fieldMsg.msgArgs)) mkString (fieldDelimiter), ids)
+    createErrorMessage(List[String](mkSummaryErr(summaryMsg.msgKey, summaryMsg.msgArgs)) :::
+      List(mkFieldErr(fieldMsg.msgKey, fieldMsg.msgArgs)) mkString (fieldDelimiter), ids)
 
   def createErrorMessage(ids: TargetFieldIds, fieldMsg: FieldErrorConfig): Invalid =
     createErrorMessage(mkFieldErr(fieldMsg.msgKey, fieldMsg.msgArgs), ids)
