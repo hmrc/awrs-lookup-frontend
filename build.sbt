@@ -43,7 +43,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(scalaSettings: _*)
   .settings(defaultSettings(): _*)
   .settings(
-    scalaVersion := "2.13.14",
+    scalaVersion := "2.13.16",
     scalacOptions ++= Seq("-feature", "-Wconf:src=routes/.*:s", "-Wconf:cat=unused-imports&src=html/.*:s"),
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
