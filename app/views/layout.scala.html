@@ -20,6 +20,8 @@
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.ServiceURLs
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.TemplateOverrides
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 
 
@@ -41,12 +43,12 @@ hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 @hmrcPage(
     HmrcStandardPageParams(
         pageTitle = pageTitle,
+        isWelshTranslationAvailable = true,
         serviceURLs = ServiceURLs(
             serviceUrl = Some(routes.LookupController.show().url)
         ),
         templateOverrides = TemplateOverrides(
             additionalScriptsBlock = scripts
-        ),
-        isWelshTranslationAvailable = true
+        )
     )
 )(content)
