@@ -22,16 +22,16 @@ import utils.AwrsUnitTestTraits
 
 class ModelTests extends AwrsUnitTestTraits {
 
-  val testInfo: Info = Info("testBusinessName", "testTradingName", "testFullName",
-    Address("testline1", "testline2", "testline3", "testline4", "testPostCode", "testCountry"))
+  val testInfo: Info = Info(Some("testBusinessName"), Some("testTradingName"), Some("testFullName"),
+    Some(Address(Some("testline1"), Some("testline2"), Some("testline3"), Some("testline4"), Some("testPostCode"), Some("testCountry"))))
 
   "AwrsEntry" should {
     "Correctly convert Business to json and back with status Approved" in {
       val testObj: AwrsEntry = Business(
         awrsRef = "testValue",
-        registrationDate = "01/01/1970",
+        registrationDate = Some("01/01/1970"),
         status = Approved,
-        registrationEndDate = "01/01/2017",
+        registrationEndDate = Some("01/01/2017"),
         info = testInfo
       )
       val json = Json.toJson[AwrsEntry](testObj)
@@ -43,9 +43,9 @@ class ModelTests extends AwrsUnitTestTraits {
     "Correctly convert Business to json and back with status DeRegistered" in {
       val testObj: AwrsEntry = Business(
         awrsRef = "testValue",
-        registrationDate = "01/01/1970",
+        registrationDate = Some("01/01/1970"),
         status = DeRegistered,
-        registrationEndDate = "01/01/2017",
+        registrationEndDate = Some("01/01/2017"),
         info = testInfo
       )
       val json = Json.toJson[AwrsEntry](testObj)
@@ -57,13 +57,13 @@ class ModelTests extends AwrsUnitTestTraits {
     "Correctly convert Group to json and back with status Revoked" in {
       val testObj: AwrsEntry = Group(
         awrsRef = "testValue",
-        registrationDate = "01/01/1970",
+        registrationDate = Some("01/01/1970"),
         status = Revoked,
-        registrationEndDate = "01/01/2017",
+        registrationEndDate = Some("01/01/2017"),
         info = testInfo,
         members = List(
-          testInfo.copy(businessName = "testBusinessName2"),
-          testInfo.copy(businessName = "testBusinessName3")
+          testInfo.copy(businessName = Some("testBusinessName2")),
+          testInfo.copy(businessName = Some("testBusinessName3"))
         )
       )
       val json = Json.toJson[AwrsEntry](testObj)

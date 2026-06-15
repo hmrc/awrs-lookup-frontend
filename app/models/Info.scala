@@ -16,7 +16,7 @@
 
 package models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 case class Info(businessName: Option[String] = None,
                 tradingName: Option[String] = None,
@@ -57,14 +57,14 @@ case class Address(
 }
 
 object Address {
-  implicit val formatter: OFormat[Address] = Json.format[Address]
+  given formatter: OFormat[Address] = Json.format[Address]
 
-  implicit class AddressUtil(address: Option[Address]) {
+  extension (address: Option[Address]) {
     def toStringSeq: Seq[String] = address.fold(Seq[String]())(x => x.toStringSeq)
   }
 
 }
 
 object Info {
-  implicit val formatter: OFormat[Info] = Json.format[Info]
+  given formatter: OFormat[Info] = Json.format[Info]
 }

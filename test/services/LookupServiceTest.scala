@@ -33,7 +33,7 @@ class LookupServiceTest extends AwrsUnitTestTraits {
     "call lookup connector and return a the response" in {
       val testAwrs = "XXAW00000123456"
 
-      val data: JsValue = Json.toJson(Business(
+      val data: JsValue = Json.toJson[AwrsEntry](Business(
         awrsRef = "XXAW00000123456",
         registrationDate = Some("2020-04-01"),
         status = AwrsStatus("Approved"),
@@ -45,11 +45,11 @@ class LookupServiceTest extends AwrsUnitTestTraits {
         )
       )
 
-      val dataToReturn: Future[Option[SearchResult]] = SearchResult(List(AwrsEntry("Business", data)))
+      val dataToReturn: Future[Option[SearchResult]] = Future.successful(Option(SearchResult(List(Json.fromJson[AwrsEntry](data).get))))
 
       val mockLookupConnector = mock[LookupConnector]
 
-      when(mockLookupConnector.queryByUrn(any())(any(), any())).thenReturn(dataToReturn)
+      when(mockLookupConnector.queryByUrn(any())(using any(), any())).thenReturn(dataToReturn)
       val lookupService = new LookupService(mockLookupConnector)
 
       val resultWithData = lookupService.lookup(testAwrs)
@@ -60,11 +60,11 @@ class LookupServiceTest extends AwrsUnitTestTraits {
     "call lookup connector and return an exception" in {
       val testAwrs = "XXAW00000123456"
 
-      val dataToReturn: Future[Option[SearchResult]] = new Exception ("test implicit exception thrown")
+      val dataToReturn: Future[Option[SearchResult]] = Future.failed(new Exception ("test implicit exception thrown"))
 
       val mockLookupConnector = mock[LookupConnector]
 
-      when(mockLookupConnector.queryByUrn(any())(any(), any())).thenReturn(dataToReturn)
+      when(mockLookupConnector.queryByUrn(any())(using any(), any())).thenReturn(dataToReturn)
       val lookupService = new LookupService(mockLookupConnector)
 
       val resultWithData = lookupService.lookup(testAwrs)

@@ -31,10 +31,10 @@ class AddressTest extends AwrsUnitTestTraits {
 
   "Address" should {
     "override hashcode, equals and toString correctly" in {
-      val add1 = Address(line1, line2, line3, line4, post, country)
-      val add1a = Address(line1, line2, line3, line4, post, country)
-      val add2 = Address(line1, line2, addressLine4 = line4, addressCountry = country)
-      val add3 = Address(line1, line2)
+      val add1 = Address(Some(line1), Some(line2), Some(line3), Some(line4), Some(post), Some(country))
+      val add1a = Address(Some(line1), Some(line2), Some(line3), Some(line4), Some(post), Some(country))
+      val add2 = Address(Some(line1), Some(line2), addressLine4 = Some(line4), addressCountry = Some(country))
+      val add3 = Address(Some(line1), Some(line2))
 
       add1.equals(add1a) mustBe true
       add1.equals(add2) mustBe false
@@ -53,7 +53,7 @@ class AddressTest extends AwrsUnitTestTraits {
     }
 
     "toStringSeq should only return a sequence of the populated fields" in {
-      val test = Address(line1, line2, addressLine4 = line4, addressCountry = country)
+      val test = Address(Some(line1), Some(line2), addressLine4 = Some(line4), addressCountry = Some(country))
       val expected = Seq(line1, line2, line4, country)
       test.toStringSeq mustBe expected
 

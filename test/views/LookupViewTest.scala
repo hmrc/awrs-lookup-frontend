@@ -18,22 +18,25 @@ package views
 
 import org.jsoup.nodes.Document
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import play.api.i18n.Messages
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import controllers.LookupController
 import services.LookupService
-import utils.TestUtils.{testBusinessSearchResult, _}
+import utils.HtmlUtils.soupUtil3
+import utils.TestUtils.{testBusinessSearchResult, *}
 import utils.{AwrsUnitTestTraits, HtmlUtils}
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
-class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
+class LookupViewTest extends AwrsUnitTestTraits {
   val mockLookupService: LookupService = mock[LookupService]
   val lookupFailure: JsValue = Json.parse( """{"reason": "Generic test reason"}""")
   val searchMain: search_main = app.injector.instanceOf[search_main]
@@ -59,8 +62,8 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display an awrs entry when a valid reference is entered" in {
-      when(mockLookupService.lookup(any())(any(), any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
-      val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
+      when(mockLookupService.lookup(any())(using any(), any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      val document: Document = TestLookupController.show().apply(testRequest(Some(testAwrsRef)))
       val head = testBusinessSearchResult.results.head
       val info = head.info
 
@@ -80,8 +83,8 @@ class LookupViewTest extends AwrsUnitTestTraits with HtmlUtils {
     }
 
     "display a 'No results found' page when a non existent reference is entered" in {
-      when(mockLookupService.lookup(any())(any(), any())).thenReturn(Future.successful(None))
-      val document: Document = TestLookupController.show().apply(testRequest(testAwrsRef))
+      when(mockLookupService.lookup(any())(using any(), any())).thenReturn(Future.successful(None))
+      val document: Document = TestLookupController.show().apply(testRequest(Some(testAwrsRef)))
       document.title mustBe Messages("awrs.lookup.results.page_title_no_results")
       document.getElementById("not-found").text must include(Messages("awrs.lookup.search.not_found"))
     }

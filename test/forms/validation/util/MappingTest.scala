@@ -32,13 +32,13 @@
 
 package forms.validation.util
 
-import forms.test.util._
-import forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, _}
-import forms.validation.util.ErrorMessagesUtilAPI._
-import forms.validation.util.MappingUtilAPI.{MappingUtil, _}
-import play.api.data.Forms._
+import forms.test.util.*
+import forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, *}
+import forms.validation.util.ErrorMessagesUtilAPI.*
+import forms.validation.util.MappingUtilAPI.*
+import play.api.data.Forms.*
 import play.api.data.validation.Invalid
-import play.api.data.{Form, FormError}
+import play.api.data.{FieldMapping, Form, FormError}
 import play.api.i18n.Messages
 import utils.AwrsUnitTestTraits
 
@@ -52,8 +52,7 @@ class MappingTest extends AwrsUnitTestTraits {
   val asciiChar255 = 255
 
   def validateISO88591(input: String): Boolean = {
-    val inputList: List[Char] = input.toList
-    inputList.forall { c =>
+    input.forall { c =>
       (c >= asciiChar32 && c <= asciiChar126) || (c >= asciiChar160 && c <= asciiChar255)
     }
   }
@@ -63,8 +62,8 @@ class MappingTest extends AwrsUnitTestTraits {
   }
 
 
-  implicit class Helper(errors: Seq[FormError]) {
-    def shouldContain(expected: Invalid) = {
+  extension (errors: Seq[FormError]) {
+    def shouldContain(expected: Invalid): Boolean = {
       val transformed: Seq[(String, Seq[Any])] = errors.map { x => (x.message, x.args) }
       transformed.contains((expected.errors.head.message, expected.errors.head.args))
     }
@@ -92,13 +91,13 @@ class MappingTest extends AwrsUnitTestTraits {
     )
   }
 
-  val defaultCompulsoryMapping = (fieldId: String) => compulsoryText(CompulsoryTextFieldMappingParameter(
+  val defaultCompulsoryMapping: String => FieldMapping[Option[String]] = (fieldId: String) => compulsoryText(CompulsoryTextFieldMappingParameter(
     simpleFieldIsEmptyConstraintParameter(fieldId, "testkey1"),
     genericFieldMaxLengthConstraintParameter(defaultMaxLength, fieldId, fieldNameInErrorMessage = ""),
     genericInvalidFormatConstraintParameter(validText, fieldId, fieldNameInErrorMessage = ""))
   )
 
-  val defaultOptionalMapping = (fieldId: String) => optionalText(OptionalTextFieldMappingParameter(
+  val defaultOptionalMapping: String => FieldMapping[Option[String]] = (fieldId: String) => optionalText(OptionalTextFieldMappingParameter(
     genericFieldMaxLengthConstraintParameter(defaultMaxLength, fieldId, fieldNameInErrorMessage = ""),
     genericInvalidFormatConstraintParameter(validText, fieldId, fieldNameInErrorMessage = ""))
   )
@@ -106,7 +105,7 @@ class MappingTest extends AwrsUnitTestTraits {
   def compulsoryFieldTest[T](fieldId: String,
                              preCondition: FormData = FormData(),
                              ignoreCondition: Set[FormData] = Set(),
-                             idPrefix: IdPrefix = None)(implicit form: Form[T], messages: Messages): Unit = {
+                             idPrefix: IdPrefix = None)(using form: Form[T], messages: Messages): Unit = {
     val prefixedFieldId: String = idPrefix attach fieldId
     val emptyError = ExpectedFieldIsEmpty(prefixedFieldId, FieldError("testkey1"))
     val maxLenError = ExpectedFieldExceedsMaxLength(prefixedFieldId, "", defaultMaxLength)
@@ -125,7 +124,7 @@ class MappingTest extends AwrsUnitTestTraits {
   def optionalFieldTest[T](fieldId: String,
                            preCondition: FormData = FormData(),
                            ignoreCondition: Set[FormData] = Set(),
-                           idPrefix: IdPrefix = None)(implicit form: Form[T], messages: Messages): Unit = {
+                           idPrefix: IdPrefix = None)(using form: Form[T], messages: Messages): Unit = {
     val prefixedFieldId: String = idPrefix attach fieldId
     val maxLenError = ExpectedFieldExceedsMaxLength(prefixedFieldId, "", defaultMaxLength)
     val invalidFormats = List(ExpectedInvalidFieldFormat("α", prefixedFieldId, ""))
@@ -148,16 +147,16 @@ class MappingTest extends AwrsUnitTestTraits {
                       ignoredField2: Option[String]
                      )
 
-      val alwaysIgnore: Option[FormQuery] = (data: FormData) => false
+      val alwaysIgnore: Option[FormQuery] = Some((_: FormData) => false)
 
-      implicit val form = Form(
+      given form: Form[Test] = Form(
         mapping(
           "field1" -> defaultCompulsoryMapping("field1"),
           "field1a" -> defaultCompulsoryMapping("field1a").toStringFormatter,
           "field2" -> defaultOptionalMapping("field2"),
           "ignoredField" -> (defaultCompulsoryMapping("ignoredField") iff alwaysIgnore),
           "ignoredField2" -> (defaultOptionalMapping("ignoredField2") iff alwaysIgnore)
-        )(Test.apply)(Test.unapply))
+        )(Test.apply)(t => Some(t.field1, t.field1a, t.field2, t.ignoredField, t.ignoredField2)))
 
       "trigger validation errors" in {
         compulsoryFieldTest("field1")
@@ -173,7 +172,7 @@ class MappingTest extends AwrsUnitTestTraits {
       "ignored fields should not be entered into the resulting case class" in {
         val data = FormData("field1" -> "me", "field1a" -> "me2", "ignoredField" -> "data", "ignoredField" -> "data2")
         form.bind(data).fold(
-          errors => {},
+          _ => {},
           model => {
             model.ignoredField mustBe None
             model.ignoredField2 mustBe None
@@ -188,22 +187,22 @@ class MappingTest extends AwrsUnitTestTraits {
     "function correctly when there is crossField validation" should {
 
       def field1IsEmpty(): Option[FormQuery] =
-        (data: FormData) => data.getOrElse("field1", "").equals("")
+        Some((data: FormData) => data.getOrElse("field1", "").equals(""))
 
       val field1IsEmptyTestData = FormData("field1" -> "")
-      val field1IsNotEmptyTestData = FormData("field1" -> "a")
+      val field1IsNotEmptyTestData = Set(FormData("field1" -> "a"))
 
       // if a field is conditionally dependent on another then it cannot be of a String type
       case class Test(field1: Option[String],
                       field2: Option[String],
                       field3: Option[String]
                      )
-      implicit val form = Form(
+      given form: Form[Test] = Form(
         mapping(
           "field1" -> optional(text),
           "field2" -> (defaultCompulsoryMapping("field2") iff field1IsEmpty()),
           "field3" -> (defaultOptionalMapping("field3") iff field1IsEmpty())
-        )(Test.apply)(Test.unapply))
+        )(Test.apply)(t => Some(t.field1, t.field2, t.field3)))
 
       "trigger validation errors" in {
         compulsoryFieldTest("field2", field1IsEmptyTestData, field1IsNotEmptyTestData)
@@ -224,10 +223,10 @@ class MappingTest extends AwrsUnitTestTraits {
     "function correctly when it is used inside a submap" should {
 
       def field1IsEmpty(): Option[FormQuery] =
-        (data: FormData) => data.getOrElse("sub.field1", "").equals("")
+        Some((data: FormData) => data.getOrElse("sub.field1", "").equals(""))
 
       val field1IsEmptyTestData = FormData("sub.field1" -> "")
-      val field1IsNotEmptyTestData = FormData("sub.field1" -> "a")
+      val field1IsNotEmptyTestData = Set(FormData("sub.field1" -> "a"))
 
       case class SubTest(field1: Option[String], field2: Option[String])
       case class Test(field1: SubTest)
@@ -244,11 +243,11 @@ class MappingTest extends AwrsUnitTestTraits {
       val submap = (prefix: Option[String]) => mapping(
         "field1" -> optional(text),
         "field2" -> (defaultCompulsoryMapping(attachPrefix(prefix, "field2")) iff field1IsEmpty())
-      )(SubTest.apply)(SubTest.unapply)
+      )(SubTest.apply)(st => Some(st.field1, st.field2))
 
-      implicit val form = Form(mapping(
+      given form: Form[Test] = Form(mapping(
         "sub" -> submap(Some("sub"))
-      )(Test.apply)(Test.unapply))
+      )(Test.apply)(t => Some(t.field1)))
 
       "trigger validation errors" in {
         compulsoryFieldTest("sub.field2", field1IsEmptyTestData, field1IsNotEmptyTestData)

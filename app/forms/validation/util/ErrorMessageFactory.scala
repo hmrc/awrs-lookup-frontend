@@ -88,7 +88,7 @@ trait ErrorMessageFactory {
 // used to create API supported Invalid instances that can then be used in form constraints
 object ErrorMessageFactory extends ErrorMessageFactory {
 
-  import ErrorDelimiterConstants._
+  import ErrorDelimiterConstants.*
 
   private def argsToString(args: Any): String =
     args match {

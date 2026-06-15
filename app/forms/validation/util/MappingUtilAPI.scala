@@ -16,21 +16,21 @@
 
 package forms.validation.util
 
-import play.api.data.Forms._
-import play.api.data.format._
+import play.api.data.Forms.*
+import play.api.data.format.*
 import play.api.data.validation.{Invalid, Valid}
 import play.api.data.{FieldMapping, FormError, Mapping}
 
 
 object MappingUtilAPI {
 
-  import ConstraintUtil._
+  import ConstraintUtil.*
 
   def compulsoryText(config: CompulsoryTextFieldMappingParameter): FieldMapping[Option[String]] = of(compulsoryTextFieldFormatter(config))
 
   def optionalText(config: OptionalTextFieldMappingParameter): FieldMapping[Option[String]] = of(optionalTextFieldMapping(config))
 
-  implicit class MappingUtil(mapping: Mapping[Option[String]]) {
+  extension (mapping: Mapping[Option[String]]) {
     /**
       * used to convert Option[String] formatters to String formatters, this so we can reuse the compulsory text
       * formatter on String fields instead of the default Option[String] fields
@@ -39,10 +39,10 @@ object MappingUtilAPI {
     mapping.transform[String]((value: Option[String]) => value.fold("")(x => x), (value: String) => Some(value))
   }
 
-  implicit class MappingUtil_AddPreconditionToOptionMapping[T](mapping: Mapping[Option[T]]) {
+  extension [T](mapping: Mapping[Option[T]]) {
 
     // attach the key to the mapping if they do not have the expected key
-    private def checkKey(expectedKey: String, mapping: Mapping[Option[T]]): Mapping[Option[T]] = {
+    private def checkKey(expectedKey: String): Mapping[Option[T]] = {
       val mappingKey = mapping.key
       expectedKey.equals(mappingKey) match {
         case true => mapping
@@ -51,18 +51,18 @@ object MappingUtilAPI {
       }
     }
 
-    private val iffBind = (key: String, data: Map[String, String]) => (preCondition: Boolean) =>
+    private def iffBind = (key: String, data: Map[String, String]) => (preCondition: Boolean) =>
       (preCondition match {
         case false => Right(None)
         case true =>
-          val validated: Either[Seq[FormError], Option[T]] = checkKey(key, mapping).bind(data)
+          val validated: Either[Seq[FormError], Option[T]] = checkKey(key).bind(data)
           validated match {
             case Left(errors) => Left(errors)
             case Right(ostring) => Right(ostring)
           }
       }): Either[Seq[FormError], Option[T]]
 
-    private val iffUnbind = (key: String, value: Option[T]) => checkKey(key, mapping).unbind(value): Map[String, String]
+    private def iffUnbind = (key: String, value: Option[T]) => checkKey(key).unbind(value): Map[String, String]
 
     def iff(preCondition: Option[FormQuery]): Mapping[Option[T]] = of(new Formatter[Option[T]] {
 
@@ -77,7 +77,7 @@ object MappingUtilAPI {
     def iff(preCondition: FormQuery): Mapping[Option[T]] = of(new Formatter[Option[T]] {
 
       def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Option[T]] =
-        iffBind(key, data)(preCondition.get(data))
+        iffBind(key, data)(preCondition(data))
 
       def unbind(key: String, value: Option[T]): Map[String, String] =
         iffUnbind(key, value)

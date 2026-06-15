@@ -18,15 +18,15 @@ package controllers
 
 import org.jsoup.nodes.Element
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import play.api.i18n.Messages
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{OK, _}
 import services.LookupService
-import utils.TestUtils._
+import utils.TestUtils.*
 import utils.AwrsUnitTestTraits
-import utils.HtmlUtils._
+import utils.HtmlUtils.*
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -45,15 +45,15 @@ class LookupControllerTest extends AwrsUnitTestTraits {
   "Lookup Controller " should {
 
     "in show, lookup awrs entry when passed a valid awrs reference" in {
-      when(mockLookupService.lookup(any())(any(), any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
+      when(mockLookupService.lookup(any())(using any(), any())).thenReturn(Future.successful(Some(testBusinessSearchResult)))
       val result = TestLookupController.show().apply(FakeRequest())
       status(result) mustBe OK
     }
 
     "render a technical error" when {
       "an exception is received from the lookup call" in {
-        when(mockLookupService.lookup(any())(any(), any())).thenReturn(new Exception("failed"))
-        val html = FutureResultUtil(TestLookupController.show()(FakeRequest("GET", "check-the-awrs-register/?query=XXAW00000123554"))).getDocument
+        when(mockLookupService.lookup(any())(using any(), any())).thenReturn(Future.failed(new Exception("failed")))
+        val html = TestLookupController.show()(FakeRequest("GET", "check-the-awrs-register/?query=XXAW00000123554")).getDocument
 
         html.title() mustBe "Sorry, we are experiencing technical difficulties - GOV.UK"
       }
@@ -81,7 +81,7 @@ class LookupControllerTest extends AwrsUnitTestTraits {
     }
 
     "show error if the query field is empty" in {
-      callLookupFrontEndAndReturnSummaryError("").text mustBe Messages("awrs.search.query.empty.summary")
+      callLookupFrontEndAndReturnSummaryError(Option("")).text mustBe Messages("awrs.search.query.empty.summary")
     }
 
   }

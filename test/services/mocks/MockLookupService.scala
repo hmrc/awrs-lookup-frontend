@@ -17,7 +17,7 @@
 package services.mocks
 
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito._
+import org.mockito.Mockito.*
 import models.SearchResult
 import services.LookupService
 import utils.AwrsUnitTestTraits
@@ -26,9 +26,9 @@ import scala.concurrent.Future
 
 trait MockLookupService extends AwrsUnitTestTraits {
 
-  val mockLookupService = mock[LookupService]
+  val mockLookupService: LookupService = mock[LookupService]
 
   def mockLookupServiceWithOnly(lookupAwrsRef: MockConfiguration[Future[Option[SearchResult]]] = DoNotConfigure): Unit = {
-    lookupAwrsRef ifConfiguredThen (dataToReturn => when(mockLookupService.lookup(any())(any(), any())).thenReturn(dataToReturn))
+    lookupAwrsRef ifConfiguredThen (dataToReturn => when(mockLookupService.lookup(any())(using any(), any())).thenReturn(dataToReturn))
   }
 }

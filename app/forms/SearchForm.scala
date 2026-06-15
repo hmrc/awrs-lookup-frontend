@@ -17,13 +17,13 @@
 package forms
 
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.validation.Valid
-import forms.prevalidation._
+import forms.prevalidation.*
 import forms.validation.util.ConstraintUtil.{CompulsoryTextFieldMappingParameter, FieldFormatConstraintParameter}
 import forms.validation.util.ErrorMessageFactory.createErrorMessage
-import forms.validation.util.ErrorMessagesUtilAPI._
-import forms.validation.util.MappingUtilAPI._
+import forms.validation.util.ErrorMessagesUtilAPI.*
+import forms.validation.util.MappingUtilAPI.*
 import forms.validation.util.{FieldErrorConfig, MessageArguments, SummaryErrorConfig, TargetFieldIds}
 import models.Query
 
@@ -95,7 +95,7 @@ object SearchForm {
 
   lazy val searchValidationForm: Form[Query] = Form(mapping(
     query -> compulsoryQueryField.toStringFormatter
-  )(Query.apply)(Query.unapply))
+  )(Query.apply)(q => Some(q.query)))
 
   lazy val searchForm: PrevalidationAPI[Query] =
     preprocessedForm(

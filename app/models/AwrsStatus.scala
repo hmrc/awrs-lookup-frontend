@@ -16,7 +16,7 @@
 
 package models
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 sealed trait AwrsStatus {
   def code: String
@@ -33,7 +33,7 @@ object AwrsStatus {
       Revoked,
       DeRegistered)
 
-  implicit val reader: Reads[AwrsStatus] = new Reads[AwrsStatus] {
+  given reader: Reads[AwrsStatus] = new Reads[AwrsStatus] {
     def reads(json: JsValue): JsResult[AwrsStatus] =
       JsSuccess(json match {
         case JsString(code) => apply(code)
@@ -41,7 +41,7 @@ object AwrsStatus {
       })
   }
 
-  implicit val writer: Writes[AwrsStatus] = new Writes[AwrsStatus] {
+  given writer: Writes[AwrsStatus] = new Writes[AwrsStatus] {
     def writes(v: AwrsStatus): JsValue = JsString(v.code)
   }
 

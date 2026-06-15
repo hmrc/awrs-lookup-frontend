@@ -18,7 +18,7 @@ package forms.validation.util
 
 import forms.validation.util.ErrorMessageFactory.createErrorMessage
 import forms.validation.util.ErrorMessageInterpreter.{defaultSummaryId, getFieldErrors, getSummaryErrors}
-import play.api.data.Form
+import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.{Constraint, Valid, ValidationResult}
 import utils.AwrsUnitTestTraits
@@ -43,10 +43,10 @@ class ErrorMessageLookupTest extends AwrsUnitTestTraits {
       Valid
     }
 
-  val testModelMapping = mapping(
+  val testModelMapping: Mapping[TestModel] = mapping(
     "field1" -> text,
     "field2" -> text,
-    "field3" -> text)(TestModel.apply)(TestModel.unapply)
+    "field3" -> text)(TestModel.apply)(tm => Some(tm.field1, tm.field2, tm.field3))
 
   "The Message Handler" should {
 
@@ -224,7 +224,7 @@ class ErrorMessageLookupTest extends AwrsUnitTestTraits {
 
     "embedded messages are extracted correctly" when {
 
-      import forms.validation.util.ErrorMessageLookup._
+      import forms.validation.util.ErrorMessageLookup.*
 
       "simple usage in field error message " in {
         val msgKey = "empty"

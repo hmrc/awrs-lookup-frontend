@@ -21,26 +21,28 @@ import org.jsoup.nodes.Document
 import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.concurrent.Future
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import scala.language.implicitConversions
 
 
-trait HtmlUtils {
+object HtmlUtils {
 
-  implicit def soupUtil(html: Html): Document = Jsoup.parse(html.toString)
+  given soupUtil: Conversion[Html, Document] with
+    def apply(html: Html): Document = Jsoup.parse(html.toString)
 
-  implicit def soupUtil2(str: String): Document = Jsoup.parse(str.toString)
-  implicit def soupUtil3(result: Future[Result]): Document = Jsoup.parse(contentAsString(result))
+  given soupUtil2: Conversion[String, Document] with
+    def apply(str: String): Document = Jsoup.parse(str.toString)
+  
+  given soupUtil3: Conversion[Future[Result], Document] with
+    def apply(result: Future[Result]): Document = Jsoup.parse(contentAsString(result))
 
-  implicit class StringHtmlUtil(str: String) {
+  extension (str: String) {
     // compress multiple spaces into a single space
     def htmlTrim: String = str.replaceAll("[\\s]{2,}", " ")
   }
 
-  implicit class FutureResultUtil(res: Future[Result]) {
+  extension (res: Future[Result]) {
     def getDocument: Document = Jsoup.parse(contentAsString(res))
   }
 
 }
-
-object HtmlUtils extends HtmlUtils

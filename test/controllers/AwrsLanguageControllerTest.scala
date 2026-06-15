@@ -19,7 +19,7 @@ package controllers
 import play.api.i18n.I18nSupport.ResultWithMessagesApi
 import play.api.i18n.Lang
 import play.api.mvc.Results.Redirect
-import play.api.mvc._
+import play.api.mvc.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{cookies, defaultAwaitTimeout}
 import uk.gov.hmrc.http.{SessionKeys => HMRCSessionKeys}
@@ -27,7 +27,7 @@ import utils.AwrsUnitTestTraits
 
 class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
 
-  object TestLanguageController extends AwrsLanguageController(servicesConfig, mcc, messagesApi)
+  object TestLanguageController extends AwrsLanguageController(servicesConfig, mcc)
 
   ".langCall" should {
     "return a GET call with the correct url" in {
@@ -71,13 +71,13 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
 
   ".switchToLanguage" should {
 
-    implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withSession(HMRCSessionKeys.sessionId -> "id")
+    given fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withSession(HMRCSessionKeys.sessionId -> "id")
 
     "redirect to the referrer with the correct english language and correct toggle setting" in {
 
       val headers: Headers = new Headers(Seq(("referer", "https://www.tax.service.gov.uk/check-the-awrs-register/language/en?q=test#test")))
       val fakeRequest: FakeRequest[AnyContent] = FakeRequest("GET", "fakeUri", headers, AnyContent.apply())
-      implicit val messagesRequest: MessagesRequest[AnyContent] = new MessagesRequest[AnyContent](fakeRequest, messagesApi)
+      given messagesRequest: MessagesRequest[AnyContent] = new MessagesRequest[AnyContent](fakeRequest, messagesApi)
 
       val result = await(TestLanguageController.switchToLanguage("english")(messagesRequest)).toString()
 
@@ -94,7 +94,7 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
 
       val headers: Headers = new Headers(Seq(("referer", "https://www.tax.service.gov.uk/check-the-awrs-register/language/cy?q=test#test")))
       val fakeRequest: FakeRequest[AnyContent] = FakeRequest("GET", "fakeUri", headers, AnyContent.apply())
-      implicit val messagesRequest: MessagesRequest[AnyContent] = new MessagesRequest[AnyContent](fakeRequest, messagesApi)
+      given messagesRequest: MessagesRequest[AnyContent] = new MessagesRequest[AnyContent](fakeRequest, messagesApi)
 
       val result = await(TestLanguageController.switchToLanguage("random")(messagesRequest)).toString()
 
@@ -111,7 +111,7 @@ class AwrsLanguageControllerTest extends AwrsUnitTestTraits {
 
       val headers: Headers = new Headers(Seq(("referer", "https://www.tax.service.gov.uk/check-the-awrs-register/language/otherLang?q=test#test")))
       val fakeRequest: FakeRequest[AnyContent] = FakeRequest("GET", "fakeUri", headers, AnyContent.apply())
-      implicit val messagesRequest: MessagesRequest[AnyContent] = new MessagesRequest[AnyContent](fakeRequest, messagesApi)
+      given messagesRequest: MessagesRequest[AnyContent] = new MessagesRequest[AnyContent](fakeRequest, messagesApi)
 
       val result = await(TestLanguageController.switchToLanguage("otherLang")(messagesRequest)).toString()
 

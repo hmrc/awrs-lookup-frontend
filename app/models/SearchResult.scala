@@ -15,9 +15,11 @@
  */
 
 package models
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
+import uk.gov.hmrc.http.InternalServerException
 import utils.AwrsNumberFormatter
+
 import scala.util.matching.Regex
 
 sealed trait AwrsEntry {
@@ -38,13 +40,16 @@ sealed trait AwrsEntry {
 
 case class SearchResult(results: List[AwrsEntry])
 
-
 case class Business(awrsRef: String,
                     registrationDate: Option[String],
                     status: AwrsStatus,
                     info: Info,
                     registrationEndDate: Option[String] = None
                    ) extends AwrsEntry
+
+object Business {
+  given formatter: OFormat[Business] = Json.format[Business]
+}
 
 case class Group(awrsRef: String,
                  registrationDate: Option[String],
@@ -54,42 +59,38 @@ case class Group(awrsRef: String,
                  registrationEndDate: Option[String] = None
                 ) extends AwrsEntry
 
-object Business {
-  implicit val formatter: OFormat[Business] = Json.format[Business]
-}
-
 object Group {
-  implicit val formatter: OFormat[Group] = Json.format[Group]
+  given formatter: OFormat[Group] = Json.format[Group]
 }
 
 object AwrsEntry {
 
   val awrsFormatPattern: Regex = "([A-Za-z]{4})([0-9]{3})([0-9]{4})([0-9]{4})".r
 
-  def unapply(foo: AwrsEntry): Option[(String, JsValue)] = {
-    val (prod: Product, sub) = foo match {
-      case b: Business => (b, Json.toJson(b)(Business.formatter))
-      case b: Group => (b, Json.toJson(b)(Group.formatter))
+  def unapply(awrsEntry: AwrsEntry): (String, JsValue) = {
+    val json = awrsEntry match {
+      case business: Business => Json.toJson(business)(Business.formatter)
+      case group: Group => Json.toJson(group)(Group.formatter)
     }
-    Some(prod.productPrefix -> sub)
+    awrsEntry.getClass.getSimpleName -> json
   }
 
   def apply(`class`: String, data: JsValue): AwrsEntry = {
     (`class` match {
       case "Business" => Json.fromJson[Business](data)(Business.formatter)
       case "Group" => Json.fromJson[Group](data)(Group.formatter)
-    }).get
+    }).getOrElse(throw new InternalServerException("Error deserializing AwrsEntry"))
   }
 
-  implicit val reads: Reads[AwrsEntry] = (
+  given reads: Reads[AwrsEntry] = (
     (JsPath \ "class").read[String] and (JsPath \ "data").read[JsValue]
     )(AwrsEntry.apply _)
 
-  implicit val writes: OWrites[AwrsEntry] = (
+  given writes: OWrites[AwrsEntry] = (
     (JsPath \ "class").write[String] and (JsPath \ "data").write[JsValue]
-  )(unlift(AwrsEntry.unapply))
+    )(AwrsEntry.unapply)
 }
 
 object SearchResult {
-  implicit val formatter: OFormat[SearchResult] = Json.format[SearchResult]
+  given formatter: OFormat[SearchResult] = Json.format[SearchResult]
 }

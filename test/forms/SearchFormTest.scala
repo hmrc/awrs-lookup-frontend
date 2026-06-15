@@ -16,16 +16,18 @@
 
 package forms
 
-import forms.test.util.{ExpectedInvalidFieldFormat, _}
+import forms.test.util.{ExpectedInvalidFieldFormat, *}
 import forms.validation.util.{FieldError, MessageArguments, SummaryError}
+import models.Query
+import play.api.data.Form
 import utils.AwrsUnitTestTraits
 
 class SearchFormTest extends AwrsUnitTestTraits {
 
-  import SearchForm._
+  import SearchForm.*
 
   "SearchForm" should {
-    implicit val form = searchForm.form
+    given form: Form[Query] = searchForm.form
 
     "validate and generate the correct error messages" in {
       val fieldId: String = query
