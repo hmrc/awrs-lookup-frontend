@@ -18,13 +18,13 @@ package views.html.helpers
 
 import org.jsoup.nodes.Document
 import models.Info
-import utils.{AwrsUnitTestTraits, HtmlUtils}
+import utils.AwrsUnitTestTraits
+import utils.HtmlUtils.soupUtil
 
-class packageTest extends AwrsUnitTestTraits with HtmlUtils {
+import scala.language.implicitConversions
 
-  // this is shadowed so we would use the implicit conversion defined in the package instead
-  override def convertToOption[T, U <: T](value: U): Option[T] = ???
-
+class packageTest extends AwrsUnitTestTraits {
+  
   "spans function" should {
     "Output only defined elements in <span> tags" in {
       val testData: Map[String, Option[String]] =
@@ -35,7 +35,7 @@ class packageTest extends AwrsUnitTestTraits with HtmlUtils {
         spanTags.size() mustBe 3
       }
       testData.foreach {
-        case (id: String, Some(x)) =>
+        case (_: String, Some(x)) =>
           spanTags.text().contains(x) mustBe true
         case _ =>
       }

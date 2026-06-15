@@ -20,15 +20,15 @@ import java.net.URI
 
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, Lang, MessagesApi}
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 import scala.util.Try
 
 class AwrsLanguageController @Inject()(configuration: ServicesConfig,
-                                       mcc: MessagesControllerComponents,
-                                       override implicit val messagesApi: MessagesApi)
+                                       mcc: MessagesControllerComponents)
+                                      (using messagesApi: MessagesApi)
   extends FrontendController(mcc) with I18nSupport {
 
   val English: Lang = Lang("en")
@@ -53,7 +53,8 @@ class AwrsLanguageController @Inject()(configuration: ServicesConfig,
     } yield s"$path$query$fragment"
   }
 
-  def switchToLanguage(language: String): Action[AnyContent] = Action { implicit request =>
+  def switchToLanguage(language: String): Action[AnyContent] = Action { request =>
+
     val lang = languageMap.getOrElse(language, English)
 
     val redirectURL = request.headers.get(REFERER)

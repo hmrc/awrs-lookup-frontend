@@ -20,8 +20,8 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test.FakeRequest
 import models.AwrsStatus.Approved
-import models._
-import utils.ImplicitConversions._
+import models.*
+import utils.ImplicitConversions.*
 
 object TestUtils {
 

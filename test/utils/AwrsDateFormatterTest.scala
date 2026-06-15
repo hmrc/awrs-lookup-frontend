@@ -18,7 +18,7 @@ package utils
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class AwrsDateFormatterTest extends AwrsUnitTestTraits with HtmlUtils {
+class AwrsDateFormatterTest extends AwrsUnitTestTraits {
 
   val datePattern = DateTimeFormatter.ofPattern("d MMMM yyyy")
   val dateTimePattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -27,16 +27,16 @@ class AwrsDateFormatterTest extends AwrsUnitTestTraits with HtmlUtils {
     
     "returns a translateable date string from a string that matches the format (d MMMM yyyy)" in {
       val dateString = "1 April 2017"
-      AwrsDateFormatter.showDateTranslation(dateString) mustBe "1 April 2017"
+      AwrsDateFormatter.showDateTranslation(Some(dateString)) mustBe dateString
     }
 
     "returns empty string when given date does not match the required date format (d MMMM yyyy)" in {
       val dateString1 = "sdfsdfssdfs"
       val dateString2 = "2122-33-22"
       val dateString3 = ""
-      AwrsDateFormatter.showDateTranslation(dateString1) mustBe ""
-      AwrsDateFormatter.showDateTranslation(dateString2) mustBe ""
-      AwrsDateFormatter.showDateTranslation(dateString3) mustBe ""
+      AwrsDateFormatter.showDateTranslation(Some(dateString1)) mustBe ""
+      AwrsDateFormatter.showDateTranslation(Some(dateString2)) mustBe ""
+      AwrsDateFormatter.showDateTranslation(Some(dateString3)) mustBe ""
     }
   }
 

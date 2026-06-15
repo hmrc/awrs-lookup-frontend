@@ -18,102 +18,102 @@ package forms.test.util
 
 import play.api.data.Form
 import play.api.i18n.{Messages, MessagesApi}
-import forms.validation.util._
+import forms.validation.util.*
 import scala.language.implicitConversions
 
 
 trait ImplicitSingleFieldTestAPI {
 
-  implicit val fieldId: String
+  given fieldId: String
 
-  def assertFieldIsCompulsory(config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsCompulsory(config: CompulsoryFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsOptional(config: OptionalFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsOptional(config: OptionalFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsOptionalWhen(condition: Map[String, String], config: OptionalFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsOptionalWhen(condition: Map[String, String], config: OptionalFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsOptionalWhen(conditions: Set[Map[String, String]], config: OptionalFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsOptionalWhen(conditions: Set[Map[String, String]], config: OptionalFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertEnumFieldIsCompulsory(config: CompulsoryEnumValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertEnumFieldIsCompulsory(config: CompulsoryEnumValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertEnumFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryEnumValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertEnumFieldIsCompulsoryWhen(condition: Map[String, String], config: CompulsoryEnumValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertEnumFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryEnumValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertEnumFieldIsCompulsoryWhen(conditions: Set[Map[String, String]], config: CompulsoryEnumValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsIgnoredWhen(condition: Map[String, String], config: FieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsIgnoredWhen(condition: Map[String, String], config: FieldToIgnore)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: FieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: FieldToIgnore)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertEnumFieldIsIgnoredWhen(condition: Map[String, String], config: EnumFieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertEnumFieldIsIgnoredWhen(condition: Map[String, String], config: EnumFieldToIgnore)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertEnumFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: EnumFieldToIgnore)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertEnumFieldIsIgnoredWhen(conditions: Set[Map[String, String]], config: EnumFieldToIgnore)(using messages: Messages, messagesApi: MessagesApi): Unit
 
 }
 
 trait ImplicitCrossFieldTestAPI {
 
-  implicit val fieldIds: Set[String]
+  given fieldIds: Set[String]
 
-  def assertAtLeastOneFieldMustNotBeEmptyWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAtLeastOneFieldMustNotBeEmptyWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAtLeastOneFieldMustNotBeEmptyWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAtLeastOneFieldMustNotBeEmptyWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAllFieldsCannotBeAnsweredWithInvalidWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAllFieldsCannotBeAnsweredWithInvalidWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAllFieldsCannotBeAnsweredWithInvalidWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAllFieldsCannotBeAnsweredWithInvalidWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAtLeastOneFieldMustNotBeEmptyIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(condition: Map[String, String], config: CrossFieldValidationExpectations, invalidAnswer: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertAllFieldsCannotBeAnsweredWithInvalidIsIgnoredWhen(conditions: Set[Map[String, String]], config: CrossFieldValidationExpectations, invalidAnswer: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 }
 
 trait FormValidationTestAPI {
 
-  def assertErrorMessageIsCorrectlyPopulated(errorMessage: MessageLookup)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertErrorMessageIsCorrectlyPopulated(errorMessage: MessageLookup)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFormIsValid[T](form: Form[T], testData: Map[String, String])(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFormIsValid[T](form: Form[T], testData: Map[String, String])(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldError(formWithErrors: Form[_], fieldId: String, expected: FieldError)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldError(formWithErrors: Form[_], fieldId: String, expected: FieldError)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertDateFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertDateFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertNotThisFieldError(form: Form[_], fieldId: String, unacceptable: FieldError)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertNotThisFieldError(form: Form[_], fieldId: String, unacceptable: FieldError)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertHasNoFieldError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertHasNoFieldError(form: Form[_], fieldId: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertHasFieldError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertHasFieldError(form: Form[_], fieldId: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertSummaryError(formWithErrors: Form[_], fieldId: String, expected: SummaryError)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertSummaryError(formWithErrors: Form[_], fieldId: String, expected: SummaryError)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertNotThisSummaryError(form: Form[_], fieldId: String, unacceptable: SummaryError)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertNotThisSummaryError(form: Form[_], fieldId: String, unacceptable: SummaryError)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertHasNoAnchorFromSummaryError(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertHasNoAnchorFromSummaryError(form: Form[_], fieldId: String)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldCannotBeEmpty(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, fieldIsEmptyExpectation: ExpectedFieldIsEmpty)(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldCannotBeExceedMaxLength(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, maxLengthExpectationOp: MaxLengthOption[ExpectedFieldExceedsMaxLength])(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldCannotBeExceedMaxLength(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, maxLengthExpectationOp: MaxLengthOption[ExpectedFieldExceedsMaxLength])(using messages: Messages, messagesApi: MessagesApi): Unit
 
-  def assertFieldConformsExpectedFormats(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, formatExpectations: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi): Unit
-
-
-  def assertEnumFieldSatisfy(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(implicit messages: Messages, messagesApi: MessagesApi): Unit
-
-  def assertFieldIgnoresEmptyConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String)(implicit messages: Messages, messagesApi: MessagesApi): Unit
-
-  def assertFieldIgnoresMaxLengthConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, maxLength: Int)(implicit messages: Messages, messagesApi: MessagesApi): Unit
-
-  def assertFieldIgnoresFormatsConstraitsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, formatExpectations: ExpectedFieldFormat)(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertFieldConformsExpectedFormats(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, formatExpectations: ExpectedFieldFormat)(using messages: Messages, messagesApi: MessagesApi): Unit
 
 
-  def assertEnumFieldIgnoresConstraintsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(implicit messages: Messages, messagesApi: MessagesApi): Unit
+  def assertEnumFieldSatisfy(preCond: Map[String, String] = Map())(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(using messages: Messages, messagesApi: MessagesApi): Unit
+
+  def assertFieldIgnoresEmptyConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String)(using messages: Messages, messagesApi: MessagesApi): Unit
+
+  def assertFieldIgnoresMaxLengthConstraintWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, maxLength: Int)(using messages: Messages, messagesApi: MessagesApi): Unit
+
+  def assertFieldIgnoresFormatsConstraitsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, formatExpectations: ExpectedFieldFormat)(using messages: Messages, messagesApi: MessagesApi): Unit
+
+
+  def assertEnumFieldIgnoresConstraintsWhen(preCond: Map[String, String])(form: Form[_], fieldId: String, validEnumValues: Set[Enumeration#Value], invalidEnumValues: Set[Enumeration#Value])(using messages: Messages, messagesApi: MessagesApi): Unit
 }
 
 trait ExpectedErrorExpectation {
@@ -125,7 +125,7 @@ trait ExpectedErrorExpectation {
 case class ExpectedFieldIsEmpty(fieldError: FieldError, summaryError: SummaryError) extends ExpectedErrorExpectation
 
 object ExpectedFieldIsEmpty {
-  def apply(anchorId: String, fieldError: FieldError)(implicit messages: Messages, messagesApi: MessagesApi): ExpectedFieldIsEmpty =
+  def apply(anchorId: String, fieldError: FieldError)(using messages: Messages, messagesApi: MessagesApi): ExpectedFieldIsEmpty =
     new ExpectedFieldIsEmpty(fieldError, SummaryError(ErrorMessageInterpreter.defaultSummaryId(fieldError.msgKey), anchor = anchorId))
 }
 
@@ -133,7 +133,7 @@ case class ExpectedFieldExceedsMaxLength(fieldError: FieldError, summaryError: S
 
 object ExpectedFieldExceedsMaxLength {
   // quick constructor for the default expected max length error messages
-  def apply(fieldId: String, embeddedFieldNameInErrorMessages: String, maxLen: Int)(implicit messages: Messages, messagesApi: MessagesApi): ExpectedFieldExceedsMaxLength = {
+  def apply(fieldId: String, embeddedFieldNameInErrorMessages: String, maxLen: Int)(using messages: Messages, messagesApi: MessagesApi): ExpectedFieldExceedsMaxLength = {
     val defaultKey = "awrs.generic.error.maximum_length"
     val defaultError = FieldError(defaultKey, MessageArguments(embeddedFieldNameInErrorMessages, maxLen))
     new ExpectedFieldExceedsMaxLength(defaultError, SummaryError(ErrorMessageInterpreter.defaultSummaryId(defaultKey), MessageArguments(embeddedFieldNameInErrorMessages), fieldId), maxLen)
@@ -164,14 +164,14 @@ case class MaxLengthIsHandledByTheRegEx() extends MaxLengthOption[Nothing]
 case class ExpectedInvalidFieldFormat(invalidCase: String, fieldError: FieldError, summaryError: SummaryError) extends ExpectedErrorExpectation
 
 object ExpectedInvalidFieldFormat {
-  def apply(invalidCase: String, fieldId: String, embeddedFieldNameInErrorMessages: String)(implicit messages: Messages, messagesApi: MessagesApi): ExpectedInvalidFieldFormat = {
+  def apply(invalidCase: String, fieldId: String, embeddedFieldNameInErrorMessages: String)(using messages: Messages, messagesApi: MessagesApi): ExpectedInvalidFieldFormat = {
     val defaultKey = "awrs.generic.error.character_invalid"
     val defaultFieldError = FieldError(defaultKey)
     val defaultSummaryError = SummaryError(ErrorMessageInterpreter.defaultSummaryId(defaultKey), MessageArguments(embeddedFieldNameInErrorMessages), fieldId)
     new ExpectedInvalidFieldFormat(invalidCase, defaultFieldError, defaultSummaryError)
   }
 
-  def apply(invalidCase: String, fieldId: String, fieldError: FieldError)(implicit messages: Messages, messagesApi: MessagesApi): ExpectedInvalidFieldFormat = {
+  def apply(invalidCase: String, fieldId: String, fieldError: FieldError)(using messages: Messages, messagesApi: MessagesApi): ExpectedInvalidFieldFormat = {
     val defaultSummaryError = SummaryError(ErrorMessageInterpreter.defaultSummaryId(fieldError.msgKey), anchor = fieldId)
     new ExpectedInvalidFieldFormat(invalidCase, fieldError, defaultSummaryError)
   }

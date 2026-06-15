@@ -35,21 +35,15 @@ import scala.concurrent.Future
 
 trait AwrsUnitTestTraits extends PlaySpec with MockitoSugar with BeforeAndAfterEach with GuiceOneAppPerSuite {
 
-  implicit lazy val hc: HeaderCarrier = HeaderCarrier()
+  given hc: HeaderCarrier = HeaderCarrier()
 
-  implicit def convertToOption[T, U <: T](value: U): Option[T] = Some(value)
+  given messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
 
-  implicit def convertToFuture[T](value: T): Future[Option[T]] = Future.successful(value)
+  given messages: Messages = messagesApi.preferred(Seq(Lang("en")))
 
-  implicit def convertToFuture[T](err: Throwable): Future[Option[T]] = Future.failed(err)
+  given environment: Environment = app.injector.instanceOf[Environment]
 
-  implicit val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
-
-  implicit val messages: Messages = messagesApi.preferred(Seq(Lang("en")))
-
-  implicit val environment: Environment = app.injector.instanceOf[Environment]
-
-  implicit val configuration: Configuration = app.injector.instanceOf[Configuration]
+  given configuration: Configuration = app.injector.instanceOf[Configuration]
 
   val mcc: MessagesControllerComponents = app.injector.instanceOf[MessagesControllerComponents]
 
@@ -75,16 +69,6 @@ trait AwrsUnitTestTraits extends PlaySpec with MockitoSugar with BeforeAndAfterE
   case class Configure[A](config: A) extends MockConfiguration[A]
 
   case object DoNotConfigure extends MockConfiguration[Nothing]
-
-  implicit def convertToMockConfiguration[T](value: T): MockConfiguration[T] = Configure(value)
-
-  implicit def convertToMockConfiguration2[T](value: T): MockConfiguration[Option[T]] = Configure(value)
-
-  implicit def convertToMockConfiguration3[T](value: T): MockConfiguration[Future[T]] = Configure(Future.successful(value))
-
-  implicit def convertToMockConfiguration4[T](value: T): MockConfiguration[Future[Option[T]]] = Configure(Future.successful(Some(value)))
-
-  implicit def convertToMockConfiguration5[T](err: Throwable): MockConfiguration[Future[Option[T]]] = Configure(err)
 
   sealed trait MatcherConfiguration[+A] {
     def matcher: A = this match {

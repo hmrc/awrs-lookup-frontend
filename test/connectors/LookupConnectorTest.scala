@@ -17,8 +17,8 @@
 package connectors
 
 import java.util.UUID
-import org.mockito.Mockito._
-import play.api.http.Status._
+import org.mockito.Mockito.*
+import play.api.http.Status.*
 import play.api.libs.json.{JsValue, Json}
 import exceptions.LookupExceptions
 import models.SearchResult
@@ -30,6 +30,8 @@ import uk.gov.hmrc.http.client.{RequestBuilder, HttpClientV2}
 import scala.concurrent.{ExecutionContext, Future}
 import org.mockito.ArgumentMatchers.any
 import java.net.URL
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class LookupConnectorTest extends AwrsUnitTestTraits {
 
@@ -52,11 +54,10 @@ class LookupConnectorTest extends AwrsUnitTestTraits {
 
   "LookupConnector by urn" should {
 
-    implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-    implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
+    given hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
 
     "lookup an awrs entry when a valid reference number is entered" in new ConnectorTest {
-      val expectedResult: Option[SearchResult] = testBusinessSearchResult
+      val expectedResult = Option(testBusinessSearchResult)
       val lookupSuccess: JsValue = SearchResult.formatter.writes(expectedResult.get)
       when(executeGet[HttpResponse]).thenReturn(Future.successful(HttpResponse(OK, lookupSuccess, Map.empty[String, Seq[String]])))
       val result: Future[Option[SearchResult]] = TestLookupConnector.queryByUrn(testAwrsRef)

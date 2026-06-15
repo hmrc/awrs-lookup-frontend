@@ -26,7 +26,7 @@ object AwrsDateFormatter {
   private val datePattern = DateTimeFormatter.ofPattern("d MMMM yyyy")
   private val resolverStyle = ResolverStyle.STRICT
 
-  def showDateTranslation(str: Option[String])(implicit  messages: Messages): String = {
+  def showDateTranslation(str: Option[String])(using  messages: Messages): String = {
     try {
       val date = stringToLocalDate(str.get, datePattern)
       val formatter = DateTimeFormatter.ofPattern(setDateTimeFormat(date.getMonthValue)).withResolverStyle(resolverStyle)
@@ -36,13 +36,13 @@ object AwrsDateFormatter {
     }
   }
 
-  def showDateTimeNowTranslation(dateTime: LocalDateTime = LocalDateTime.now())(implicit  messages: Messages): String = {
+  def showDateTimeNowTranslation(dateTime: LocalDateTime = LocalDateTime.now())(using  messages: Messages): String = {
     val format = setDateTimeFormat(dateTime.getMonthValue, showTime = true)
     val formatter = DateTimeFormatter.ofPattern(format).withResolverStyle(resolverStyle)
     dateTime.format(formatter).replace("AM", "am").replace("PM", "pm")
   }
 
-  def setDateTimeFormat(monthValue: Int, showTime: Boolean = false)(implicit  messages: Messages): String = {
+  def setDateTimeFormat(monthValue: Int, showTime: Boolean = false)(using  messages: Messages): String = {
     s"""d '${messages(s"month.$monthValue")}' uuuu""" + (if (showTime) " h:mma" else "")
   }
 
