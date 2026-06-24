@@ -30,11 +30,7 @@ object ConstraintUtil {
 
   type FormQuery = FormData => Boolean
 
-  implicit def castSingleToSet[A](value: A): Set[A] = Set(value)
-
-  implicit def castToOptionPreCondition(preCondition: FormQuery): Option[FormQuery] = Some(preCondition)
-
-  implicit class PostConstraintsUtil[A](c: Constraint[A]) {
+  extension [A](c: Constraint[A]) {
     def andThen(c2: Constraint[A]): Constraint[A] =
       Constraint[A]({
         (a: A) =>
@@ -54,7 +50,7 @@ object ConstraintUtil {
       })
   }
 
-  implicit class PreConstraintsUtil[A](cond: A => Boolean) {
+  extension [A](cond: A => Boolean) {
     def preCondition(c: Constraint[A]): Constraint[A] =
       Constraint[A]({
         (a: A) =>
@@ -66,7 +62,7 @@ object ConstraintUtil {
   }
 
   // always valid is required in case an empty sequence is passed in
-  def alwaysValidConstraint[A]: Constraint[A] = Constraint[A]((a: A) => Valid)
+  def alwaysValidConstraint[A]: Constraint[A] = Constraint[A]((_: A) => Valid)
 
   def andThenSeqChain[A](seq: Seq[Constraint[A]]): Constraint[A] = seq.foldLeft(alwaysValidConstraint[A])(_ andThen _)
 
@@ -79,7 +75,7 @@ object ConstraintUtil {
         }
     })
 
-  implicit class MappingUtil[A](m: Mapping[A]) {
+  extension [A](m: Mapping[A]) {
     def verifying(constraints: List[Constraint[A]]): Mapping[A] =
       constraints.foldLeft(m)(_.verifying(_))
 
@@ -91,7 +87,7 @@ object ConstraintUtil {
         f =>
           preCondition.apply(f) match {
             case Valid => c(f)
-            case f: Invalid => Valid
+            case _: Invalid => Valid
           }
       })
       m.verifying(preCondition).verifying(newConsts)
@@ -173,7 +169,7 @@ object ConstraintUtil {
                                                emptyErrorMsg: Invalid) extends ValidationMappingTrait[Mapping[T]]
 
 
-  private def noConstraint[A] = Constraint[A] { ignore: A => Valid }
+  private def noConstraint[A] = Constraint[A] { (_: A) => Valid }
 
   // sub constraints for text fields
   private def fieldMustNotBeEmptyConstraint[A](config: FieldIsEmptyConstraintParameter): Constraint[A] =

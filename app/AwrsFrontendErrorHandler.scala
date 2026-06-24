@@ -23,11 +23,11 @@ import views.html.error_template
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class AwrsFrontendErrorHandler @Inject()(implicit val messagesApi: MessagesApi,
+class AwrsFrontendErrorHandler @Inject()(val messagesApi: MessagesApi,
                                          val ec: ExecutionContext,
                                          errorTemplate: error_template) extends FrontendErrorHandler {
 
-  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: RequestHeader): Future[Html]= {
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(using request: RequestHeader): Future[Html]= {
     Future.successful(errorTemplate(pageTitle, heading, message))
   }
 }

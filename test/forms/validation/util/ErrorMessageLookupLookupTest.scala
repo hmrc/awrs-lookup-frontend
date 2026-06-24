@@ -17,7 +17,7 @@
 package forms.validation.util
 
 
-import forms.validation.util.ErrorMessageLookup._
+import forms.validation.util.ErrorMessageLookup.*
 import utils.AwrsUnitTestTraits
 
 class ErrorMessageLookupLookupTest extends AwrsUnitTestTraits {

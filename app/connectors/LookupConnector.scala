@@ -25,7 +25,7 @@ import forms.prevalidation
 import models.SearchResult
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
 import uk.gov.hmrc.http.client.HttpClientV2
-import utils.ImplicitConversions._
+import utils.ImplicitConversions.*
 import utils.LoggingUtils
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, InternalServerException, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
@@ -78,7 +78,7 @@ class LookupConnector @Inject()(loggingUtils: LoggingUtils,
       throw new InternalServerException(s"Unsuccessful return of data. Status code: $status")
   }
 
-  def queryByUrn(query: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SearchResult]] = {
+  def queryByUrn(query: String)(using hc: HeaderCarrier, ec: ExecutionContext): Future[Option[SearchResult]] = {
     val getURL = byUrnUrl(prevalidation.trimAllFunc(query).toUpperCase)
     http.get(url"$getURL").execute[HttpResponse].flatMap(responseCore(s"ByUrl[ $query ]"))
   }

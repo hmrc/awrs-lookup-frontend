@@ -17,7 +17,6 @@
 package audit
 
 import javax.inject.{Inject, Named}
-import play.api.Configuration
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.AuditExtensions
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
@@ -25,7 +24,6 @@ import uk.gov.hmrc.play.audit.model.{Audit, DataEvent}
 import scala.concurrent.ExecutionContext
 
 class Auditable @Inject()(auditConnector: AuditConnector,
-                          configuration: Configuration,
                           @Named("appName") val appName: String) {
 
   def audit: Audit = new Audit(appName, auditConnector)
@@ -35,7 +33,7 @@ class Auditable @Inject()(auditConnector: AuditConnector,
                     tags: Map[String, String] = Map.empty[String, String],
                     detail: Map[String, String],
                     eventType: String)
-                   (implicit hc: HeaderCarrier,ec: ExecutionContext): Unit =
+                   (using hc: HeaderCarrier,ec: ExecutionContext): Unit =
     audit.sendDataEvent(
       DataEvent(
         appName,

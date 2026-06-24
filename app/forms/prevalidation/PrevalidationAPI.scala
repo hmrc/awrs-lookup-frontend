@@ -34,8 +34,8 @@ object CaseOption extends Enumeration {
 // the type of trim is defaulted to both head and tail
 trait PrevalidationAPI[T] {
 
-  import TrimOption._
-  import CaseOption._
+  import TrimOption.*
+  import CaseOption.*
 
   type PreprocessFunction = Map[String, String] => Map[String, String]
 
@@ -99,7 +99,7 @@ trait PrevalidationAPI[T] {
 
   // copied the source from play 2.4 to convert a Request object into Map[String, Seq[String]] then call our trimmed
   // bindFromRequest function
-  def bindFromRequest()(implicit request: play.api.mvc.Request[_]): Form[T] =
+  def bindFromRequest()(using request: play.api.mvc.Request[_]): Form[T] =
   bindFromRequest {
     (request.body match {
       case body: play.api.mvc.AnyContent if body.asFormUrlEncoded.isDefined => body.asFormUrlEncoded.get

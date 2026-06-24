@@ -152,10 +152,10 @@ case class TargetFieldIds(anchor: String, otherIds: String*)
   * All types inheriting this trait must contain a message key.
   */
 trait MessageLookup extends MessageConfig[String] with I18nSupport {
-  val messagesApi: MessagesApi
-  val messages: Messages
+  given messagesApi: MessagesApi
+  given messages: Messages
 
-  override def toString: String = ErrorMessageLookup.messageLookup(this)(messages, messagesApi)
+  override def toString: String = ErrorMessageLookup.messageLookup(this)
 }
 
 /**
@@ -183,11 +183,11 @@ trait MessageLookup extends MessageConfig[String] with I18nSupport {
   * @param msgArgs any arguments expected by the message in the conf/messages file
   */
 case class EmbeddedMessage (msgKey: String, msgArgs: MessageArguments = MessageArguments())
-                           (implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup
+                           (using val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup
 
 object EmbeddedMessage {
 
-  def apply(msgKey: String)(implicit messages: Messages, messagesApi: MessagesApi): EmbeddedMessage =
+  def apply(msgKey: String)(using messages: Messages, messagesApi: MessagesApi): EmbeddedMessage =
     new EmbeddedMessage(msgKey = msgKey)
 }
 
@@ -200,8 +200,8 @@ object EmbeddedMessage {
   * @param anchor  where the summary error message will hyper link to
   */
 case class SummaryError (msgKey: String, msgArgs: MessageArguments = MessageArguments(), anchor: String)
-                        (implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
-  def this(msgKey: String, anchor: String)(implicit messages: Messages, messagesApi: MessagesApi) = this(msgKey, MessageArguments(), anchor)
+                        (using val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
+  def this(msgKey: String, anchor: String)(using messages: Messages, messagesApi: MessagesApi) = this(msgKey, MessageArguments(), anchor)
 
   override def hashCode(): Int = {
     var code = this.productPrefix.hashCode()
@@ -232,7 +232,7 @@ case class SummaryError (msgKey: String, msgArgs: MessageArguments = MessageArgu
   * @param msgArgs any arguments expected by the message in the conf/messages file
   */
 case class FieldError (msgKey: String, msgArgs: MessageArguments = MessageArguments())
-                      (implicit val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
+                      (using val messages: Messages, val messagesApi: MessagesApi) extends MessageLookup {
   override def hashCode(): Int = {
     var code = this.productPrefix.hashCode()
     val arr = this.productArity

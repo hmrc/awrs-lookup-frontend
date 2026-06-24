@@ -19,13 +19,13 @@ package controllers
 import _root_.controllers.util.AwrsLookupController
 import connectors.RawResponseReads
 import forms.SearchForm
-import forms.SearchForm._
+import forms.SearchForm.*
 import forms.prevalidation.PrevalidationAPI
 
 import javax.inject.Inject
 import models.{Query, SearchResult}
 import play.api.i18n.Messages
-import play.api.mvc._
+import play.api.mvc.*
 import services.LookupService
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
@@ -37,13 +37,13 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
                                  searchMain: search_main,
                                  searchNoResults: search_no_results,
                                  singleResult: single_result,
-                                 errorTemplate: error_template)(implicit ec: ExecutionContext) extends AwrsLookupController(mcc) with RawResponseReads {
+                                 errorTemplate: error_template)(using ec: ExecutionContext) extends AwrsLookupController(mcc) with RawResponseReads {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
 
   private[controllers] def validateFormAndSearch(preValidationForm: PrevalidationAPI[Query], action: Call,
                                                  lookupCall: lookupServiceCall
-                                                 )(implicit request: Request[AnyContent]): Future[Result] = {
+                                                 )(using request: Request[AnyContent]): Future[Result] = {
     preValidationForm.bindFromRequest().fold(
       formWithErrors => {
         val query = formWithErrors.data.get("query")
@@ -69,7 +69,9 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
 
   def show(): Action[AnyContent] = Action.async {
 
-    implicit request =>
+    request =>
+      
+      given Request[AnyContent] = request
 
       val action = controllers.routes.LookupController.show()
       if (request.queryString.contains(SearchForm.query)) {
