@@ -18,6 +18,7 @@ package controllers
 
 import _root_.controllers.util.AwrsLookupController
 import connectors.RawResponseReads
+import filters.AwrsLookupRateLimitFilter
 import forms.SearchForm
 import forms.SearchForm.*
 import forms.prevalidation.PrevalidationAPI
@@ -37,7 +38,9 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
                                  searchMain: search_main,
                                  searchNoResults: search_no_results,
                                  singleResult: single_result,
-                                 errorTemplate: error_template)(using ec: ExecutionContext) extends AwrsLookupController(mcc) with RawResponseReads {
+                                 errorTemplate: error_template,
+                                 rateLimitFilter: AwrsLookupRateLimitFilter)
+                                (using ec: ExecutionContext) extends AwrsLookupController(mcc) with RawResponseReads {
 
   private type lookupServiceCall = String => Future[Option[SearchResult]]
 
@@ -67,7 +70,7 @@ class LookupController @Inject()(mcc: MessagesControllerComponents,
     )
   }
 
-  def show(): Action[AnyContent] = Action.async {
+  def show(): Action[AnyContent] = (Action andThen rateLimitFilter).async {
 
     request =>
       

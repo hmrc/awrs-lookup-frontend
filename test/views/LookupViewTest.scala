@@ -25,6 +25,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import controllers.LookupController
+import filters.AwrsLookupRateLimitFilter
 import services.LookupService
 import utils.HtmlUtils.soupUtil3
 import utils.TestUtils.{testBusinessSearchResult, *}
@@ -43,11 +44,12 @@ class LookupViewTest extends AwrsUnitTestTraits {
   val searchNoResults: search_no_results = app.injector.instanceOf[search_no_results]
   val singleResult: single_result = app.injector.instanceOf[single_result]
   val errorTemplate: error_template = app.injector.instanceOf[error_template]
+  val rateLimitFilter: AwrsLookupRateLimitFilter = app.injector.instanceOf[AwrsLookupRateLimitFilter]
 
   def testRequest(query: Option[String]): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, "/awrs-lookup-frontend" + query.fold("")(q => s"?query=$q"))
 
-  object TestLookupController extends LookupController(mcc, mockLookupService , searchMain, searchNoResults, singleResult, errorTemplate)
+  object TestLookupController extends LookupController(mcc, mockLookupService , searchMain, searchNoResults, singleResult, errorTemplate, rateLimitFilter)
 
 
   "Lookup Controller " should {

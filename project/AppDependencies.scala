@@ -26,7 +26,8 @@ object AppDependencies {
     ws,
     "uk.gov.hmrc" %% "bootstrap-frontend-play-30" % bootstrapVersion,
     "uk.gov.hmrc" %% "play-partials-play-30"      % "10.2.0",
-    "uk.gov.hmrc" %% "play-frontend-hmrc-play-30" % playVersion
+    "uk.gov.hmrc" %% "play-frontend-hmrc-play-30" % playVersion,
+    "com.digitaltangible" %% "play-guard"         % "3.0.0"
   )
 
   val test: Seq[ModuleID] = Seq(

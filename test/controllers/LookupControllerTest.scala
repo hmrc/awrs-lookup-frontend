@@ -16,31 +16,37 @@
 
 package controllers
 
+import filters.AwrsLookupRateLimitFilter
 import org.jsoup.nodes.Element
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.*
+import play.api.http.Status
 import play.api.i18n.Messages
 import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.MessagesControllerComponents
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{OK, _}
+import play.api.test.Helpers.*
 import services.LookupService
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import utils.TestUtils.*
 import utils.AwrsUnitTestTraits
 import utils.HtmlUtils.*
 import views.html.error_template
 import views.html.lookup.{search_main, search_no_results, single_result}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class LookupControllerTest extends AwrsUnitTestTraits {
+class LookupControllerTest extends AwrsUnitTestTraits  {
   val mockLookupService: LookupService = mock[LookupService]
   val lookupFailure: JsValue = Json.parse( """{"reason": "Generic test reason"}""")
   val searchMain: search_main = app.injector.instanceOf[search_main]
   val searchNoResults: search_no_results = app.injector.instanceOf[search_no_results]
   val singleResult: single_result = app.injector.instanceOf[single_result]
   val errorTemplate: error_template = app.injector.instanceOf[error_template]
+  val rateLimitFilter: AwrsLookupRateLimitFilter = new AwrsLookupRateLimitFilter(servicesConfig)
 
-  object TestLookupController extends LookupController(mcc, mockLookupService, searchMain, searchNoResults, singleResult, errorTemplate)
+  object TestLookupController extends LookupController(mcc, mockLookupService, searchMain, searchNoResults, singleResult, errorTemplate, rateLimitFilter)
 
   "Lookup Controller " should {
 
@@ -59,6 +65,23 @@ class LookupControllerTest extends AwrsUnitTestTraits {
       }
     }
 
+    "return 429 when too many requests are send" ignore  {
+      val servicesConfigMock = mock[ServicesConfig]
+      val mccInstance: MessagesControllerComponents = app.injector.instanceOf[MessagesControllerComponents]
+      val rateLimitFilterInstance: AwrsLookupRateLimitFilter = new AwrsLookupRateLimitFilter(servicesConfigMock)
+
+      val sut = new LookupController(mccInstance, mockLookupService, searchMain, searchNoResults, singleResult, errorTemplate, rateLimitFilterInstance)
+
+      // ToDo Still depends on values in application.conf
+      when(servicesConfigMock.getString("ratelimit-filter.enabled")).thenReturn(true)
+      when(servicesConfigMock.getString("ratelimit-filter.bucketSize")).thenReturn("1")
+      when(servicesConfigMock.getString("ratelimit-filter.ratePerSecond")).thenReturn("0.001")
+      val results = for (_ <- 0 until 100) yield sut.show()(FakeRequest())
+
+      val statuses = await(Future.sequence(results)).map(_.header.status)
+
+      statuses.contains(Status.TOO_MANY_REQUESTS) mustBe true
+    }
   }
 
   "lookup routes" should {
@@ -83,7 +106,5 @@ class LookupControllerTest extends AwrsUnitTestTraits {
     "show error if the query field is empty" in {
       callLookupFrontEndAndReturnSummaryError(Option("")).text mustBe Messages("awrs.search.query.empty.summary")
     }
-
   }
-
 }
