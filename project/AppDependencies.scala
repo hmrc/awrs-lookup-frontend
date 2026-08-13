@@ -19,8 +19,8 @@ import sbt.*
 object AppDependencies {
   import play.sbt.PlayImport.*
 
-  private val bootstrapVersion         = "10.7.0"
-  private val playVersion              = "12.32.0"
+  private val bootstrapVersion         = "10.8.0"
+  private val playVersion              = "13.11.0"
 
   val compile: Seq[ModuleID] = Seq(
     ws,
@@ -31,7 +31,7 @@ object AppDependencies {
 
   val test: Seq[ModuleID] = Seq(
     "uk.gov.hmrc" %% "bootstrap-test-play-30" % bootstrapVersion % Test,
-    "org.jsoup"   %  "jsoup"                  % "1.22.1"         % Test,
+    "org.jsoup"   %  "jsoup"                  % "1.23.1"         % Test,
     "org.mockito" %  "mockito-core"           % "5.23.0"         % Test
   )
 
